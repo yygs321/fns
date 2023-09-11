@@ -4,6 +4,7 @@ import FooterBar from "./Pages/Common/Component/FooterBar";
 import LoginPage from "./Pages/LoginPage/LoginPage";
 import MyPage from "./Pages/MyPage/MyPage"
 import MainPage from "./Pages/MainPage/MainPage";
+import EditProfilePage from "./Pages/MyPage/EditProfilePage";
 
 function App() {
   useEffect(() => {
@@ -41,8 +42,10 @@ function App() {
         <Router>
           <Routes>
             <Route path="/" element={<LoginPage />} />
-            <Route path="/mypage" element={<MyPage />} />
             <Route path="/main" element={<MainPage />} />
+            <Route path="/mypage" element={<MyPage />} />
+            <Route path="/edit-profile" element={<EditProfilePage />} />
+            
           </Routes>
         </Router>
       </div>

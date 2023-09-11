@@ -4,6 +4,10 @@
   padding: 20px;
 }
 
+.mypage-container .MuiListItemIcon-root {
+  min-width: unset;
+}
+
 .profile-section {
   display: flex;
   flex-direction: row;   /* 가로 방향으로 요소를 배열합니다. */
@@ -40,7 +44,7 @@
 }
 
 /* 모바일 크기에 맞게 크기 조정 */
-@media (max-width: 800px) {
+@media (max-width: 500px) {
   .profile-avatar {
     width: 35vw;
     height: 35vw;
@@ -52,5 +56,21 @@
 
   .profile-details p {
     font-size: 1.2rem;
+  }
+}
+
+ /* 중간 화면 크기 (예: 태블릿) */ 
+ @media (min-width: 500px) and (max-width: 799px) {
+  .profile-avatar {
+    width: 25vw;
+    height: 25vw;
+  }
+
+  .profile-details h5 {
+    font-size: 1.8rem;
+  }
+
+  .profile-details p {
+    font-size: 1.6rem;
   }
 }
