@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import FooterBar from "./Pages/Common/Component/FooterBar";
 import LoginPage from "./Pages/LoginPage/LoginPage";
-import FooterBar from "./Pages/Common/FooterBar";
+import MainPage from "./Pages/MainPage/MainPage";
 
 function App() {
   useEffect(() => {
@@ -30,18 +31,29 @@ function App() {
         height: "100%",
         maxWidth: "767px",
         margin: "0 auto",
+        paddingBottom: "8vh",
         boxShadow:
           "0 4px 4px rgba(0,23,80,.01), 0 1px 6px rgba(0,23,80,.015), 0 8px 8px rgba(0,23,80,.012), 0 16px 16px rgba(0,23,80,.012), 8px 32px 32px rgba(0,23,80,.018), 8px 64px 64px rgba(0,23,80,.018)",
       }}
     >
-      <div className="display-body" style={{ height: "92vh" }}>
+      <div className="display-body" style={{ minHeight: "92vh" }}>
         <Router>
           <Routes>
             <Route path="/" element={<LoginPage />} />
+            <Route path="/main" element={<MainPage />} />
           </Routes>
         </Router>
       </div>
-      <div className="footerbar" style={{ height: "8vh" }}>
+      <div
+        className="footerbar"
+        style={{
+          height: "8vh",
+          width: "100%",
+          position: "fixed",
+          bottom: "0",
+          maxWidth: "767px",
+        }}
+      >
         {isLogin && <FooterBar />}
       </div>
     </div>

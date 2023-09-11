@@ -12,16 +12,18 @@ const LoginPage = () => {
   };
 
   return (
-    <Grid container justifyContent={"center"}>
-      <div>
-        <img
-          src={kakaoButton}
-          alt=""
-          onClick={handleKakaoButton}
-          style={{ cursor: "pointer" }}
-        />
-      </div>
-    </Grid>
+    <div className="white-pages">
+      <Grid container justifyContent={"center"}>
+        <div>
+          <img
+            src={kakaoButton}
+            alt=""
+            onClick={handleKakaoButton}
+            style={{ cursor: "pointer" }}
+          />
+        </div>
+      </Grid>
+    </div>
   );
 };
 
