@@ -31,15 +31,15 @@
 
 /* 기본 글자 크기를 조정 */
 .profile-details h5 {
-  font-size: 1.8rem; /* 원하는 크기로 조정하세요 */
+  font-size: 2.4rem; 
 }
 
 .profile-details p {
-  font-size: 1.4rem; /* 원하는 크기로 조정하세요 */
+  font-size: 2rem; 
 }
 
-/* 모바일 크기에 따라 크기 조정 */
-@media (max-width: 400px) {
+/* 모바일 크기에 맞게 크기 조정 */
+@media (max-width: 800px) {
   .profile-avatar {
     width: 35vw;
     height: 35vw;
