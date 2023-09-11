@@ -4,8 +4,6 @@ import {
   AccordionSummary, 
   AccordionDetails, 
   Typography, 
-  Avatar, 
-  Button 
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
@@ -41,36 +39,50 @@ const MyPage = () => {
               alignItems: "center",
             }}
           >
-          <Avatar 
+            <img 
             src={profile.image} 
-            alt="Profile Picture" 
+            alt="User's Profile" 
             className="profile-avatar" 
-          />
-          <Button
-              variant="contained"
-              component="label"
-              style={{ position: "absolute", bottom: "20px", right: "20px" }}
+            />
+
+            <label 
+              style={{ 
+                position: "absolute", 
+                bottom: "2px", 
+                right: "2px", 
+                cursor: "pointer"
+              }}
             >
-              <PhotoCameraIcon />
+              <PhotoCameraIcon 
+                style={{ 
+                  fontSize: 'small', 
+                  color: '#FFFFFF', 
+                  backgroundColor: '#00E1AB',
+                  padding: '8px',
+                  borderRadius: '50%'
+                }}
+              />
               <input
                 type="file"
                 hidden
                 accept="image/*"
                 onChange={handleImageUpload}
+                style={{ display: 'none' }}
               />
-          </Button>
+            </label>
         </div>
         <div className="profile-details">
             <Typography variant="h5">{profile.nickname}</Typography>
-            <Typography>Age: {profile.age}</Typography>
-            <Typography>Gender: {profile.gender}</Typography>
-            <Typography>Height: {profile.height} cm</Typography>
-            <Typography>Weight: {profile.weight} kg</Typography>
+            <br/>
+            <Typography>나이: {profile.age}</Typography>
+            <Typography>성별: {profile.gender}</Typography>
+            <Typography>키: {profile.height} cm</Typography>
+            <Typography>몸무게: {profile.weight} kg</Typography>
         </div>
       </div>
       <Accordion>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography>Nutrition Settings</Typography>
+          <Typography>나만의 영양소 설정</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
@@ -80,7 +92,7 @@ const MyPage = () => {
       </Accordion>
       <Accordion>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography>Edit Profile</Typography>
+          <Typography>회원정보 수정</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
@@ -90,7 +102,7 @@ const MyPage = () => {
       </Accordion>
       <Accordion>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography>Logout</Typography>
+          <Typography>로그아웃</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
