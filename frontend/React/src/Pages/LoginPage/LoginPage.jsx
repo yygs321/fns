@@ -1,5 +1,6 @@
 import React from "react";
 import kakaoButton from "../../assets/Image/kakao_login.svg";
+import { Grid } from "@mui/material";
 
 const LoginPage = () => {
   const REST_API_KEY = `${process.env.REACT_APP_KAKAO_REST_API_KEY}`;
@@ -11,14 +12,16 @@ const LoginPage = () => {
   };
 
   return (
-    <div>
-      <img
-        src={kakaoButton}
-        alt=""
-        onClick={handleKakaoButton}
-        style={{ cursor: "pointer" }}
-      />
-    </div>
+    <Grid container justifyContent={"center"}>
+      <div>
+        <img
+          src={kakaoButton}
+          alt=""
+          onClick={handleKakaoButton}
+          style={{ cursor: "pointer" }}
+        />
+      </div>
+    </Grid>
   );
 };
 
