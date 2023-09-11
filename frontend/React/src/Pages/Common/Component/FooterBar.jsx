@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 
@@ -7,10 +7,10 @@ import CalendarMonthRoundedIcon from "@mui/icons-material/CalendarMonthRounded";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import GroupsRoundedIcon from "@mui/icons-material/GroupsRounded";
 import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
-import "./FooterBar.css";
+import "../CSS/FooterBar.css";
 
 const FooterBar = () => {
-  const [value, setValue] = React.useState("home");
+  const [value, setValue] = useState("main");
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -23,23 +23,22 @@ const FooterBar = () => {
       // className="bottom-navbar"
       sx={{
         width: "100%",
-        position: "fixed",
-        bottom: "0",
         maxWidth: "767px",
+        height: "100%",
       }}
     >
       <BottomNavigationAction
-        label=""
-        value="home"
+        value="main"
+        sx={{ scale: "1.1" }}
         icon={
           <HomeRoundedIcon
-            className={value === "home" ? "selected-navbar-action" : ""}
+            className={value === "main" ? "selected-navbar-action" : ""}
           />
         }
       />
       <BottomNavigationAction
-        label=""
         value="calendar"
+        sx={{ scale: "1.1" }}
         icon={
           <CalendarMonthRoundedIcon
             className={value === "calendar" ? "selected-navbar-action" : ""}
@@ -47,8 +46,8 @@ const FooterBar = () => {
         }
       />
       <BottomNavigationAction
-        label=""
         value="search"
+        sx={{ scale: "1.1" }}
         icon={
           <SearchRoundedIcon
             className={value === "search" ? "selected-navbar-action" : ""}
@@ -56,8 +55,8 @@ const FooterBar = () => {
         }
       />
       <BottomNavigationAction
-        label=""
         value="community"
+        sx={{ scale: "1.1" }}
         icon={
           <GroupsRoundedIcon
             className={value === "community" ? "selected-navbar-action" : ""}
@@ -65,8 +64,8 @@ const FooterBar = () => {
         }
       />
       <BottomNavigationAction
-        label=""
         value="mypage"
+        sx={{ scale: "1.1" }}
         icon={
           <PersonRoundedIcon
             className={value === "mypage" ? "selected-navbar-action" : ""}
