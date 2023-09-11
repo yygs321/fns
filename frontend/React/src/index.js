@@ -5,10 +5,34 @@ import App from "./App";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
 
+import { createTheme } from "@mui/material";
+import { ThemeProvider } from "@emotion/react";
+
+import { Provider } from "react-redux";
+import { store, persistor } from "./Redux/store/store";
+import { PersistGate } from "redux-persist/integration/react";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#00E1AB", // 여기에 원하는 primary 색상을 지정합니다.
+    },
+  },
+  typography: {
+    fontFamily: "NanumSquareRound, sans-serif",
+  },
+});
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <ThemeProvider theme={theme}>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <App />
+        </PersistGate>
+      </Provider>
+    </ThemeProvider>
   </React.StrictMode>
 );
 
