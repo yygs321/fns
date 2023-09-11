@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LoginPage from "./Pages/LoginPage/LoginPage";
 import FooterBar from "./Pages/Common/FooterBar";
+import MyPage from "./Pages/MyPage/MyPage"
 
 function App() {
   useEffect(() => {
@@ -38,6 +39,7 @@ function App() {
         <Router>
           <Routes>
             <Route path="/" element={<LoginPage />} />
+            <Route path="/mypage" element={<MyPage />} />
           </Routes>
         </Router>
       </div>

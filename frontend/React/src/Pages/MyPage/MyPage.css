@@ -1,0 +1,21 @@
+.mypage-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.profile-section {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.profile-avatar {
+  width: 150px; /* 사진 크기 조절 */
+  height: 150px; /* 사진 크기 조절 */
+  margin-right: 20px;
+}
+
+.profile-details {
+  flex: 1;
+}
