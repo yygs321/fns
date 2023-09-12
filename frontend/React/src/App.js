@@ -49,7 +49,7 @@ function App() {
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/edit-profile" element={<EditProfilePage />} />
             <Route path="/mycustom" element={<MyCustom />} />
-            <Route path="/searchfoodpage" element={<SearchFoodPage />} />
+            <Route path="/search" element={<SearchFoodPage />} />
             
           </Routes>
         </div>
