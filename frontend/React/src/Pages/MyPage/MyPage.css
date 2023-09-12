@@ -1,0 +1,76 @@
+.mypage-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.mypage-container .MuiListItemIcon-root {
+  min-width: unset;
+}
+
+.profile-section {
+  display: flex;
+  flex-direction: row;   /* 가로 방향으로 요소를 배열합니다. */
+  align-items: center;     /* 요소를 중앙으로 정렬합니다. */
+  margin-bottom: 20px;
+  justify-content: center; /* 이미지와 프로필 정보를 가로 방향에서 중앙에 정렬합니다. */
+  width: 100%;
+  text-align: center;      /* 텍스트를 중앙으로 정렬합니다. */
+  font-family: "NanumSquareRound";
+}
+
+.profile-avatar {
+  object-fit: cover;
+  width: 15vw;
+  height: 15vw;
+  border-radius: 50%;
+  border: 0.1px solid rgb(230, 230, 230);
+  overflow: hidden;
+  margin-bottom: 15px;     /* 아바타와 텍스트 사이의 간격을 제공합니다. */
+  margin-right: 20px; /* 추가: 프로필 사진과 프로필 내용 사이의 간격을 조정 */
+}
+
+.profile-details {
+  flex: 1;
+}
+
+/* 기본 글자 크기를 조정 */
+.profile-details h5 {
+  font-size: 2.4rem; 
+}
+
+.profile-details p {
+  font-size: 2rem; 
+}
+
+/* 모바일 크기에 맞게 크기 조정 */
+@media (max-width: 500px) {
+  .profile-avatar {
+    width: 35vw;
+    height: 35vw;
+  }
+
+  .profile-details h5 {
+    font-size: 1.4rem;
+  }
+
+  .profile-details p {
+    font-size: 1.2rem;
+  }
+}
+
+ /* 중간 화면 크기 (예: 태블릿) */ 
+ @media (min-width: 500px) and (max-width: 799px) {
+  .profile-avatar {
+    width: 25vw;
+    height: 25vw;
+  }
+
+  .profile-details h5 {
+    font-size: 1.8rem;
+  }
+
+  .profile-details p {
+    font-size: 1.6rem;
+  }
+}
