@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Button, TextField, Typography, Modal, Box } from '@mui/material';
+import { Button, TextField, Typography, Modal, Box, Grid } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 const EditProfilePage = () => {
@@ -91,37 +91,37 @@ const EditProfilePage = () => {
                 </div>
             </div>
             <Modal
-                open={openModal}
-                onClose={() => setOpenModal(false)}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box
+            open={openModal}
+            onClose={() => setOpenModal(false)}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+>
+            <Grid container justifyContent="center">
+                <Grid item xs={6}> 
+                  <Box
                     style={{
-                        position: 'absolute',
-                        top: '50%',
-                        left: '50%',
-                        transform: 'translate(-50%, -50%)',
-                        width: '20vh',       
-                        height: 'auto',   
-                        backgroundColor: 'white',
-                        boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.5)', // 그림자 값을 조정
-                        border: '1px solid #ddd', 
-                        p: 4,
-                        textAlign: 'center',
-                        padding: '20px', 
-                    }}
-                >
+                    maxWidth: '400px', 
+                    backgroundColor: 'white',
+                    boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.5)',
+                    border: '1px solid #ddd', 
+                    p: 4,
+                    textAlign: 'center',
+                    padding: '20px', 
+                        }}
+                        >
                     <Typography id="modal-modal-title" variant="h6" component="h2">
                         저장되었습니다!
                     </Typography>
                     <Button style={{ marginTop: '12px' }} onClick={handleModalClose}>
                         확인
                     </Button>
-                </Box>
-            </Modal>
-        </div>
-    );
-};
+                    </Box>
+                </Grid>
+                </Grid>
+              </Modal>
+            </div>
+          );
+        };
 
 export default EditProfilePage;

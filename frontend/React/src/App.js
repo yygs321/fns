@@ -5,6 +5,7 @@ import LoginPage from "./Pages/LoginPage/LoginPage";
 import MyPage from "./Pages/MyPage/MyPage"
 import MainPage from "./Pages/MainPage/MainPage";
 import EditProfilePage from "./Pages/MyPage/EditProfilePage";
+import MyCustom from "./Pages/MyPage/MyCustom";
 
 function App() {
   useEffect(() => {
@@ -45,6 +46,7 @@ function App() {
             <Route path="/main" element={<MainPage />} />
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/edit-profile" element={<EditProfilePage />} />
+            <Route path="/mycustom" element={<MyCustom />} />
             
           </Routes>
         </Router>

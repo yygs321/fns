@@ -90,12 +90,12 @@ const MyPage = () => {
       <Divider />
 
      <List>
-        <ListItemButton>
+      <ListItemButton component={Link} to="/mycustom">
           <ListItemText primary="나만의 영양소 설정" />
-          <ListItemIcon>
+            <ListItemIcon>
             <ChevronRightIcon style={{ color: '#00E1AB' }}/>
           </ListItemIcon>
-        </ListItemButton>
+      </ListItemButton>
         <Divider />
         
         <ListItemButton onClick={() => setOpenNestedList(!openNestedList)}>
