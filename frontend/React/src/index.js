@@ -17,6 +17,9 @@ const theme = createTheme({
     primary: {
       main: "#00E1AB", // 여기에 원하는 primary 색상을 지정합니다.
     },
+    warning: {
+      main: "#FA6666",
+    },
   },
   typography: {
     fontFamily: "NanumSquareRound, sans-serif",
