@@ -33,8 +33,11 @@ public class Exercise extends BaseEntity {
 
     private LocalDateTime date;
 
+    private Long exerciseTime;
+
     @Builder
-    public Exercise(LocalDateTime date) {
+    public Exercise(LocalDateTime date, Long exerciseTime) {
         this.date = date;
+        this.exerciseTime = exerciseTime;
     }
 }

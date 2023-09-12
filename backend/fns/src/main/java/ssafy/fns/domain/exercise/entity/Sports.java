@@ -25,20 +25,16 @@ public class Sports extends BaseEntity {
 
     private String sportsName;
 
-    private Integer time;
-
-    private Integer kcal;
+    private Long met;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "exercise_id")
     private Exercise exercise;
 
     @Builder
-
-    public Sports(String sportsName, Integer time, Integer kcal, Exercise exercise) {
+    public Sports(String sportsName, Long met, Exercise exercise) {
         this.sportsName = sportsName;
-        this.time = time;
-        this.kcal = kcal;
+        this.met = met;
         this.exercise = exercise;
     }
 }
