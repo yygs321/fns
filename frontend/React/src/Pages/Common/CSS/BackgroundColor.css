@@ -1,0 +1,11 @@
+.gray-pages {
+  height: 100%;
+  width: 100%;
+  background-color: #e7e7e7;
+}
+
+.white-pages {
+  height: 100%;
+  width: 100%;
+  background-color: white;
+}

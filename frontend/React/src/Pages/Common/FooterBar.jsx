@@ -7,7 +7,7 @@ import CalendarMonthRoundedIcon from "@mui/icons-material/CalendarMonthRounded";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import GroupsRoundedIcon from "@mui/icons-material/GroupsRounded";
 import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
-import "./FooterBar.css";
+import "./CSS/FooterBar.css";
 
 const FooterBar = () => {
   const [value, setValue] = React.useState("home");

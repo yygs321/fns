@@ -34,7 +34,7 @@ function App() {
           "0 4px 4px rgba(0,23,80,.01), 0 1px 6px rgba(0,23,80,.015), 0 8px 8px rgba(0,23,80,.012), 0 16px 16px rgba(0,23,80,.012), 8px 32px 32px rgba(0,23,80,.018), 8px 64px 64px rgba(0,23,80,.018)",
       }}
     >
-      <div className="display-body" style={{ height: "92vh" }}>
+      <div className="display-body" style={{ minHeight: "92vh" }}>
         <Router>
           <Routes>
             <Route path="/" element={<LoginPage />} />
