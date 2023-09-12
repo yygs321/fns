@@ -36,7 +36,7 @@ const SearchFoodPage = () => {
 
       <Grid container direction="column" spacing={3}>
         <Grid item container alignItems="center" spacing={1}>
-          <Grid item xs={9}>
+          <Grid item xs={8}>
             <FormControl fullWidth>
               <InputLabel>Kcal</InputLabel>
               <Select value={kcal} onChange={(e) => setKcal(e.target.value)}>
@@ -52,7 +52,7 @@ const SearchFoodPage = () => {
         </Grid>
 
         <Grid item container alignItems="center" spacing={1}>
-          <Grid item xs={9}>
+          <Grid item xs={8}>
             <FormControl fullWidth>
               <InputLabel>탄수화물</InputLabel>
               <Select value={carbs} onChange={(e) => setCarbs(e.target.value)}>
@@ -68,7 +68,7 @@ const SearchFoodPage = () => {
         </Grid>
 
         <Grid item container alignItems="center" spacing={1}>
-          <Grid item xs={9}>
+          <Grid item xs={8}>
             <FormControl fullWidth>
               <InputLabel>단백질</InputLabel>
               <Select value={protein} onChange={(e) => setProtein(e.target.value)}>
@@ -84,7 +84,7 @@ const SearchFoodPage = () => {
         </Grid>
 
         <Grid item container alignItems="center" spacing={1}>
-          <Grid item xs={9}>
+          <Grid item xs={8}>
             <FormControl fullWidth>
               <InputLabel>지방</InputLabel>
               <Select value={fat} onChange={(e) => setFat(e.target.value)}>
