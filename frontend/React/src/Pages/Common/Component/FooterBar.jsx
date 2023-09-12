@@ -8,12 +8,15 @@ import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import GroupsRoundedIcon from "@mui/icons-material/GroupsRounded";
 import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
 import "../CSS/FooterBar.css";
+import { useNavigate } from "react-router-dom";
 
 const FooterBar = () => {
   const [value, setValue] = useState("main");
+  const navigate = useNavigate();
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    navigate(`${newValue}`);
   };
 
   return (
