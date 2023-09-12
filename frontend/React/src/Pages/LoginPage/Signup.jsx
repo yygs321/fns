@@ -6,6 +6,7 @@ import {useState} from 'react';
 
 const Signup = () => {
 
+    const [유효한닉네임, set유효한닉네임] = useState(false)
     const [중복체크, set중복체크] = useState(false)
     const [인증, set인증] = useState(false)
     const 중복체크버튼 = () => {
@@ -17,6 +18,19 @@ const Signup = () => {
     const [비밀번호, set비밀번호] = useState('');
     const [비밀번호확인, set비밀번호확인] = useState('');
     const [일치여부확인, set일치여부확인] = useState(true);
+    const [비번양식확인, set비번양식확인] = useState(true);
+
+    const 가입버튼 = () => {
+        // 비밀번호 양식 확인
+        const 비번체크결과 = 비번체크(비밀번호);
+        set비번양식확인(비번체크결과);
+    }
+
+    function 비번체크(password) {
+        const 비번조건 = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[~!@#$%^&*]).{8,16}$/;
+        return 비번조건.test(password);
+      }
+      
 
     const 비밀번호입력 = e => {
         set비밀번호(e.target.value)
@@ -27,9 +41,7 @@ const Signup = () => {
         set일치여부확인((e.target.value === 비밀번호) ? true : false);
     }
 
-    const 가입버튼 = () => {
-
-    }
+    
 
     return (
         <Container maxWidth="xs" component="main">
@@ -91,8 +103,8 @@ const Signup = () => {
             onChange={비밀번호입력}
             value={비밀번호}
             type="password"
-            error={!일치여부확인}
-            helperText={!일치여부확인 ? '비밀번호가 일치하지 않습니다' : ''}
+            error={!비번양식확인}
+            helperText={!비번양식확인 ? '비밀번호가 양식이 맞지 않습니다!' : ''}
             />
             </Grid>
             <FormControl className="글자" sx={{ml : 4, mt : 4}}>

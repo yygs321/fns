@@ -7,11 +7,7 @@ import CalendarMonthRoundedIcon from "@mui/icons-material/CalendarMonthRounded";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import GroupsRoundedIcon from "@mui/icons-material/GroupsRounded";
 import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
-<<<<<<< HEAD:frontend/React/src/Pages/Common/Component/FooterBar.jsx
 import "../CSS/FooterBar.css";
-=======
-import "./CSS/FooterBar.css";
->>>>>>> f4ffa5dd6c06dba9f8091e069b3c2cf862722452:frontend/React/src/Pages/Common/FooterBar.jsx
 
 const FooterBar = () => {
   const [value, setValue] = useState("main");
