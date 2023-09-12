@@ -6,6 +6,7 @@ import MyPage from "./Pages/MyPage/MyPage"
 import MainPage from "./Pages/MainPage/MainPage";
 import EditProfilePage from "./Pages/MyPage/EditProfilePage";
 import MyCustom from "./Pages/MyPage/MyCustom";
+import SearchFoodPage from "./Pages/SearchFoodPage/SearchFoodPage";
 
 function App() {
   useEffect(() => {
@@ -47,6 +48,7 @@ function App() {
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/edit-profile" element={<EditProfilePage />} />
             <Route path="/mycustom" element={<MyCustom />} />
+            <Route path="/searchfoodpage" element={<SearchFoodPage />} />
             
           </Routes>
         </Router>
