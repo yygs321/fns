@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ssafy.fns.domain.food.service.InvakeService;
+import ssafy.fns.domain.food.service.IntakeService;
 
 @RestController
 @RequiredArgsConstructor
@@ -14,6 +14,6 @@ import ssafy.fns.domain.food.service.InvakeService;
 @Slf4j
 public class FoodsController {
 
-    private final InvakeService invakeService;
+    private final IntakeService intakeService;
 
 }

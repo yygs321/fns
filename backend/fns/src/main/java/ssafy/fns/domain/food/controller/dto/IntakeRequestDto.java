@@ -7,9 +7,10 @@ import lombok.NoArgsConstructor;
 import ssafy.fns.domain.food.entity.Time;
 
 @Getter
-@NoArgsConstructor
 @AllArgsConstructor
-public class InvakeRequestDto {
+@NoArgsConstructor
+public class IntakeRequestDto {
+
     private Long intake_id;
     private Date date;
     private Long rate;
