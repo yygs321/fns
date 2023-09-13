@@ -36,8 +36,10 @@ const SportItem = ({ name, kcal, icon, onTimeChange, isEditMode, isChecked, onCh
         <input type="checkbox" checked={isChecked} onChange={() => onCheckChange(name)} />
       </Grid>
     )}
-    <Grid item xs={isEditMode ? 1 : 2}>{icon}</Grid>
-    <Grid item xs={6}>
+     <Grid item xs={isEditMode ? 1 : 2} onClick={isEditMode ? () => onCheckChange(name) : undefined} style={{ cursor: isEditMode ? 'pointer' : 'default' }}>
+      {icon}
+    </Grid>
+    <Grid item xs={6} onClick={isEditMode ? () => onCheckChange(name) : undefined} style={{ cursor: isEditMode ? 'pointer' : 'default' }}>
       <Typography>{name} 1시간 당 {kcal}cal소모</Typography>
     </Grid>
     {!isEditMode && (
@@ -88,22 +90,23 @@ const SportsPage = () => {
   }, 0);
 
     return  (
-      <div style={{ 
+      <div className='gray-pages' 
+      style={{ 
         height: '100vh', 
-        backgroundColor: '#f0f0f0', 
         display: 'flex', 
-        flexDirection: 'column', // 이 부분을 추가합니다.
+        flexDirection: 'column', 
         justifyContent: 'center', 
         alignItems: 'center', 
-        gap: '20px' // 박스들 사이의 간격을 조절합니다.
+        gap: '20px' 
       }}>
       
       {/* Box 1 */}
-      <div style={{ 
-          width: '80%', 
+      <div className="sports-box"
+        style={{ 
+          width: '90%', 
           backgroundColor: 'white', 
-          borderRadius: '10px', 
-          boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)', 
+          borderRadius: '30px', 
+          boxShadow: '2px 2px 4px #a5a5a5', 
           padding: '20px', 
           textAlign: 'center',
           boxSizing: 'border-box',
@@ -147,11 +150,12 @@ const SportsPage = () => {
       </div>
       
       {/* Box 2 */}
-          <div style={{ 
+          <div className="sports-box" 
+            style={{ 
               width: '80%', 
               backgroundColor: 'white', 
-              borderRadius: '10px', 
-              boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)', 
+              borderRadius: '30px', 
+              boxShadow: '2px 2px 4px #a5a5a5', 
               padding: '20px', 
               textAlign: 'center',
               boxSizing: 'border-box',

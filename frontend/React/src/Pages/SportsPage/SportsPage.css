@@ -1,0 +1,8 @@
+.sports-box::-webkit-scrollbar {
+  display: none;  /* Chrome and Safari */
+}
+
+.sports-box {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
