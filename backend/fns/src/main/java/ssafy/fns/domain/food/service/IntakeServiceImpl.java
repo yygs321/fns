@@ -7,6 +7,6 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class InvakeServiceImpl implements InvakeService {
+public class IntakeServiceImpl implements IntakeService {
 
 }
