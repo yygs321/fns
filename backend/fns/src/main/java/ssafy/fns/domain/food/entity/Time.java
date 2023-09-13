@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum Time {
 
-    MORNING("TIME_MORNING"), LUNCH("TIME_LUNCH"), DINNER("TIME_DINNER"), SNACK("TIME_SNACK");
+    MORNING("MORNING"), LUNCH("LUNCH"), DINNER("DINNER"), ETC("ETC");
 
     private final String key;
 
