@@ -1,14 +1,14 @@
 server:
   port: 8081
 
-  spring:
-    profiles:
-      include: secret
-      active: develop
+spring:
+  profiles:
+    include: secret
+    active: develop
 
-    mvc:
-      pathmatch:
-        matching-strategy: ant_path_matcher
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 
 ---
 
@@ -37,12 +37,3 @@ spring:
         show_sql: true
       logging.level:
         org.hibernate.SQL: debug
-
-  security:
-    oauth2:
-      client:
-        registration:
-          google:
-            redirect-uri: http://localhost:3000/oauth/google/callback
-          kakao:
-            redirect-uri: http://localhost:3000/oauth/kakao/callback

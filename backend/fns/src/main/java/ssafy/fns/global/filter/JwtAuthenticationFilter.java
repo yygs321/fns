@@ -1,7 +1,6 @@
 package ssafy.fns.global.filter;
 
 import java.io.IOException;
-import java.util.Arrays;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -11,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
 import ssafy.fns.global.exception.GlobalRuntimeException;
 import ssafy.fns.global.security.JwtTokenProvider;
@@ -41,14 +39,12 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
             //유효성 체크 실패
             throw new GlobalRuntimeException("유효하지 않은 액세스토큰입니다.", HttpStatus.FORBIDDEN);
         }
-        
-        //TODO:Member 만들어지면 주석 해제
 
-//        Authentication authentication = jwtTokenProvider.getAuthentication(token);
-//
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
-//
-//        chain.doFilter(request, response);
+        Authentication authentication = jwtTokenProvider.getAuthentication(token);
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        chain.doFilter(request, response);
 
     }
 }
