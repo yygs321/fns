@@ -1,14 +1,13 @@
-package ssafy.fns.domain.food.entity;
+package ssafy.fns.domain.member.entity;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import ssafy.fns.global.entity.BaseEntity;
@@ -16,15 +15,12 @@ import ssafy.fns.global.entity.BaseEntity;
 @Entity
 @Getter
 @NoArgsConstructor
-public class Food extends BaseEntity {
+public class Base extends BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "food_id")
+    @Column(name = "base_id")
     private Long id;
-
-    private String name;
-
-    private Long volume;
 
     private Long kcal;
 
@@ -60,7 +56,7 @@ public class Food extends BaseEntity {
 
     private Long trans_fat;
 
-    @OneToMany(mappedBy = "food", fetch = FetchType.LAZY)
-    private List<Intake> intakeList = new ArraList<>();
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
 }
