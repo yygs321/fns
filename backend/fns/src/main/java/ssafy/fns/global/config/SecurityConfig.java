@@ -17,6 +17,39 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    private final JwtTokenProvider jwtTokenProvider;
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.csrf().disable(); //csrf disable
+
+        http
+                .cors()
+                .and()
+                .authorizeRequests()
+                .anyRequest().authenticated()
+                .and()
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+
+        http.formLogin()
+                .disable();
+
+
+        return http.build();
+    }
+
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return web -> {
+            web.ignoring()
+                    .antMatchers(
+                            "/api/members/sign-up",
+                            "/api/auth/**",
+                            "/error",
+                            "/api/bookclubs/start"
+                    );
+        };
+    }
 
 
 }
