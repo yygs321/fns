@@ -2,10 +2,11 @@ import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import FooterBar from "./Pages/Common/Component/FooterBar";
 import LoginPage from "./Pages/LoginPage/LoginPage";
-import MyPage from "./Pages/MyPage/MyPage"
+import MyPage from "./Pages/MyPage/MyPage";
 import MainPage from "./Pages/MainPage/MainPage";
 import EditProfilePage from "./Pages/MyPage/EditProfilePage";
 import MyCustom from "./Pages/MyPage/MyCustom";
+import DietPage from "./Pages/DietPage/DietPage";
 import SearchFoodPage from "./Pages/SearchFoodPage/SearchFoodPage";
 
 function App() {
@@ -46,11 +47,11 @@ function App() {
           <Routes>
             <Route path="/" element={<LoginPage />} />
             <Route path="/main" element={<MainPage />} />
+            <Route path="/diet" element={<DietPage />} />
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/edit-profile" element={<EditProfilePage />} />
             <Route path="/mycustom" element={<MyCustom />} />
             <Route path="/search" element={<SearchFoodPage />} />
-            
           </Routes>
         </div>
 
