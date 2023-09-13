@@ -29,28 +29,38 @@ const sportsData = [
     { name: '골프', kcal: 500, icon: <SportsGolfIcon fontSize="large" /> }
 ];
 
-const SportItem = ({ name, kcal, icon, onTimeChange }) => (
+const SportItem = ({ name, kcal, icon, onTimeChange, isEditMode, isChecked, onCheckChange }) => (
   <Grid container alignItems="center" spacing={3}>
-    <Grid item xs={2}>
-    {icon}
-    </Grid>
+    {isEditMode && (
+      <Grid item xs={1} style={{ position: 'relative', zIndex: 2 }}>
+        <input type="checkbox" checked={isChecked} onChange={() => onCheckChange(name)} />
+      </Grid>
+    )}
+    <Grid item xs={isEditMode ? 1 : 2}>{icon}</Grid>
     <Grid item xs={6}>
       <Typography>{name} 1시간 당 {kcal}cal소모</Typography>
     </Grid>
-    <Grid item xs={4}>
-      <TextField
-        fullWidth
-        type="number"
-        label="시간"
-        onChange={(e) => onTimeChange(name, parseInt(e.target.value))}
-      />
-    </Grid>
+    {!isEditMode && (
+      <Grid item xs={4}>
+        <TextField
+          fullWidth
+          type="number"
+          label="시간"
+          onChange={(e) => onTimeChange(name, parseInt(e.target.value))}
+        />
+      </Grid>
+    )}
   </Grid>
 );
 
 const SportsPage = () => {
   const [times, setTimes] = useState({});
-
+  const [isEditMode, setEditMode] = useState(false);
+  const [checkedSports, setCheckedSports] = useState(sportsData.reduce((acc, sport) => ({
+    ...acc,
+    [sport.name]: true
+  }), {}));
+  
   const handleTimeChange = (name, time) => {
     setTimes((prevTimes) => ({
       ...prevTimes,
@@ -58,6 +68,19 @@ const SportsPage = () => {
     }));
   };
 
+  const handleCheckChange = (name) => {
+    setCheckedSports((prevChecked) => ({
+      ...prevChecked,
+      [name]: !prevChecked[name]
+    }));
+  };
+
+  const handleSave = () => {
+    setEditMode(false);
+  };
+
+  const filteredSports = sportsData.filter(sport => checkedSports[sport.name]);
+  const renderSports = isEditMode ? sportsData : filteredSports;
   const totalHours = Object.values(times).reduce((acc, val) => acc + val, 0);
   const totalCalories = Object.entries(times).reduce((acc, [name, time]) => {
     const kcal = sportsData.find(sport => sport.name === name)?.kcal || 0;
@@ -88,31 +111,51 @@ const SportsPage = () => {
           marginBottom: '20px',
           overflowY: 'auto'
       }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <Typography variant="h4">운동 시간</Typography>
-              <SettingsIcon />
-          </div>
-          {sportsData.map((sport) => (
-              <SportItem 
+      <div style={{ 
+          display: 'flex', 
+          justifyContent: 'center', 
+          alignItems: 'center',     
+          width: '100%',           
+          position: 'relative'     
+      }}>
+    <Typography variant="h4">운동 시간</Typography>
+    <SettingsIcon  
+        onClick={() => setEditMode(!isEditMode)}
+        style={{ 
+           position: 'absolute', 
+           right: 0,             
+          top: '50%',           
+          transform: 'translateY(-50%)'  
+        }} />
+      </div>
+          {renderSports.map((sport) => (
+            <SportItem 
               key={sport.name} 
               name={sport.name} 
               kcal={sport.kcal} 
               icon={sport.icon}  
               onTimeChange={handleTimeChange} 
+              isEditMode={isEditMode}
+              isChecked={checkedSports[sport.name]}
+              onCheckChange={handleCheckChange}
           />
           ))}
+
+        {isEditMode && (
+            <Button onClick={handleSave}>저장</Button>
+    )}
       </div>
       
       {/* Box 2 */}
-      <div style={{ 
-          width: '80%', 
-          backgroundColor: 'white', 
-          borderRadius: '10px', 
-          boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)', 
-          padding: '20px', 
-          textAlign: 'center',
-          boxSizing: 'border-box',
-          maxHeight: '80vh'
+          <div style={{ 
+              width: '80%', 
+              backgroundColor: 'white', 
+              borderRadius: '10px', 
+              boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)', 
+              padding: '20px', 
+              textAlign: 'center',
+              boxSizing: 'border-box',
+              maxHeight: '80vh'
       }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '20px' }}>
               <Typography variant="h6">

@@ -43,7 +43,7 @@ const MainPage = () => {
   const today = now.toLocaleDateString("ko-KR", options).split(" ");
 
   const maxKcal = 2400;
-  const nowKcal = 2000;
+  const nowKcal = 2800;
 
   useEffect(() => {
     let targetValue = 0;
@@ -302,7 +302,7 @@ const MainPage = () => {
                       fontSize={"2rem"}
                       fontWeight={"bold"}
                     >
-                      Kcal
+                      kcal
                     </Typography>
                   </Grid>
                 </Grid>
@@ -377,17 +377,23 @@ const MainPage = () => {
                 </Grid>
                 <hr style={{ width: "80vw", maxWidth: "650px" }} />
                 <Grid item container xs={12} justifyContent={"center"}>
-                  <Typography sx={{ color: "text.secondary" }}>
-                    여기다 메뉴 요약
-                  </Typography>
+                  {!isAccordionSelected ? (
+                    <Typography sx={{ color: "text.secondary" }}>
+                      여기다 메뉴 요약
+                    </Typography>
+                  ) : (
+                    <Typography sx={{ color: "text.secondary" }}>
+                      펼쳐진 메뉴
+                    </Typography>
+                  )}
                 </Grid>
               </Grid>
             </AccordionSummary>
-            <AccordionDetails>
+            {/* <AccordionDetails>
               <Grid item container justifyContent={"center"}>
                 <Typography>참치 캔</Typography>
               </Grid>
-            </AccordionDetails>
+            </AccordionDetails> */}
           </Accordion>
         </Grid>
       </Grid>
