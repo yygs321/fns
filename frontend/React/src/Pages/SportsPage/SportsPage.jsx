@@ -13,7 +13,11 @@ import SportsBaseballIcon from '@mui/icons-material/SportsBaseball';
 import SportsTennisIcon from '@mui/icons-material/SportsTennis';
 import SportsVolleyballIcon from '@mui/icons-material/SportsVolleyball';
 import SportsGolfIcon from '@mui/icons-material/SportsGolf';
-
+// 페이지 들어올 때 서버에 요청해서 저장된 내용 불러옴
+const handleSaveData = () => {
+  // 여기에 나중에 API 연결 코드를 작성하면 됩니다.
+  console.log("데이터가 저장되었습니다."); // 임시 메시지
+};
 const sportsData = [
     { name: '조깅', kcal: 500, icon: <DirectionsRunIcon fontSize="large" /> },
     { name: '사이클', kcal: 500, icon: <DirectionsBikeIcon fontSize="large" /> },
@@ -36,10 +40,18 @@ const SportItem = ({ name, kcal, icon, onTimeChange, isEditMode, isChecked, onCh
         <input type="checkbox" checked={isChecked} onChange={() => onCheckChange(name)} />
       </Grid>
     )}
-     <Grid item xs={isEditMode ? 1 : 2} onClick={isEditMode ? () => onCheckChange(name) : undefined} style={{ cursor: isEditMode ? 'pointer' : 'default' }}>
-      {icon}
-    </Grid>
-    <Grid item xs={6} onClick={isEditMode ? () => onCheckChange(name) : undefined} style={{ cursor: isEditMode ? 'pointer' : 'default' }}>
+     <Grid 
+    item xs={isEditMode ? 1 : 2} 
+    style={{ cursor: isEditMode ? 'pointer' : 'default', marginRight: isEditMode ? '30px' : '0' }}
+    onClick={isEditMode ? () => onCheckChange(name) : undefined}
+>
+  {icon}
+</Grid>
+    <Grid 
+      item xs={6}  
+      style={{ cursor: isEditMode ? 'pointer' : 'default' }}
+      onClick={isEditMode ? () => onCheckChange(name) : undefined}
+    >
       <Typography>{name} 1시간 당 {kcal}cal소모</Typography>
     </Grid>
     {!isEditMode && (
@@ -101,7 +113,7 @@ const SportsPage = () => {
       }}>
       
       {/* Box 1 */}
-      <div className="sports-box"
+      <div
         style={{ 
           width: '90%', 
           backgroundColor: 'white', 
@@ -150,9 +162,9 @@ const SportsPage = () => {
       </div>
       
       {/* Box 2 */}
-          <div className="sports-box" 
+          <div 
             style={{ 
-              width: '80%', 
+              width: '90%', 
               backgroundColor: 'white', 
               borderRadius: '30px', 
               boxShadow: '2px 2px 4px #a5a5a5', 
@@ -169,6 +181,7 @@ const SportsPage = () => {
                   총 소모 칼로리: {totalCalories}cal
               </Typography>
           </div>
+          <Button onClick={handleSaveData} style={{ marginTop: '20px' }}>저장</Button>
       </div>
       
     </div>
