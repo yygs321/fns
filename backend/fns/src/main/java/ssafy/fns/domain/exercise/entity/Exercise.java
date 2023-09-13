@@ -12,10 +12,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import ssafy.fns.domain.member.entity.Member;
 import ssafy.fns.global.entity.BaseEntity;
 
 @Entity
@@ -28,15 +28,22 @@ public class Exercise extends BaseEntity {
     @Column(name="exercise_id")
     private Long id;
 
-    @OneToMany(mappedBy = "sports", fetch = FetchType.LAZY)
-    private List<Sports> sportsList= new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "sports_id")
+    private Sports sports;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     private LocalDateTime date;
 
     private Long exerciseTime;
 
     @Builder
-    public Exercise(LocalDateTime date, Long exerciseTime) {
+    public Exercise(Sports sports, Member member, LocalDateTime date, Long exerciseTime) {
+        this.sports = sports;
+        this.member = member;
         this.date = date;
         this.exerciseTime = exerciseTime;
     }
