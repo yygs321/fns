@@ -8,7 +8,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import ssafy.fns.global.entity.BaseEntity;
@@ -16,10 +15,10 @@ import ssafy.fns.global.entity.BaseEntity;
 @Entity
 @Getter
 @NoArgsConstructor
-public class Foods extends BaseEntity {
+public class Food extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="foods_id")
+    @Column(name="food_id")
     private Long id;
 
     private String name;

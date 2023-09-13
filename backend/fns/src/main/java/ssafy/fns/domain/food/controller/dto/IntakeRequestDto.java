@@ -9,7 +9,7 @@ import ssafy.fns.domain.food.entity.Time;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class InvakeRequestDto {
+public class IntakeRequestDto {
     private Long intake_id;
     private Date date;
     private Long rate;

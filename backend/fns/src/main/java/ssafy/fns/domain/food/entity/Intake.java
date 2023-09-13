@@ -12,6 +12,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,7 +27,7 @@ import ssafy.fns.global.entity.BaseEntity;
 public class Intake extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="invake_id")
+    @Column(name = "intake_id")
     private Long id;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -35,4 +37,9 @@ public class Intake extends BaseEntity {
     private Time intatke_time;
 
     private Long rate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "food_id")
+    private Food food;
+
 }

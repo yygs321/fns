@@ -10,6 +10,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class InvakeResponseDto {
+public class IntakeForMainResponseDto {
+    private int kcal;
 
+    private Long carbs;
+
+    private Long protein;
+
+    private Long fat;
 }
