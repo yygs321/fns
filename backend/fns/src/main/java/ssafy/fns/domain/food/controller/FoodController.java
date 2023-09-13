@@ -12,7 +12,7 @@ import ssafy.fns.domain.food.service.IntakeService;
 @RequestMapping(value = "/api/food")
 @CrossOrigin("*")
 @Slf4j
-public class FoodsController {
+public class FoodController {
 
     private final IntakeService intakeService;
 

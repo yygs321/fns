@@ -14,5 +14,5 @@ public class IntakeRequestDto {
     private Long intake_id;
     private Date date;
     private Long rate;
-    private Time invake_time;
+    private Time intake_time;
 }

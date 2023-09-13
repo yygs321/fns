@@ -1,14 +1,14 @@
 package ssafy.fns.domain.food.entity;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import lombok.Builder;
+import javax.persistence.OneToMany;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import ssafy.fns.global.entity.BaseEntity;
@@ -16,10 +16,11 @@ import ssafy.fns.global.entity.BaseEntity;
 @Entity
 @Getter
 @NoArgsConstructor
-public class Foods extends BaseEntity {
+public class Food extends BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="foods_id")
+    @Column(name = "food_id")
     private Long id;
 
     private String name;
@@ -60,8 +61,7 @@ public class Foods extends BaseEntity {
 
     private Long trans_fat;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "intake_id")
-    private Intake intake;
+    @OneToMany(mappedBy = "food", fetch = FetchType.LAZY)
+    private List<Intake> intakeList = new ArrayList<>();
 
 }
