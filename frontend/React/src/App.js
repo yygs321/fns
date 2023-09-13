@@ -9,7 +9,6 @@ import MyCustom from "./Pages/MyPage/MyCustom";
 import DietPage from "./Pages/DietPage/DietPage";
 import SearchFoodPage from "./Pages/SearchFoodPage/SearchFoodPage";
 import SportsPage from "./Pages/SportsPage/SportsPage";
-import CheckBoxTestPage from "./Pages/SportsPage/TestPage";
 
 function App() {
   useEffect(() => {
@@ -55,7 +54,7 @@ function App() {
             <Route path="/mycustom" element={<MyCustom />} />
             <Route path="/search" element={<SearchFoodPage />} />
             <Route path="/sports" element={<SportsPage />} />
-            <Route path="/test" element={<CheckBoxTestPage />} />
+            
           </Routes>
         </div>
 
