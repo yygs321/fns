@@ -7,16 +7,23 @@ import FlatwareRoundedIcon from "@mui/icons-material/FlatwareRounded";
 import FitnessCenterRoundedIcon from "@mui/icons-material/FitnessCenterRounded";
 import MonitorWeightRoundedIcon from "@mui/icons-material/MonitorWeightRounded";
 import { useMediaQuery, useTheme } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const actions = [
-  { icon: <FlatwareRoundedIcon />, name: "eat" },
-  { icon: <FitnessCenterRoundedIcon />, name: "fit" },
-  { icon: <MonitorWeightRoundedIcon />, name: "weight" },
+  { icon: <FlatwareRoundedIcon />, name: "diet", text: "식단 입력" },
+  { icon: <FitnessCenterRoundedIcon />, name: "fit", text: "운동 입력" },
+  { icon: <MonitorWeightRoundedIcon />, name: "weight", text: "체중 입력" },
 ];
 
 export default function FloatingInputButton() {
   const [dialOpen, setDialOpen] = React.useState(false);
+
+  const navigate = useNavigate();
+
   const handleDialButton = () => setDialOpen(!dialOpen);
+  const handleDialAction = (name) => {
+    navigate(`/${name}`);
+  };
 
   const theme = useTheme();
   const isSmallScreen = useMediaQuery("(max-width: 768px)");
@@ -51,10 +58,23 @@ export default function FloatingInputButton() {
       >
         {actions.map((action) => (
           <SpeedDialAction
-            key={action.name}
+            key={`dial-${action.name}`}
             icon={action.icon}
-            tooltipTitle={action.name}
-            onClick={handleDialButton}
+            tooltipTitle={action.text}
+            componentsProps={{
+              tooltip: {
+                sx: {
+                  backgroundColor: "rgba(50, 50, 50, 95%)",
+                  boxShadow: "2px 2px 4px #a5a5a5",
+                  border: "0.5px solid #a5a5a5",
+                  borderRadius: "10px",
+                  textShadow: "2px 2px 40px white",
+                  fontSize: "0.9rem",
+                  padding: "0.6rem",
+                },
+              },
+            }}
+            onClick={() => handleDialAction(action.name)}
             sx={{
               backgroundColor: theme.palette.primary.main,
               "&:hover": {

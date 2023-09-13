@@ -3,7 +3,9 @@
   min-height: 92vh;
   width: 100%;
   background-color: #e7e7e7;
-  box-shadow: "0 4px 4px rgba(0,23,80,.01), 0 1px 6px rgba(0,23,80,.015), 0 8px 8px rgba(0,23,80,.012), 0 16px 16px rgba(0,23,80,.012), 8px 32px 32px rgba(0,23,80,.018), 8px 64px 64px rgba(0,23,80,.018)";
+  /* box-shadow: 0 4px 4px rgba(0, 23, 80, 0.01), 0 1px 6px rgba(0, 23, 80, 0.015),
+    0 8px 8px rgba(0, 23, 80, 0.012), 0 16px 16px rgba(0, 23, 80, 0.012),
+    8px 32px 32px rgba(0, 23, 80, 0.018), 8px 64px 64px rgba(0, 23, 80, 0.018); */
   -ms-overflow-style: none; /* 인터넷 익스플로러 */
   scrollbar-width: none; /* 파이어폭스 */
 }
@@ -18,12 +20,23 @@
   min-height: 92vh;
   width: 100%;
   background-color: white;
-  box-shadow: "0 4px 4px rgba(0,23,80,.01), 0 1px 6px rgba(0,23,80,.015), 0 8px 8px rgba(0,23,80,.012), 0 16px 16px rgba(0,23,80,.012), 8px 32px 32px rgba(0,23,80,.018), 8px 64px 64px rgba(0,23,80,.018)";
+  /* box-shadow: 0 4px 4px rgba(0, 23, 80, 0.01), 0 1px 6px rgba(0, 23, 80, 0.015),
+    0 8px 8px rgba(0, 23, 80, 0.012), 0 16px 16px rgba(0, 23, 80, 0.012),
+    8px 32px 32px rgba(0, 23, 80, 0.018), 8px 64px 64px rgba(0, 23, 80, 0.018); */
   -ms-overflow-style: none; /* 인터넷 익스플로러 */
   scrollbar-width: none; /* 파이어폭스 */
 }
 
 /* ( 크롬, 사파리, 오페라, 엣지 ) 스크롤 숨기기 */
 .white-pages::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  -ms-overflow-style: none; /* 인터넷 익스플로러 */
+  scrollbar-width: none; /* 파이어폭스 */
+}
+
+body::-webkit-scrollbar {
   display: none;
 }
