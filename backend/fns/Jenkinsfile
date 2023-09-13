@@ -20,7 +20,7 @@ pipeline{
             steps {
                 git url: 'https://lab.ssafy.com/s09-bigdata-recom-sub2/S09P22A403.git',
                     branch: 'be/develop',
-                    credentialsId: '66274b16-fdd8-42d7-83ff-4a11f5c34e8b'
+                    credentialsId: 'a432e361-21de-400a-a3c2-8f8860f53b7f'
             }
         }
 
