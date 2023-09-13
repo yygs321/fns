@@ -1,26 +1,38 @@
 import React, { useState } from 'react';
 import { Typography, Button, Grid, TextField } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
+import DirectionsRunIcon from '@mui/icons-material/DirectionsRun'; 
+import DirectionsBikeIcon from '@mui/icons-material/DirectionsBike'; 
+import HikingIcon from '@mui/icons-material/Hiking'; 
+import PoolIcon from '@mui/icons-material/Pool';
+import AccessibilityNewIcon from '@mui/icons-material/AccessibilityNew'; //줄넘기 이 아이콘으로 대체
+import StairsIcon from '@mui/icons-material/Stairs';
+import SelfImprovementIcon from '@mui/icons-material/SelfImprovement';
+import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
+import SportsBaseballIcon from '@mui/icons-material/SportsBaseball';
+import SportsTennisIcon from '@mui/icons-material/SportsTennis';
+import SportsVolleyballIcon from '@mui/icons-material/SportsVolleyball';
+import SportsGolfIcon from '@mui/icons-material/SportsGolf';
 
 const sportsData = [
-    { name: '조깅', kcal: 500 },
-    { name: '사이클', kcal: 500 },
-    { name: '등산', kcal: 500 },
-    { name: '수영', kcal: 500 },
-    { name: '줄넘기', kcal: 500 },
-    { name: '계단 오르기', kcal: 500 },
-    { name: '요가', kcal: 500 },
-    { name: '축구', kcal: 500 },
-    { name: '야구', kcal: 500 },
-    { name: '테니스', kcal: 500 },
-    { name: '배구', kcal: 500 },
-    { name: '골프', kcal: 500 }
+    { name: '조깅', kcal: 500, icon: <DirectionsRunIcon fontSize="large" /> },
+    { name: '사이클', kcal: 500, icon: <DirectionsBikeIcon fontSize="large" /> },
+    { name: '등산', kcal: 500, icon: <HikingIcon fontSize="large" /> },
+    { name: '수영', kcal: 500, icon: <PoolIcon fontSize="large" /> },
+    { name: '줄넘기', kcal: 500, icon: <AccessibilityNewIcon fontSize="large" /> },
+    { name: '계단 오르기', kcal: 500, icon: <StairsIcon fontSize="large" /> },
+    { name: '요가', kcal: 500, icon: <SelfImprovementIcon fontSize="large" /> },
+    { name: '축구', kcal: 500, icon: <SportsSoccerIcon fontSize="large" /> },
+    { name: '야구', kcal: 500, icon: <SportsBaseballIcon fontSize="large" /> },
+    { name: '테니스', kcal: 500, icon: <SportsTennisIcon fontSize="large" /> },
+    { name: '배구', kcal: 500, icon: <SportsVolleyballIcon fontSize="large" /> },
+    { name: '골프', kcal: 500, icon: <SportsGolfIcon fontSize="large" /> }
 ];
 
-const SportItem = ({ name, kcal, onTimeChange }) => (
-  <Grid container alignItems="center" spacing={2}>
+const SportItem = ({ name, kcal, icon, onTimeChange }) => (
+  <Grid container alignItems="center" spacing={3}>
     <Grid item xs={2}>
-      <Typography>{name}</Typography>
+    {icon}
     </Grid>
     <Grid item xs={6}>
       <Typography>{name} 1시간 당 {kcal}cal소모</Typography>
@@ -81,7 +93,13 @@ const SportsPage = () => {
               <SettingsIcon />
           </div>
           {sportsData.map((sport) => (
-              <SportItem key={sport.name} name={sport.name} kcal={sport.kcal} onTimeChange={handleTimeChange} />
+              <SportItem 
+              key={sport.name} 
+              name={sport.name} 
+              kcal={sport.kcal} 
+              icon={sport.icon}  
+              onTimeChange={handleTimeChange} 
+          />
           ))}
       </div>
       
