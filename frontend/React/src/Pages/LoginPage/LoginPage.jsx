@@ -8,7 +8,7 @@ import {
 import {
   VisibilityOff, Visibility 
 } from "@mui/icons-material";
-import "./LoginPage.css";
+import "./CSS/LoginPage.css";
 import "../Common/CSS/BackgroundColor.css";
 
 const LoginPage = () => {

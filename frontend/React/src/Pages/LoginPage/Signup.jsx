@@ -1,7 +1,6 @@
 import React from 'react';
 import {Grid, Container, FormControl, Box, TextField, Button} from '@mui/material';
-import './Signup.scss';
-import { Form } from 'react-router-dom';
+import './CSS/Signup.scss';
 import {useState} from 'react';
 
 const Signup = () => {
