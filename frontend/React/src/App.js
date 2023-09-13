@@ -2,12 +2,14 @@ import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import FooterBar from "./Pages/Common/Component/FooterBar";
 import LoginPage from "./Pages/LoginPage/LoginPage";
-import MyPage from "./Pages/MyPage/MyPage"
+import MyPage from "./Pages/MyPage/MyPage";
 import MainPage from "./Pages/MainPage/MainPage";
 import EditProfilePage from "./Pages/MyPage/EditProfilePage";
 import MyCustom from "./Pages/MyPage/MyCustom";
 import Signup from "./Pages/LoginPage/Signup";
 import Info from "./Pages/LoginPage/InfoPage";
+import DietPage from "./Pages/DietPage/DietPage";
+import SearchFoodPage from "./Pages/SearchFoodPage/SearchFoodPage";
 
 function App() {
   useEffect(() => {
@@ -33,7 +35,8 @@ function App() {
       className="service-display"
       style={{
         width: "100%",
-        height: "100%",
+        // height: "100%",
+        minHeight: "92vh",
         maxWidth: "767px",
         margin: "0 auto",
         paddingBottom: "8vh",
@@ -41,32 +44,34 @@ function App() {
           "0 4px 4px rgba(0,23,80,.01), 0 1px 6px rgba(0,23,80,.015), 0 8px 8px rgba(0,23,80,.012), 0 16px 16px rgba(0,23,80,.012), 8px 32px 32px rgba(0,23,80,.018), 8px 64px 64px rgba(0,23,80,.018)",
       }}
     >
-      <div className="display-body" style={{ minHeight: "92vh" }}>
-        <Router>
+      <Router>
+        <div className="display-body" style={{ minHeight: "92vh" }}>
           <Routes>
             <Route path="/" element={<LoginPage />} />
             <Route path="/info" element={<Info />} />
             <Route path="/signup" element={<Signup/>}/>
             <Route path="/main" element={<MainPage />} />
+            <Route path="/diet" element={<DietPage />} />
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/edit-profile" element={<EditProfilePage />} />
             <Route path="/mycustom" element={<MyCustom />} />
-            
+            <Route path="/search" element={<SearchFoodPage />} />
           </Routes>
-        </Router>
-      </div>
-      <div
-        className="footerbar"
-        style={{
-          height: "8vh",
-          width: "100%",
-          position: "fixed",
-          bottom: "0",
-          maxWidth: "767px",
-        }}
-      >
-        {isLogin && <FooterBar />}
-      </div>
+        </div>
+
+        <div
+          className="footerbar"
+          style={{
+            height: "8vh",
+            width: "100%",
+            position: "fixed",
+            bottom: "0",
+            maxWidth: "767px",
+          }}
+        >
+          {isLogin && <FooterBar />}
+        </div>
+      </Router>
     </div>
   );
 }
