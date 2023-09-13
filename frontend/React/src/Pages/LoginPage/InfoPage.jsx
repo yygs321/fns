@@ -6,11 +6,19 @@ import {
   Box,
   TextField,
   Button,
+  Checkbox,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
 } from "@mui/material";
 import "./CSS/InfoPage.scss";
 import { useState } from "react";
 import ManRoundedIcon from '@mui/icons-material/ManRounded';
 import WomanRoundedIcon from '@mui/icons-material/WomanRounded';
+import LoginPage from "./LoginPage";
+import {Link} from 'react-router-dom';
+
+
 function 닉네임확인함수(nickname) {
   const regex = /^[a-zA-Z0-9가-힣]{2,16}$/;
   return regex.test(nickname);
@@ -19,13 +27,14 @@ function 닉네임확인함수(nickname) {
 const InfoPage = () => {
   const [닉네임, set닉네임] = useState("");
   const [닉네임확인, set닉네임확인] = useState(true);
+  const [프로필공개여부, set프로필공개여부] = useState(true);
   const [성별, set성별] = useState('');
   const 닉네임입력 = (e) => {
     set닉네임(e.target.value);
   };
 
   const 저장버튼 = () => {
-    const 닉네임확인결과 = 닉네임확인(닉네임);
+    const 닉네임확인결과 = 닉네임확인함수(닉네임);
     set닉네임확인(닉네임확인결과);
   };
 
@@ -35,6 +44,12 @@ const InfoPage = () => {
   const 여성버튼 = () => {
     set성별(name => '여성');
   }
+  const 체크박스 = e => {
+    set프로필공개여부(e.target.value);
+  }
+  const labelStyle = {
+    whiteSpace: 'nowrap'
+  };
 
   return (
     <Container maxWidth="xs" componenet="main">
@@ -99,8 +114,25 @@ const InfoPage = () => {
             />
             <Grid sx={{ml : 2}}>{성별}</Grid>
         </Grid>
-        <Button sx={{mt : 8}} className="저장버튼" fullWidth variant="contained">
-            저장
+
+        <Grid container sx={{mt : 8, ml : 2, mr : 2}}>
+          <RadioGroup
+          row
+          value={프로필공개여부}
+          onChange={체크박스}
+          >
+          <Grid xs={6}>
+            <FormControlLabel value="프로필공개" control={<Radio/>} label="프로필공개"/>
+          </Grid>
+          <Grid xs={6}>
+            <FormControlLabel value="프로필비공개" control={<Radio/>} label="프로필비공개" sx={labelStyle}/>
+          </Grid>
+          </RadioGroup>
+          <span>{프로필공개여부}</span>
+        </Grid>
+
+        <Button sx={{mt : 8}} className="저장버튼" fullWidth variant="contained" onClick={저장버튼}>
+          <Link to='/' style={{textDecoration : 'none'}} element={LoginPage}>저장</Link>
         </Button>
     </Container>
   );

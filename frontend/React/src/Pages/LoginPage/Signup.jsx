@@ -2,6 +2,8 @@ import React from 'react';
 import {Grid, Container, FormControl, Box, TextField, Button} from '@mui/material';
 import './CSS/Signup.scss';
 import {useState} from 'react';
+import { Link } from 'react-router-dom';
+import Info from "./InfoPage";
 
 const Signup = () => {
 
@@ -40,7 +42,7 @@ const Signup = () => {
         set일치여부확인((e.target.value === 비밀번호) ? true : false);
     }
 
-    
+    const 최종확인 = 일치여부확인 && 비번양식확인;
 
     return (
         <Container maxWidth="xs" component="main">
@@ -118,6 +120,7 @@ const Signup = () => {
             value={비밀번호확인}
             type="password"
             error={!일치여부확인}
+            helperText={!일치여부확인 && '비밀번호가 일치하지 않습니다'}
             />
             </Grid>
             <Grid sx = {{mt : 8, ml : 4, mr : 4}}>
@@ -128,7 +131,7 @@ const Signup = () => {
             className='가입버튼'
             fullWidth
             >
-                가입
+                {최종확인 ? <Link style={{textDecoration : 'none'}}to='/info' element={<Info/>}>가입</Link> : '가입'}
             </Button>
             </Grid>
         </Container>

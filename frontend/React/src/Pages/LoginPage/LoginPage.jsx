@@ -3,13 +3,15 @@ import kakaoButton from "../../assets/Image/kakao_login.svg";
 import googleButton from "../../assets/Image/google_login.svg";
 import { useCallback, useState } from "react";
 import {
-  Box, TextField, InputAdornment, Icon, Grid, IconButton, Container, FormControl, InputLabel, OutlinedInput, Link
+  Box, TextField, InputAdornment, Icon, Grid, IconButton, Container, FormControl, InputLabel, OutlinedInput
 } from "@mui/material";
 import {
   VisibilityOff, Visibility 
 } from "@mui/icons-material";
 import "./CSS/LoginPage.css";
 import "../Common/CSS/BackgroundColor.css";
+import { Link } from 'react-router-dom';
+import Signup from "./Signup";
 
 const LoginPage = () => {
   const REST_API_KEY = `${process.env.REACT_APP_KAKAO_REST_API_KEY}`;
@@ -87,7 +89,7 @@ const LoginPage = () => {
 
       <Grid container sx={{mt : 3}}>
         <Grid item xs>
-          <Link>회원가입</Link>
+          <Link to="/signup" element={<Signup/>}>회원가입</Link>
         </Grid>
         <Grid>
           <Link>비밀번호 찾기</Link>
