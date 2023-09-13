@@ -29,7 +29,7 @@ public class Sports extends BaseEntity {
 
     private Long met;
 
-    @OneToMany(mappedBy = "sports")
+    @OneToMany(mappedBy = "sports", fetch = FetchType.LAZY)
     private List<Exercise> exerciseList= new ArrayList<>();
 
     @Builder
