@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -29,13 +31,15 @@ public class Member extends BaseEntity {
 
     private String password;
 
-    private String provider;
+    @Enumerated(EnumType.STRING)
+    private Provider provider;
 
     private String nickname;
 
     private Boolean isPublished;
 
-    private String gender;
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 
     private Long height;
 
@@ -49,9 +53,9 @@ public class Member extends BaseEntity {
     private List<Exercise> exerciseList = new ArrayList<>();
 
     @Builder
-    public Member(String email, String password, String provider, String nickname,
-            Boolean isPublished,
-            String gender, Long height, Long weight, Integer age, Long targetWeight) {
+    public Member(String email, String password, Provider provider, String nickname,
+            Boolean isPublished, Gender gender, Long height, Long weight, Integer age,
+            Long targetWeight) {
         this.email = email;
         this.password = password;
         this.provider = provider;

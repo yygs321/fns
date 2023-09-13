@@ -18,5 +18,5 @@ public class MemberProfileRequestDto {
     private Long height;
     private Long weight;
     private String gender;
-    private String isPublished;
+    private Boolean isPublished;
 }
