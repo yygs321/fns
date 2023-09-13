@@ -52,6 +52,9 @@ public class Member extends BaseEntity {
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<Exercise> exerciseList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    private List<Base> baseList = new ArrayList<>();
+
     @Builder
     public Member(String email, String password, Provider provider, String nickname,
             Boolean isPublished, Gender gender, Long height, Long weight, Integer age,

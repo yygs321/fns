@@ -5,24 +5,19 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import ssafy.fns.domain.food.entity.Time;
 
 /*
-* 추천 음식 반환용
-* */
+ * 식단 입력 페이지에서 내가 오늘 먹은 음식 반환
+ * */
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class FoodRecommendationResponseDto {
-    private Long food_id;
-
+public class IntakeForDietResponseDto {
     private String name;
 
+    private Time intake_time;
+
     private int kcal;
-
-    private Long carbs;
-
-    private Long protein;
-
-    private Long fat;
 }
