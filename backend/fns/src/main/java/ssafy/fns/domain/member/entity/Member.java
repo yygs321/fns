@@ -8,7 +8,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import lombok.Builder;
 import lombok.Getter;
@@ -34,7 +33,7 @@ public class Member extends BaseEntity {
 
     private String nickname;
 
-    private Boolean is_published;
+    private Boolean isPublished;
 
     private String gender;
 
@@ -44,24 +43,24 @@ public class Member extends BaseEntity {
 
     private Integer age;
 
-    private Long target_weight;
+    private Long targetWeight;
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
-    private List<Exercise> exerciseList=new ArrayList<>();
+    private List<Exercise> exerciseList = new ArrayList<>();
 
     @Builder
     public Member(String email, String password, String provider, String nickname,
-            Boolean is_published,
-            String gender, Long height, Long weight, Integer age, Long target_weight) {
+            Boolean isPublished,
+            String gender, Long height, Long weight, Integer age, Long targetWeight) {
         this.email = email;
         this.password = password;
         this.provider = provider;
         this.nickname = nickname;
-        this.is_published = is_published;
+        this.isPublished = isPublished;
         this.gender = gender;
         this.height = height;
         this.weight = weight;
         this.age = age;
-        this.target_weight = target_weight;
+        this.targetWeight = targetWeight;
     }
 }
