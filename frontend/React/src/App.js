@@ -57,7 +57,7 @@ function App() {
             <Route path="/mypage/edit-profile" element={<EditProfilePage />} />
             <Route path="/mypage/mycustom" element={<MyCustom />} />
             <Route path="/search" element={<SearchFoodPage />} />
-            <Route path="/sports" element={<SportsPage />} />
+            <Route path="/fit" element={<SportsPage />} />
             
           </Routes>
         </div>

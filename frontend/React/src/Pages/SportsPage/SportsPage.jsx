@@ -30,7 +30,7 @@ const sportsData = [
 ];
 
 const SportItem = ({ name, kcal, icon, onTimeChange, isEditMode, isChecked, onCheckChange }) => (
-  <Grid container alignItems="center" spacing={3}>
+  <Grid container alignItems="center" spacing={3} style={{ marginBottom: '20px' }}>
     {isEditMode && (
       <Grid item xs={1} style={{ position: 'relative', zIndex: 2 }}>
         <input type="checkbox" checked={isChecked} onChange={() => onCheckChange(name)} />
