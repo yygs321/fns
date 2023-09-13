@@ -6,6 +6,8 @@ import MyPage from "./Pages/MyPage/MyPage";
 import MainPage from "./Pages/MainPage/MainPage";
 import EditProfilePage from "./Pages/MyPage/EditProfilePage";
 import MyCustom from "./Pages/MyPage/MyCustom";
+import Signup from "./Pages/LoginPage/Signup";
+import Info from "./Pages/LoginPage/InfoPage";
 import DietPage from "./Pages/DietPage/DietPage";
 import SearchFoodPage from "./Pages/SearchFoodPage/SearchFoodPage";
 import SportsPage from "./Pages/SportsPage/SportsPage";
@@ -47,6 +49,8 @@ function App() {
         <div className="display-body" style={{ minHeight: "92vh" }}>
           <Routes>
             <Route path="/" element={<LoginPage />} />
+            <Route path="/info" element={<Info />} />
+            <Route path="/signup" element={<Signup/>}/>
             <Route path="/main" element={<MainPage />} />
             <Route path="/diet" element={<DietPage />} />
             <Route path="/mypage" element={<MyPage />} />

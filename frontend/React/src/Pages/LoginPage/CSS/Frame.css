@@ -1,0 +1,33 @@
+.로그인컨테이너{
+}
+.구글로그인 {
+    object-fit: cover;
+}
+.카카오로그인{
+    object-fit: cover;
+}
+.로그인박스 {
+    background-color: skyblue;
+    text-align: center;
+    height : 8.5vh;
+    font-size : 5vh;
+    margin-top : 5vh;
+    line-height: 8.5vh;
+    border-radius: 20px;
+}
+.비번박스{
+    width : 40vh;
+}
+.아이디박스{
+    width : 40vh;
+}
+.로고{
+    background-color: rgb(151, 151, 151);
+    text-align: center;
+    height : 25vh;
+    font-size : 5vh;
+    margin-top : 5vh;
+    line-height: 25vh;
+    border-radius: 20px;
+}
+

@@ -1,0 +1,7 @@
+<img
+        className="kakao-login-large-narrow-icon"
+        src={kakaoButton}
+        alt=""
+        onClick={handleKakaoButton}
+        style={{ cursor: "pointer" }}
+        />
