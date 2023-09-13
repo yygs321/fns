@@ -12,7 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,16 +27,11 @@ public class Exercise extends BaseEntity {
     @Column(name="exercise_id")
     private Long id;
 
-    @OneToMany(mappedBy = "sports", fetch = FetchType.LAZY)
-    private List<Sports> sportsList= new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "sports_id")
+    private Sports sports;
 
     private LocalDateTime date;
 
     private Long exerciseTime;
-
-    @Builder
-    public Exercise(LocalDateTime date, Long exerciseTime) {
-        this.date = date;
-        this.exerciseTime = exerciseTime;
-    }
 }
