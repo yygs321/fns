@@ -46,6 +46,16 @@ pipeline{
             }
         }
 
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('A403_sonarqube') { 
+                    dir('backend/fns') {
+                        sh './gradlew sonarqube --stacktrace'
+                    }
+                }
+            }
+        }
+
         stage('Delete existing Docker images and containers') {
             steps {
                 sh'''
