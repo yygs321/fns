@@ -90,7 +90,7 @@ const MyPage = () => {
       <Divider />
 
      <List>
-      <ListItemButton component={Link} to="/mycustom">
+      <ListItemButton component={Link} to="/mypage/mycustom">
           <ListItemText primary="나만의 영양소 설정" />
             <ListItemIcon>
             <ChevronRightIcon style={{ color: '#00E1AB' }}/>
@@ -107,7 +107,7 @@ const MyPage = () => {
         <Divider />
         <Collapse in={openNestedList} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            <ListItemButton component={Link} to="/edit-profile" style={{ paddingLeft: 32 }}> {/* padding을 추가하여 중첩된 항목처럼 보이게 함 */}
+            <ListItemButton component={Link} to="/mypage/edit-profile" style={{ paddingLeft: 32 }}> {/* padding을 추가하여 중첩된 항목처럼 보이게 함 */}
               <ListItemText primary="개인정보 수정" />
               <ChevronRightIcon style={{ color: '#00E1AB' }}/>
             </ListItemButton>

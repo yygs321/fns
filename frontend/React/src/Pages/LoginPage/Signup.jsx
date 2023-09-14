@@ -1,5 +1,6 @@
 import React from 'react';
-import {Grid, Container, FormControl, Box, TextField, Button} from '@mui/material';
+// import {Grid, Container, FormControl, Box, TextField, Button} from '@mui/material';
+import {Grid, Container, FormControl, TextField, Button} from '@mui/material';
 import './CSS/Signup.scss';
 import {useState} from 'react';
 import { Link } from 'react-router-dom';
@@ -15,7 +16,10 @@ const Signup = () => {
     }
     const 인증확인버튼 = () => {
     }
-
+    console.log(유효한닉네임); // 임시코드입니다. 나중에 지워주세요!
+    console.log(set유효한닉네임); // 임시코드입니다. 나중에 지워주세요!
+    console.log(인증); // 임시코드입니다. 나중에 지워주세요!
+    console.log(set인증); // 임시코드입니다. 나중에 지워주세요!
     const [비밀번호, set비밀번호] = useState('');
     const [비밀번호확인, set비밀번호확인] = useState('');
     const [일치여부확인, set일치여부확인] = useState(true);
