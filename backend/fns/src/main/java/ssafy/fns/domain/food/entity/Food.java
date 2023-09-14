@@ -61,6 +61,6 @@ public class Food extends BaseEntity {
     private Long trans_fat;
 
     @OneToMany(mappedBy = "food", fetch = FetchType.LAZY)
-    private List<Intake> intakeList = new ArraList<>();
+    private List<Intake> intakeList = new ArrayList<>();
 
 }
