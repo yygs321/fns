@@ -50,7 +50,12 @@ pipeline{
             steps {
                 withSonarQubeEnv('A403_sonarqube') { 
                     dir('backend/fns') {
-                        sh './gradlew sonarqube --stacktrace'
+                        sh'''
+                            ./gradlew sonarqube \
+                            -Dsonar.projectKey=A403FNS \
+                            -Dsonar.host.url=https://sonarqube.ssafy.com \
+                            -Dsonar.login=09f5bc46fcd873552d46638898c5f9cf082677cd
+                        '''
                     }
                 }
             }
