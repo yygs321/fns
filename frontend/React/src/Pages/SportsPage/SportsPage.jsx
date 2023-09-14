@@ -133,7 +133,8 @@ const SportsPage = () => {
           width: '100%',           
           position: 'relative'     
       }}>
-    <Typography variant="h4">운동 시간</Typography>
+    <Typography variant="h4" fontWeight={"bold"} style={{marginBottom: '20px'}}>운동 시간</Typography>
+   
     <SettingsIcon  
         onClick={() => setEditMode(!isEditMode)}
         style={{ 
@@ -172,19 +173,39 @@ const SportsPage = () => {
               textAlign: 'center',
               boxSizing: 'border-box',
               maxHeight: '80vh'
-      }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '20px' }}>
+              }}>
+
+          <div style={{ display: 'flex', 
+              justifyContent: 'space-between', 
+              alignItems: 'center', 
+              marginTop: '20px' }}>
+              <div>
               <Typography variant="h6">
-                  총 시간: {totalHours}시간
+                총 운동 시간: 
               </Typography>
               <Typography variant="h6">
-                  총 소모 칼로리: {totalCalories}cal
+                {totalHours}시간
+              </Typography>
+               </div>
+    
+          <div>
+              <Typography variant="h6">
+                총 소모 칼로리: 
+              </Typography>
+              <Typography variant="h6">
+                {totalCalories}cal
               </Typography>
           </div>
-          <Button onClick={handleSaveData} style={{ marginTop: '20px' }}>저장</Button>
-      </div>
+            </div>
+            <Button variant="contained" 
+               onClick={handleSaveData} 
+               style={{ marginTop: '20px', fontSize: '20px', padding: '5px 100px' }}
+                >저장
+            </Button>
+          
+         </div>
       
-    </div>
+        </div>
         
     );
 };
