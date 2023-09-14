@@ -29,6 +29,7 @@ const BarGraph = (props) => {
     return () => {
       clearInterval(interval); // 컴포넌트가 언마운트될 때 인터벌 정리
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
