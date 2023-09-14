@@ -26,6 +26,33 @@ const theme = createTheme({
   },
 });
 
+// 밑에 코드는 모바일에서 0.3초 이내로 2번 탭 시에 화면이 확대되는걸 방지해주는 코드라고 함.
+// 혹시 나중에 더블탭으로 확대될지 몰라서 일단 넣어둠.
+
+// document.documentElement.addEventListener(
+//   "touchstart",
+//   function (event) {
+//     if (event.touches.length > 1) {
+//       event.preventDefault();
+//     }
+//   },
+//   false
+// );
+
+// var lastTouchEnd = 0;
+
+// document.documentElement.addEventListener(
+//   "touchend",
+//   function (event) {
+//     var now = new Date().getTime();
+//     if (now - lastTouchEnd <= 300) {
+//       event.preventDefault();
+//     }
+//     lastTouchEnd = now;
+//   },
+//   false
+// );
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>

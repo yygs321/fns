@@ -11,13 +11,15 @@ import {
 
 import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
 import AddCircleOutlineRoundedIcon from "@mui/icons-material/AddCircleOutlineRounded";
+import { useNavigate } from "react-router-dom";
 
 const DietAccordion = (props) => {
   const { name, food } = props;
 
-  const totalKcal = food.reduce((total, f) => total + f.kcal, 0);
-
   const [isAccordionSelected, setIsAccordionSelected] = useState(false);
+  const navigate = useNavigate();
+
+  const totalKcal = food.reduce((total, f) => total + f.kcal, 0);
 
   const handleAccordion = () => {
     setIsAccordionSelected(!isAccordionSelected);
@@ -25,6 +27,7 @@ const DietAccordion = (props) => {
 
   const handleAddButton = (event) => {
     event.stopPropagation();
+    navigate("/diet/input", { state: { name: name, food: food } });
   };
 
   return (
