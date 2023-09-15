@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -38,4 +39,11 @@ public class Intake extends BaseEntity {
     @JoinColumn(name = "food_id")
     private Food food;
 
+    @Builder
+
+    public Intake(Date date, Time intake_time, Long rate) {
+        this.date = date;
+        this.intake_time = intake_time;
+        this.rate = rate;
+    }
 }
