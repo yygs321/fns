@@ -30,7 +30,7 @@ public class Sports extends BaseEntity {
     private Long met;
 
     @OneToMany(mappedBy = "sports", fetch = FetchType.LAZY)
-    private List<Exercise> exerciseList= new ArrayList<>();
+    private List<Exercise> exerciseList = new ArrayList<>();
 
     @Builder
     public Sports(String sportsName, Long met) {

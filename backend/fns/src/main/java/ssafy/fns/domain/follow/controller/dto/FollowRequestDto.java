@@ -5,5 +5,5 @@ import lombok.Getter;
 @Getter
 public class FollowRequestDto {
 
-    private Long member_id;
+    private Long memberId;
 }

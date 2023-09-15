@@ -34,7 +34,7 @@ public class Base extends BaseEntity {
 
     private Long sugar;
 
-    private Long dietary_fiber;
+    private Long dietaryFiber;
 
     private Long calcium;
 
@@ -54,9 +54,32 @@ public class Base extends BaseEntity {
 
     private Long acid;
 
-    private Long trans_fat;
+    private Long transFat;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
+
+    public Base(Long kcal, Long carbs, Long protein, Long fat, Long pollination, Long sugar,
+            Long dietaryFiber, Long calcium, Long potassium, Long iron, Long phosphorus,
+            Long vitaminA,
+            Long vitaminC, Long vitaminD, Long cholesterol, Long acid, Long transFat) {
+        this.kcal = kcal;
+        this.carbs = carbs;
+        this.protein = protein;
+        this.fat = fat;
+        this.pollination = pollination;
+        this.sugar = sugar;
+        this.dietaryFiber = dietaryFiber;
+        this.calcium = calcium;
+        this.potassium = potassium;
+        this.iron = iron;
+        this.phosphorus = phosphorus;
+        this.vitaminA = vitaminA;
+        this.vitaminC = vitaminC;
+        this.vitaminD = vitaminD;
+        this.cholesterol = cholesterol;
+        this.acid = acid;
+        this.transFat = transFat;
+    }
 }
