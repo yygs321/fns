@@ -180,7 +180,103 @@ const UsersTabs = () => {
         ))}
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        추천창
+        {users.map((user, index) => (
+          <Grid
+            key={`${user.username}-${index}`}
+            container
+            item
+            xs={11}
+            justifyContent={"center"}
+            alignItems={"center"}
+            sx={{
+              height: "22vh",
+              borderBottom: "1px solid #e7e7e7",
+              pt: "1vh",
+              pb: "2vh",
+            }}
+          >
+            <Grid
+              container
+              item
+              xs={5}
+              justifyContent={"center"}
+              alignItems={"center"}
+            >
+              <Grid
+                container
+                item
+                xs={12}
+                justifyContent={"center"}
+                alignItems={"center"}
+              >
+                <Avatar
+                  alt="MyName"
+                  src={user.profileImg}
+                  sx={{ width: "5rem", height: "5rem" }}
+                />
+              </Grid>
+              <Grid
+                container
+                item
+                xs={12}
+                justifyContent={"center"}
+                alignItems={"center"}
+                textAlign={"center"}
+              >
+                <Typography
+                  variant="body1"
+                  color="text.primary"
+                  fontSize={"1rem"}
+                  fontWeight={"bold"}
+                  whiteSpace="nowrap"
+                  overflow="hidden"
+                  textOverflow="ellipsis"
+                >
+                  {user.username}
+                </Typography>
+              </Grid>
+            </Grid>
+            <Grid
+              container
+              item
+              xs={7}
+              justifyContent={"center"}
+              alignItems={"center"}
+              direction={"column"}
+            >
+              <Grid item container xs={3} justifyContent={"center"}>
+                <CommunityBarGraph
+                  nutrient={user.nowKcal}
+                  maxNutrient={user.maxKcal}
+                  name={"칼로리"}
+                />
+              </Grid>
+              <Grid item container xs={3} justifyContent={"center"}>
+                <CommunityBarGraph
+                  nutrient={user.nowcarb}
+                  maxNutrient={user.maxcarb}
+                  name={"탄수화물"}
+                />
+              </Grid>
+              <Grid item container xs={3} justifyContent={"center"}>
+                <CommunityBarGraph
+                  nutrient={user.nowprot}
+                  maxNutrient={user.maxprot}
+                  name={"단백질"}
+                />
+              </Grid>
+              <Grid item container xs={3} justifyContent={"center"}>
+                <CommunityBarGraph
+                  nutrient={user.nowprov}
+                  maxNutrient={user.maxprov}
+                  name={"지방"}
+                />
+              </Grid>
+            </Grid>
+          </Grid>
+
+          // 여기 재활용하는 부분 컴포넌트로 따로 빼서, 작성할 것. 코드 너무 길어짐.
+        ))}
       </CustomTabPanel>
     </Box>
   );
