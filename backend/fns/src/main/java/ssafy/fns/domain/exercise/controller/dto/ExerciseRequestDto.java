@@ -16,7 +16,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 public class ExerciseRequestDto {
-    private Long exercise_id;
+    private Long sportsId;
 
     private Long exerciseTime;
 }

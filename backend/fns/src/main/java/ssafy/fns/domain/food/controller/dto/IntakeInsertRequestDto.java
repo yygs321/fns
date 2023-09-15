@@ -17,8 +17,8 @@ import ssafy.fns.domain.food.entity.Time;
 @NoArgsConstructor
 @Builder
 public class IntakeInsertRequestDto {
-    private Long food_id;
+    private Long foodId;
     private Date date;
     private Long rate;
-    private Time intake_time;
+    private Time intakeTime;
 }

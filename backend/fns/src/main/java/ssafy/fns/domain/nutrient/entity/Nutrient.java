@@ -37,7 +37,7 @@ public class Nutrient extends BaseEntity {
 
     private Long sugar;
 
-    private Long dietary_fiber;
+    private Long dietaryFiber;
 
     private Long calcium;
 
@@ -57,7 +57,7 @@ public class Nutrient extends BaseEntity {
 
     private Long acid;
 
-    private Long trans_fat;
+    private Long transFat;
 
     @Builder
     public Nutrient(Long age, Gender gender, Long kcal, Long carbs, Long protein, Long fat,
@@ -74,7 +74,7 @@ public class Nutrient extends BaseEntity {
         this.fat = fat;
         this.pollination = pollination;
         this.sugar = sugar;
-        this.dietary_fiber = dietary_fiber;
+        this.dietaryFiber = dietary_fiber;
         this.calcium = calcium;
         this.potassium = potassium;
         this.iron = iron;
@@ -84,6 +84,6 @@ public class Nutrient extends BaseEntity {
         this.vitaminD = vitaminD;
         this.cholesterol = cholesterol;
         this.acid = acid;
-        this.trans_fat = trans_fat;
+        this.transFat = trans_fat;
     }
 }

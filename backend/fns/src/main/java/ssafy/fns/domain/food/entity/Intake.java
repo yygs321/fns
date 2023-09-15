@@ -31,7 +31,7 @@ public class Intake extends BaseEntity {
     private Date date;
 
     @Enumerated(EnumType.STRING)
-    private Time intake_time;
+    private Time intakeTime;
 
     private Long rate;
 
@@ -41,9 +41,9 @@ public class Intake extends BaseEntity {
 
     @Builder
 
-    public Intake(Date date, Time intake_time, Long rate) {
+    public Intake(Date date, Time intakeTime, Long rate) {
         this.date = date;
-        this.intake_time = intake_time;
+        this.intakeTime = intakeTime;
         this.rate = rate;
     }
 }
