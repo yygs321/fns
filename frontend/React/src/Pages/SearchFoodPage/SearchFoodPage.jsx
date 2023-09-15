@@ -18,13 +18,22 @@ const SearchFoodPage = () => {
   const [fat, setFat] = useState('');
 
   const DUMMY_DATA = [
-    { name: '식품1', kcal: 80, carbs: 10, protein: 5, fat: 3 },
-    { name: '식품2', kcal: 150, carbs: 20, protein: 10, fat: 6 },
-    { name: '식품3', kcal: 300, carbs: 30, protein: 15, fat: 9 },
-    { name: '식품4', kcal: 400, carbs: 10, protein: 5, fat: 9 },
-    { name: '식품5', kcal: 200, carbs: 15, protein: 10, fat: 6 },
-    { name: '식품6', kcal: 300, carbs: 30, protein: 5, fat: 3 },
+    { name: '식품1', kcal: 80, carbs: 9, protein: 53, fat: 3 },
+    { name: '식품2', kcal: 150, carbs: 60, protein: 90, fat: 66 },
+    { name: '식품3', kcal: 300, carbs: 36, protein: 105, fat: 19 },
+    { name: '식품4', kcal: 400, carbs: 100, protein: 56, fat: 96 },
+    { name: '식품5', kcal: 200, carbs: 15, protein: 60, fat: 60 },
+    { name: '식품6', kcal: 300, carbs: 90, protein: 50, fat: 30 },
+    { name: '식품7', kcal: 720, carbs: 75, protein: 10, fat: 15 },
+    { name: '식품8', kcal: 500, carbs: 90, protein: 65, fat: 30 },
   ];
+  const filterKeyToLabel = {
+    kcal: 'KCAL',
+    carbs: '탄수화물',
+    protein: '단백질',
+    fat: '지방'
+  };
+  
 
   const filteredData = DUMMY_DATA.filter(item => 
     item.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -67,7 +76,7 @@ const SearchFoodPage = () => {
               {activeFilters.map(filterKey => (
                 <Grid item key={filterKey}>
                   <Chip
-                    label={`${filterKey.toUpperCase()}: ${filters[filterKey]}`}
+                    label={`${filterKeyToLabel[filterKey]}: ${filters[filterKey]}`}
                     onDelete={() => {
                       switch (filterKey) {
                         case 'kcal':
