@@ -5,6 +5,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import ssafy.fns.domain.auth.controller.dto.CheckEmailRequestDto;
+import ssafy.fns.domain.auth.controller.dto.RefreshAccessTokenRequestDto;
+import ssafy.fns.domain.auth.controller.dto.SendEmailRequestDto;
 import ssafy.fns.domain.auth.controller.dto.SignInRequestDto;
 import ssafy.fns.domain.auth.entity.RefreshToken;
 import ssafy.fns.domain.auth.repository.RefreshTokenRepository;
@@ -28,6 +31,18 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     @Transactional
+    public void sendEmail(SendEmailRequestDto requestDto) {
+
+    }
+
+    @Override
+    @Transactional
+    public void checkEmail(CheckEmailRequestDto requestDto) {
+
+    }
+
+    @Override
+    @Transactional
     public TokenDto defaultSignIn(SignInRequestDto requestDto) {
         Member member = memberRepository.findByEmailAndProvider(requestDto.getEmail(),
                 Provider.DEFAULT);
@@ -47,6 +62,12 @@ public class AuthServiceImpl implements AuthService {
         saveRefreshToken(requestDto, token);
 
         return TokenDto.from(token);
+    }
+
+    @Override
+    @Transactional
+    public String refreshAccessToken(RefreshAccessTokenRequestDto requestDto) {
+        return null;
     }
 
     private void saveRefreshToken(SignInRequestDto requestDto, Token token) {
