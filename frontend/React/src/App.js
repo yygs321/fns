@@ -12,6 +12,7 @@ import DietPage from "./Pages/DietPage/DietPage";
 import DietInputPage from "./Pages/DietPage/DietInputPage";
 import SearchFoodPage from "./Pages/SearchFoodPage/SearchFoodPage";
 import SearchFood from "./Pages/DietPage/SearchFood";
+import FoodDetail from "./Pages/SearchFoodPage/FoodDetail";
 import SportsPage from "./Pages/SportsPage/SportsPage";
 
 function App() {
@@ -61,6 +62,7 @@ function App() {
             <Route path="/mypage/edit-profile" element={<EditProfilePage />} />
             <Route path="/mypage/mycustom" element={<MyCustom />} />
             <Route path="/search" element={<SearchFoodPage />} />
+            <Route path="/search/food/:name" element={<FoodDetail />} />
             <Route path="/fit" element={<SportsPage />} />
           </Routes>
         </div>

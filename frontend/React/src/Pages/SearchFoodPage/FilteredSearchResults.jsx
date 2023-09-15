@@ -1,5 +1,6 @@
 import React from 'react';
 import { Typography, Divider } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 function FilteredSearchResults({ data, filters }) {
   // 먼저 데이터를 필터링합니다.
@@ -16,7 +17,9 @@ function FilteredSearchResults({ data, filters }) {
       {filteredItems.map((item, index) => (
         <div key={item.name}>
           {/* 큰 글자로 항목 이름 표시 */}
+          <Link style={{ color: 'inherit', textDecoration: 'none' }} to={`/search/food/${item.name}` }>
           <Typography variant="h5" gutterBottom>{item.name}</Typography>
+          </Link>
 
           {/* 항목 정보도 추가 가능, 예시로 kcal 정보를 추가해 보겠습니다. */}
           <Typography variant="body1">{`KCAL: ${item.kcal}`}</Typography>
