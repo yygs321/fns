@@ -29,6 +29,7 @@ const BarGraph = (props) => {
     return () => {
       clearInterval(interval); // 컴포넌트가 언마운트될 때 인터벌 정리
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -63,7 +64,9 @@ const BarGraph = (props) => {
               background:
                 nutrient > maxNutrient
                   ? "linear-gradient(to right,#e05750, #ffd8d0)"
-                  : "linear-gradient(to right, #14caa0, #55ffd7)", // 그라데이션 색상 설정
+                  : nutrient / maxNutrient >= 0.5
+                  ? "linear-gradient(to right, #14caa0, #55ffd7)"
+                  : "linear-gradient(to right, #4d66e2, #87d0f8)", // 그라데이션 색상 설정
               borderRadius: "20px", // 바의 radius 설정
             },
           }}

@@ -67,6 +67,7 @@ function App() {
             position: "fixed",
             bottom: "0",
             maxWidth: "767px",
+            zIndex: "1000",
           }}
         >
           {isLogin && <FooterBar />}

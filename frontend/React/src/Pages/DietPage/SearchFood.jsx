@@ -1,23 +1,25 @@
 import React, { useState } from "react";
 
 import {
-  Box,
+  // Box,
   Grid,
   Typography,
   TextField,
   Button,
-  IconButton,
+  // IconButton,
 } from "@mui/material";
 
 import NavigateBeforeRoundedIcon from "@mui/icons-material/NavigateBeforeRounded";
 import SearchIcon from "@mui/icons-material/Search";
-import AddRoundedIcon from "@mui/icons-material/AddRounded";
+// import AddRoundedIcon from "@mui/icons-material/AddRounded";
 
 import { useLocation, useNavigate } from "react-router-dom";
 
 const SearchFood = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [addedFood, setAddedFood] = useState([]);
+
+  console.log(searchTerm);
 
   const location = useLocation();
   const navigate = useNavigate();

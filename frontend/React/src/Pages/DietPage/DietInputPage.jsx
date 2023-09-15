@@ -1,12 +1,11 @@
-import React, { useState } from "react";
+import React from "react"; // { useState }
 
-import { Box, Grid, Typography, TextField, Button } from "@mui/material";
+import { Grid, Typography, TextField, Button } from "@mui/material";
 
 import NavigateBeforeRoundedIcon from "@mui/icons-material/NavigateBeforeRounded";
 import SearchIcon from "@mui/icons-material/Search";
 
 import { useLocation, useNavigate } from "react-router-dom";
-import FoodButtonGroup from "./FoodButtonGroup";
 import FoodCount from "./FoodCount";
 
 const DietInputPage = () => {
@@ -173,11 +172,12 @@ const DietInputPage = () => {
               xs={12}
               justifyContent={"space-evenly"}
               alignItems={"center"}
+              // textAlign={"center"}
             >
               <Grid
                 container
                 item
-                xs={4}
+                xs={3}
                 justifyContent={"center"}
                 alignItems={"center"}
               >
@@ -193,7 +193,7 @@ const DietInputPage = () => {
               <Grid
                 container
                 item
-                xs={8}
+                xs={9}
                 justifyContent={"center"}
                 alignItems={"center"}
               >
