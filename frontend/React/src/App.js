@@ -6,10 +6,16 @@ import MyPage from "./Pages/MyPage/MyPage";
 import MainPage from "./Pages/MainPage/MainPage";
 import EditProfilePage from "./Pages/MyPage/EditProfilePage";
 import MyCustom from "./Pages/MyPage/MyCustom";
+import Signup from "./Pages/LoginPage/Signup";
+import Info from "./Pages/LoginPage/InfoPage";
 import DietPage from "./Pages/DietPage/DietPage";
 import DietInputPage from "./Pages/DietPage/DietInputPage";
 import SearchFoodPage from "./Pages/SearchFoodPage/SearchFoodPage";
+<<<<<<< HEAD
 import SearchFood from "./Pages/DietPage/SearchFood";
+=======
+import SportsPage from "./Pages/SportsPage/SportsPage";
+>>>>>>> fd80b1c2fb64e2a4ebf45023bd46de424a337f1a
 
 function App() {
   useEffect(() => {
@@ -48,6 +54,8 @@ function App() {
         <div className="display-body" style={{ minHeight: "92vh" }}>
           <Routes>
             <Route path="/" element={<LoginPage />} />
+            <Route path="/info" element={<Info />} />
+            <Route path="/signup" element={<Signup/>}/>
             <Route path="/main" element={<MainPage />} />
             <Route path="/diet" element={<DietPage />} />
             <Route path="/diet/input" element={<DietInputPage />} />
@@ -56,6 +64,8 @@ function App() {
             <Route path="/mypage/edit-profile" element={<EditProfilePage />} />
             <Route path="/mypage/mycustom" element={<MyCustom />} />
             <Route path="/search" element={<SearchFoodPage />} />
+            <Route path="/fit" element={<SportsPage />} />
+            
           </Routes>
         </div>
 
