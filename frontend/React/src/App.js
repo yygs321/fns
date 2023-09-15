@@ -10,6 +10,7 @@ import Signup from "./Pages/LoginPage/Signup";
 import Info from "./Pages/LoginPage/InfoPage";
 import DietPage from "./Pages/DietPage/DietPage";
 import SearchFoodPage from "./Pages/SearchFoodPage/SearchFoodPage";
+import WeightInput from "./Pages/WeightInput/WeightInput";
 
 function App() {
   useEffect(() => {
@@ -49,6 +50,7 @@ function App() {
           <Routes>
             <Route path="/" element={<LoginPage />} />
             <Route path="/info" element={<Info />} />
+            <Route path="/weight" element={<WeightInput/>}/>
             <Route path="/signup" element={<Signup/>}/>
             <Route path="/main" element={<MainPage />} />
             <Route path="/diet" element={<DietPage />} />
