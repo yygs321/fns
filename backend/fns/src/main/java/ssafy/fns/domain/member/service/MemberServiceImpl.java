@@ -34,13 +34,21 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional
     public void emailDuplicationCheck(String email) {
+        Member member = memberRepository.findByEmail(email);
 
+        if (member != null) {
+            throw new GlobalRuntimeException("이미 존재하는 이메일입니다.", HttpStatus.BAD_REQUEST);
+        }
     }
 
     @Override
     @Transactional
     public void nicknameDuplication(String nickname) {
+        Member member = memberRepository.findByNickname(nickname);
 
+        if (member != null) {
+            throw new GlobalRuntimeException("이미 존재하는 닉네임입니다.", HttpStatus.BAD_REQUEST);
+        }
     }
 
     private void checkValication(SignUpRequestDto requestDto) {
