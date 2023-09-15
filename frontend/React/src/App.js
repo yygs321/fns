@@ -13,6 +13,7 @@ import DietInputPage from "./Pages/DietPage/DietInputPage";
 import SearchFoodPage from "./Pages/SearchFoodPage/SearchFoodPage";
 import SearchFood from "./Pages/DietPage/SearchFood";
 import SportsPage from "./Pages/SportsPage/SportsPage";
+import CommunityPage from "./Pages/CommunityPage/CommunityPage";
 
 function App() {
   useEffect(() => {
@@ -62,6 +63,7 @@ function App() {
             <Route path="/mypage/mycustom" element={<MyCustom />} />
             <Route path="/search" element={<SearchFoodPage />} />
             <Route path="/fit" element={<SportsPage />} />
+            <Route path="/community" element={<CommunityPage />} />
           </Routes>
         </div>
 
