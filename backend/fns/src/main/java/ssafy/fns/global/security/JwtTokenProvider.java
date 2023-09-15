@@ -1,6 +1,5 @@
 package ssafy.fns.global.security;
 
-import com.sun.xml.bind.v2.TODO;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -20,6 +19,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 import ssafy.fns.domain.auth.vo.Token;
+import ssafy.fns.domain.member.entity.Member;
+import ssafy.fns.domain.member.repository.MemberRepository;
 import ssafy.fns.global.exception.GlobalRuntimeException;
 
 @RequiredArgsConstructor
@@ -38,8 +39,7 @@ public class JwtTokenProvider {
     private final long EXPIRATION_TIME_OF_ACCESS_TOKEN = 1000L * 60 * 60;
     private final long EXPIRATION_TIME_OF_REFRESH_TOKEN = 1000L * 60 * 60 * 24 * 30;
 
-    //TODO : Member 도메인 만들고 주석 해제
-    //private final MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
 
     public Token createToken(String email) {
         Claims claims = Jwts.claims().setSubject(email);
@@ -64,15 +64,14 @@ public class JwtTokenProvider {
                 .build();
     }
 
-    //:TODO : Member 만들고 구현
-//    @Transactional
-//    public Authentication getAuthentication(String token) {
-//        Member member = memberRepository.findByEmail(this.getEmail(token));
-//        Collection<? extends GrantedAuthority> authorities = new ArrayList<>(
-//                Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")));
-//        return new UsernamePasswordAuthenticationToken(member, "",
-//                authorities);
-//    }
+    @Transactional
+    public Authentication getAuthentication(String token) {
+        Member member = memberRepository.findByEmail(this.getEmail(token));
+        Collection<? extends GrantedAuthority> authorities = new ArrayList<>(
+                Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")));
+        return new UsernamePasswordAuthenticationToken(member, "",
+                authorities);
+    }
 
     private String getEmail(String token) {
         return Jwts.parser().setSigningKey(accessTokenSalt).parseClaimsJws(token).getBody()
