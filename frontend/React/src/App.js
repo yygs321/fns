@@ -9,7 +9,9 @@ import MyCustom from "./Pages/MyPage/MyCustom";
 import Signup from "./Pages/LoginPage/Signup";
 import Info from "./Pages/LoginPage/InfoPage";
 import DietPage from "./Pages/DietPage/DietPage";
+import DietInputPage from "./Pages/DietPage/DietInputPage";
 import SearchFoodPage from "./Pages/SearchFoodPage/SearchFoodPage";
+import SearchFood from "./Pages/DietPage/SearchFood";
 import SportsPage from "./Pages/SportsPage/SportsPage";
 
 function App() {
@@ -50,15 +52,16 @@ function App() {
           <Routes>
             <Route path="/" element={<LoginPage />} />
             <Route path="/info" element={<Info />} />
-            <Route path="/signup" element={<Signup/>}/>
+            <Route path="/signup" element={<Signup />} />
             <Route path="/main" element={<MainPage />} />
             <Route path="/diet" element={<DietPage />} />
+            <Route path="/diet/input" element={<DietInputPage />} />
+            <Route path="/diet/input/search" element={<SearchFood />} />
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/mypage/edit-profile" element={<EditProfilePage />} />
             <Route path="/mypage/mycustom" element={<MyCustom />} />
             <Route path="/search" element={<SearchFoodPage />} />
             <Route path="/fit" element={<SportsPage />} />
-            
           </Routes>
         </div>
 
@@ -70,6 +73,7 @@ function App() {
             position: "fixed",
             bottom: "0",
             maxWidth: "767px",
+            zIndex: "1000",
           }}
         >
           {isLogin && <FooterBar />}
