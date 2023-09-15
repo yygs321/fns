@@ -52,12 +52,12 @@ const MainPage = () => {
   const today = now.toLocaleDateString("ko-KR", options).split(" ");
 
   const maxKcal = 2400;
-  const nowKcal = 2800;
+  const nowKcal = 1000;
 
   useEffect(() => {
     let targetValue = 0;
 
-    if (nowKcal >= maxKcal) {
+    if (nowKcal > maxKcal) {
       setIsOverKcal(true);
       setOverKcal(nowKcal - maxKcal);
       targetValue = 100;
@@ -89,12 +89,15 @@ const MainPage = () => {
     <div className="gray-pages">
       <Grid container justifyContent={"center"}>
         <Grid
-          className="white-content-box"
+          className=""
           item
           container
-          xs={11}
+          xs={12}
           justifyContent={"center"}
-          sx={{ marginTop: "1vh", marginBottom: "1vh", height: "70vh" }}
+          sx={{
+            height: "8vh",
+            backgroundColor: "#00E1AB",
+          }}
         >
           <Grid
             container
@@ -104,18 +107,27 @@ const MainPage = () => {
             alignItems={"center"}
           >
             <NavigateBeforeRoundedIcon
-              sx={{ color: "text.secondary", fontSize: "2rem" }}
+              sx={{ color: "white", fontSize: "2rem" }}
             />
             <Typography
               variant="caption"
               component="div"
-              color="text.secondary"
+              color="white"
               fontSize={"1.5rem"}
               fontWeight={"bold"}
             >
               {`${today[0]}${today[1]}${today[2]}${today[3]}`}
             </Typography>
           </Grid>
+        </Grid>
+        <Grid
+          className="white-content-box"
+          item
+          container
+          xs={11}
+          justifyContent={"center"}
+          sx={{ marginTop: "2vh", height: "60vh" }}
+        >
           <Grid
             container
             item
@@ -221,17 +233,21 @@ const MainPage = () => {
                     <Typography
                       variant="caption"
                       component="div"
-                      color={isOverKcal ? "warning.main" : "primary.main"}
+                      color={
+                        isOverKcal
+                          ? "warning.main"
+                          : nowKcal / maxKcal >= 0.8
+                          ? "primary.main"
+                          : "#506CFF"
+                      }
                       fontSize={"1.2rem"}
                       fontWeight={"bold"}
                     >
-                      {isOverKcal ? (
-                        "칼로리 초과!"
-                      ) : nowKcal / maxKcal >= 0.8 ? (
-                        "적정 수준이예요!"
-                      ) : (
-                        <br />
-                      )}
+                      {isOverKcal
+                        ? "칼로리 초과!"
+                        : nowKcal / maxKcal >= 0.8
+                        ? "적정 수준이예요!"
+                        : "더 먹어야해요!"}
                     </Typography>
                   </Grid>
                   <Grid
@@ -355,7 +371,7 @@ const MainPage = () => {
           xs={11}
           justifyContent={"center"}
           alignItems={"center"}
-          sx={{ marginTop: "1vh", marginBottom: "1vh" }}
+          sx={{ marginTop: "2vh" }}
         >
           <Accordion
             expanded={isAccordionSelected}
@@ -420,17 +436,29 @@ const MainPage = () => {
             <linearGradient
               id="my_gradient"
               x1={isOverKcal ? "100%" : "75%"}
-              y1={isOverKcal ? "100%" : "25%"}
-              x2={isOverKcal ? "50%" : "0%"}
-              y2={isOverKcal ? "25%" : "0%"}
+              y1={isOverKcal ? "100%" : "75%"}
+              x2={isOverKcal ? "50%" : nowKcal / maxKcal >= 0.5 ? "0%" : "10%"}
+              y2={isOverKcal ? "25%" : nowKcal / maxKcal >= 0.5 ? "0%" : "50%"}
             >
               <stop
                 offset="0%"
-                stopColor={isOverKcal ? "#ffd8d0" : "#55ffd7"}
+                stopColor={
+                  isOverKcal
+                    ? "#ffd8d0"
+                    : nowKcal / maxKcal >= 0.5
+                    ? "#55ffd7"
+                    : "#87d0f8"
+                }
               />
               <stop
                 offset="100%"
-                stopColor={isOverKcal ? "#e05750" : "#14caa0"}
+                stopColor={
+                  isOverKcal
+                    ? "#e05750"
+                    : nowKcal / maxKcal >= 0.5
+                    ? "#14caa0"
+                    : "#4d66e2"
+                }
               />
             </linearGradient>
           </defs>
