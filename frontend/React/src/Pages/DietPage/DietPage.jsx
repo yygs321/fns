@@ -139,7 +139,7 @@ const DietPage = () => {
                 color="white"
                 fontSize={"1.2rem"}
                 fontWeight={"bold"}
-                sx={{ textShadow: "2px 2px 20px #8b8b8b" }}
+                sx={{ textShadow: "2px 2px 20px #c8c8c8" }}
               >
                 {isToday
                   ? `${today[0]}${today[1]}${today[2]}${today[3]}`

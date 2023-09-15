@@ -111,7 +111,7 @@ const SearchFood = () => {
             fontSize={"1.5rem"}
             fontWeight={"bold"}
           >
-            {state.name || ""}
+            {`${state.name} 검색` || ""}
           </Typography>
         </Grid>
         <Grid
