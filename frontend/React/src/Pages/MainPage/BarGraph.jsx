@@ -78,7 +78,7 @@ const BarGraph = (props) => {
             variant="body2"
             color="text.secondary"
             fontSize={"0.9rem"}
-          >{`${nutrient}/${maxNutrient}`}</Typography>
+          >{`${nutrient} / ${maxNutrient}`}</Typography>
         </Box>
       </Box>
     </Box>
