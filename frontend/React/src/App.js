@@ -14,6 +14,7 @@ import SearchFoodPage from "./Pages/SearchFoodPage/SearchFoodPage";
 import SearchFood from "./Pages/DietPage/SearchFood";
 import FoodDetail from "./Pages/SearchFoodPage/FoodDetail";
 import SportsPage from "./Pages/SportsPage/SportsPage";
+import CalendarPage from "./Pages/CalendarPage/CalendarPage";
 
 function App() {
   useEffect(() => {
@@ -64,6 +65,7 @@ function App() {
             <Route path="/search" element={<SearchFoodPage />} />
             <Route path="/search/food/:name" element={<FoodDetail />} />
             <Route path="/fit" element={<SportsPage />} />
+            <Route path="/calendar" element={<CalendarPage />} />
           </Routes>
         </div>
 
