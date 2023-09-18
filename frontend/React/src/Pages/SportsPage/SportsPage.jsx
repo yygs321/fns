@@ -60,7 +60,11 @@ const SportItem = ({ name, kcal, icon, onTimeChange, isEditMode, isChecked, onCh
           fullWidth
           type="number"
           label="시간"
-          onChange={(e) => onTimeChange(name, parseInt(e.target.value))}
+          onChange={(e) => {
+            const value = parseFloat(e.target.value);
+            onTimeChange(name, isNaN(value) ? 0 : value);
+        }}
+        
         />
       </Grid>
     )}
