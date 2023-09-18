@@ -1,39 +1,62 @@
 import React, { useState } from 'react';
-import { Typography, LinearProgress } from '@mui/material';
+import { Typography, LinearProgress, Badge } from '@mui/material';
 import dayjs from 'dayjs';
-import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
+import { LocalizationProvider, DateCalendar, PickersDay } from '@mui/x-date-pickers';
 
 const CalendarPage = () => {
-    const [selectedDate, setSelectedDate] = useState(new Date());
-    const [value, setValue] = React.useState(dayjs()); // 현재 날짜로 초기화
-    const [data, setData] = React.useState({ /* 더미 데이터 혹은 서버에서 가져온 데이터 */ });
+    const [selectedDate, setSelectedDate] = useState(dayjs());
+
+    // 더미 데이터
+    const data = {
+        '2023-09-15': 20,
+        '2023-09-16': 50,
+        '2023-09-17': 70,
+        '2023-09-18': 100,
+        // ... 추가적인 날짜와 데이터
+    };
+
+    const getIconByValue = (value) => {
+        if (value <= 20) return '🔴';
+        if (value <= 50) return '🔶';
+        if (value <= 70) return '🟡';
+        return '🟢';
+    };    
+
+    const CustomDay = (props) => {
+        const { day, outsideCurrentMonth, ...other } = props;
+        const formattedDate = day.format('YYYY-MM-DD');
+        const value = data[formattedDate];
+        const icon = value !== undefined ? getIconByValue(value) : null;
+
+        return (
+            <Badge
+                key={formattedDate}
+                overlap="circular"
+                badgeContent={icon}
+            >
+                <PickersDay {...other} outsideCurrentMonth={outsideCurrentMonth} day={day} />
+            </Badge>
+        );
+    };
+
     return (
         <div className="gray-pages" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '2% 0' }}>
-            
-            {/* Box 1 - Placeholder for Calendar */}
             <div className="white-content-box" style={{ width: '80%', padding: '20px', marginBottom: '20px' }}>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DateCalendar 
-      value={value}
-      onChange={(newValue) => {
-        setValue(newValue);
-        // 여기서 해당 날짜에 대한 세부 정보나 성과를 팝업, 모달 등의 형태로 보여줄 수 있는 로직 추가
-      }}
-      // 달력에 다양한 색상을 표시하기 위한 로직 (예: 렌더링 함수 오버라이드) 추가
-    />
-            </LocalizationProvider>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DateCalendar 
+                        value={selectedDate}
+                        onChange={(newValue) => setSelectedDate(newValue)}
+                        slots={{ day: CustomDay }}
+                    />
+                </LocalizationProvider>
             </div>
 
-            {/* Box 2 - Nutrient Information */}
             <div className="white-content-box" style={{ width: '80%', padding: '20px' }}>
-                <Typography variant="h6">{selectedDate.toDateString()}</Typography>
+                <Typography variant="h6">{selectedDate.format('YYYY-MM-DD')}</Typography>
                 <Typography variant="body2" style={{ marginTop: 15 }}>오늘의 영양소 정보</Typography>
-                {/* Example nutrient: Protein */}
                 <Typography style={{ marginTop: 20 }}>Protein</Typography>
-                <LinearProgress variant="determinate" value={50} />  {/* Example: 50% */}
+                <LinearProgress variant="determinate" value={50} />
             </div>
         </div>
     );
