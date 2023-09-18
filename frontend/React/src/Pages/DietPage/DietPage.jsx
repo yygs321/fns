@@ -1,6 +1,10 @@
-import React, { memo, useEffect, useState } from "react";
+// import React, { memo, useEffect, useState } from "react";
 
-import { Box, Grid, Typography } from "@mui/material";
+// import { Box, Grid, Typography } from "@mui/material";
+
+import React, { memo, useState } from "react";
+
+import { Grid, Typography } from "@mui/material";
 
 import NavigateBeforeRoundedIcon from "@mui/icons-material/NavigateBeforeRounded";
 import NavigateNextRoundedIcon from "@mui/icons-material/NavigateNextRounded";
@@ -135,7 +139,7 @@ const DietPage = () => {
                 color="white"
                 fontSize={"1.2rem"}
                 fontWeight={"bold"}
-                sx={{ textShadow: "2px 2px 20px #8b8b8b" }}
+                sx={{ textShadow: "2px 2px 20px #c8c8c8" }}
               >
                 {isToday
                   ? `${today[0]}${today[1]}${today[2]}${today[3]}`

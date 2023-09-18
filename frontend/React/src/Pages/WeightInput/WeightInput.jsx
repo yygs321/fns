@@ -22,7 +22,7 @@ const WeightInput = () => {
   const [목표체중, set목표체중] = useState("");
   const [다이어트모드, set다이어트모드] = useState(false);
   const [기간, set기간] = useState("");
-  const [일자, set일자] = useState({
+  const 일자 = ({
     month: 월,
     day: 일,
   });

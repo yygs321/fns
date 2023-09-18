@@ -1,12 +1,21 @@
 import React from "react";
+// import {
+//   Grid,
+//   Container,
+//   FormControl,
+//   Box,
+//   TextField,
+//   Button,
+//   Checkbox,
+//   FormControlLabel,
+//   Radio,
+//   RadioGroup,
+// } from "@mui/material";
 import {
   Grid,
   Container,
-  FormControl,
-  Box,
   TextField,
   Button,
-  Checkbox,
   FormControlLabel,
   Radio,
   RadioGroup,
@@ -32,6 +41,8 @@ const InfoPage = () => {
   const 닉네임입력 = (e) => {
     set닉네임(e.target.value);
   };
+  console.log(닉네임확인);  // 임시로 닉네임확인 사용. 나중에 지워주세요!
+  console.log(닉네임입력);  // 임시로 닉네임입력 사용. 나중에 지워주세요!
 
   const 저장버튼 = () => {
     const 닉네임확인결과 = 닉네임확인함수(닉네임);

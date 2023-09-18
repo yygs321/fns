@@ -9,8 +9,15 @@ import MyCustom from "./Pages/MyPage/MyCustom";
 import Signup from "./Pages/LoginPage/Signup";
 import Info from "./Pages/LoginPage/InfoPage";
 import DietPage from "./Pages/DietPage/DietPage";
+import DietInputPage from "./Pages/DietPage/DietInputPage";
 import SearchFoodPage from "./Pages/SearchFoodPage/SearchFoodPage";
 import WeightInput from "./Pages/WeightInput/WeightInput";
+import SearchFood from "./Pages/DietPage/SearchFood";
+import FoodDetail from "./Pages/SearchFoodPage/FoodDetail";
+import SportsPage from "./Pages/SportsPage/SportsPage";
+import CommunityPage from "./Pages/CommunityPage/CommunityPage";
+import CalendarPage from "./Pages/CalendarPage/CalendarPage";
+import UserSearch from "./Pages/CommunityPage/UserSearch";
 
 function App() {
   useEffect(() => {
@@ -52,12 +59,20 @@ function App() {
             <Route path="/info" element={<Info />} />
             <Route path="/weight" element={<WeightInput/>}/>
             <Route path="/signup" element={<Signup/>}/>
+            <Route path="/signup" element={<Signup />} />
             <Route path="/main" element={<MainPage />} />
             <Route path="/diet" element={<DietPage />} />
+            <Route path="/diet/input" element={<DietInputPage />} />
+            <Route path="/diet/input/search" element={<SearchFood />} />
             <Route path="/mypage" element={<MyPage />} />
-            <Route path="/edit-profile" element={<EditProfilePage />} />
-            <Route path="/mycustom" element={<MyCustom />} />
+            <Route path="/mypage/edit-profile" element={<EditProfilePage />} />
+            <Route path="/mypage/mycustom" element={<MyCustom />} />
             <Route path="/search" element={<SearchFoodPage />} />
+            <Route path="/search/food/:name" element={<FoodDetail />} />
+            <Route path="/fit" element={<SportsPage />} />
+            <Route path="/community" element={<CommunityPage />} />
+            <Route path="/calendar" element={<CalendarPage />} />
+            <Route path="/community/search" element={<UserSearch />} />
           </Routes>
         </div>
 
@@ -69,6 +84,7 @@ function App() {
             position: "fixed",
             bottom: "0",
             maxWidth: "767px",
+            zIndex: "1000",
           }}
         >
           {isLogin && <FooterBar />}
