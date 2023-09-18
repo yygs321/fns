@@ -2,15 +2,16 @@ import React, { useState } from 'react';
 import { Typography, Slider, Button, Grid } from '@mui/material';
 
 const MyCustomPage = () => {
-    const [kcal, setKcal] = useState(2000);
-    const [carbs, setCarbs] = useState(250);
-    const [protein, setProtein] = useState(50);
-    const [fat, setFat] = useState(70);
+    // 더미 데이터
+    const initialKcal = 2000;
+    const initialCarbs = 250;
+    const initialProtein = 50;
+    const initialFat = 70;
 
-    const maxKcal = 3000;
-    const maxCarbs = 400;
-    const maxProtein = 100;
-    const maxFat = 100;
+    const [kcal, setKcal] = useState(initialKcal);
+    const [carbs, setCarbs] = useState(initialCarbs);
+    const [protein, setProtein] = useState(initialProtein);
+    const [fat, setFat] = useState(initialFat);
 
     return (
         <div className="gray-pages" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
@@ -20,13 +21,12 @@ const MyCustomPage = () => {
                 </Typography>
 
                 <Grid container spacing={3}>
-                    {renderSlider("칼로리", kcal, setKcal, maxKcal)}
-                    {renderSlider("탄수화물", carbs, setCarbs, maxCarbs)}
-                    {renderSlider("단백질", protein, setProtein, maxProtein)}
-                    {renderSlider("지방", fat, setFat, maxFat)}
+                    {renderSlider("칼로리", kcal, setKcal, initialKcal)}
+                    {renderSlider("탄수화물", carbs, setCarbs, initialCarbs)}
+                    {renderSlider("단백질", protein, setProtein, initialProtein)}
+                    {renderSlider("지방", fat, setFat, initialFat)}
                     <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center' }}>
                     <Button variant="contained" 
-           
                       style={{ marginTop: '20px', fontSize: '20px', padding: '5px 100px' }}
                         >저장
                     </Button>
@@ -37,7 +37,10 @@ const MyCustomPage = () => {
     );
 };
 
-const renderSlider = (label, value, setValue, maxValue) => {
+const renderSlider = (label, value, setValue, initialValue) => {
+    const minValue = initialValue * 0.5;
+    const maxValue = initialValue * 1.5;
+
     return (
         <Grid item xs={12}>
             <Typography gutterBottom>
@@ -46,6 +49,7 @@ const renderSlider = (label, value, setValue, maxValue) => {
             <Slider
              value={value}
              onChange={(e, newValue) => setValue(newValue)}
+             min={minValue}
              max={maxValue}
              sx={{
                 '& .MuiSlider-rail': {
@@ -53,9 +57,8 @@ const renderSlider = (label, value, setValue, maxValue) => {
                 }
                 }}
                 />
-
-                </Grid>
-            );
-            }
+        </Grid>
+    );
+}
 
 export default MyCustomPage;
