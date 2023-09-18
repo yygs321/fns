@@ -2,6 +2,7 @@ package ssafy.fns.domain.auth.service;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
+import java.util.regex.Pattern;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -37,6 +38,8 @@ public class AuthServiceImpl implements AuthService {
     @Override
     @Transactional
     public void sendEmail(EmailRequestDto requestDto) {
+        emailDupicationCheck(requestDto.getEmail());
+
         String email = requestDto.getEmail();
         String code = generateAuthCode();
 
@@ -115,5 +118,20 @@ public class AuthServiceImpl implements AuthService {
 
     private String generateAuthCode() {
         return UUID.randomUUID().toString();
+    }
+
+    private void emailDupicationCheck(String email) {
+        checkEmailRegexp(email);
+        Member member = memberRepository.findByEmail(email);
+
+        if (member != null) {
+            throw new GlobalRuntimeException("이미 존재하는 이메일입니다.", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    private void checkEmailRegexp(String email) {
+        if (!Pattern.matches("\\w+@\\w+\\.\\w+(\\.\\w+)?", email)) {
+            throw new GlobalRuntimeException("Email 형식이 잘못되었습니다.", HttpStatus.BAD_REQUEST);
+        }
     }
 }

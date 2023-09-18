@@ -52,6 +52,7 @@ public class SecurityConfig {
             web.ignoring()
                     .antMatchers(
                             "/api/members/sign-up",
+                            "/api/members/check-email-duplication",
                             "/api/auth/**",
                             "/error"
                     );
