@@ -16,7 +16,7 @@ public class EmailSender {
         this.javaMailSender = javaMailSender;
     }
 
-    void sendEmail(String code, String email) {
+    void sendEmail(String email, String code) {
 
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         try {
