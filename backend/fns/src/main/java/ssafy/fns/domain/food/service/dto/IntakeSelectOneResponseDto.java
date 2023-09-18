@@ -7,6 +7,8 @@ import java.sql.Date;
 public class IntakeSelectOneResponseDto {
     private Date date;
 
+    private String volume;
+
     private Long kcal;
 
     private Long carbs;
@@ -28,6 +30,8 @@ public class IntakeSelectOneResponseDto {
     private Long iron;
 
     private Long phosphorus;
+
+    private Long sodium;
 
     private Long vitaminA;
 

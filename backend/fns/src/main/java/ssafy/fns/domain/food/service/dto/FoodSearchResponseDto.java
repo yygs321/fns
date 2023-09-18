@@ -8,7 +8,7 @@ public class FoodSearchResponseDto {
 
     private String name;
 
-    private Long volume;
+    private String volume;
 
     private Long kcal;
 
@@ -31,6 +31,8 @@ public class FoodSearchResponseDto {
     private Long iron;
 
     private Long phosphorus;
+
+    private Long sodium;
 
     private Long vitaminA;
 

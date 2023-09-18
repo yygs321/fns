@@ -13,7 +13,29 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import ssafy.fns.global.entity.BaseEntity;
-
+/*
+                   음식명 name
+                 * 식품중량 volume
+                 * 에너지(kcal) kcal
+                 * 탄수화물 carbs
+                 * 단백질 protein;
+                 * 지방 fat
+                 * 수분 pollination
+                 * 당 sugar
+                 * 식이섬유 dietaryFiber
+                 * 칼슘 calcium
+                 * 칼륨 potassium
+                 * 철 iron
+                 * 인 phosphorus
+                 * 나트륨 sodium
+                 * 비타민A vitaminA
+                 * 비타민C vitaminC
+                 * 비타민D vitaminD
+                 * 콜레스테롤 cholesterol
+                 * 포화지방산 acid
+                 * 트랜스지방산 transFat
+                 * 업체명
+                 * */
 @Entity
 @Getter
 @NoArgsConstructor
@@ -25,7 +47,7 @@ public class Food extends BaseEntity {
 
     private String name;
 
-    private Long volume;
+    private String volume;
 
     private Long kcal;
 
@@ -48,6 +70,8 @@ public class Food extends BaseEntity {
     private Long iron;
 
     private Long phosphorus;
+
+    private Long sodium;
 
     private Long vitaminA;
 
