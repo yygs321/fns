@@ -4,11 +4,17 @@ server:
 spring:
   profiles:
     include: secret
-    #active: develop
+    active: develop
 
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+
+---
+spring:
+  config:
+    activate:
+      on-profile: develop
       
   h2:
     console:
