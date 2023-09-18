@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import ssafy.fns.global.entity.BaseEntity;
@@ -38,7 +39,7 @@ public class Food extends BaseEntity {
 
     private Long sugar;
 
-    private Long dietary_fiber;
+    private Long dietaryFiber;
 
     private Long calcium;
 
@@ -58,9 +59,8 @@ public class Food extends BaseEntity {
 
     private Long acid;
 
-    private Long trans_fat;
+    private Long transFat;
 
     @OneToMany(mappedBy = "food", fetch = FetchType.LAZY)
     private List<Intake> intakeList = new ArrayList<>();
-
 }
