@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import ssafy.fns.domain.auth.controller.dto.CheckEmailRequestDto;
-import ssafy.fns.domain.auth.controller.dto.SendEmailRequestDto;
 import ssafy.fns.domain.auth.controller.dto.SignInRequestDto;
 import ssafy.fns.domain.auth.service.AuthService;
+import ssafy.fns.domain.member.controller.dto.EmailRequestDto;
 import ssafy.fns.global.response.JsonResponse;
 
 @RestController
@@ -25,7 +25,7 @@ public class AuthController {
     }
 
     @PostMapping("/send-email")
-    public ResponseEntity<?> sendEmail(@RequestBody SendEmailRequestDto requestDto) {
+    public ResponseEntity<?> sendEmail(@RequestBody EmailRequestDto requestDto) {
         service.sendEmail(requestDto);
         return JsonResponse.ok("Email 전송 성공!!");
     }

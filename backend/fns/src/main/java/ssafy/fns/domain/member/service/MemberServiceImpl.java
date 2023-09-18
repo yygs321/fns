@@ -5,6 +5,7 @@ import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import ssafy.fns.domain.member.controller.dto.EmailRequestDto;
 import ssafy.fns.domain.member.controller.dto.SignUpRequestDto;
 import ssafy.fns.domain.member.entity.Member;
 import ssafy.fns.domain.member.entity.Provider;
@@ -33,8 +34,9 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional
-    public void emailDuplicationCheck(String email) {
-        Member member = memberRepository.findByEmail(email);
+    public void emailDuplicationCheck(EmailRequestDto requestDto) {
+        checkEmailRegexp(requestDto.getEmail());
+        Member member = memberRepository.findByEmail(requestDto.getEmail());
 
         if (member != null) {
             throw new GlobalRuntimeException("이미 존재하는 이메일입니다.", HttpStatus.BAD_REQUEST);
@@ -52,16 +54,11 @@ public class MemberServiceImpl implements MemberService {
     }
 
     private void checkValication(SignUpRequestDto requestDto) {
-        String email = requestDto.getEmail();
         String password = requestDto.getPassword();
         String password2 = requestDto.getPassword2();
-        String provider = requestDto.getProvider(); //default
 
-        checkEmailRegexp(email);
         checkPasswordMatch(password, password2);
         checkPasswordRegexp(password);
-        emailDuplicationCheck(email);
-
     }
 
     private void checkEmailRegexp(String email) {

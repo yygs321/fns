@@ -1,4 +1,4 @@
-package ssafy.fns.domain.auth.controller.dto;
+package ssafy.fns.domain.member.controller.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SendEmailRequestDto {
+public class EmailRequestDto {
 
     private String email;
 }

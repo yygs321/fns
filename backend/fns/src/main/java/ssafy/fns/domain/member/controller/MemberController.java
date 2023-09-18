@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ssafy.fns.domain.member.controller.dto.EmailRequestDto;
 import ssafy.fns.domain.member.controller.dto.SignUpRequestDto;
 import ssafy.fns.domain.member.service.MemberService;
 import ssafy.fns.global.response.JsonResponse;
@@ -18,6 +19,13 @@ import ssafy.fns.global.response.JsonResponse;
 public class MemberController {
 
     private final MemberService memberService;
+
+    @PostMapping(value = "/email-check")
+    public ResponseEntity<?> emailDuplicationCheck(@RequestBody EmailRequestDto requestDto) {
+        memberService.emailDuplicationCheck(requestDto.getEmail());
+        return JsonResponse.ok("이메일 중복 체크 성공!");
+    }
+
 
     @PostMapping(value = "/sign-up")
     public ResponseEntity<?> signUp(@RequestBody SignUpRequestDto requestDto) {
