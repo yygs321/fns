@@ -5,6 +5,7 @@ import java.util.UUID;
 import java.util.regex.Pattern;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,7 @@ import ssafy.fns.global.security.JwtTokenProvider;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AuthServiceImpl implements AuthService {
 
     private final MemberRepository memberRepository;
@@ -105,7 +107,8 @@ public class AuthServiceImpl implements AuthService {
 
         RefreshToken refreshToken = RefreshToken.builder()
                 .token(token.getRefreshToken())
-                .email(requestDto.getEmail()).build();
+                .email(requestDto.getEmail())
+                .build();
 
         refreshTokenRepository.save(refreshToken);
     }
