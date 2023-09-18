@@ -23,7 +23,7 @@ public class EmailSender {
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, false,
                     "UTF-8");
             log.info("이메일 : " + email);
-            mimeMessageHelper.setFrom("yygs321@gmail.com");
+            mimeMessageHelper.setFrom("kimsg64090@gmail.com");
             mimeMessageHelper.setTo(email);
             mimeMessageHelper.setSubject("[FNS]회원가입 인증 코드입니다.");
             mimeMessageHelper.setText("인증 코드 : " + code);
