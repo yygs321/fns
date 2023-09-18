@@ -95,7 +95,8 @@ public class AuthServiceImpl implements AuthService {
 
         saveRefreshToken(requestDto, token);
 
-        return TokenDto.from(token);
+        Long expirationTime = jwtTokenProvider.getExpirationTime(token.getAccessToken());
+        return TokenDto.from(token, expirationTime);
     }
 
 

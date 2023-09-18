@@ -13,17 +13,21 @@ public class TokenDto {
 
     private String accessToken;
     private String refreshToken;
+    private Long expirationTime;
 
     @Builder
-    public TokenDto(String accessToken, String refreshToken) {
+    public TokenDto(String accessToken, String refreshToken, Long expirationTime) {
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
+        this.expirationTime = expirationTime;
     }
 
-    public static TokenDto from(Token token) {
+    public static TokenDto from(Token token, Long expirationTime) {
         return TokenDto.builder()
                 .accessToken(token.getAccessToken())
-                .refreshToken(token.getRefreshToken()).build();
+                .refreshToken(token.getRefreshToken())
+                .expirationTime(expirationTime)
+                .build();
     }
 
 }
