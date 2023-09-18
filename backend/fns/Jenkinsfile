@@ -26,9 +26,11 @@ pipeline{
 
         stage('Apply application.yml files') {
             steps {
-                withCredentials([file(credentialsId: 'application-secret', variable: 'secretFile')]) {
+                withCredentials([file(credentialsId: 'application-secret', variable: 'secretFile'),
+                file(credentialsId: 'application-prod', variable: 'prodFile')]) {
                     script {
                         sh 'cp $secretFile backend/fns/src/main/resources/application-secret.yml'
+                        sh 'cp $prodFile backend/fns/src/main/resources/application-prod.yml'
                     }
                 }
             }
