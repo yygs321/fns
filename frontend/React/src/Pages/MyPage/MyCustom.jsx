@@ -19,6 +19,8 @@ const MyCustomPage = () => {
     const navigate = useNavigate();
     const timeoutRef = useRef(null);
 
+    const [tooltipOpen, setTooltipOpen] = useState(false); // 툴팁의 상태를 관리
+
     const handleSave = () => {
         setOpenModal(true);
         timeoutRef.current = setTimeout(() => {
@@ -35,13 +37,13 @@ const MyCustomPage = () => {
         <div className="gray-pages" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
             <div className="white-content-box" style={{ width: '80%', padding: '20px', backgroundColor: 'white', borderRadius: '10px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>
             <Typography variant="h6" gutterBottom align="center" style={{marginBottom: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                    나에게 맞는 영양소를 설정해보세요!
-                    <Tooltip title="내 추천 영양소의 0.5배 ~ 1.5배까지 조정 가능합니다!">
-                        <IconButton size="small" style={{marginLeft: '10px'}}>
-                            <HelpOutlineIcon />
-                        </IconButton>
-                    </Tooltip>
-                </Typography>
+            나에게 맞는 영양소를 설정해보세요!
+            <Tooltip title="내 추천 영양소의 0.5배 ~ 1.5배까지 조정 가능합니다!" open={tooltipOpen}>
+                <IconButton size="small" style={{marginLeft: '10px'}} onClick={() => setTooltipOpen(!tooltipOpen)}>
+                    <HelpOutlineIcon />
+                </IconButton>
+            </Tooltip>
+            </Typography>
 
                 <Grid container spacing={3}>
                     {renderSlider("칼로리", kcal, setKcal, initialKcal)}
