@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ssafy.fns.domain.auth.controller.dto.CheckEmailRequestDto;
 import ssafy.fns.domain.auth.controller.dto.EmailRequestDto;
+import ssafy.fns.domain.auth.controller.dto.RefreshAccessTokenRequestDto;
 import ssafy.fns.domain.auth.controller.dto.SignInRequestDto;
 import ssafy.fns.domain.auth.service.AuthService;
 import ssafy.fns.global.response.JsonResponse;
@@ -38,4 +39,8 @@ public class AuthController {
         return JsonResponse.ok("Email 체크 성공!!");
     }
 
+    @PostMapping("/refresh")
+    public ResponseEntity<?> refresh(@RequestBody RefreshAccessTokenRequestDto requestDto) {
+        return JsonResponse.ok("액세스토큰 재발급 완료", authService.refreshAccessToken(requestDto));
+    }
 }
