@@ -25,6 +25,10 @@ const DietInputPage = () => {
     navigate("/diet/input/search", { state: { name: state.name } });
   };
 
+  const handleSaveDietList = () => {
+    navigate("/diet");
+  };
+
   return (
     <div className="white-pages">
       <Grid
@@ -273,6 +277,7 @@ const DietInputPage = () => {
               textShadow: "2px 2px 20px #8b8b8b",
               fontSize: "1.5rem",
             }}
+            onClick={handleSaveDietList}
           >
             저장
           </Button>
