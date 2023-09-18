@@ -1,62 +1,48 @@
 import React, { useState } from "react";
 
-import { Grid, Typography, TextField, Button } from "@mui/material";
+import { Grid, Typography, TextField, Button, Avatar } from "@mui/material";
 
 import NavigateBeforeRoundedIcon from "@mui/icons-material/NavigateBeforeRounded";
 import SearchIcon from "@mui/icons-material/Search";
 
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const SearchFood = () => {
+import Cat from "../../assets/Image/cat.jpg";
+
+const UserSearch = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [addedFood, setAddedFood] = useState([]);
+  const [addedFollow, setAddedFollow] = useState([]);
 
   console.log(searchTerm);
 
-  const location = useLocation();
   const navigate = useNavigate();
 
-  const state = location.state;
-
   const searchResult = [
-    { name: "치킨버거", kcal: 10 },
-    { name: "새우버거", kcal: 11 },
-    { name: "야옹이", kcal: 15 },
-    { name: "버거킹", kcal: 5 },
-    { name: "치킨버거", kcal: 10 },
-    { name: "새우버거", kcal: 11 },
-    { name: "야옹이", kcal: 15 },
-    { name: "버거킹", kcal: 5 },
-    { name: "치킨버거", kcal: 10 },
-    { name: "새우버거", kcal: 11 },
-    { name: "야옹이", kcal: 15 },
-    { name: "버거킹", kcal: 5 },
-    { name: "치킨버거", kcal: 10 },
-    { name: "새우버거", kcal: 11 },
-    { name: "야옹이", kcal: 15 },
-    { name: "버거킹", kcal: 5 },
+    { username: "짭냥이", profileImg: Cat, old: 10, BMI: 30 },
+    { username: "콘냥이", profileImg: Cat, old: 9, BMI: 25 },
+    { username: "얍냥이", profileImg: Cat, old: 8, BMI: 20 },
+    { username: "쩝냥이", profileImg: Cat, old: 7, BMI: 15 },
   ];
-
   const goBackPage = () => {
     navigate(-1);
   };
 
-  const handleSearchFood = () => {
+  const handleSearchFollow = () => {
     // 여기다 검색 api
   };
 
   const handlePressEnter = (event) => {
     if (event.key === "Enter") {
-      handleSearchFood();
+      handleSearchFollow();
     }
   };
 
-  const handleAddFood = (one) => {
-    setAddedFood((prev) => [...prev, one.name]);
+  const handleAddFollow = (one) => {
+    setAddedFollow((prev) => [...prev, one.username]);
   };
 
-  const handleCancleFood = (one) => {
-    setAddedFood((prev) => prev.filter((food) => food !== one.name));
+  const handleCancleFollow = (one) => {
+    setAddedFollow((prev) => prev.filter((follow) => follow !== one.username));
   };
 
   const handleSaveButton = () => {
@@ -103,7 +89,7 @@ const SearchFood = () => {
             fontSize={"1.5rem"}
             fontWeight={"bold"}
           >
-            {`${state.name} 검색` || ""}
+            유저 검색
           </Typography>
         </Grid>
         <Grid
@@ -133,10 +119,13 @@ const SearchFood = () => {
           <TextField
             fullWidth
             variant="outlined"
-            placeholder="음식 검색"
+            placeholder="유저 검색"
             InputProps={{
               endAdornment: (
-                <SearchIcon color="text.secondary" onClick={handleSearchFood} />
+                <SearchIcon
+                  color="text.secondary"
+                  onClick={handleSearchFollow}
+                />
               ),
               sx: {
                 height: "6vh",
@@ -177,23 +166,79 @@ const SearchFood = () => {
             alignItems={"center"}
             sx={{
               borderBottom: "2px solid #e7e7e7",
-              height: "10vh",
+              height: "20vh",
             }}
           >
             <Grid
               container
               item
-              xs={5}
+              xs={4}
               justifyContent={"flex-start"}
               alignItems={"center"}
             >
-              <Typography
-                variant="caption"
-                component="div"
-                fontSize={"1.4rem"}
-                fontWeight={"bold"}
+              <Grid
+                container
+                item
+                xs={12}
+                justifyContent={"center"}
+                alignItems={"center"}
               >
-                {one.name}
+                <Avatar
+                  alt="MyName"
+                  src={one.profileImg}
+                  sx={{ width: "5rem", height: "5rem" }}
+                />
+              </Grid>
+              <Grid
+                container
+                item
+                xs={12}
+                justifyContent={"center"}
+                alignItems={"center"}
+                textAlign={"center"}
+              >
+                <Typography
+                  variant="body1"
+                  color="text.primary"
+                  fontSize={"1rem"}
+                  fontWeight={"bold"}
+                  whiteSpace="nowrap"
+                  overflow="hidden"
+                  textOverflow="ellipsis"
+                >
+                  {one.username}
+                </Typography>
+              </Grid>
+            </Grid>
+            <Grid
+              container
+              item
+              xs={4}
+              justifyContent={"center"}
+              alignItems={"center"}
+              direction={"column"}
+            >
+              <Typography
+                variant="body1"
+                color="text.primary"
+                fontSize={"1rem"}
+                fontWeight={"bold"}
+                whiteSpace="nowrap"
+                overflow="hidden"
+                textOverflow="ellipsis"
+              >
+                나이 : {one.old}
+              </Typography>
+              <Typography
+                variant="body1"
+                color="text.primary"
+                fontSize={"1rem"}
+                fontWeight={"bold"}
+                whiteSpace="nowrap"
+                overflow="hidden"
+                textOverflow="ellipsis"
+              >
+                BMI : {one.BMI}
               </Typography>
             </Grid>
             <Grid
@@ -203,34 +248,18 @@ const SearchFood = () => {
               justifyContent={"center"}
               alignItems={"center"}
             >
-              <Typography
-                variant="caption"
-                component="div"
-                fontSize={"1.1rem"}
-                // fontWeight={"bold"}
-              >
-                {one.kcal} kcal
-              </Typography>
-            </Grid>
-            <Grid
-              container
-              item
-              xs={3}
-              justifyContent={"flex-end"}
-              alignItems={"center"}
-            >
-              {!addedFood.includes(one.name) ? (
+              {!addedFollow.includes(one.username) ? (
                 <Button
                   variant="contained"
                   sx={{
                     borderRadius: "10px",
                     color: "white",
                     textShadow: "2px 2px 20px #8b8b8b",
-                    fontSize: "1.1rem",
+                    fontSize: "1rem",
                   }}
-                  onClick={() => handleAddFood(one)}
+                  onClick={() => handleAddFollow(one)}
                 >
-                  추가
+                  팔로우
                 </Button>
               ) : (
                 <Button
@@ -240,11 +269,11 @@ const SearchFood = () => {
                     borderRadius: "10px",
                     color: "white",
                     textShadow: "2px 2px 20px #8b8b8b",
-                    fontSize: "1.1rem",
+                    fontSize: "1rem",
                   }}
-                  onClick={() => handleCancleFood(one)}
+                  onClick={() => handleCancleFollow(one)}
                 >
-                  취소
+                  &nbsp;취소&nbsp;
                 </Button>
               )}
             </Grid>
@@ -285,4 +314,4 @@ const SearchFood = () => {
   );
 };
 
-export default SearchFood;
+export default UserSearch;

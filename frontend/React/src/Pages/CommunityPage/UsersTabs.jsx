@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 
 import PropTypes from "prop-types";
-import { Tabs, Tab, Typography, Box, Grid, Avatar } from "@mui/material";
+import { Tabs, Tab, Box } from "@mui/material";
 
-import CommunityBarGraph from "./CommunityBarGraph";
+import UserGraph from "./UserGraph";
+import UserRecommend from "./UserRecommend";
 import Cat from "../../assets/Image/cat.jpg";
 
 const UsersTabs = () => {
@@ -58,14 +59,32 @@ const UsersTabs = () => {
     },
   ];
 
+  const recommendedUsers = [
+    { username: "짭냥이", profileImg: Cat, old: 10, BMI: 30 },
+    { username: "콘냥이", profileImg: Cat, old: 9, BMI: 25 },
+    { username: "얍냥이", profileImg: Cat, old: 8, BMI: 20 },
+    { username: "쩝냥이", profileImg: Cat, old: 7, BMI: 15 },
+  ];
+
+  const [selectedUser, setSelectedUser] = useState(null);
+
+  const handleUserChange = (newUserIndex) => (event) => {
+    if (selectedUser !== newUserIndex) {
+      setSelectedUser(newUserIndex);
+    } else {
+      setSelectedUser(null);
+    }
+  };
+
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    setSelectedUser(null);
   };
 
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box sx={{ width: "100%", height: "100%" }}>
       <Box
         sx={{
           borderBottom: 1,
@@ -77,205 +96,39 @@ const UsersTabs = () => {
           onChange={handleChange}
           aria-label="community"
           variant="fullWidth"
+          sx={{ height: "6vh" }}
         >
           <Tab label="팔로우" {...a11yProps(0)} />
           <Tab label="추천" {...a11yProps(1)} />
         </Tabs>
       </Box>
-      <CustomTabPanel value={value} index={0}>
+      <CustomTabPanel
+        value={value}
+        index={0}
+        className="noscroll"
+        sx={{ overflow: "scroll" }}
+      >
         {users.map((user, index) => (
-          <Grid
-            key={`${user.username}-${index}`}
-            container
-            item
-            xs={11}
-            justifyContent={"center"}
-            alignItems={"center"}
-            sx={{
-              height: "22vh",
-              borderBottom: "1px solid #e7e7e7",
-              pt: "1vh",
-              pb: "2vh",
-            }}
-          >
-            <Grid
-              container
-              item
-              xs={5}
-              justifyContent={"center"}
-              alignItems={"center"}
-            >
-              <Grid
-                container
-                item
-                xs={12}
-                justifyContent={"center"}
-                alignItems={"center"}
-              >
-                <Avatar
-                  alt="MyName"
-                  src={user.profileImg}
-                  sx={{ width: "5rem", height: "5rem" }}
-                />
-              </Grid>
-              <Grid
-                container
-                item
-                xs={12}
-                justifyContent={"center"}
-                alignItems={"center"}
-                textAlign={"center"}
-              >
-                <Typography
-                  variant="body1"
-                  color="text.primary"
-                  fontSize={"1rem"}
-                  fontWeight={"bold"}
-                  whiteSpace="nowrap"
-                  overflow="hidden"
-                  textOverflow="ellipsis"
-                >
-                  {user.username}
-                </Typography>
-              </Grid>
-            </Grid>
-            <Grid
-              container
-              item
-              xs={7}
-              justifyContent={"center"}
-              alignItems={"center"}
-              direction={"column"}
-            >
-              <Grid item container xs={3} justifyContent={"center"}>
-                <CommunityBarGraph
-                  nutrient={user.nowKcal}
-                  maxNutrient={user.maxKcal}
-                  name={"칼로리"}
-                />
-              </Grid>
-              <Grid item container xs={3} justifyContent={"center"}>
-                <CommunityBarGraph
-                  nutrient={user.nowcarb}
-                  maxNutrient={user.maxcarb}
-                  name={"탄수화물"}
-                />
-              </Grid>
-              <Grid item container xs={3} justifyContent={"center"}>
-                <CommunityBarGraph
-                  nutrient={user.nowprot}
-                  maxNutrient={user.maxprot}
-                  name={"단백질"}
-                />
-              </Grid>
-              <Grid item container xs={3} justifyContent={"center"}>
-                <CommunityBarGraph
-                  nutrient={user.nowprov}
-                  maxNutrient={user.maxprov}
-                  name={"지방"}
-                />
-              </Grid>
-            </Grid>
-          </Grid>
+          <UserGraph
+            user={user}
+            index={index}
+            selectedUser={selectedUser}
+            handleUserChange={handleUserChange}
+            key={`follow-${user.username}-${index}`}
+          />
         ))}
       </CustomTabPanel>
-      <CustomTabPanel value={value} index={1}>
-        {users.map((user, index) => (
-          <Grid
-            key={`${user.username}-${index}`}
-            container
-            item
-            xs={11}
-            justifyContent={"center"}
-            alignItems={"center"}
-            sx={{
-              height: "22vh",
-              borderBottom: "1px solid #e7e7e7",
-              pt: "1vh",
-              pb: "2vh",
-            }}
-          >
-            <Grid
-              container
-              item
-              xs={5}
-              justifyContent={"center"}
-              alignItems={"center"}
-            >
-              <Grid
-                container
-                item
-                xs={12}
-                justifyContent={"center"}
-                alignItems={"center"}
-              >
-                <Avatar
-                  alt="MyName"
-                  src={user.profileImg}
-                  sx={{ width: "5rem", height: "5rem" }}
-                />
-              </Grid>
-              <Grid
-                container
-                item
-                xs={12}
-                justifyContent={"center"}
-                alignItems={"center"}
-                textAlign={"center"}
-              >
-                <Typography
-                  variant="body1"
-                  color="text.primary"
-                  fontSize={"1rem"}
-                  fontWeight={"bold"}
-                  whiteSpace="nowrap"
-                  overflow="hidden"
-                  textOverflow="ellipsis"
-                >
-                  {user.username}
-                </Typography>
-              </Grid>
-            </Grid>
-            <Grid
-              container
-              item
-              xs={7}
-              justifyContent={"center"}
-              alignItems={"center"}
-              direction={"column"}
-            >
-              <Grid item container xs={3} justifyContent={"center"}>
-                <CommunityBarGraph
-                  nutrient={user.nowKcal}
-                  maxNutrient={user.maxKcal}
-                  name={"칼로리"}
-                />
-              </Grid>
-              <Grid item container xs={3} justifyContent={"center"}>
-                <CommunityBarGraph
-                  nutrient={user.nowcarb}
-                  maxNutrient={user.maxcarb}
-                  name={"탄수화물"}
-                />
-              </Grid>
-              <Grid item container xs={3} justifyContent={"center"}>
-                <CommunityBarGraph
-                  nutrient={user.nowprot}
-                  maxNutrient={user.maxprot}
-                  name={"단백질"}
-                />
-              </Grid>
-              <Grid item container xs={3} justifyContent={"center"}>
-                <CommunityBarGraph
-                  nutrient={user.nowprov}
-                  maxNutrient={user.maxprov}
-                  name={"지방"}
-                />
-              </Grid>
-            </Grid>
-          </Grid>
-
-          // 여기 재활용하는 부분 컴포넌트로 따로 빼서, 작성할 것. 코드 너무 길어짐.
+      <CustomTabPanel
+        value={value}
+        index={1}
+        className="noscroll"
+        sx={{ overflow: "scroll" }}
+      >
+        {recommendedUsers.map((user, index) => (
+          <UserRecommend
+            user={user}
+            key={`recommend-${user.username}-${index}`}
+          />
         ))}
       </CustomTabPanel>
     </Box>
@@ -295,7 +148,11 @@ function CustomTabPanel(props) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && <Box>{children}</Box>}
+      {value === index && (
+        <Box className="noscroll" sx={{ overflow: "scroll", height: "54vh" }}>
+          {children}
+        </Box>
+      )}
     </div>
   );
 }

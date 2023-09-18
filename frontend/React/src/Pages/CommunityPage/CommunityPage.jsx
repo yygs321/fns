@@ -7,8 +7,11 @@ import SearchIcon from "@mui/icons-material/Search";
 import CommunityBarGraph from "./CommunityBarGraph";
 import UsersTabs from "./UsersTabs";
 import Cat from "../../assets/Image/cat.jpg";
+import { useNavigate } from "react-router-dom";
 
 const CommunityPage = () => {
+  const navigate = useNavigate();
+
   const maxKcal = 2400;
   const nowKcal = 2000;
   const maxcarb = 200;
@@ -19,6 +22,10 @@ const CommunityPage = () => {
   const nowprov = 50;
 
   const username = "귀여운 멍멍이";
+
+  const goToSearch = () => {
+    navigate("/community/search");
+  };
 
   return (
     <div className="white-pages">
@@ -39,7 +46,7 @@ const CommunityPage = () => {
           <Grid
             container
             item
-            xs={5}
+            xs={4}
             justifyContent={"center"}
             alignItems={"center"}
           >
@@ -80,7 +87,7 @@ const CommunityPage = () => {
           <Grid
             container
             item
-            xs={7}
+            xs={8}
             justifyContent={"center"}
             alignItems={"center"}
             direction={"column"}
@@ -155,7 +162,7 @@ const CommunityPage = () => {
                 },
               }}
               maxRows={1}
-              // onClick={goToSearch}
+              onClick={goToSearch}
             />
           </Grid>
         </Grid>
@@ -165,6 +172,9 @@ const CommunityPage = () => {
           xs={11}
           justifyContent={"center"}
           alignItems={"center"}
+          sx={{
+            height: "60vh",
+          }}
         >
           <UsersTabs />
         </Grid>
