@@ -10,7 +10,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ssafy.fns.domain.auth.controller.dto.CheckEmailRequestDto;
 import ssafy.fns.domain.auth.controller.dto.EmailRequestDto;
-import ssafy.fns.domain.auth.controller.dto.RefreshAccessTokenRequestDto;
 import ssafy.fns.domain.auth.controller.dto.SignInRequestDto;
 import ssafy.fns.domain.auth.entity.MailHistory;
 import ssafy.fns.domain.auth.entity.RefreshToken;
@@ -97,11 +96,6 @@ public class AuthServiceImpl implements AuthService {
         return TokenDto.from(token);
     }
 
-    @Override
-    @Transactional
-    public String refreshAccessToken(RefreshAccessTokenRequestDto requestDto) {
-        return null;
-    }
 
     private void saveRefreshToken(SignInRequestDto requestDto, Token token) {
         RefreshToken lastRefreshToken = refreshTokenRepository.findByEmail(requestDto.getEmail());

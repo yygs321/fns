@@ -19,22 +19,22 @@ import ssafy.fns.global.response.JsonResponse;
 @RequestMapping("/api/auth")
 public class AuthController {
 
-    private final AuthService service;
+    private final AuthService authService;
 
     @PostMapping("/sign-in")
     public ResponseEntity<?> defaultSignIn(@RequestBody SignInRequestDto requestDto) {
-        return JsonResponse.ok("로그인 성공!", service.defaultSignIn(requestDto));
+        return JsonResponse.ok("로그인 성공!", authService.defaultSignIn(requestDto));
     }
 
     @PostMapping("/send-email")
     public ResponseEntity<?> sendEmail(@RequestBody EmailRequestDto requestDto) {
-        service.sendEmail(requestDto);
+        authService.sendEmail(requestDto);
         return JsonResponse.ok("Email 전송 성공!!");
     }
 
     @PostMapping("/check-email")
     public ResponseEntity<?> checkEmail(@RequestBody CheckEmailRequestDto requestDto) {
-        service.checkEmail(requestDto);
+        authService.checkEmail(requestDto);
         return JsonResponse.ok("Email 체크 성공!!");
     }
 
