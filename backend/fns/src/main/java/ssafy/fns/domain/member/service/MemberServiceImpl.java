@@ -31,15 +31,15 @@ public class MemberServiceImpl implements MemberService {
         memberRepository.save(member);
     }
 
-    @Override
-    @Transactional
-    public void nicknameDuplication(String nickname) {
-        Member member = memberRepository.findByNickname(nickname);
-
-        if (member != null) {
-            throw new GlobalRuntimeException("이미 존재하는 닉네임입니다.", HttpStatus.BAD_REQUEST);
-        }
-    }
+//    @Override
+//    @Transactional
+//    public void nicknameDuplication(String nickname) {
+//        Member member = memberRepository.findByNickname(nickname);
+//
+//        if (member != null) {
+//            throw new GlobalRuntimeException("이미 존재하는 닉네임입니다.", HttpStatus.BAD_REQUEST);
+//        }
+//    }
 
     private void checkPassword(String password, String password2) {
         if (!password.equals(password2)) {

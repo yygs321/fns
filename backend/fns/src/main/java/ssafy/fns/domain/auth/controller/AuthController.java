@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ssafy.fns.domain.auth.controller.dto.CheckEmailRequestDto;
+import ssafy.fns.domain.auth.controller.dto.EmailRequestDto;
 import ssafy.fns.domain.auth.controller.dto.SignInRequestDto;
 import ssafy.fns.domain.auth.service.AuthService;
-import ssafy.fns.domain.member.controller.dto.EmailRequestDto;
 import ssafy.fns.global.response.JsonResponse;
 
 @RestController

@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ssafy.fns.domain.auth.controller.dto.CheckEmailRequestDto;
+import ssafy.fns.domain.auth.controller.dto.EmailRequestDto;
 import ssafy.fns.domain.auth.controller.dto.RefreshAccessTokenRequestDto;
 import ssafy.fns.domain.auth.controller.dto.SignInRequestDto;
 import ssafy.fns.domain.auth.entity.MailHistory;
@@ -17,7 +18,6 @@ import ssafy.fns.domain.auth.repository.MailHistoryRepository;
 import ssafy.fns.domain.auth.repository.RefreshTokenRepository;
 import ssafy.fns.domain.auth.service.dto.TokenDto;
 import ssafy.fns.domain.auth.vo.Token;
-import ssafy.fns.domain.member.controller.dto.EmailRequestDto;
 import ssafy.fns.domain.member.entity.Member;
 import ssafy.fns.domain.member.entity.Provider;
 import ssafy.fns.domain.member.repository.MemberRepository;
@@ -121,17 +121,14 @@ public class AuthServiceImpl implements AuthService {
     }
 
     private void emailDupicationCheck(String email) {
-        checkEmailRegexp(email);
+        if (!Pattern.matches("\\w+@\\w+\\.\\w+(\\.\\w+)?", email)) {
+            throw new GlobalRuntimeException("Email 형식이 잘못되었습니다.", HttpStatus.BAD_REQUEST);
+        }
+
         Member member = memberRepository.findByEmail(email);
 
         if (member != null) {
             throw new GlobalRuntimeException("이미 존재하는 이메일입니다.", HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    private void checkEmailRegexp(String email) {
-        if (!Pattern.matches("\\w+@\\w+\\.\\w+(\\.\\w+)?", email)) {
-            throw new GlobalRuntimeException("Email 형식이 잘못되었습니다.", HttpStatus.BAD_REQUEST);
         }
     }
 }

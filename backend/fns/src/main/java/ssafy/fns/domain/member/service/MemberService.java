@@ -6,5 +6,5 @@ public interface MemberService {
 
     void signUp(SignUpRequestDto requestDto);
 
-    void nicknameDuplication(String nickname);
+    //void nicknameDuplication(String nickname);
 }

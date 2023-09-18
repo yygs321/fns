@@ -29,7 +29,7 @@ public class MailHistory {
         this.email = email;
         this.code = code;
         this.isAuthed = isAuthed;
-        this.sendDate = sendDate;
+        this.sendDate = LocalDateTime.now();
     }
 
     public boolean checkAuthCode(String code) {

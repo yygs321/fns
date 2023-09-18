@@ -1,4 +1,4 @@
-package ssafy.fns.domain.member.controller.dto;
+package ssafy.fns.domain.auth.controller.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
