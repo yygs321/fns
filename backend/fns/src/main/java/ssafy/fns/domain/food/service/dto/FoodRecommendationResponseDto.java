@@ -18,11 +18,11 @@ public class FoodRecommendationResponseDto {
 
     private String name;
 
-    private int kcal;
+    private Double kcal;
 
-    private Long carbs;
+    private Double carbs;
 
-    private Long protein;
+    private Double protein;
 
-    private Long fat;
+    private Double fat;
 }

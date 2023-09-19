@@ -33,7 +33,7 @@ public class Intake extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Time intakeTime;
 
-    private Long rate;
+    private Double rate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "food_id")
@@ -41,7 +41,7 @@ public class Intake extends BaseEntity {
 
     @Builder
 
-    public Intake(Date date, Time intakeTime, Long rate) {
+    public Intake(Date date, Time intakeTime, Double rate) {
         this.date = date;
         this.intakeTime = intakeTime;
         this.rate = rate;

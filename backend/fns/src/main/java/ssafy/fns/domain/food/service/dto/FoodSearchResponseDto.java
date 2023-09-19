@@ -10,39 +10,39 @@ public class FoodSearchResponseDto {
 
     private String volume;
 
-    private Long kcal;
+    private Double kcal;
 
-    private Long carbs;
+    private Double carbs;
 
-    private Long protein;
+    private Double protein;
 
-    private Long fat;
+    private Double fat;
 
-    private Long pollination;
+    private Double pollination;
 
-    private Long sugar;
+    private Double sugar;
 
-    private Long dietary_fiber;
+    private Double dietaryFiber;
 
-    private Long calcium;
+    private Double calcium;
 
-    private Long potassium;
+    private Double potassium;
 
-    private Long iron;
+    private Double iron;
 
-    private Long phosphorus;
+    private Double phosphorus;
 
-    private Long sodium;
+    private Double sodium;
 
-    private Long vitaminA;
+    private Double vitaminA;
 
-    private Long vitaminC;
+    private Double vitaminC;
 
-    private Long vitaminD;
+    private Double vitaminD;
 
-    private Long cholesterol;
+    private Double cholesterol;
 
-    private Long acid;
+    private Double acid;
 
-    private Long trans_fat;
+    private Double transFat;
 }

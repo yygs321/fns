@@ -19,5 +19,5 @@ public class IntakeForDietResponseDto {
 
     private Time intake_time;
 
-    private int kcal;
+    private Double kcal;
 }

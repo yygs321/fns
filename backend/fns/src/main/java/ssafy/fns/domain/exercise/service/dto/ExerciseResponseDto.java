@@ -14,5 +14,5 @@ public class ExerciseResponseDto {
 
     private String sportsName;
 
-    private Long kcal;
+    private Double kcal;
 }

@@ -13,11 +13,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class IntakeForMainResponseDto {
-    private int kcal;
+    private Double kcal;
 
-    private Long carbs;
+    private Double carbs;
 
-    private Long protein;
+    private Double protein;
 
-    private Long fat;
+    private Double fat;
 }

@@ -19,6 +19,6 @@ import ssafy.fns.domain.food.entity.Time;
 public class IntakeInsertRequestDto {
     private Long foodId;
     private Date date;
-    private Long rate;
+    private Double rate;
     private Time intakeTime;
 }

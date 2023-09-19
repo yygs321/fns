@@ -49,42 +49,68 @@ public class Food extends BaseEntity {
 
     private String volume;
 
-    private Long kcal;
+    private Double kcal;
 
-    private Long carbs;
+    private Double carbs;
 
-    private Long protein;
+    private Double protein;
 
-    private Long fat;
+    private Double fat;
 
-    private Long pollination;
+    private Double pollination;
 
-    private Long sugar;
+    private Double sugar;
 
-    private Long dietaryFiber;
+    private Double dietaryFiber;
 
-    private Long calcium;
+    private Double calcium;
 
-    private Long potassium;
+    private Double potassium;
 
-    private Long iron;
+    private Double iron;
 
-    private Long phosphorus;
+    private Double phosphorus;
 
-    private Long sodium;
+    private Double sodium;
 
-    private Long vitaminA;
+    private Double vitaminA;
 
-    private Long vitaminC;
+    private Double vitaminC;
 
-    private Long vitaminD;
+    private Double vitaminD;
 
-    private Long cholesterol;
+    private Double cholesterol;
 
-    private Long acid;
+    private Double acid;
 
-    private Long transFat;
+    private Double transFat;
 
     @OneToMany(mappedBy = "food", fetch = FetchType.LAZY)
     private List<Intake> intakeList = new ArrayList<>();
+
+    public Food(String name, String volume, Double kcal, Double carbs, Double protein, Double fat,
+            Double pollination, Double sugar, Double dietaryFiber, Double calcium, Double potassium,
+            Double iron, Double phosphorus, Double sodium, Double vitaminA, Double vitaminC,
+            Double vitaminD, Double cholesterol, Double acid, Double transFat) {
+        this.name = name;
+        this.volume = volume;
+        this.kcal = kcal;
+        this.carbs = carbs;
+        this.protein = protein;
+        this.fat = fat;
+        this.pollination = pollination;
+        this.sugar = sugar;
+        this.dietaryFiber = dietaryFiber;
+        this.calcium = calcium;
+        this.potassium = potassium;
+        this.iron = iron;
+        this.phosphorus = phosphorus;
+        this.sodium = sodium;
+        this.vitaminA = vitaminA;
+        this.vitaminC = vitaminC;
+        this.vitaminD = vitaminD;
+        this.cholesterol = cholesterol;
+        this.acid = acid;
+        this.transFat = transFat;
+    }
 }
