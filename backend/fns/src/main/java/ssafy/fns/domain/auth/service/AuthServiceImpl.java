@@ -101,6 +101,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
+    @Transactional
     public TokenResponseDto refreshAccessToken(RefreshAccessTokenRequestDto requestDto) {
 
         String accessToken = jwtTokenProvider.refreshAccessToken(requestDto.getRefreshToken());
