@@ -54,7 +54,8 @@ public class SecurityConfig {
                             "/api/members/sign-up",
                             "/api/auth/**",
                             "/error",
-                            "/api/db"
+                            "/api/db",
+                            "/v3/api-docs","/swagger*/**" //swagger 용
                     );
         };
     }
