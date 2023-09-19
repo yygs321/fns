@@ -4,7 +4,7 @@ const initialState = {
   nowTimeDiet: [],
 };
 
-// 로그인 관련 리듀서
+// 식단 관련 리듀서
 export const dietReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.NOW_TIME_DIET:
