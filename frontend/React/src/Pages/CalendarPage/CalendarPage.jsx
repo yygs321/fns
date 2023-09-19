@@ -26,29 +26,40 @@ const CalendarPage = () => {
         // ... 추가적인 날짜와 데이터
     };
 
-    const getIconByValue = (value) => {
-        if (value <= 20) return '🔴';
-        if (value <= 50) return '🔶';
-        if (value <= 70) return '🟡';
-        return '🟢';
-    };    
+    const getBackgroundColorByValue = (value) => {
+        if (value === undefined) return 'transparent'; // 데이터가 없는 경우 투명색
+        if (value <= 20) return '#ebedf0';  // 깃허브 잔디의 가장 연한 색
+        if (value <= 50) return '#c6e48b';  // 조금 더 진한 색
+        if (value <= 70) return '#7bc96f';  // 더 진한 색
+        return '#239a3b';  // 가장 진한 색
+    }; 
 
     const CustomDay = (props) => {
         const { day, outsideCurrentMonth, ...other } = props;
         const formattedDate = day.format('YYYY-MM-DD');
         const value = data[formattedDate];
-        const icon = value !== undefined ? getIconByValue(value) : null;
-
+        const backgroundColor = getBackgroundColorByValue(value);
         
+         // 현재 날짜와 선택된 날짜를 비교하여 선택 여부 파악
+    const isSelected = day.isSame(selectedDate, 'day');
+    
+    const dayStyle = {
+        backgroundColor: backgroundColor,
+        // 선택된 날짜에 대한 스타일링
+        border: isSelected ? '2px solid red' : 'none',  // 빨간 테두리
+        
+    };
 
         return (
+            
             <Badge
-                key={formattedDate}
-                overlap="circular"
-                badgeContent={icon}
-            >
-                <PickersDay {...other} outsideCurrentMonth={outsideCurrentMonth} day={day} />
-            </Badge>
+            key={formattedDate}
+            overlap="circular"
+            badgeContent="" // 아이콘 대신 배경색만 변경하므로 badgeContent는 비워둡니다.
+            style={{ backgroundColor }}
+        >
+            <PickersDay {...other} outsideCurrentMonth={outsideCurrentMonth} day={day} style={dayStyle}/>
+        </Badge>
         );
     };
 

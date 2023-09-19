@@ -1,84 +1,83 @@
-
-$입력크기 : 60vw;
-$단위마진 : 67vw;
-$글자마진 : 3.5rem;
+$입력크기: 60vw;
+$단위마진: 67vw;
+$글자마진: 3.5rem;
 // 1글자 기준 1글자 추가마다 1rem씩 제거
 // 최대 4글자
 
-.정보입력박스{
-    display : flex;
-    justify-content: center;
-    font-size : 50px;
-    margin-top : 6vh;
+.정보입력박스 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 50px;
+  height: 15vh;
+  // margin-top: 6vh;
 }
-.닉네임박스{
-    display : flex;
-    align-items: center;
+.닉네임박스 {
+  display: flex;
+  align-items: center;
 }
-.닉네임글자{
-    position: relative;
-    margin-right : $글자마진 - 2;
-    white-space: nowrap;
+.닉네임글자 {
+  position: relative;
+  // margin-right: $글자마진 - 2;
+  white-space: nowrap;
 }
-.닉네임입력{
-    width : $입력크기;
+.닉네임입력 {
+  width: $입력크기;
 }
-.나이글자{
-    position :relative;
-    margin-right : $글자마진 - 1;
-    white-space: nowrap;
+.나이글자 {
+  position: relative;
+  // margin-right: $글자마진 - 1;
+  white-space: nowrap;
 }
-.나이박스{
-    display : flex;
-    align-items: center;
+.나이박스 {
+  display: flex;
+  align-items: center;
 }
-.나이단위{
-    position : absolute;
-    margin-left : $단위마진;
+// .나이단위 {
+//   position: absolute;
+//   margin-left: $단위마진;
+// }
+.나이입력 {
+  width: $입력크기;
 }
-.나이입력{
-    width : $입력크기;
+.키박스 {
+  display: flex;
+  align-items: center;
 }
-.키박스{
-    display: flex;
-    align-items: center;
+.키글자 {
+  display: relative;
+  // margin-right: $글자마진;
+  white-space: nowrap;
 }
-.키글자{
-    display : relative;
-    margin-right : $글자마진;
-    white-space : nowrap;
+.키입력 {
+  width: $입력크기;
 }
-.키입력{
-    width : $입력크기;
+// .키단위 {
+//   position: absolute;
+//   margin-left: $단위마진;
+// }
+.개인정보-체중박스 {
+  display: flex;
+  align-items: center;
 }
-.키단위{
-    position : absolute;
-    margin-left : $단위마진;
+.체중글자 {
+  display: relative;
+  // margin-right: $글자마진 - 1;
+  white-space: nowrap;
 }
-.체중박스{
-    display : flex;
-    align-items : center;
+.체중입력 {
+  width: $입력크기;
 }
-.체중글자{
-    display : relative;
-    margin-right : $글자마진 - 1;
-    white-space : nowrap;
+// .체중단위 {
+//   position: absolute;
+//   margin-left: $단위마진;
+// }
+.성별박스 {
+  display: flex;
+  align-items: center;
 }
-.체중입력{
-    width : $입력크기;
-}
-.체중단위{
-    position : absolute;
-    margin-left : $단위마진;
-}
-.성별박스{
-    display : flex;
-    align-items: center;
-}
-.성별글자{
-    margin-right : $글자마진;
-}
-.저장버튼{
-
-    
-}
+// .성별글자 {
+// margin-right: $글자마진;
+// }
+// .저장버튼 {
+// }

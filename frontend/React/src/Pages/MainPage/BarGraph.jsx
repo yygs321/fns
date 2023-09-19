@@ -57,7 +57,7 @@ const BarGraph = (props) => {
           variant="determinate"
           sx={{
             height: "2.5vh",
-            borderRadius: "30px",
+            borderRadius: "20px",
             backgroundColor: "#e7e7e7",
             marginY: "0.3rem",
             "& .MuiLinearProgress-bar": {
