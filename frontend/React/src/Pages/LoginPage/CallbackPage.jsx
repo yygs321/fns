@@ -20,27 +20,26 @@ const KakaoCallback = () => {
     axios
       .post(`${SERVER_API_URL}/auth/kakao`, { code: code })
       .then((res) => {
-        const userNo = res.data.data;
-
+        // const userNo = res.data.data;
+          console.log(res)
+          console.log(res.data)
         // userNo를 비교용으로 사용하기 위해 리덕스 저장
         // dispatch(loginSaveUserNo(userNo));
 
-        if (res.data.code === "201") {
+        if (res.message === "signup") {
           // 정보입력 페이지로 이동. 코드는 메시지로 변경
           navigate(`/Info`);
-        } else if (res.data.code === "200") {
+        } else if (res.message === "login") {
           localStorage.setItem(
             "access-token",
-            res.headers.get("authorization")
+            res.data.accessToken
           );
           localStorage.setItem(
             "refresh-token",
-            res.headers.get("refresh-token")
+            res.data.refreshToken
           );
           navigate(`/main`);
-        } else {
-          alert(res.data.message);
-        }
+        } 
       })
       .catch((e) => {
         console.log(e);
