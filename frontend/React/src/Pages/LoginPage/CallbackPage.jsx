@@ -18,7 +18,7 @@ const KakaoCallback = () => {
 
   const kakaoLogin = (code) => {
     axios
-      .get(`${SERVER_API_URL}/user/login?code=${code}`)
+      .post(`${SERVER_API_URL}/auth/kakao`, { code: code })
       .then((res) => {
         const userNo = res.data.data;
 

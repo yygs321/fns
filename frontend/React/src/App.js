@@ -19,6 +19,7 @@ import CommunityPage from "./Pages/CommunityPage/CommunityPage";
 import CalendarPage from "./Pages/CalendarPage/CalendarPage";
 import UserSearch from "./Pages/CommunityPage/UserSearch";
 import { useSelector } from "react-redux";
+import KakaoCallback from "./Pages/LoginPage/CallbackPage"
 
 function App() {
   useEffect(() => {
@@ -81,6 +82,7 @@ function App() {
             <Route path="/community" element={<CommunityPage />} />
             <Route path="/community/search" element={<UserSearch />} />
             <Route path="/calendar" element={<CalendarPage />} />
+            <Route path="/oauth/kakao/callback" element={<KakaoCallback />} />
           </Routes>
         </div>
 
