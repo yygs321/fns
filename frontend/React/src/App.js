@@ -16,6 +16,7 @@ import FoodDetail from "./Pages/SearchFoodPage/FoodDetail";
 import SportsPage from "./Pages/SportsPage/SportsPage";
 import CommunityPage from "./Pages/CommunityPage/CommunityPage";
 import UserSearch from "./Pages/CommunityPage/UserSearch";
+import { useSelector } from "react-redux";
 
 function App() {
   useEffect(() => {
@@ -34,7 +35,12 @@ function App() {
     };
   }, []);
 
-  const isLogin = true; // 추후에 로그인 기능 활성화되면 수정
+  const isLogin = useSelector((state) => {
+    return state.auth.isLogin;
+  });
+
+  // 추후에 로그인 기능 활성화되면 수정, 로그인 체크해서 로그인 안 돼있으면 로그인 페이지로 보내야됨.
+  // 또 로그인이 안 돼있으면 FooterBar가 보이지 않도록 처리해야됨.
 
   return (
     <div
@@ -42,16 +48,19 @@ function App() {
       style={{
         width: "100%",
         // height: "100%",
-        minHeight: "92vh",
+        minHeight: isLogin ? "92vh" : "100vh",
         maxWidth: "767px",
         margin: "0 auto",
-        paddingBottom: "8vh",
+        paddingBottom: isLogin ? "8vh" : "0",
         boxShadow:
           "0 4px 4px rgba(0,23,80,.01), 0 1px 6px rgba(0,23,80,.015), 0 8px 8px rgba(0,23,80,.012), 0 16px 16px rgba(0,23,80,.012), 8px 32px 32px rgba(0,23,80,.018), 8px 64px 64px rgba(0,23,80,.018)",
       }}
     >
       <Router>
-        <div className="display-body" style={{ minHeight: "92vh" }}>
+        <div
+          className="display-body"
+          style={{ minHeight: isLogin ? "92vh" : "100vh" }}
+        >
           <Routes>
             <Route path="/" element={<LoginPage />} />
             <Route path="/info" element={<Info />} />
@@ -71,19 +80,21 @@ function App() {
           </Routes>
         </div>
 
-        <div
-          className="footerbar"
-          style={{
-            height: "8vh",
-            width: "100%",
-            position: "fixed",
-            bottom: "0",
-            maxWidth: "767px",
-            zIndex: "1000",
-          }}
-        >
-          {isLogin && <FooterBar />}
-        </div>
+        {isLogin && (
+          <div
+            className="footerbar"
+            style={{
+              height: "8vh",
+              width: "100%",
+              position: "fixed",
+              bottom: "0",
+              maxWidth: "767px",
+              zIndex: "1000",
+            }}
+          >
+            <FooterBar />
+          </div>
+        )}
       </Router>
     </div>
   );
