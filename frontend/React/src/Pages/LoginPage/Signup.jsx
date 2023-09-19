@@ -35,11 +35,11 @@ const Signup = () => {
 
   const 가입버튼 = () => {
     // 비밀번호 양식 확인
-    if (유효한닉네임) {
-      if (일치여부확인 && 비번양식확인) {
-        navigate("/info");
-      }
-    }
+    // if (유효한닉네임) {
+    // if (일치여부확인 && 비번양식확인) {
+    navigate("/info");
+    // }
+    // }
   };
 
   function 비번체크(password) {

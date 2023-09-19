@@ -21,13 +21,50 @@ function 닉네임확인함수(nickname) {
   return regex.test(nickname);
 }
 
+// 나중에 저장 버튼에서 모두 다 입력했는지 체크해야됨
+
 const InfoPage = () => {
   const [닉네임, set닉네임] = useState("");
   const [닉네임확인, set닉네임확인] = useState(true);
   const [프로필공개여부, set프로필공개여부] = useState(true);
   const [성별, set성별] = useState("");
+
+  const [나이, set나이] = useState("");
+  const [키, set키] = useState("");
+  const [체중, set체중] = useState("");
+
   const 닉네임입력 = (e) => {
     set닉네임(e.target.value);
+  };
+
+  const 나이입력 = (e) => {
+    if (e.target.value === "") {
+      set나이("");
+    }
+    const value = parseInt(e.target.value);
+    if (!isNaN(value) && value > 0) {
+      set나이(value);
+    }
+  };
+
+  const 키입력 = (e) => {
+    if (e.target.value === "") {
+      set키("");
+    }
+    const value = parseInt(e.target.value);
+    if (!isNaN(value) && value > 0) {
+      set키(value);
+    }
+  };
+
+  const 체중입력 = (e) => {
+    if (e.target.value === "") {
+      set체중("");
+    }
+    const value = parseInt(e.target.value);
+    if (!isNaN(value) && value > 0) {
+      set체중(value);
+    }
   };
   console.log(닉네임확인); // 임시로 닉네임확인 사용. 나중에 지워주세요!
   console.log(닉네임입력); // 임시로 닉네임입력 사용. 나중에 지워주세요!
@@ -59,8 +96,14 @@ const InfoPage = () => {
   };
 
   return (
-    <Container maxWidth="xs" componenet="main">
-      <Grid container justifyContent={"center"} alignItems={"center"}>
+    <Container maxWidth="xs" componenet="main" sx={{ height: "100vh" }}>
+      <Grid
+        container
+        justifyContent={"center"}
+        alignItems={"center"}
+        alignContent={"center"}
+        sx={{ height: "100%" }}
+      >
         <div className="정보입력박스">
           <Typography sx={{ fontSize: "3rem" }}>정보 입력</Typography>
         </div>
@@ -92,10 +135,12 @@ const InfoPage = () => {
                 variant="outlined"
                 color="primary"
                 type="text"
+                value={닉네임}
                 // label="닉네임"
                 autoFocus
                 required
                 className="닉네임입력"
+                onChange={닉네임입력}
                 InputProps={{
                   sx: { borderRadius: "10px" },
                 }}
@@ -176,9 +221,11 @@ const InfoPage = () => {
                 color="primary"
                 type="number"
                 // label="나이"
+                value={나이}
                 autoFocus
                 required
                 className="나이입력"
+                onChange={나이입력}
                 InputProps={{
                   endAdornment: (
                     <Typography color="text.secondary">(세)</Typography>
@@ -218,10 +265,12 @@ const InfoPage = () => {
                 variant="outlined"
                 color="primary"
                 type="number"
+                value={키}
                 // label="키"
                 autoFocus
                 required
                 className="키입력"
+                onChange={키입력}
                 InputProps={{
                   endAdornment: (
                     <Typography color="text.secondary">(cm)</Typography>
@@ -237,7 +286,7 @@ const InfoPage = () => {
           container
           justifyContent={"center"}
           alignItems={"center"}
-          className="체중박스"
+          className="개인정보-체중박스"
           sx={{ my: 2 }}
         >
           <Grid item container xs={11}>
@@ -262,10 +311,12 @@ const InfoPage = () => {
                 variant="outlined"
                 color="primary"
                 type="number"
+                value={체중}
                 // label="체중"
                 autoFocus
                 required
                 className="체중입력"
+                onChange={체중입력}
                 InputProps={{
                   endAdornment: (
                     <Typography color="text.secondary">(kg)</Typography>
@@ -404,5 +455,3 @@ const InfoPage = () => {
 };
 
 export default InfoPage;
-
-// 저장 버튼만 수정하고 push

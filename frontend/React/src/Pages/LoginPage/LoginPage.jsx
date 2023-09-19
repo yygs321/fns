@@ -2,8 +2,6 @@ import React, { useState } from "react";
 
 import kakaoButton from "../../assets/Image/kakao_login_asset.svg";
 import googleButton from "../../assets/Image/google_login_asset.svg";
-// import kakaoButton from "../../assets/Image/kakao_login.svg";
-// import googleButton from "../../assets/Image/google_login.svg";
 
 import {
   Box,
