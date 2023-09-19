@@ -7,7 +7,7 @@ import java.sql.Date;
 public class IntakeSelectOneResponseDto {
     private Date date;
 
-    private String volume;
+    private int volume;
 
     private Double kcal;
 

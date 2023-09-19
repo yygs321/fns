@@ -8,7 +8,7 @@ public class FoodSearchResponseDto {
 
     private String name;
 
-    private String volume;
+    private int volume;
 
     private Double kcal;
 

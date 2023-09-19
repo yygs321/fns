@@ -61,13 +61,6 @@ public class DbController {
             int id = 1;
             for (int i = 0; i < element.size(); i++) {
                 JSONObject ob = (JSONObject) element.get(i);
-                Double kcal = nullCheck((String) ob.get("에너지(kcal)"));
-                Double carbs = nullCheck((String) ob.get("탄수화물(g)"));
-                Double protein = nullCheck((String) ob.get("단백질(g)"));
-                Double fat = nullCheck((String) ob.get("지방(g)"));
-
-                if(kcal == -1.0 || carbs == -1.0 || protein == -1.0 || fat == -1.0) continue;
-
                 String name = (String) ob.get("식품명");
                 // 중량에 단위가 붙어 있어써 때서 저장
                 String volume = (String) ob.get("식품중량");
@@ -78,27 +71,35 @@ public class DbController {
                         break;
                     }
                 }
-                Long rate = Long.parseLong(volume.substring(0,index));
+                int size = Integer.parseInt(volume.substring(0, index));
+                Double rate = Double.parseDouble(volume.substring(0,index))/100.0;
 
-                Double pollination = nullCheck((String) ob.get("수분(g)"));
-                Double sugar = nullCheck((String) ob.get("당류(g)"));
-                Double dietaryFiber = nullCheck((String) ob.get("식이섬유(g)"));
-                Double calcium = nullCheck((String) ob.get("칼슘(mg)"));
-                Double potassium = nullCheck((String) ob.get("칼륨(mg)"));
-                Double iron = nullCheck((String) ob.get("철(mg)"));
-                Double phosphorus = nullCheck((String) ob.get("인(mg)"));
-                Double sodium = nullCheck((String) ob.get("나트륨(mg)"));
-                Double vitaminA = nullCheck((String) ob.get("비타민 A(μg RAE)"));
-                Double vitaminC = nullCheck((String) ob.get("비타민 C(mg)"));
-                Double vitaminD = nullCheck((String) ob.get("비타민 D(μg)"));
-                Double cholesterol = nullCheck((String) ob.get("콜레스테롤(mg)"));
-                Double acid = nullCheck((String) ob.get("포화지방산(g)"));
-                Double transFat = nullCheck((String) ob.get("트랜스지방산(g)"));
+                Double kcal = nullCheck((String) ob.get("에너지(kcal)"),rate);
+                Double carbs = nullCheck((String) ob.get("탄수화물(g)"),rate);
+                Double protein = nullCheck((String) ob.get("단백질(g)"),rate);
+                Double fat = nullCheck((String) ob.get("지방(g)"),rate);
+
+                if(kcal == -1.0 || carbs == -1.0 || protein == -1.0 || fat == -1.0) continue;
+
+                Double pollination = nullCheck((String) ob.get("수분(g)"),rate);
+                Double sugar = nullCheck((String) ob.get("당류(g)"),rate);
+                Double dietaryFiber = nullCheck((String) ob.get("식이섬유(g)"),rate);
+                Double calcium = nullCheck((String) ob.get("칼슘(mg)"),rate);
+                Double potassium = nullCheck((String) ob.get("칼륨(mg)"),rate);
+                Double iron = nullCheck((String) ob.get("철(mg)"),rate);
+                Double phosphorus = nullCheck((String) ob.get("인(mg)"),rate);
+                Double sodium = nullCheck((String) ob.get("나트륨(mg)"),rate);
+                Double vitaminA = nullCheck((String) ob.get("비타민 A(μg RAE)"),rate);
+                Double vitaminC = nullCheck((String) ob.get("비타민 C(mg)"),rate);
+                Double vitaminD = nullCheck((String) ob.get("비타민 D(μg)"),rate);
+                Double cholesterol = nullCheck((String) ob.get("콜레스테롤(mg)"),rate);
+                Double acid = nullCheck((String) ob.get("포화지방산(g)"),rate);
+                Double transFat = nullCheck((String) ob.get("트랜스지방산(g)"),rate);
 
 //                System.out.println("음식 "+(id++)+" : " + name+",\t"+volume+",\t"+kcal+" kcal,\t"+carbs+",\t"+protein+",\t"+fat);
 //                System.out.println("?????????????????????????????????????????????????????????????????????????????????????????");
 
-                Food food = new Food(name, volume, kcal, carbs, protein, fat,
+                Food food = new Food(name, size, kcal, carbs, protein, fat,
                         pollination, sugar, dietaryFiber, calcium, potassium,
                         iron, phosphorus, sodium, vitaminA, vitaminC,
                         vitaminD, cholesterol, acid, transFat);
@@ -110,10 +111,10 @@ public class DbController {
         }
     }
 
-    public Double nullCheck(String nutrition){
+    public Double nullCheck(String nutrition, Double rate){
         if(nutrition.isEmpty())
             return -1.0;
-
-        return Double.parseDouble(nutrition);
+        Double temp = Double.parseDouble(nutrition)*rate;
+        return (double) Math.round(temp*10)/10.0;
     }
 }

@@ -33,6 +33,7 @@ public class Intake extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Time intakeTime;
 
+    // 몇 인분 먹었는지 : 1.0 인분, 0.5 인분, 1.5 인분 등 
     private Double rate;
 
     @ManyToOne(fetch = FetchType.LAZY)

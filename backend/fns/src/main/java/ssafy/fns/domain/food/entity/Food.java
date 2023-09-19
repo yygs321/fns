@@ -47,7 +47,7 @@ public class Food extends BaseEntity {
 
     private String name;
 
-    private String volume;
+    private int volume;
 
     private Double kcal;
 
@@ -88,7 +88,7 @@ public class Food extends BaseEntity {
     @OneToMany(mappedBy = "food", fetch = FetchType.LAZY)
     private List<Intake> intakeList = new ArrayList<>();
 
-    public Food(String name, String volume, Double kcal, Double carbs, Double protein, Double fat,
+    public Food(String name, int volume, Double kcal, Double carbs, Double protein, Double fat,
             Double pollination, Double sugar, Double dietaryFiber, Double calcium, Double potassium,
             Double iron, Double phosphorus, Double sodium, Double vitaminA, Double vitaminC,
             Double vitaminD, Double cholesterol, Double acid, Double transFat) {
