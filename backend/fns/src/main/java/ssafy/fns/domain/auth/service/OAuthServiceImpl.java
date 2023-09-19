@@ -30,7 +30,7 @@ public class OAuthServiceImpl implements OAuthService {
     public OAuthLoginResponseDto login(SocialLoginType socialLoginType,
             OAuthLoginRequestDto requestDto) {
         String accessToken;
-        OAuthLoginResponseDto oauthLoginResponseDto;
+        OAuthLoginResponseDto oAuthLoginResponseDto;
         TokenResponseDto tokenResponseDto;
 
         OAuthProvider oauthProvider = findSocialProvider(socialLoginType);
@@ -49,36 +49,36 @@ public class OAuthServiceImpl implements OAuthService {
             tokenResponseDto = TokenResponseDto.from(token, expirationTime);
         }
 
-        oauthLoginResponseDto = OAuthLoginResponseDto.builder()
+        oAuthLoginResponseDto = OAuthLoginResponseDto.builder()
                 .tokenResponseDto(tokenResponseDto)
                 .detailDto(detailDto)
                 .socialLoginType(socialLoginType.toString())
                 .build();
 
-        return oauthLoginResponseDto;
+        return oAuthLoginResponseDto;
     }
 
     private OAuthProvider findSocialProvider(SocialLoginType socialLoginType) {
-        final OAuthProvider oauthProvider;
+        final OAuthProvider oAuthProvider;
         switch (socialLoginType) {
             case GOOGLE -> {
-                oauthProvider = googleProvider;
+                oAuthProvider = googleProvider;
             }
             case KAKAO -> {
-                oauthProvider = kakaoProvider;
+                oAuthProvider = kakaoProvider;
             }
             default -> {
                 throw new GlobalRuntimeException("알 수 없는 소셜 로그인 형식입니다.",
                         HttpStatus.BAD_REQUEST);
             }
         }
-        return oauthProvider;
+        return oAuthProvider;
     }
 
     private OAuthDetailDto getUserDetail(SocialLoginType socialLoginType, String token) {
-        OAuthProvider oauthProvider = findSocialProvider(socialLoginType);
+        OAuthProvider oAuthProvider = findSocialProvider(socialLoginType);
 
-        return oauthProvider.getOAuthDetail(token);
+        return oAuthProvider.getOAuthDetail(token);
     }
 
     private boolean isEmailDuplicated(SocialLoginType socialLoginType, String email) {

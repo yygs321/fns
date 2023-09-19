@@ -19,13 +19,13 @@ import ssafy.fns.global.response.JsonResponse;
 @RequestMapping(value = "/api/auth")
 public class OAuthController {
 
-    private final OAuthService oauthService;
+    private final OAuthService oAuthService;
 
     @PostMapping(value = "/{social-login-type}")
     public ResponseEntity<?> socialLogin(
             @PathVariable(name = "social-login-type") SocialLoginType socialLoginType,
             OAuthLoginRequestDto requestDto) {
-        OAuthLoginResponseDto oauthResponseDto = oauthService.login(socialLoginType,
+        OAuthLoginResponseDto oauthResponseDto = oAuthService.login(socialLoginType,
                 requestDto);
 
         if (oauthResponseDto.getTokenResponseDto() == null) {
