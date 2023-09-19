@@ -5,17 +5,19 @@ import java.util.UUID;
 import java.util.regex.Pattern;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ssafy.fns.domain.auth.controller.dto.CheckEmailRequestDto;
 import ssafy.fns.domain.auth.controller.dto.EmailRequestDto;
+import ssafy.fns.domain.auth.controller.dto.RefreshAccessTokenRequestDto;
 import ssafy.fns.domain.auth.controller.dto.SignInRequestDto;
 import ssafy.fns.domain.auth.entity.MailHistory;
 import ssafy.fns.domain.auth.entity.RefreshToken;
 import ssafy.fns.domain.auth.repository.MailHistoryRepository;
 import ssafy.fns.domain.auth.repository.RefreshTokenRepository;
-import ssafy.fns.domain.auth.service.dto.TokenDto;
+import ssafy.fns.domain.auth.service.dto.TokenResponseDto;
 import ssafy.fns.domain.auth.vo.Token;
 import ssafy.fns.domain.member.entity.Member;
 import ssafy.fns.domain.member.entity.Provider;
@@ -25,6 +27,7 @@ import ssafy.fns.global.security.JwtTokenProvider;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class AuthServiceImpl implements AuthService {
 
     private final MemberRepository memberRepository;
@@ -75,7 +78,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     @Transactional
-    public TokenDto defaultSignIn(SignInRequestDto requestDto) {
+    public TokenResponseDto defaultSignIn(SignInRequestDto requestDto) {
         Member member = memberRepository.findByEmailAndProvider(requestDto.getEmail(),
                 Provider.DEFAULT);
 
@@ -93,7 +96,21 @@ public class AuthServiceImpl implements AuthService {
 
         saveRefreshToken(requestDto, token);
 
-        return TokenDto.from(token);
+        Long expirationTime = jwtTokenProvider.getExpirationTime(token.getAccessToken());
+        return TokenResponseDto.from(token, expirationTime);
+    }
+
+    @Override
+    public TokenResponseDto refreshAccessToken(RefreshAccessTokenRequestDto requestDto) {
+
+        String accessToken = jwtTokenProvider.refreshAccessToken(requestDto.getRefreshToken());
+        Long expirationTime = jwtTokenProvider.getExpirationTime(accessToken);
+
+        Token token = Token.builder()
+                .accessToken(accessToken)
+                .refreshToken(requestDto.getRefreshToken())
+                .build();
+        return TokenResponseDto.from(token, expirationTime);
     }
 
 
@@ -105,7 +122,8 @@ public class AuthServiceImpl implements AuthService {
 
         RefreshToken refreshToken = RefreshToken.builder()
                 .token(token.getRefreshToken())
-                .email(requestDto.getEmail()).build();
+                .email(requestDto.getEmail())
+                .build();
 
         refreshTokenRepository.save(refreshToken);
     }

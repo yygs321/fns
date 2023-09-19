@@ -16,14 +16,14 @@ public class EmailSender {
         this.javaMailSender = javaMailSender;
     }
 
-    void sendEmail(String code, String email) {
+    void sendEmail(String email, String code) {
 
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
         try {
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, false,
                     "UTF-8");
             log.info("이메일 : " + email);
-            mimeMessageHelper.setFrom("yygs321@gmail.com");
+            mimeMessageHelper.setFrom("kimsg64090@gmail.com");
             mimeMessageHelper.setTo(email);
             mimeMessageHelper.setSubject("[FNS]회원가입 인증 코드입니다.");
             mimeMessageHelper.setText("인증 코드 : " + code);

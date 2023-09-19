@@ -4,6 +4,7 @@ import java.util.regex.Pattern;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ssafy.fns.domain.member.controller.dto.SignUpRequestDto;
 import ssafy.fns.domain.member.entity.Member;
@@ -16,6 +17,7 @@ import ssafy.fns.global.exception.GlobalRuntimeException;
 public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional
@@ -24,7 +26,7 @@ public class MemberServiceImpl implements MemberService {
 
         Member member = Member.builder()
                 .email(requestDto.getEmail())
-                .password(requestDto.getPassword())
+                .password(passwordEncoder.encode(requestDto.getPassword()))
                 .provider(Provider.valueOf(requestDto.getProvider()))
                 .build();
 
