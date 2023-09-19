@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Badge, Container } from '@mui/material';
+import { Badge } from '@mui/material';
 import dayjs from 'dayjs';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider, DateCalendar, PickersDay } from '@mui/x-date-pickers';
@@ -41,7 +41,7 @@ const CalendarPage = () => {
         const backgroundColor = getBackgroundColorByValue(value);
         
          // 현재 날짜와 선택된 날짜를 비교하여 선택 여부 파악
-    const isSelected = day.isSame(selectedDate, 'day');
+    const isSelected = day.isSame(날짜, 'day');
     
     const dayStyle = {
         backgroundColor: backgroundColor,
