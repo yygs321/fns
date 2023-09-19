@@ -25,47 +25,47 @@ public class Nutrient extends BaseEntity {
 
     private Gender gender;
 
-    private Long kcal;
+    private Double kcal;
 
-    private Long carbs;
+    private Double carbs;
 
-    private Long protein;
+    private Double protein;
 
-    private Long fat;
+    private Double fat;
 
-    private Long pollination;
+    private Double pollination;
 
-    private Long sugar;
+    private Double sugar;
 
-    private Long dietaryFiber;
+    private Double dietaryFiber;
 
-    private Long calcium;
+    private Double calcium;
 
-    private Long potassium;
+    private Double potassium;
 
-    private Long iron;
+    private Double iron;
 
-    private Long phosphorus;
+    private Double phosphorus;
 
-    private Long vitaminA;
+    private Double sodium;
 
-    private Long vitaminC;
+    private Double vitaminA;
 
-    private Long vitaminD;
+    private Double vitaminC;
 
-    private Long cholesterol;
+    private Double vitaminD;
 
-    private Long acid;
+    private Double cholesterol;
 
-    private Long transFat;
+    private Double acid;
+
+    private Double transFat;
 
     @Builder
-    public Nutrient(Long age, Gender gender, Long kcal, Long carbs, Long protein, Long fat,
-            Long pollination, Long sugar, Long dietary_fiber, Long calcium, Long potassium,
-            Long iron,
-            Long phosphorus, Long vitaminA, Long vitaminC, Long vitaminD, Long cholesterol,
-            Long acid,
-            Long trans_fat) {
+    public Nutrient(Long age, Gender gender, Double kcal, Double carbs, Double protein, Double fat,
+            Double pollination, Double sugar, Double dietaryFiber, Double calcium, Double potassium,
+            Double iron, Double phosphorus, Double sodium, Double vitaminA, Double vitaminC,
+            Double vitaminD, Double cholesterol, Double acid, Double transFat) {
         this.age = age;
         this.gender = gender;
         this.kcal = kcal;
@@ -74,16 +74,17 @@ public class Nutrient extends BaseEntity {
         this.fat = fat;
         this.pollination = pollination;
         this.sugar = sugar;
-        this.dietaryFiber = dietary_fiber;
+        this.dietaryFiber = dietaryFiber;
         this.calcium = calcium;
         this.potassium = potassium;
         this.iron = iron;
         this.phosphorus = phosphorus;
+        this.sodium = sodium;
         this.vitaminA = vitaminA;
         this.vitaminC = vitaminC;
         this.vitaminD = vitaminD;
         this.cholesterol = cholesterol;
         this.acid = acid;
-        this.transFat = trans_fat;
+        this.transFat = transFat;
     }
 }

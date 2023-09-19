@@ -53,7 +53,8 @@ public class SecurityConfig {
                     .antMatchers(
                             "/api/members/sign-up",
                             "/api/auth/**",
-                            "/error"
+                            "/error",
+                            "/api/db"
                     );
         };
     }

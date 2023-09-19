@@ -38,12 +38,12 @@ public class Exercise extends BaseEntity {
 
     private LocalDateTime date;
 
-    private Long kcal;
+    private Double kcal;
 
     private Long exerciseTime;
 
     @Builder
-    public Exercise(Sports sports, Member member, LocalDateTime date, Long kcal,Long exerciseTime) {
+    public Exercise(Sports sports, Member member, LocalDateTime date, Double kcal,Long exerciseTime) {
         this.sports = sports;
         this.member = member;
         this.date = date;

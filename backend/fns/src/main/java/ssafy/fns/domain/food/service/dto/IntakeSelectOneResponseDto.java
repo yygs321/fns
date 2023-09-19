@@ -7,37 +7,41 @@ import java.sql.Date;
 public class IntakeSelectOneResponseDto {
     private Date date;
 
-    private Long kcal;
+    private int volume;
 
-    private Long carbs;
+    private Double kcal;
 
-    private Long protein;
+    private Double carbs;
 
-    private Long fat;
+    private Double protein;
 
-    private Long pollination;
+    private Double fat;
 
-    private Long sugar;
+    private Double pollination;
 
-    private Long dietary_fiber;
+    private Double sugar;
 
-    private Long calcium;
+    private Double dietaryFiber;
 
-    private Long potassium;
+    private Double calcium;
 
-    private Long iron;
+    private Double potassium;
 
-    private Long phosphorus;
+    private Double iron;
 
-    private Long vitaminA;
+    private Double phosphorus;
 
-    private Long vitaminC;
+    private Double sodium;
 
-    private Long vitaminD;
+    private Double vitaminA;
 
-    private Long cholesterol;
+    private Double vitaminC;
 
-    private Long acid;
+    private Double vitaminD;
 
-    private Long trans_fat;
+    private Double cholesterol;
+
+    private Double acid;
+
+    private Double transFat;
 }

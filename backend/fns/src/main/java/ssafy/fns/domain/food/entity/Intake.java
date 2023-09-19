@@ -33,7 +33,8 @@ public class Intake extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Time intakeTime;
 
-    private Long rate;
+    // 몇 인분 먹었는지 : 1.0 인분, 0.5 인분, 1.5 인분 등 
+    private Double rate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "food_id")
@@ -41,7 +42,7 @@ public class Intake extends BaseEntity {
 
     @Builder
 
-    public Intake(Date date, Time intakeTime, Long rate) {
+    public Intake(Date date, Time intakeTime, Double rate) {
         this.date = date;
         this.intakeTime = intakeTime;
         this.rate = rate;
