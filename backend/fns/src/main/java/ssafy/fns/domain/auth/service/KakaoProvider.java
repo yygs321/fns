@@ -21,8 +21,10 @@ public class KakaoProvider implements OAuthProvider {
     private String KAKAO_CLIENT_KEY;
     @Value("${spring.security.oauth2.client.registration.kakao.redirect-uri}")
     private String KAKAO_REDIRECT_URI;
+    @Value("${spring.security.oauth2.client.provider.kakao.user-info-uri}")
+    private String KAKAO_USER_URL;
     private static final String KAKAO_BASE_URL = "https://kauth.kakao.com";
-    private static final String KAKAO_USER_URL = "https://kapi.kakao.com/v2/user/me";
+
 
     @Override
     @Transactional
