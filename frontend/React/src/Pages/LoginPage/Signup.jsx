@@ -111,7 +111,6 @@ const Signup = () => {
                 color="primary"
                 type="text"
                 label="아이디(이메일)"
-                autoFocus
                 required
                 InputProps={{
                   sx: { borderRadius: "10px" },

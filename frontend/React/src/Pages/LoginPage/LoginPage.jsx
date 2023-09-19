@@ -79,7 +79,6 @@ const LoginPage = () => {
             color="primary"
             type="text"
             label="아이디"
-            autoFocus
             InputProps={{
               sx: { borderRadius: "10px" },
             }}
