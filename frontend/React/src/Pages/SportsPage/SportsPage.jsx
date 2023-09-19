@@ -88,9 +88,12 @@ const SportItem = ({
           fullWidth
           type="number"
           label="시간"
-          onChange={(e) => onTimeChange(name, parseInt(e.target.value))}
           InputProps={{
             sx: { borderRadius: "10px" },
+          }}
+          onChange={(e) => {
+            const value = parseFloat(e.target.value);
+            onTimeChange(name, isNaN(value) ? 0 : value);
           }}
         />
       </Grid>

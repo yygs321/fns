@@ -24,6 +24,11 @@ const EditProfilePage = () => {
         navigate("/mypage");
     };
 
+    const handleCheckNickname = () => {
+        // 나중에 닉네임 중복 확인 API 연결
+        console.log('닉네임 중복 확인');
+    };
+
     return (
         <div style={{ height: '100vh', backgroundColor: '#f0f0f0', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <div style={{ 
@@ -43,19 +48,30 @@ const EditProfilePage = () => {
                 <br/>
 
                 <TextField 
-                    fullWidth
-                    margin="normal"
-                    label="닉네임" 
-                    value={nickname} 
-                    onChange={(e) => setNickname(e.target.value)}
-                    InputProps={{
-                      endAdornment: (
-                        <Typography variant="caption" style={{ whiteSpace: 'nowrap' }}>
-                            2~16 글자 이내
-                        </Typography>
-                    )
-                    }}
-                />
+                fullWidth
+                margin="normal"
+                label="닉네임" 
+                value={nickname} 
+                onChange={(e) => setNickname(e.target.value)}
+                InputProps={{
+                  endAdornment: (
+                    <Typography variant="caption" style={{ whiteSpace: 'nowrap' }}>
+                        2~16 글자 이내
+                    </Typography>
+                  ),
+                }}
+            />
+            <div style={{ display: 'flex', justifyContent: 'center', margin: '10px 0' }}>
+                <Button 
+                    variant="contained"
+                    color="primary"
+                    size="small"
+                    onClick={handleCheckNickname}
+                >
+                    중복확인
+                </Button>
+            </div>
+
                 <TextField 
                     fullWidth
                     margin="normal"
