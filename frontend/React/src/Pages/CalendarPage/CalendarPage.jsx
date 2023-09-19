@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { Badge } from '@mui/material';
+import { Badge, Container } from '@mui/material';
 import dayjs from 'dayjs';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider, DateCalendar, PickersDay } from '@mui/x-date-pickers';
 import NutritionInfo from './NutritionInfo';
+import {WeightChart} from './WeightChart';
 
 const CalendarPage = () => {
-    const [selectedDate, setSelectedDate] = useState(dayjs());
+    const [날짜, set날짜] = useState(dayjs());
 
     // 더미 데이터
     const data = {
@@ -51,43 +52,46 @@ const CalendarPage = () => {
         );
     };
 
-    const nutritionData = {
-        calories: {
-            intake: 1500,
-            recommended: 2000
+    const 영양데이터 = {
+        칼로리: {
+            섭취량: 1500,
+            권장량: 2000
         },
-        carbs: {
-            intake: 200,
-            recommended: 300
+        탄수화물: {
+            섭취량: 200,
+            권장량: 300
         },
-        protein: {
-            intake: 50,
-            recommended: 80
+        단백질: {
+            섭취량: 50,
+            권장량: 80
         },
-        fat: {
-            intake: 60,
-            recommended: 90
+        지방: {
+            섭취량: 60,
+            권장량: 90
         }
     };
     
     return (
         <div className="gray-pages" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '2% 0' }}>
+                
             {/* box1 */}
             <div className="white-content-box" style={{ width: '80%', padding: '20px', marginBottom: '20px' }}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DateCalendar 
-                        value={selectedDate}
-                        onChange={(newValue) => setSelectedDate(newValue)}
+                        value={날짜}
+                        onChange={(newValue) => set날짜(newValue)}
                         slots={{ day: CustomDay }}
                     />
                 </LocalizationProvider>
             </div>
 
-           {/* box2 */}
-           <NutritionInfo selectedDate={selectedDate} nutritionData={nutritionData} 
-           />
-           
+            {/* box2 */}
+            <NutritionInfo 날짜={날짜} 영양데이터={영양데이터} 
+            />
+            <WeightChart 날짜={날짜}/>
+            
         </div>
+        
     );
 };
 

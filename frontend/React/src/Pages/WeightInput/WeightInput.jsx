@@ -1,9 +1,7 @@
 import { React, useState } from "react";
 import "../Common/CSS/BackgroundColor.css";
-import Chart from "./Chart";
 import "./CSS/WeightInput.scss";
 import {
-  Grid,
   Container,
   Button,
   Modal,
@@ -12,6 +10,11 @@ import {
   TextField,
 } from "@mui/material";
 
+export const 목표체중 = "80";
+export const 기간 = "50";
+export const 현재체중 = "88";
+export const 시작체중 = "92";
+
 const WeightInput = () => {
   const 월 = 9;
   const 일 = 15;
@@ -19,9 +22,9 @@ const WeightInput = () => {
   const [수정모달열기, set수정모달열기] = useState(false);
   const [목표모달열기, set목표모달열기] = useState(false);
   const [체중, set체중] = useState("");
-  const [목표체중, set목표체중] = useState("");
+  const [목표체중, set목표체중] = useState("80");
   const [다이어트모드, set다이어트모드] = useState(false);
-  const [기간, set기간] = useState("");
+  const [기간, set기간] = useState("50");
   const 일자 = ({
     month: 월,
     day: 일,
@@ -56,9 +59,6 @@ const WeightInput = () => {
 
   return (
     <Container component="main" maxWidth="sx" className="회색배경">
-      <Grid container className="차트박스">
-        <Chart />
-      </Grid>
 
       <div className="체중박스">
         <div className="일자">
@@ -249,3 +249,4 @@ const WeightInput = () => {
 };
 
 export default WeightInput;
+
