@@ -9,21 +9,25 @@ import ssafy.fns.domain.auth.vo.Token;
 @NoArgsConstructor
 @Getter
 @Setter
-public class TokenDto {
+public class TokenResponseDto {
 
     private String accessToken;
     private String refreshToken;
+    private Long expirationTime;
 
     @Builder
-    public TokenDto(String accessToken, String refreshToken) {
+    public TokenResponseDto(String accessToken, String refreshToken, Long expirationTime) {
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
+        this.expirationTime = expirationTime;
     }
 
-    public static TokenDto from(Token token) {
-        return TokenDto.builder()
+    public static TokenResponseDto from(Token token, Long expirationTime) {
+        return TokenResponseDto.builder()
                 .accessToken(token.getAccessToken())
-                .refreshToken(token.getRefreshToken()).build();
+                .refreshToken(token.getRefreshToken())
+                .expirationTime(expirationTime)
+                .build();
     }
 
 }
