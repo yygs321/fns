@@ -28,7 +28,7 @@ const WeightInput = () => {
   const 일자 = ({
     month: 월,
     day: 일,
-  };
+  });
 
   const 체중입력함수 = (e) => {
     set체중((data) => e.target.value);
