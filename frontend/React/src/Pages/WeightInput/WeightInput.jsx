@@ -2,7 +2,6 @@ import { React, useState } from "react";
 import "../Common/CSS/BackgroundColor.css";
 import "./CSS/WeightInput.scss";
 import {
-  Container,
   Button,
   Modal,
   Box,
@@ -58,7 +57,7 @@ const WeightInput = () => {
   const 목표값여부 = 목표체중 && 기간;
 
   return (
-    <Container component="main" maxWidth="sx" className="회색배경">
+    <div className="회색배경">
 
       <div className="체중박스">
         <div className="일자">
@@ -66,9 +65,8 @@ const WeightInput = () => {
         </div>
         <div className="체중">
           {!다이어트모드 && (
-            <span>
-              {체중}
-              {체중 ? "kg" : ""}
+            <span className={`fontSize ${체중 ? '체중' : '체중없음'}`}>
+              {체중 ? `${체중}kg` : "몸무게를 입력해주세요"}
             </span>
           )}
           {다이어트모드 && (
@@ -132,7 +130,7 @@ const WeightInput = () => {
           variant="contained"
           className="수정버튼"
           onClick={체중수정모달}
-          sx={{ mt: 2, color: "white", fontSize: "1.4rem" }}
+          sx={{ mt: 15, color: "white", fontSize: "1.4rem" }}
         >
           체중 수정
         </Button>
@@ -142,7 +140,7 @@ const WeightInput = () => {
           variant="contained"
           className="목표버튼"
           onClick={목표설정모달}
-          sx={{ mt: 2, color: "white", fontSize: "1.4rem" }}
+          sx={{ mt: 5, color: "white", fontSize: "1.4rem" }}
         >
           강량 목표 설정
         </Button>
@@ -258,7 +256,7 @@ const WeightInput = () => {
           </Box>
         </Modal>
       </div>
-    </Container>
+    </div>
   );
 };
 

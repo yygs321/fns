@@ -5,6 +5,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider, DateCalendar, PickersDay } from '@mui/x-date-pickers';
 import NutritionInfo from './NutritionInfo';
 import {WeightChart} from './WeightChart';
+import "./calendarcss.scss";
 
 const CalendarPage = () => {
     const [날짜, set날짜] = useState(dayjs());
@@ -86,7 +87,7 @@ const CalendarPage = () => {
         <div className="gray-pages" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '2% 0' }}>
                 
             {/* box1 */}
-            <div className="white-content-box" style={{ width: '80%', padding: '20px', marginBottom: '20px' }}>
+            <div className="캘린더배경" style={{ width: '80%', padding: '20px', marginBottom: '20px' }}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DateCalendar 
                         value={날짜}
