@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ssafy.fns.domain.auth.controller.dto.OAuthLoginRequestDto;
@@ -26,7 +27,7 @@ public class OAuthController {
     @PostMapping(value = "/{social-login-type}")
     public ResponseEntity<?> socialLogin(
             @PathVariable(name = "social-login-type") String socialLoginType,
-            OAuthLoginRequestDto requestDto) {
+            @RequestBody OAuthLoginRequestDto requestDto) {
         log.info("DTO code = "+requestDto.getCode());
         OAuthLoginResponseDto oauthResponseDto = oAuthService.login(SocialLoginType.valueOf(socialLoginType.toUpperCase()),
                 requestDto);
