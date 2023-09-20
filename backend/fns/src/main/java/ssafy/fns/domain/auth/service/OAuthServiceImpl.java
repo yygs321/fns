@@ -2,6 +2,7 @@ package ssafy.fns.domain.auth.service;
 
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import ssafy.fns.domain.auth.controller.dto.OAuthLoginRequestDto;
@@ -17,6 +18,7 @@ import ssafy.fns.global.security.JwtTokenProvider;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class OAuthServiceImpl implements OAuthService {
 
     private final GoogleProvider googleProvider;
@@ -34,6 +36,8 @@ public class OAuthServiceImpl implements OAuthService {
         TokenResponseDto tokenResponseDto;
 
         OAuthProvider oauthProvider = findSocialProvider(socialLoginType);
+
+        log.info("login code : "+requestDto.getCode());
 
         accessToken = oauthProvider.getToken(requestDto.getCode());
 

@@ -1,6 +1,7 @@
 package ssafy.fns.domain.auth.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +18,7 @@ import ssafy.fns.global.response.JsonResponse;
 @RequiredArgsConstructor
 @CrossOrigin("*")
 @RequestMapping(value = "/api/auth")
+@Slf4j
 public class OAuthController {
 
     private final OAuthService oAuthService;
@@ -25,6 +27,7 @@ public class OAuthController {
     public ResponseEntity<?> socialLogin(
             @PathVariable(name = "social-login-type") String socialLoginType,
             OAuthLoginRequestDto requestDto) {
+        log.info("DTO code = "+requestDto.getCode());
         OAuthLoginResponseDto oauthResponseDto = oAuthService.login(SocialLoginType.valueOf(socialLoginType.toUpperCase()),
                 requestDto);
 

@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.Map;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import ssafy.fns.global.exception.GlobalRuntimeException;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class KakaoProvider implements OAuthProvider {
 
 
@@ -57,6 +59,9 @@ public class KakaoProvider implements OAuthProvider {
                 .append("&redirect_uri=").append(KAKAO_REDIRECT_URI)
                 .append("&client_id=").append(KAKAO_CLIENT_KEY)
                 .append("&code=").append(code);
+
+        log.info("last code : "+code);
+
         return sb.toString();
     }
 
