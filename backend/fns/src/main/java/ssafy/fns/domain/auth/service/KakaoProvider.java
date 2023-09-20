@@ -74,6 +74,7 @@ public class KakaoProvider implements OAuthProvider {
 
         Map<String, Object> properties = (Map<String, Object>) user_info.get("properties");
         Map<String, Object> kakao_account = (Map<String, Object>) user_info.get("kakao_account");
+
         String email = (String) kakao_account.get("email");
         String name = (String) properties.get("nickname");
 
