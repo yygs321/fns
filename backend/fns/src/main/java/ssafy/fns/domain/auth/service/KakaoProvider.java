@@ -1,9 +1,9 @@
 package ssafy.fns.domain.auth.service;
 
-import java.time.LocalDateTime;
 import java.util.Map;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -14,6 +14,7 @@ import ssafy.fns.global.exception.GlobalRuntimeException;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class KakaoProvider implements OAuthProvider {
 
 
@@ -71,24 +72,22 @@ public class KakaoProvider implements OAuthProvider {
             throw new GlobalRuntimeException("카카오 사용자 정보를 받아오지 못함", HttpStatus.BAD_REQUEST);
         }
 
+        Map<String, Object> properties = (Map<String, Object>) user_info.get("properties");
         Map<String, Object> kakao_account = (Map<String, Object>) user_info.get("kakao_account");
-
-        String name = (String) kakao_account.get("name");
         String email = (String) kakao_account.get("email");
-        String gender = (String) kakao_account.get("gender");
-        int birthyear = (int) kakao_account.get("birthyear");
+        String name = (String) properties.get("nickname");
 
         OAuthDetailDto detailDto = OAuthDetailDto.builder()
                 .name(name)
                 .email(email)
-                .gender(gender)
-                .age(String.valueOf(LocalDateTime.now().getYear() - birthyear)).build();
+
+                .build();
 
         return detailDto;
     }
 
     @Nullable
-    private static Map getUserInfo(String token, WebClient kakaoUserDetailClient) {
+    private static Map<String, Object> getUserInfo(String token, WebClient kakaoUserDetailClient) {
         Map user_info = kakaoUserDetailClient.get()
                 .header("Authorization", "Bearer " + token)
                 .header("Content-type", "application/x-www-form-urlencoded;charset=utf-8")
