@@ -22,21 +22,15 @@ const KakaoCallback = () => {
     axios
       .post(`${SERVER_API_URL}/auth/kakao`, { code: code })
       .then((res) => {
-        // 어떻게 나오는지 찍어보고 합시다
-          console.log('#1')
-          console.log(res)
-          console.log('#2')
-          console.log(res.data)
-          console.log('#3')
-          console.log(res.message)
-
+        console.log(res.data.message)
+        console.log(res.data.data.name)
         // userNo를 비교용으로 사용하기 위해 리덕스 저장
         // dispatch(loginSaveUserNo(userNo));
 
-        if (res.message === "signup") {
+        if (res.data.message === "signup") {
           // 메시지에 따라서 회원가입이면 정보입력 페이지로 이동. 
           navigate(`/Info`);
-        } else if (res.message === "login") {
+        } else if (res.data.message === "login") {
           // 메시지에 따라서 로그인이면 메인 페이지로 이동. 
           localStorage.setItem(
             "access-token",
