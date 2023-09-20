@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-// import { loginSaveUserNo } from "../actions/actions"; 필요하다면 userID로 변경 
+// import { loginSaveUserNo } from "../actions/actions"; 필요하다면 member-id로 변경 
 
 const KakaoCallback = () => {
   const dispatch = useDispatch();
@@ -20,16 +20,22 @@ const KakaoCallback = () => {
     axios
       .post(`${SERVER_API_URL}/auth/kakao`, { code: code })
       .then((res) => {
-        // const userNo = res.data.data;
+        // 어떻게 나오는지 찍어보고 합시다
+          console.log('#1')
           console.log(res)
+          console.log('#2')
           console.log(res.data)
+          console.log('#3')
+          console.log(res.message)
+
         // userNo를 비교용으로 사용하기 위해 리덕스 저장
         // dispatch(loginSaveUserNo(userNo));
 
         if (res.message === "signup") {
-          // 정보입력 페이지로 이동. 코드는 메시지로 변경
+          // 메시지에 따라서 회원가입이면 정보입력 페이지로 이동. 
           navigate(`/Info`);
         } else if (res.message === "login") {
+          // 메시지에 따라서 로그인이면 메인 페이지로 이동. 
           localStorage.setItem(
             "access-token",
             res.data.accessToken
