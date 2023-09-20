@@ -23,9 +23,9 @@ public class OAuthController {
 
     @PostMapping(value = "/{social-login-type}")
     public ResponseEntity<?> socialLogin(
-            @PathVariable(name = "social-login-type") SocialLoginType socialLoginType,
+            @PathVariable(name = "social-login-type") String socialLoginType,
             OAuthLoginRequestDto requestDto) {
-        OAuthLoginResponseDto oauthResponseDto = oAuthService.login(socialLoginType,
+        OAuthLoginResponseDto oauthResponseDto = oAuthService.login(SocialLoginType.valueOf(socialLoginType.toUpperCase()),
                 requestDto);
 
         if (oauthResponseDto.getTokenResponseDto() == null) {
