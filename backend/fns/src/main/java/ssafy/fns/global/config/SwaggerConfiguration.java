@@ -40,7 +40,7 @@ public class SwaggerConfiguration {
         return new ApiInfoBuilder()
                 .title("FNS")
                 .description("SSAFY A403조")
-                .version("1.0")
+                .version("2.0")
                 .build();
     }
 
