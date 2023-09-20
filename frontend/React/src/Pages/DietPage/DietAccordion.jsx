@@ -8,12 +8,15 @@ import { Grid, Typography, Accordion, AccordionSummary } from "@mui/material";
 import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
 import AddCircleOutlineRoundedIcon from "@mui/icons-material/AddCircleOutlineRounded";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { nowDiet, resetDiet } from "../../Redux/actions/actions";
 
 const DietAccordion = (props) => {
   const { name, food } = props;
 
   const [isAccordionSelected, setIsAccordionSelected] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const totalKcal = food.reduce((total, f) => total + f.kcal, 0);
 
@@ -21,8 +24,10 @@ const DietAccordion = (props) => {
     setIsAccordionSelected(!isAccordionSelected);
   };
 
-  const handleAddButton = (event) => {
+  const handleAddButton = async (event) => {
     event.stopPropagation();
+    await dispatch(resetDiet());
+    await dispatch(nowDiet(food));
     navigate("/diet/input", { state: { name: name, food: food } });
   };
 

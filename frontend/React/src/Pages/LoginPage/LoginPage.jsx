@@ -113,24 +113,24 @@ const LoginPage = () => {
           />
         </FormControl>
 
-        {/* <FormControl fullWidth className="로그인박스" sx={{ mt: 4 }}> */}
-        <Button
-          fullWidth
-          variant="contained"
-          onClick={버튼활성화}
-          sx={{
-            cursor: "pointer",
-            color: "white",
-            borderRadius: "10px",
-            height: "8vh",
-            mt: 4,
-            fontSize: "1.4rem",
-            textShadow: "2px 2px 20px #8b8b8b",
-          }}
-        >
-          로그인
-        </Button>
-        {/* </FormControl> */}
+        <FormControl className="로그인박스">
+          <Button
+            fullWidth
+            variant="contained"
+            onClick={버튼활성화}
+            sx={{
+              cursor: "pointer",
+              color: "white",
+              borderRadius: "10px",
+              height: "8vh",
+              mt: 4,
+              fontSize: "1.4rem",
+              textShadow: "2px 2px 20px #8b8b8b",
+            }}
+          >
+            로그인
+          </Button>
+        </FormControl>
 
         <Grid
           container
@@ -168,7 +168,7 @@ const LoginPage = () => {
           </Grid>
         </Grid>
 
-        <FormControl fullWidth className="카카오로그인" sx={{ mt: 3 }}>
+        <FormControl className="카카오로그인" sx={{ mt: 3 }}>
           <img
             src={kakaoButton}
             alt=""
@@ -176,7 +176,7 @@ const LoginPage = () => {
             style={{ cursor: "pointer" }}
           />
         </FormControl>
-        <FormControl fullWidth className="구글로그인" sx={{ mt: 2 }}>
+        <FormControl className="구글로그인" sx={{ mt: 2 }}>
           <img
             alt=""
             src={googleButton}

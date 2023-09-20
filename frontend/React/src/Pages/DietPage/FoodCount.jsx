@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { styled } from "@mui/system";
 import { Grid, TextField, IconButton } from "@mui/material";
@@ -8,22 +8,50 @@ import AddIcon from "@mui/icons-material/Add";
 
 import { NumericFormat } from "react-number-format";
 
-const FoodCount = () => {
-  const [value, setValue] = useState(1.0);
+import { useDispatch } from "react-redux";
+import { fixedFromDiet } from "../../Redux/actions/actions";
+
+const FoodCount = (props) => {
+  const { one, addedDiet } = props;
+
+  const [value, setValue] = useState(one.count || 1.0);
+  const [isAddedFood, setIsAddedFood] = useState(false);
+
+  console.log(isAddedFood);
+
+  useEffect(() => {
+    const index = addedDiet.findIndex((food) => food.name === one.name);
+    setIsAddedFood(index !== -1);
+  }, [addedDiet, one]);
+
+  const dispatch = useDispatch();
 
   const handleValueChange = (values) => {
     const { floatValue } = values;
     setValue(floatValue);
+    dispatch(
+      fixedFromDiet({ name: one.name, kcal: one.kcal, count: floatValue })
+    );
   };
 
   const handlePlus = () => {
     if (value < 99.5) {
-      setValue(value + 0.5);
+      const newValue = value + 0.5;
+      setValue(newValue);
+      dispatch(
+        fixedFromDiet({ name: one.name, kcal: one.kcal, count: newValue })
+      );
     }
   };
+
   const handleMinus = () => {
     if (value > 0.5) {
-      setValue(value - 0.5);
+      const newValue = value - 0.5;
+      setValue(newValue);
+
+      dispatch(
+        fixedFromDiet({ name: one.name, kcal: one.kcal, count: newValue })
+      );
     }
   };
 
