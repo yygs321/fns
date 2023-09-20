@@ -29,13 +29,14 @@ public class OAuthController {
     public ResponseEntity<?> socialLogin(
             @PathVariable(name = "social-login-type") String socialLoginType,
             @RequestBody OAuthLoginRequestDto requestDto) {
-        OAuthLoginResponseDto oauthResponseDto
+        OAuthLoginResponseDto oAuthResponseDto
                 = oAuthService.login(socialLoginTypeConverter.convert(socialLoginType), requestDto);
 
-        if (oauthResponseDto.getTokenResponseDto() == null) {
-            return JsonResponse.ok("signup", oauthResponseDto.getDetailDto());
+        log.info("requestDto: "+ oAuthResponseDto.getDetailDto());
+        if (oAuthResponseDto.getTokenResponseDto() == null) {
+            return JsonResponse.ok("signup", oAuthResponseDto.getDetailDto());
         } else {
-            return JsonResponse.ok("login", oauthResponseDto.getTokenResponseDto());
+            return JsonResponse.ok("login", oAuthResponseDto.getTokenResponseDto());
         }
     }
 }
