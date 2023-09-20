@@ -14,9 +14,11 @@ const KakaoCallback = () => {
     const params = new URL(window.location.href).searchParams;
     const code = params.get("code");
     kakaoLogin(code);
+    console.log(code)
   });
 
   const kakaoLogin = (code) => {
+    console.log(code)
     axios
       .post(`${SERVER_API_URL}/auth/kakao`, { code: code })
       .then((res) => {
