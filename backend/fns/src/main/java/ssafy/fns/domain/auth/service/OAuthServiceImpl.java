@@ -36,9 +36,6 @@ public class OAuthServiceImpl implements OAuthService {
         TokenResponseDto tokenResponseDto;
 
         OAuthProvider oauthProvider = findSocialProvider(socialLoginType);
-
-        log.info("login code : "+requestDto.getCode());
-
         accessToken = oauthProvider.getToken(requestDto.getCode());
 
         OAuthDetailDto detailDto = getUserDetail(socialLoginType, accessToken);
@@ -64,6 +61,7 @@ public class OAuthServiceImpl implements OAuthService {
 
     private OAuthProvider findSocialProvider(SocialLoginType socialLoginType) {
         final OAuthProvider oAuthProvider;
+
         switch (socialLoginType) {
             case GOOGLE -> {
                 oAuthProvider = googleProvider;

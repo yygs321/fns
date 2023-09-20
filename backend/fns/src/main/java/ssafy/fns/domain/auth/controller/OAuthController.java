@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ssafy.fns.domain.auth.controller.dto.OAuthLoginRequestDto;
 import ssafy.fns.domain.auth.service.OAuthService;
 import ssafy.fns.domain.auth.service.dto.OAuthLoginResponseDto;
-import ssafy.fns.domain.auth.utility.SocialLoginType;
+import ssafy.fns.domain.auth.utility.SocialLoginTypeConverter;
 import ssafy.fns.global.response.JsonResponse;
 
 @RestController
@@ -23,14 +23,14 @@ import ssafy.fns.global.response.JsonResponse;
 public class OAuthController {
 
     private final OAuthService oAuthService;
+    private final SocialLoginTypeConverter socialLoginTypeConverter;
 
     @PostMapping(value = "/{social-login-type}")
     public ResponseEntity<?> socialLogin(
             @PathVariable(name = "social-login-type") String socialLoginType,
             @RequestBody OAuthLoginRequestDto requestDto) {
-        log.info("DTO code = "+requestDto.getCode());
-        OAuthLoginResponseDto oauthResponseDto = oAuthService.login(SocialLoginType.valueOf(socialLoginType.toUpperCase()),
-                requestDto);
+        OAuthLoginResponseDto oauthResponseDto
+                = oAuthService.login(socialLoginTypeConverter.convert(socialLoginType), requestDto);
 
         if (oauthResponseDto.getTokenResponseDto() == null) {
             return JsonResponse.ok("signup", oauthResponseDto.getDetailDto());

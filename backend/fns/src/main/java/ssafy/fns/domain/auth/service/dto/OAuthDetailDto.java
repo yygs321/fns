@@ -15,7 +15,5 @@ public class OAuthDetailDto {
 
     private String name;
     private String email;
-    private String gender;
-    private String age;
 
 }
