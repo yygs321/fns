@@ -35,17 +35,17 @@ const DietPage = () => {
       name: "아침",
       // food: [],
       food: [
-        { name: "참", kcal: 100 },
-        { name: "치", kcal: 100 },
+        { name: "참", kcal: 100, count: 1 },
+        { name: "치", kcal: 100, count: 2 },
       ],
     },
     {
       name: "점심",
       // food: [],
       food: [
-        { name: "참치", kcal: 155 },
-        { name: "통", kcal: 100 },
-        { name: "조림", kcal: 100 },
+        { name: "참치", kcal: 155, count: 4 },
+        { name: "통", kcal: 100, count: 2 },
+        { name: "조림", kcal: 100, count: 5 },
       ],
     },
     {
@@ -60,11 +60,11 @@ const DietPage = () => {
       name: "간식",
       // food: [],
       food: [
-        { name: "참치맛 크래커", kcal: 5 },
-        { name: "참치맛 감자칩", kcal: 10 },
-        { name: "참치", kcal: 15 },
-        { name: "참치맛 롱소드", kcal: 20 },
-        { name: "참치맛 머신건", kcal: 5 },
+        { name: "참치맛 크래커", kcal: 5, count: 1 },
+        { name: "참치맛 감자칩", kcal: 10, count: 3 },
+        { name: "참치", kcal: 15, count: 5 },
+        { name: "참치맛 롱소드", kcal: 20, count: 7 },
+        { name: "참치맛 머신건", kcal: 5, count: 9 },
       ],
     },
   ];

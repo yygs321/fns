@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Grid, Typography, TextField, Button } from "@mui/material";
 
@@ -7,34 +7,62 @@ import SearchIcon from "@mui/icons-material/Search";
 
 import { useLocation, useNavigate } from "react-router-dom";
 
+import { useDispatch, useSelector } from "react-redux";
+import { addToDiet, deleteFromDiet } from "../../Redux/actions/actions";
+
 const SearchFood = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [addedFood, setAddedFood] = useState([]);
 
   console.log(searchTerm);
 
+  const existingDiet = useSelector((state) => {
+    return state.diet.nowDiet;
+  });
+
+  const addedDiet = useSelector((state) => {
+    return state.diet.addedDiet;
+  });
+
+  const deletedDiet = useSelector((state) => {
+    return state.diet.deletedDiet;
+  });
+
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const state = location.state;
+
+  const [addedFoodList, setAddedFoodList] = useState([]);
+
+  useEffect(() => {
+    const updatedAddedFoodList = [
+      ...existingDiet.filter(
+        (food) =>
+          !deletedDiet.some((deletedFood) => food.name === deletedFood.name)
+      ),
+      ...addedDiet,
+    ];
+    setAddedFoodList(updatedAddedFoodList);
+  }, [existingDiet, addedDiet, deletedDiet]);
 
   const searchResult = [
     { name: "치킨버거", kcal: 10 },
     { name: "새우버거", kcal: 11 },
     { name: "야옹이", kcal: 15 },
     { name: "버거킹", kcal: 5 },
-    { name: "치킨버거", kcal: 10 },
-    { name: "새우버거", kcal: 11 },
-    { name: "야옹이", kcal: 15 },
-    { name: "버거킹", kcal: 5 },
-    { name: "치킨버거", kcal: 10 },
-    { name: "새우버거", kcal: 11 },
-    { name: "야옹이", kcal: 15 },
-    { name: "버거킹", kcal: 5 },
-    { name: "치킨버거", kcal: 10 },
-    { name: "새우버거", kcal: 11 },
-    { name: "야옹이", kcal: 15 },
-    { name: "버거킹", kcal: 5 },
+    { name: "치킨", kcal: 10 },
+    { name: "새우", kcal: 11 },
+    { name: "야옹", kcal: 15 },
+    { name: "버거", kcal: 5 },
+    { name: "치거", kcal: 10 },
+    { name: "새거", kcal: 11 },
+    { name: "야이", kcal: 15 },
+    { name: "버킹", kcal: 5 },
+    { name: "킨거", kcal: 10 },
+    { name: "우버", kcal: 11 },
+    { name: "이", kcal: 15 },
+    { name: "거", kcal: 5 },
   ];
 
   const goBackPage = () => {
@@ -52,16 +80,11 @@ const SearchFood = () => {
   };
 
   const handleAddFood = (one) => {
-    setAddedFood((prev) => [...prev, one.name]);
+    dispatch(addToDiet({ ...one, count: 1 }));
   };
 
   const handleCancleFood = (one) => {
-    setAddedFood((prev) => prev.filter((food) => food !== one.name));
-  };
-
-  const handleSaveButton = () => {
-    // 리덕스같은데에다 저장
-    navigate(-1);
+    dispatch(deleteFromDiet(one));
   };
 
   return (
@@ -219,7 +242,7 @@ const SearchFood = () => {
               justifyContent={"flex-end"}
               alignItems={"center"}
             >
-              {!addedFood.includes(one.name) ? (
+              {!addedFoodList.some((food) => food.name === one.name) ? (
                 <Button
                   variant="contained"
                   sx={{
@@ -275,9 +298,9 @@ const SearchFood = () => {
               textShadow: "2px 2px 20px #8b8b8b",
               fontSize: "1.5rem",
             }}
-            onClick={handleSaveButton}
+            onClick={goBackPage}
           >
-            저장
+            돌아가기
           </Button>
         </Grid>
       </Grid>

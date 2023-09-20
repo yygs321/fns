@@ -1,4 +1,4 @@
-import React from "react"; // { useState }
+import React, { memo } from "react"; // { useState }
 
 import { Grid, Typography, TextField, Button } from "@mui/material";
 
@@ -6,27 +6,50 @@ import NavigateBeforeRoundedIcon from "@mui/icons-material/NavigateBeforeRounded
 import SearchIcon from "@mui/icons-material/Search";
 
 import { useLocation, useNavigate } from "react-router-dom";
+
 import FoodCount from "./FoodCount";
+
+import { useDispatch, useSelector } from "react-redux";
+import { resetDiet, deleteFromDiet } from "../../Redux/actions/actions";
 
 const DietInputPage = () => {
   // 여기 추후에 리덕스쪽에서 데이터 관리할 것임
   // 식단 데이터 받아온거 저장해놓고, 새로 추가하는 음식 데이터도 쌓다가 저장 누르면 api로 보내버리는 식.
 
   const location = useLocation();
-  const navigate = useNavigate();
-
   const state = location.state;
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const nowDietList = useSelector((state) => {
+    return state.diet.nowDiet;
+  });
+
+  const addedDiet = useSelector((state) => {
+    return state.diet.addedDiet;
+  });
 
   const goBackPage = () => {
     navigate(-1);
+    dispatch(resetDiet());
   };
 
   const goToSearch = () => {
-    navigate("/diet/input/search", { state: { name: state.name } });
+    navigate("/diet/input/search", {
+      state: { name: state.name },
+    });
   };
 
-  const handleSaveDietList = () => {
+  const handleSaveDietList = async () => {
+    // 백으로 add, delete, fix 보내는 로직을 async 먼저 써서 그거 완료된 뒤에 reset하고 navigate 되도록
+
+    dispatch(resetDiet());
     navigate("/diet");
+  };
+
+  const handleDeleteFood = (one) => {
+    dispatch(deleteFromDiet(one));
   };
 
   return (
@@ -133,7 +156,7 @@ const DietInputPage = () => {
         alignItems={"center"}
         sx={{ height: "50vh", overflow: "scroll" }}
       >
-        {state.food.map((one, index) => (
+        {nowDietList.map((one, index) => (
           <Grid
             key={`${one.name}-detail-${index}`}
             container
@@ -201,7 +224,7 @@ const DietInputPage = () => {
                 justifyContent={"center"}
                 alignItems={"center"}
               >
-                <FoodCount one={one} index={index} />
+                <FoodCount one={one} addedDiet={addedDiet} />
               </Grid>
             </Grid>
             <Grid
@@ -221,6 +244,7 @@ const DietInputPage = () => {
                   textShadow: "2px 2px 20px #8b8b8b",
                   fontSize: "1.5rem",
                 }}
+                onClick={() => handleDeleteFood(one)}
               >
                 삭제
               </Button>
@@ -258,7 +282,8 @@ const DietInputPage = () => {
             fontSize={"1.5rem"}
             fontWeight={"bold"}
           >
-            10 kcal
+            {nowDietList.reduce((totalKcal, food) => totalKcal + food.kcal, 0)}{" "}
+            kcal
           </Typography>
         </Grid>
         <Grid
@@ -287,4 +312,4 @@ const DietInputPage = () => {
   );
 };
 
-export default DietInputPage;
+export default memo(DietInputPage);

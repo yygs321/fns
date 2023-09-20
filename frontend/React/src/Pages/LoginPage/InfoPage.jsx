@@ -137,7 +137,7 @@ const InfoPage = () => {
                 type="text"
                 value={닉네임}
                 // label="닉네임"
-                autoFocus
+
                 required
                 className="닉네임입력"
                 onChange={닉네임입력}
@@ -222,7 +222,6 @@ const InfoPage = () => {
                 type="number"
                 // label="나이"
                 value={나이}
-                autoFocus
                 required
                 className="나이입력"
                 onChange={나이입력}
@@ -267,7 +266,7 @@ const InfoPage = () => {
                 type="number"
                 value={키}
                 // label="키"
-                autoFocus
+
                 required
                 className="키입력"
                 onChange={키입력}
@@ -313,7 +312,7 @@ const InfoPage = () => {
                 type="number"
                 value={체중}
                 // label="체중"
-                autoFocus
+
                 required
                 className="체중입력"
                 onChange={체중입력}

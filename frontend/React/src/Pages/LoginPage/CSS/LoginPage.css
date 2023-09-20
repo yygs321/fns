@@ -1,23 +1,26 @@
 .구글로그인 {
   object-fit: cover;
+  width: 90%;
 }
 .카카오로그인 {
   object-fit: cover;
+  width: 90%;
 }
 .로그인박스 {
-  /* background-color: #00e1ab; */
+  /* background-color: #00e1ab;
   text-align: center;
-  /* height: 8.5vh; */
+  height: 8.5vh; 
   font-size: 5vh;
   margin-top: 5vh;
   line-height: 8.5vh;
-  border-radius: 20px;
+  border-radius: 20px; */
+  width: 90%;
 }
 .비번박스 {
-  width: 100%;
+  width: 80%;
 }
 .아이디박스 {
-  width: 100%;
+  width: 80%;
 }
 .로고 {
   background-color: rgb(151, 151, 151);
