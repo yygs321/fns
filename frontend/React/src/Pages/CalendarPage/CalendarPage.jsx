@@ -79,10 +79,7 @@ const CalendarPage = () => {
     "2023-10-14": 85,
     // ... 추가적인 날짜와 데이터
   };
-
-
-    
-
+  
   const getBackgroundColorByValue = (value) => {
     if (value === undefined) return "transparent"; // 데이터가 없는 경우 투명색
     if (value <= 20) return "#ebedf0"; // 깃허브 잔디의 가장 연한 색
