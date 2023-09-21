@@ -84,11 +84,11 @@ public class JwtTokenProvider {
     }
 
     public String resolveToken(HttpServletRequest request) {
-        return request.getHeader("X-READED-ACCESSTOKEN");
+        return request.getHeader("X-FNS-ACCESSTOKEN");
     }
 
     public String resolveRefreshToken(HttpServletRequest request) {
-        return request.getHeader("X-READED-REFRESHTOKEN");
+        return request.getHeader("X-FNS-REFRESHTOKEN");
     }
 
     public boolean validateAccessToken(String accessToken) {
