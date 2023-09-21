@@ -1,7 +1,7 @@
 import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
-  alreadyDiet: [],
+  // alreadyDiet: [], // 만약 초기화 버튼같은걸 둬서, 기존 식단 리스트로 다시 되돌리는 기능 넣는다면 해제
   nowDiet: [],
   addedDiet: [],
   deletedDiet: [],
@@ -16,13 +16,13 @@ export const dietReducer = (state = initialState, action) => {
     case actionTypes.NOW_DIET:
       return {
         ...state,
-        alreadyDiet: action.payload,
+        // alreadyDiet: action.payload,
         nowDiet: action.payload,
       };
     case actionTypes.RESET_DIET:
       return {
         ...state,
-        alreadyDiet: [],
+        // alreadyDiet: [],
         nowDiet: [],
         addedDiet: [],
         deletedDiet: [],

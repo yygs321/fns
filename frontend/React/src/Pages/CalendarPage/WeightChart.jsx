@@ -43,7 +43,10 @@ const 차트스타일 = {
 };
 
 export function WeightChart({ 날짜 }) {
-  const percentage = (1- ((시작체중 - 목표체중) - (현재체중 - 목표체중)) / (시작체중 - 목표체중)) * 100;
+  const percentage =
+    (1 -
+      (시작체중 - 목표체중 - (현재체중 - 목표체중)) / (시작체중 - 목표체중)) *
+    100;
 
   return (
     <div
@@ -66,11 +69,11 @@ export function WeightChart({ 날짜 }) {
         <Line data={data} options={options} />
       </div>
       <Divider />
-      <div style={{marginTop : "3vh"}}>
-        <span style={{fontSize : "1.5rem"}}>현재 체중 : {현재체중}</span>
+      <div style={{ marginTop: "3vh" }}>
+        <span style={{ fontSize: "1.5rem" }}>현재 체중 : {현재체중}</span>
       </div>
-      <Grid container sx={{mt : 3}}>
-        <Grid xs={6}>
+      <Grid container sx={{ mt: 3 }}>
+        <Grid item xs={6}>
           <Typography
             style={{
               textAlign: "center",
@@ -81,7 +84,7 @@ export function WeightChart({ 날짜 }) {
             목표체중 : {목표체중}
           </Typography>
         </Grid>
-        <Grid xs={6}>
+        <Grid item xs={6}>
           <Typography
             style={{
               textAlign: "center",
@@ -94,8 +97,16 @@ export function WeightChart({ 날짜 }) {
         </Grid>
       </Grid>
       <Box sx={{ width: "100%", margin: "10px 0" }}>
-        <LinearProgress variant="determinate" value={percentage} sx={{height : "1.5rem", borderRadius : "10px"}} />
-        <Typography style={{textAlign : "center", marginTop : "10px", fontSize : "1rem"}}>달성률 : {Math.round(percentage)}%</Typography>
+        <LinearProgress
+          variant="determinate"
+          value={percentage}
+          sx={{ height: "1.5rem", borderRadius: "10px" }}
+        />
+        <Typography
+          style={{ textAlign: "center", marginTop: "10px", fontSize: "1rem" }}
+        >
+          달성률 : {Math.round(percentage)}%
+        </Typography>
       </Box>
     </div>
   );
