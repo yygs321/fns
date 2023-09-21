@@ -14,7 +14,6 @@ import SportsTennisIcon from "@mui/icons-material/SportsTennis";
 import SportsVolleyballIcon from "@mui/icons-material/SportsVolleyball";
 import SportsGolfIcon from "@mui/icons-material/SportsGolf";
 import NavigateBeforeRoundedIcon from "@mui/icons-material/NavigateBeforeRounded";
-import IconButton from '@mui/material/IconButton';
 import NavigateNextRoundedIcon from '@mui/icons-material/NavigateNextRounded';
 
 // 페이지 들어올 때 서버에 요청해서 저장된 내용 불러옴
@@ -163,31 +162,62 @@ const SportsPage = () => {
         gap: "20px",
       }}
     >
-      {/* 날짜 및 화살표 UI */}
-      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", marginBottom: "20px" }}>
-  {currentDate.toDateString() === today.toDateString() && (
-    <IconButton onClick={() => {
-      const yesterday = new Date(today);
-      yesterday.setDate(today.getDate() - 1);
-      setCurrentDate(yesterday);
-    }}>
-      <NavigateBeforeRoundedIcon />
-    </IconButton>
-  )}
-  <Typography variant="h5" style={{ margin: "0 20px" }}>
-    {currentDate.toLocaleDateString("ko-KR", {
-      year: "2-digit",
-      month: "numeric",
-      day: "numeric",
-      weekday: "short",
-    })}
-  </Typography>
-  {currentDate.toDateString() !== today.toDateString() && (
-    <IconButton onClick={() => setCurrentDate(today)}>
-      <NavigateNextRoundedIcon />
-    </IconButton>
-  )}
-</div>
+   {/* 날짜 및 화살표 UI */}
+   <Grid container justifyContent={"center"} alignItems={"center"} sx={{ height: "8vh", width: "90%", backgroundColor: "#00E1AB", borderRadius: "30px", marginBottom: "20px", boxShadow: "2px 2px 4px #a5a5a5" }}>
+
+   {/* 이전 날짜로 가기 위한 화살표 */}
+   <Grid container item xs={2} justifyContent={"center"} alignItems={"center"}>
+     {currentDate.toDateString() === today.toDateString() && (
+       <NavigateBeforeRoundedIcon
+         sx={{
+           color: "white",
+           fontSize: "1.8rem",
+           paddingBottom: "0.2rem",
+           cursor: "pointer",
+         }}
+         onClick={() => {
+           const yesterday = new Date(today);
+           yesterday.setDate(today.getDate() - 1);
+           setCurrentDate(yesterday);
+         }}
+       />
+    )}
+   </Grid>
+
+   {/* 날짜 표시 */}
+   <Grid container item xs={8} justifyContent={"center"} alignItems={"center"}>
+     <Typography
+       variant="caption"
+       component="div"
+       color="white"
+       fontSize={"1.2rem"}
+       fontWeight={"bold"}
+       sx={{ textShadow: "2px 2px 20px #c8c8c8" }}
+     >
+       {currentDate.toLocaleDateString("ko-KR", {
+         year: "2-digit",
+         month: "numeric",
+         day: "numeric",
+         weekday: "short",
+       })}
+     </Typography>
+   </Grid>
+
+   {/* 오늘 날짜로 돌아가기 위한 화살표 */}
+   <Grid container item xs={2} justifyContent={"center"} alignItems={"center"}>
+     {currentDate.toDateString() !== today.toDateString() && (
+       <NavigateNextRoundedIcon
+         sx={{
+         color: "white",
+         fontSize: "1.8rem",
+         paddingBottom: "0.2rem",
+         cursor: "pointer",
+        }}
+         onClick={() => setCurrentDate(today)}
+       />
+     )}
+    </Grid>
+   </Grid>
 
 
       {/* Box 1 */}
