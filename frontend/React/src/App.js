@@ -70,6 +70,7 @@ function App() {
           <Routes>
             <Route element={<LoggedinCheck />}>
               <Route path="/" element={<LoginPage />} />
+              <Route path="/oauth/kakao/callback" element={<KakaoCallback />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/info" element={<Info />} />
             </Route>
@@ -91,7 +92,6 @@ function App() {
               <Route path="/community" element={<CommunityPage />} />
               <Route path="/community/search" element={<UserSearch />} />
               <Route path="/calendar" element={<CalendarPage />} />
-              <Route path="/oauth/kakao/callback" element={<KakaoCallback />} />
             </Route>
             <Route path="/*" element={<NotFound />} />
           </Routes>
