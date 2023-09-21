@@ -58,7 +58,7 @@ public class FoodSearchResponseDto {
 
     public static FoodSearchResponseDto from(Food food) {
         return FoodSearchResponseDto.builder()
-                .foodId(food.getId())
+                .foodId(food.getFoodId())
                 .name(food.getName())
                 .volume(food.getVolume())
                 .kcal(food.getKcal())
