@@ -13,6 +13,10 @@ import SportsBaseballIcon from "@mui/icons-material/SportsBaseball";
 import SportsTennisIcon from "@mui/icons-material/SportsTennis";
 import SportsVolleyballIcon from "@mui/icons-material/SportsVolleyball";
 import SportsGolfIcon from "@mui/icons-material/SportsGolf";
+import NavigateBeforeRoundedIcon from "@mui/icons-material/NavigateBeforeRounded";
+import IconButton from '@mui/material/IconButton';
+import NavigateNextRoundedIcon from '@mui/icons-material/NavigateNextRounded';
+
 // 페이지 들어올 때 서버에 요청해서 저장된 내용 불러옴
 const handleSaveData = () => {
   // 여기에 나중에 API 연결 코드를 작성하면 됩니다.
@@ -113,13 +117,18 @@ const SportsPage = () => {
       {}
     )
   );
-
+  
   const handleTimeChange = (name, time) => {
     setTimes((prevTimes) => ({
       ...prevTimes,
       [name]: time,
     }));
   };
+
+
+  const [currentDate, setCurrentDate] = useState(new Date()); // 현재 화면에 표시되는 날짜
+  const today = new Date(); // 실제 오늘 날짜
+  
 
   const handleCheckChange = (name) => {
     setCheckedSports((prevChecked) => ({
@@ -154,6 +163,33 @@ const SportsPage = () => {
         gap: "20px",
       }}
     >
+      {/* 날짜 및 화살표 UI */}
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", marginBottom: "20px" }}>
+  {currentDate.toDateString() === today.toDateString() && (
+    <IconButton onClick={() => {
+      const yesterday = new Date(today);
+      yesterday.setDate(today.getDate() - 1);
+      setCurrentDate(yesterday);
+    }}>
+      <NavigateBeforeRoundedIcon />
+    </IconButton>
+  )}
+  <Typography variant="h5" style={{ margin: "0 20px" }}>
+    {currentDate.toLocaleDateString("ko-KR", {
+      year: "2-digit",
+      month: "numeric",
+      day: "numeric",
+      weekday: "short",
+    })}
+  </Typography>
+  {currentDate.toDateString() !== today.toDateString() && (
+    <IconButton onClick={() => setCurrentDate(today)}>
+      <NavigateNextRoundedIcon />
+    </IconButton>
+  )}
+</div>
+
+
       {/* Box 1 */}
       <div
         style={{
