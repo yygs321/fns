@@ -1,7 +1,17 @@
 from fastapi import FastAPI
+from pydantic import BaseModel
 
 app = FastAPI()
 
-@app.get("/")
-async def test():
-    return {"message": "Hello"}
+
+class Offset(BaseModel):
+    calorie: int
+    carbohydrate: float
+    protein: float
+
+
+@app.post("/fastapi/recommend")
+async def test(offset: Offset):
+    print(offset)
+    return {"offset": offset}
+
