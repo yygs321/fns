@@ -28,7 +28,7 @@ const DietAccordion = (props) => {
     event.stopPropagation();
     await dispatch(resetDiet());
     await dispatch(nowDiet(food));
-    navigate("/diet/input", { state: { name: name, food: food } });
+    navigate("/diet/input", { state: { name: name } });
   };
 
   return (

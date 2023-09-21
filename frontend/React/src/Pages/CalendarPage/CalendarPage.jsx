@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Badge, Grid, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import dayjs from "dayjs";
+import "dayjs/locale/ko";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import {
   LocalizationProvider,
@@ -101,22 +102,41 @@ const CalendarPage = () => {
       backgroundColor: backgroundColor,
       // 선택된 날짜에 대한 스타일링
       border: isSelected ? "2px solid red" : "none", // 빨간 테두리
+      color: day.day() === 0 ? "red" : "black",
     };
 
     return (
-      <Badge
-        key={formattedDate}
-        overlap="circular"
-        badgeContent="" // 아이콘 대신 배경색만 변경하므로 badgeContent는 비워둡니다.
-        style={{ backgroundColor }}
+      // <Badge
+      //   key={formattedDate}
+      //   overlap="circular"
+      //   badgeContent="" // 아이콘 대신 배경색만 변경하므로 badgeContent는 비워둡니다.
+      //   sx={{
+      //     width: "14%",
+      //     height: "5vh",
+      //   }}
+      // >
+      <Grid
+        container
+        justifyContent={"center"}
+        alignItems={"center"}
+        sx={{
+          borderRadius: "10px",
+          width: "100%",
+          height: "100%",
+        }}
       >
         <PickersDay
           {...other}
           outsideCurrentMonth={outsideCurrentMonth}
           day={day}
           style={dayStyle}
+          disableMargin={true}
+          sx={{ borderRadius: "10px", width: "80%", fontSize: "0.9rem" }}
+          today={true}
+          // showDaysOutsideCurrentMonth={true}
         />
-      </Badge>
+      </Grid>
+      // </Badge>
     );
   };
 
@@ -145,6 +165,7 @@ const CalendarPage = () => {
       style={{
         display: "flex",
         flexDirection: "column",
+        justifyContent: "center",
         alignItems: "center",
         padding: "2% 0",
       }}
@@ -154,12 +175,38 @@ const CalendarPage = () => {
         className="캘린더배경"
         style={{ width: "80%", padding: "20px", marginBottom: "20px" }}
       >
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DateCalendar
-            value={날짜}
-            onChange={(newValue) => set날짜(newValue)}
-            slots={{ day: CustomDay }}
-          />
+        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ko">
+          <Grid
+            container
+            justifyContent={"center"}
+            alignItems={"center"}
+            sx={{
+              height: "100%",
+              border: "1px solid #e7e7e7",
+              borderRadius: "15px",
+            }}
+          >
+            <DateCalendar
+              value={날짜}
+              onChange={(newValue) => set날짜(newValue)}
+              slots={{ day: CustomDay }}
+              sx={{
+                height: "100%",
+                width: "100%",
+
+                ".MuiDayCalendar-weekDayLabel": {
+                  width: "100%",
+                  fontSize: "1rem",
+                  fontWeight: "bold",
+                  "&[aria-label='일요일']": {
+                    color: "red",
+                  },
+                },
+              }}
+              views={["year", "month", "day"]}
+              yearsPerRow={4}
+            />
+          </Grid>
         </LocalizationProvider>
       </div>
 
