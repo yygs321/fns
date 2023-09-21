@@ -19,13 +19,19 @@ pipeline {
                     credentialsId: 'a432e361-21de-400a-a3c2-8f8860f53b7f'
             }
         }
-
-        stage('Install pipx') {
+        stage('Setup Python Environment') {
             steps {
-                sh 'pip install pipx'
-                sh 'pipx ensurepath'
+                sh 'python3 -m venv myenv'
+                
+                sh '. myenv/bin/activate'
             }
-}
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                sh 'myenv/bin/pip install -r requirements.txt'
+            }
+        }
 
         stage('Setup FastAPI Environment') {
             steps {
