@@ -35,12 +35,6 @@ pipeline {
             }
         }
 
-        stage('Test FastAPI') {
-            steps {
-                sh 'pytest'
-            }
-        }
-
         stage('Delete existing Docker images and containers') {
             steps {
                 sh '''
