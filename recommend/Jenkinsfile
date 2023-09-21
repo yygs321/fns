@@ -23,7 +23,7 @@ pipeline {
         stage('Setup FastAPI Environment') {
             steps {
                 script {
-                    sh 'pip3 install -r requirements.txt'
+                    sh 'pipx install -r requirements.txt'
                 }
             }
         }
