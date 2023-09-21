@@ -282,7 +282,10 @@ const DietInputPage = () => {
             fontSize={"1.5rem"}
             fontWeight={"bold"}
           >
-            {nowDietList.reduce((totalKcal, food) => totalKcal + food.kcal, 0)}{" "}
+            {nowDietList.reduce(
+              (totalKcal, food) => totalKcal + food.kcal * food.count,
+              0
+            )}{" "}
             kcal
           </Typography>
         </Grid>

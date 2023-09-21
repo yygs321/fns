@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { Grid, Typography, TextField, Button } from "@mui/material";
 
@@ -15,16 +15,8 @@ const SearchFood = () => {
 
   console.log(searchTerm);
 
-  const existingDiet = useSelector((state) => {
+  const nowDietList = useSelector((state) => {
     return state.diet.nowDiet;
-  });
-
-  const addedDiet = useSelector((state) => {
-    return state.diet.addedDiet;
-  });
-
-  const deletedDiet = useSelector((state) => {
-    return state.diet.deletedDiet;
   });
 
   const location = useLocation();
@@ -32,19 +24,6 @@ const SearchFood = () => {
   const dispatch = useDispatch();
 
   const state = location.state;
-
-  const [addedFoodList, setAddedFoodList] = useState([]);
-
-  useEffect(() => {
-    const updatedAddedFoodList = [
-      ...existingDiet.filter(
-        (food) =>
-          !deletedDiet.some((deletedFood) => food.name === deletedFood.name)
-      ),
-      ...addedDiet,
-    ];
-    setAddedFoodList(updatedAddedFoodList);
-  }, [existingDiet, addedDiet, deletedDiet]);
 
   const searchResult = [
     { name: "치킨버거", kcal: 10 },
@@ -242,7 +221,7 @@ const SearchFood = () => {
               justifyContent={"flex-end"}
               alignItems={"center"}
             >
-              {!addedFoodList.some((food) => food.name === one.name) ? (
+              {!nowDietList.some((food) => food.name === one.name) ? (
                 <Button
                   variant="contained"
                   sx={{
