@@ -20,6 +20,14 @@ pipeline {
             }
         }
 
+        stage('Setup FastAPI Environment') {
+            steps {
+                script {
+                    sh 'pip3 install -r requirements.txt'
+                }
+            }
+        }
+
         stage('Test FastAPI') {
             steps {
                 sh 'pytest'
