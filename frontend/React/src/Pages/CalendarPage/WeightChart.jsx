@@ -203,7 +203,7 @@ export function WeightChart({ 날짜, set날짜, 오늘 }) {
           </Typography>
         </Grid>
       </Grid>
-      <Box sx={{ width: "100%", margin: "20px 0" }}>
+      <Box sx={{ width: "100%", marginTop: "20px", marginBottom: "10px" }}>
         <LinearProgress
           variant="determinate"
           value={percentage}
