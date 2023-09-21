@@ -20,6 +20,13 @@ pipeline {
             }
         }
 
+        stage('Install pipx') {
+            steps {
+                sh 'pip install pipx'
+                sh 'pipx ensurepath'
+            }
+}
+
         stage('Setup FastAPI Environment') {
             steps {
                 script {
