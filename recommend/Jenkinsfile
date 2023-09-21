@@ -29,6 +29,8 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
+                sh 'ls -al'
+
                 sh 'myenv/bin/pip install -r requirements.txt'
             }
         }
