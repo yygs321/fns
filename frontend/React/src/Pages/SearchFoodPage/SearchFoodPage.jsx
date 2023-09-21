@@ -1,12 +1,5 @@
 import React, { useState } from 'react';
-import { 
-  Typography, 
-  TextField, 
-  Grid, 
-  Chip,
-  Divider
-  
-} from '@mui/material';
+import { Typography, TextField, Grid, Chip,Divider } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import FilteredSearchResults from './FilteredSearchResults';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
@@ -62,12 +55,6 @@ const SearchFoodPage = () => {
         placeholder="음식을 검색하세요"
         onChange={e => {
           setSearchTerm(e.target.value);
-          // if (!e.target.value) {
-          //   setKcal('');
-          //   setCarbs('');
-          //   setProtein('');
-          //   setFat('');
-          // } 검색창이 비면 필터를 초기화
         }}
         InputProps={{
           endAdornment: <SearchIcon color="primary" />
@@ -180,7 +167,6 @@ const SearchFoodPage = () => {
       )}
     </div>
   );
-  
 };
 
 export default SearchFoodPage;
