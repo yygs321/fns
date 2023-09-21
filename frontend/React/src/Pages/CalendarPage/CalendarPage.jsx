@@ -1,8 +1,5 @@
 import React, { useState } from "react";
-import {
-  // Badge,
-  Grid,
-} from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -14,11 +11,58 @@ import {
 import NutritionInfo from "./NutritionInfo";
 import { WeightChart } from "./WeightChart";
 import "./calendarcss.scss";
+import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
+import DirectionsBikeIcon from "@mui/icons-material/DirectionsBike";
+import HikingIcon from "@mui/icons-material/Hiking";
+import PoolIcon from "@mui/icons-material/Pool";
+import AccessibilityNewIcon from "@mui/icons-material/AccessibilityNew"; //줄넘기 이 아이콘으로 대체
+import StairsIcon from "@mui/icons-material/Stairs";
+import SelfImprovementIcon from "@mui/icons-material/SelfImprovement";
+import SportsSoccerIcon from "@mui/icons-material/SportsSoccer";
+import SportsBaseballIcon from "@mui/icons-material/SportsBaseball";
+import SportsTennisIcon from "@mui/icons-material/SportsTennis";
+import SportsVolleyballIcon from "@mui/icons-material/SportsVolleyball";
+import SportsGolfIcon from "@mui/icons-material/SportsGolf";
+
+const sportsData = [
+    { name: "조깅", kcal: 500, icon: <DirectionsRunIcon fontSize="large" /> },
+    { name: "사이클", kcal: 500, icon: <DirectionsBikeIcon fontSize="large" /> },
+    { name: "등산", kcal: 500, icon: <HikingIcon fontSize="large" /> },
+    { name: "수영", kcal: 500, icon: <PoolIcon fontSize="large" /> },
+    {
+      name: "줄넘기",
+      kcal: 500,
+      icon: <AccessibilityNewIcon fontSize="large" />,
+    },
+    { name: "계단 오르기", kcal: 500, icon: <StairsIcon fontSize="large" /> },
+    { name: "요가", kcal: 500, icon: <SelfImprovementIcon fontSize="large" /> },
+    { name: "축구", kcal: 500, icon: <SportsSoccerIcon fontSize="large" /> },
+    { name: "야구", kcal: 500, icon: <SportsBaseballIcon fontSize="large" /> },
+    { name: "테니스", kcal: 500, icon: <SportsTennisIcon fontSize="large" /> },
+    { name: "배구", kcal: 500, icon: <SportsVolleyballIcon fontSize="large" /> },
+    { name: "골프", kcal: 500, icon: <SportsGolfIcon fontSize="large" /> },
+  ];
+
+const 운동한것들 = [
+  {
+    name: "사이클",
+    time: "1",
+    kcal : "500",
+  },
+  {
+    name: "요가",
+    time: "1",
+    kcal : "500",
+  },
+  {
+    name: "배구",
+    time: "2",
+    kcal : "500",
+  },
+];
 
 const CalendarPage = () => {
   const [날짜, set날짜] = useState(dayjs());
-
-  // const koWeekdays = ["월", "화", "수", "목", "금", "토", "일"];
 
   // 더미 데이터
   const data = {
@@ -36,7 +80,7 @@ const CalendarPage = () => {
     "2023-10-14": 85,
     // ... 추가적인 날짜와 데이터
   };
-
+  
   const getBackgroundColorByValue = (value) => {
     if (value === undefined) return "transparent"; // 데이터가 없는 경우 투명색
     if (value <= 20) return "#ebedf0"; // 깃허브 잔디의 가장 연한 색
@@ -168,6 +212,35 @@ const CalendarPage = () => {
 
       {/* box2 */}
       <NutritionInfo 날짜={날짜} 영양데이터={영양데이터} />
+      {/* box3 */}
+      <div className="운동배경">
+      <Typography style={{textAlign : "center", marginTop : "2vh", fontSize : "2rem"}}>{날짜.format("MM월 DD일")} 운동 현황</Typography>
+      
+
+      {운동한것들.map((운동, index) => {
+        // 운동 이름으로 해당 운동을 찾습니다.
+    const 운동정보 = sportsData.find((item) => item.name === 운동.name);
+
+        return (
+        
+            <div id="운동위치설정">      
+            <Grid container style={{display : "flex", alignItems : "center"}}>
+            <Grid xs = {6}><div style={{display : "flex", flexDirection : "column", alignItems : "center"}}>{운동정보.icon} {운동.name}</div></Grid>
+            <Grid xs = {6}><div style={{display : "flex", flexDirection : "column", alignItems : "center"}}>
+                <div>
+                {운동.time}시간
+                </div>
+                <div>
+                 {운동.kcal}kcal
+                 </div>
+                 </div></Grid>
+            </Grid>
+            </div>
+        );
+    })}
+    
+</div>
+      {/* box4 */}
       <WeightChart 날짜={날짜} />
     </div>
   );

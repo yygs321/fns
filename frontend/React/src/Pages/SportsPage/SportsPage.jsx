@@ -18,7 +18,7 @@ const handleSaveData = () => {
   // 여기에 나중에 API 연결 코드를 작성하면 됩니다.
   console.log("데이터가 저장되었습니다."); // 임시 메시지
 };
-const sportsData = [
+export const sportsData = [
   { name: "조깅", kcal: 500, icon: <DirectionsRunIcon fontSize="large" /> },
   { name: "사이클", kcal: 500, icon: <DirectionsBikeIcon fontSize="large" /> },
   { name: "등산", kcal: 500, icon: <HikingIcon fontSize="large" /> },
