@@ -19,7 +19,8 @@ import CommunityPage from "./Pages/CommunityPage/CommunityPage";
 import CalendarPage from "./Pages/CalendarPage/CalendarPage";
 import UserSearch from "./Pages/CommunityPage/UserSearch";
 import { useSelector } from "react-redux";
-import KakaoCallback from "./Pages/LoginPage/CallbackPage"
+import KakaoCallback from "./Pages/LoginPage/CallbackPage";
+import NotFound from "./Pages/Common/Component/NotFound";
 
 function App() {
   useEffect(() => {
@@ -83,6 +84,7 @@ function App() {
             <Route path="/community/search" element={<UserSearch />} />
             <Route path="/calendar" element={<CalendarPage />} />
             <Route path="/oauth/kakao/callback" element={<KakaoCallback />} />
+            <Route path="/*" element={<NotFound />} />
           </Routes>
         </div>
 

@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   // Badge,
   Grid,
+  Typography,
 } from "@mui/material";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
@@ -14,11 +15,36 @@ import {
 import NutritionInfo from "./NutritionInfo";
 import { WeightChart } from "./WeightChart";
 import "./calendarcss.scss";
+import NavigateBeforeRoundedIcon from "@mui/icons-material/NavigateBeforeRounded";
+import NavigateNextRoundedIcon from "@mui/icons-material/NavigateNextRounded";
+
+dayjs.locale("ko");
 
 const CalendarPage = () => {
   const [날짜, set날짜] = useState(dayjs());
+  const 오늘 = dayjs();
 
-  // const koWeekdays = ["월", "화", "수", "목", "금", "토", "일"];
+  // 공휴일 데이터는 그냥 임시로 2023년 데이터 직접 입력, 제대로 한다면 공공데이터 API로 연동
+  const holiday = [
+    "2023-01-01",
+    "2023-01-21",
+    "2023-01-22",
+    "2023-01-23",
+    "2023-01-24",
+    "2023-03-01",
+    "2023-05-05",
+    "2023-05-27",
+    "2023-05-29",
+    "2023-06-06",
+    "2023-08-15",
+    "2023-09-28",
+    "2023-09-29",
+    "2023-09-30",
+    "2023-10-02",
+    "2023-10-03",
+    "2023-10-09",
+    "2023-12-25",
+  ];
 
   // 더미 데이터
   const data = {
@@ -47,30 +73,36 @@ const CalendarPage = () => {
 
   const CustomDay = (props) => {
     const { day, outsideCurrentMonth, ...other } = props;
+    // const formattedDate = day.locale("ko").format("YYYY-MM-DD (ddd)");
     const formattedDate = day.format("YYYY-MM-DD");
     const value = data[formattedDate];
     const backgroundColor = getBackgroundColorByValue(value);
 
     // 현재 날짜와 선택된 날짜를 비교하여 선택 여부 파악
     const isSelected = day.isSame(날짜, "day");
+    const isholiday = holiday.includes(formattedDate);
 
     const dayStyle = {
       backgroundColor: backgroundColor,
       // 선택된 날짜에 대한 스타일링
-      border: isSelected ? "2px solid red" : "none", // 빨간 테두리
-      color: day.day() === 0 ? "red" : "black",
+      border: day.isSame(오늘, "day")
+        ? "2px solid blue"
+        : isSelected
+        ? "2px solid red"
+        : "none", // 빨간 테두리
+      color:
+        (outsideCurrentMonth && day.day() === 0) ||
+        (outsideCurrentMonth && isholiday)
+          ? "#ffa3a3"
+          : outsideCurrentMonth
+          ? "#b6b6b6"
+          : day.day() === 0 || isholiday
+          ? "red"
+          : "black",
+      // 공휴일, 일요일, 현재 월 외의 날짜 등에 색깔을 각각 다르게 적용.
     };
 
     return (
-      // <Badge
-      //   key={formattedDate}
-      //   overlap="circular"
-      //   badgeContent="" // 아이콘 대신 배경색만 변경하므로 badgeContent는 비워둡니다.
-      //   sx={{
-      //     width: "14%",
-      //     height: "5vh",
-      //   }}
-      // >
       <Grid
         container
         justifyContent={"center"}
@@ -83,16 +115,20 @@ const CalendarPage = () => {
       >
         <PickersDay
           {...other}
-          outsideCurrentMonth={outsideCurrentMonth}
           day={day}
           style={dayStyle}
           disableMargin={true}
-          sx={{ borderRadius: "10px", width: "80%", fontSize: "0.9rem" }}
+          sx={{
+            borderRadius: "10px",
+            width: "80%",
+            // height: "80%",
+            fontSize: "0.9rem",
+          }}
           today={true}
+          outsideCurrentMonth={outsideCurrentMonth}
           // showDaysOutsideCurrentMonth={true}
         />
       </Grid>
-      // </Badge>
     );
   };
 
@@ -115,60 +151,209 @@ const CalendarPage = () => {
     },
   };
 
+  const [scrollDownInfo, setScrollDownInfo] = useState(false);
+
+  let lastScrollTop = 0;
+
+  const resizeCalendar = (e) => {
+    const scrollTop = e.target.scrollTop;
+
+    if (scrollTop > lastScrollTop) {
+      // 스크롤 다운
+      if (!scrollDownInfo) {
+        setScrollDownInfo(true);
+      }
+    } else {
+      // 스크롤 업
+      if (scrollDownInfo) {
+        setScrollDownInfo(false);
+      }
+    }
+
+    lastScrollTop = scrollTop;
+  };
+
+  const [캘린더고정Height, set캘린더고정Height] = useState(0); // 캘린더-고정의 높이
+
+  useEffect(() => {
+    // 컴포넌트가 마운트된 후 캘린더-고정의 높이를 측정하고 저장
+    const 캘린더고정 = document.querySelector(".캘린더-고정");
+    if (캘린더고정) {
+      const height = 캘린더고정.clientHeight;
+      set캘린더고정Height(height);
+    }
+  }, [scrollDownInfo]);
+
+  const changeDayBefore = () => {
+    const 어제 = 날짜.subtract(1, "day");
+    if (!어제.isSame("1999-12-31", "day")) {
+      set날짜(어제);
+    }
+  };
+  const changeDayAfter = () => {
+    const 내일 = 날짜.add(1, "day");
+    if (내일 <= 오늘) {
+      set날짜(내일);
+    }
+  };
+
   return (
     <div
       className="gray-pages"
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        padding: "2% 0",
-      }}
+      // style={{
+      //   display: "flex",
+      //   flexDirection: "column",
+      //   justifyContent: "center",
+      //   alignItems: "center",
+      //   // padding: "2% 0",
+      // }}
     >
       {/* box1 */}
-      <div
-        className="캘린더배경"
-        style={{ width: "80%", padding: "20px", marginBottom: "20px" }}
-      >
-        <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ko">
-          <Grid
-            container
-            justifyContent={"center"}
-            alignItems={"center"}
-            sx={{
-              height: "100%",
-              border: "1px solid #e7e7e7",
-              borderRadius: "15px",
-            }}
-          >
-            <DateCalendar
-              value={날짜}
-              onChange={(newValue) => set날짜(newValue)}
-              slots={{ day: CustomDay }}
+      <div className="캘린더-고정">
+        <div className="캘린더배경">
+          <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ko">
+            <Grid
+              container
+              justifyContent={"center"}
+              alignItems={"center"}
               sx={{
                 height: "100%",
-                width: "100%",
-
-                ".MuiDayCalendar-weekDayLabel": {
-                  width: "100%",
-                  fontSize: "1rem",
-                  fontWeight: "bold",
-                  "&[aria-label='일요일']": {
-                    color: "red",
-                  },
-                },
+                border: "1px solid #e7e7e7",
+                borderRadius: "15px",
               }}
-              views={["year", "month", "day"]}
-              yearsPerRow={4}
-            />
-          </Grid>
-        </LocalizationProvider>
+            >
+              <DateCalendar
+                value={날짜}
+                onChange={(newValue) => set날짜(newValue)}
+                slots={{ day: CustomDay }}
+                sx={{
+                  height: "100%",
+                  width: "100%",
+
+                  ".MuiDayCalendar-weekDayLabel": {
+                    width: "100%",
+                    height: "80%",
+                    fontSize: "1rem",
+                    fontWeight: "bold",
+                    "&[aria-label='일요일']": {
+                      color: "red",
+                    },
+                  },
+                  ".MuiPickersCalendarHeader-label": {
+                    fontSize: "1.2rem",
+                    whiteSpace: "nowrap",
+                    // overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    fontWeight: "bold",
+                  },
+                  ".MuiYearCalendar-root": {
+                    width: "96%",
+                  },
+                  ".MuiMonthCalendar-root": {
+                    width: "96%",
+                  },
+                  ".MuiPickersYear-yearButton": {
+                    fontSize: "0.9rem",
+                    width: "100%",
+                  },
+                  ".MuiPickersMonth-monthButton": {
+                    fontSize: "0.9rem",
+                    width: "100%",
+                  },
+
+                  display: scrollDownInfo ? "none" : "relative",
+                }}
+                views={["year", "month", "day"]}
+                monthsPerRow={4}
+                yearsPerRow={4}
+                disableFuture={true}
+                minDate={dayjs("2000-01-01")} // 최소 연도 설정
+                maxDate={dayjs()} // 현재 날짜를 최대 연도로 설정
+                showDaysOutsideCurrentMonth={true}
+                fixedWeekNumber={6}
+              />
+              {scrollDownInfo && (
+                <Grid container justifyContent={"center"} alignItems={"center"}>
+                  <Grid
+                    container
+                    item
+                    xs={2}
+                    justifyContent={"center"}
+                    alignItems={"center"}
+                  >
+                    <NavigateBeforeRoundedIcon
+                      sx={{
+                        color: "#a5a5a5",
+                        fontSize: "2rem",
+                        paddingBottom: "0.2rem",
+                        cursor: "pointer",
+                      }}
+                      onClick={changeDayBefore}
+                    />
+                  </Grid>
+                  <Grid
+                    container
+                    item
+                    xs={8}
+                    justifyContent={"center"}
+                    alignItems={"center"}
+                  >
+                    <Typography sx={{ fontWeight: "bold", fontSize: "1.5rem" }}>
+                      {날짜.format("M월 D일 (ddd)")}
+                    </Typography>
+                  </Grid>
+                  <Grid
+                    container
+                    item
+                    xs={2}
+                    justifyContent={"center"}
+                    alignItems={"center"}
+                  >
+                    <NavigateNextRoundedIcon
+                      sx={{
+                        color: "#a5a5a5",
+                        fontSize: "2rem",
+                        paddingBottom: "0.2rem",
+                        cursor: "pointer",
+                      }}
+                      onClick={changeDayAfter}
+                    />
+                  </Grid>
+                </Grid>
+              )}
+            </Grid>
+          </LocalizationProvider>
+        </div>
       </div>
 
       {/* box2 */}
-      <NutritionInfo 날짜={날짜} 영양데이터={영양데이터} />
-      <WeightChart 날짜={날짜} />
+      <Grid
+        container
+        justifyContent={"center"}
+        alignItems={"center"}
+        sx={{
+          paddingTop: `${캘린더고정Height}px`,
+        }}
+      >
+        <Grid
+          container
+          justifyContent={"center"}
+          alignItems={"center"}
+          className="정보란"
+          sx={{
+            height: `calc(92vh - ${캘린더고정Height}px)`,
+          }}
+          onScroll={resizeCalendar}
+        >
+          <NutritionInfo
+            날짜={날짜}
+            set날짜={set날짜}
+            오늘={오늘}
+            영양데이터={영양데이터}
+          />
+          <WeightChart 날짜={날짜} 오늘={오늘} set날짜={set날짜} />
+        </Grid>
+      </Grid>
     </div>
   );
 };
