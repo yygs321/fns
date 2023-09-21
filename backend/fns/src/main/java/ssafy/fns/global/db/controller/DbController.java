@@ -56,7 +56,6 @@ public class DbController {
             * 콜레스테롤 cholesterol
             * 포화지방산 acid
             * 트랜스지방산 transFat
-            * 업체명
             * */
             int id = 1;
             for (int i = 0; i < element.size(); i++) {

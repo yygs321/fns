@@ -12,6 +12,7 @@ import javax.persistence.OneToMany;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import ssafy.fns.global.entity.BaseEntity;
 /*
                    음식명 name
@@ -38,12 +39,13 @@ import ssafy.fns.global.entity.BaseEntity;
                  * */
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 public class Food extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "food_id")
-    private Long id;
+    private Long foodId;
 
     private String name;
 
