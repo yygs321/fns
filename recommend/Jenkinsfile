@@ -59,7 +59,7 @@ pipeline {
             steps {
                 sh '''
                     echo [BE] Build Docker Image!
-                    docker build -t fastapi_image .
+                    docker build -t fastapi_image -f recommend/Dockerfile .'
                     echo [BE] Run Docker Container!
                     docker run -dp 8083:8083 --name fastapi_server fastapi_image
                 '''
