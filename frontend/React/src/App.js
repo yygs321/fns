@@ -21,6 +21,8 @@ import UserSearch from "./Pages/CommunityPage/UserSearch";
 import { useSelector } from "react-redux";
 import KakaoCallback from "./Pages/LoginPage/CallbackPage";
 import NotFound from "./Pages/Common/Component/NotFound";
+import LoginCheck from "./Pages/Common/Component/LoginCheck";
+import LoggedinCheck from "./Pages/Common/Component/LoggedinCheck";
 
 function App() {
   useEffect(() => {
@@ -66,24 +68,31 @@ function App() {
           style={{ minHeight: isLogin ? "92vh" : "100vh" }}
         >
           <Routes>
-            <Route path="/" element={<LoginPage />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/info" element={<Info />} />
-            <Route path="/main" element={<MainPage />} />
-            <Route path="/diet" element={<DietPage />} />
-            <Route path="/diet/input" element={<DietInputPage />} />
-            <Route path="/diet/input/search" element={<SearchFood />} />
-            <Route path="/weight" element={<WeightInput />} />
-            <Route path="/fit" element={<SportsPage />} />
-            <Route path="/mypage" element={<MyPage />} />
-            <Route path="/mypage/edit-profile" element={<EditProfilePage />} />
-            <Route path="/mypage/mycustom" element={<MyCustom />} />
-            <Route path="/search" element={<SearchFoodPage />} />
-            <Route path="/search/food/:name" element={<FoodDetail />} />
-            <Route path="/community" element={<CommunityPage />} />
-            <Route path="/community/search" element={<UserSearch />} />
-            <Route path="/calendar" element={<CalendarPage />} />
-            <Route path="/oauth/kakao/callback" element={<KakaoCallback />} />
+            <Route element={<LoggedinCheck />}>
+              <Route path="/" element={<LoginPage />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/info" element={<Info />} />
+            </Route>
+            <Route element={<LoginCheck />}>
+              <Route path="/main" element={<MainPage />} />
+              <Route path="/diet" element={<DietPage />} />
+              <Route path="/diet/input" element={<DietInputPage />} />
+              <Route path="/diet/input/search" element={<SearchFood />} />
+              <Route path="/weight" element={<WeightInput />} />
+              <Route path="/fit" element={<SportsPage />} />
+              <Route path="/mypage" element={<MyPage />} />
+              <Route
+                path="/mypage/edit-profile"
+                element={<EditProfilePage />}
+              />
+              <Route path="/mypage/mycustom" element={<MyCustom />} />
+              <Route path="/search" element={<SearchFoodPage />} />
+              <Route path="/search/food/:name" element={<FoodDetail />} />
+              <Route path="/community" element={<CommunityPage />} />
+              <Route path="/community/search" element={<UserSearch />} />
+              <Route path="/calendar" element={<CalendarPage />} />
+              <Route path="/oauth/kakao/callback" element={<KakaoCallback />} />
+            </Route>
             <Route path="/*" element={<NotFound />} />
           </Routes>
         </div>

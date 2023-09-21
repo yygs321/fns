@@ -198,24 +198,16 @@ const CalendarPage = () => {
 
   const [scrollDownInfo, setScrollDownInfo] = useState(false);
 
-  let lastScrollTop = 0;
-
   const resizeCalendar = (e) => {
     const scrollTop = e.target.scrollTop;
 
-    if (scrollTop > lastScrollTop) {
+    if (scrollTop === 0 && scrollDownInfo) {
+      // 최상단에 도달했을 때
+      setScrollDownInfo(false);
+    } else if (scrollTop > 0 && !scrollDownInfo) {
       // 스크롤 다운
-      if (!scrollDownInfo) {
-        setScrollDownInfo(true);
-      }
-    } else {
-      // 스크롤 업
-      if (scrollDownInfo) {
-        setScrollDownInfo(false);
-      }
+      setScrollDownInfo(true);
     }
-
-    lastScrollTop = scrollTop;
   };
 
   const [캘린더고정Height, set캘린더고정Height] = useState(0); // 캘린더-고정의 높이
