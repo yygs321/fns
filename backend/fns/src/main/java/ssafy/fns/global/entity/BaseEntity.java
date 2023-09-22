@@ -28,5 +28,6 @@ public abstract class BaseEntity {
     public void delete() {
         this.isValid = false;
     }
+    public void add() { this.isValid = true; }
 }
 

@@ -29,6 +29,15 @@ public class Follow extends BaseEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member merber;
+    @JoinColumn(name = "to_member_id")
+    private Member toMember; //팔로우 요청 받은 사람
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "from_member_id")
+    private Member fromMember; // 팔로우 하는 사람
+    @Builder
+    public Follow(Member toMember, Member fromMember) {
+        this.toMember = toMember;
+        this.fromMember = fromMember;
+    }
 }
