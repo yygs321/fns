@@ -1,12 +1,13 @@
 package ssafy.fns.domain.exercise.entity;
 
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,8 +27,8 @@ public class Sports extends BaseEntity {
 
     private Long met;
 
-    @OneToOne(mappedBy = "sports", fetch = FetchType.LAZY)
-    private Exercise exercise;
+    @OneToMany(mappedBy = "sports", fetch = FetchType.LAZY)
+    private List<Exercise> exerciseList;
 
     @Builder
     public Sports(String sportsName, Long met) {
