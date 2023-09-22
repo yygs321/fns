@@ -20,41 +20,54 @@ const WeightInput = () => {
 
   const [수정모달열기, set수정모달열기] = useState(false);
   const [목표모달열기, set목표모달열기] = useState(false);
+  // 체중 설정
+  const [모달체중, set모달체중] = useState("");
   const [체중, set체중] = useState("");
-  const [목표체중, set목표체중] = useState("80");
-  const [다이어트모드, set다이어트모드] = useState(false);
-  const [기간, set기간] = useState("50");
+
+  const [목표체중, set목표체중] = useState("");
+  const [모달목표체중, set모달목표체중] = useState("");
+
+
+  const [모달기간, set모달기간] = useState("");
+  const [기간, set기간] = useState("");
   const 일자 = ({
     month: 월,
     day: 일,
   });
 
   const 체중입력함수 = (e) => {
-    set체중((data) => e.target.value);
+    set모달체중(data => e.target.value);
   };
 
   const 체중수정모달 = () => {
+    set체중(data => 모달체중);
     set수정모달열기((data) => !data);
   };
 
+  const 체중수정닫기 = () => {
+    set수정모달열기(data => !data);
+  }
+
   const 목표설정모달 = () => {
+    set목표체중(data => 모달목표체중);
+    set기간(data => 모달기간);
     set목표모달열기((data) => !data);
   };
 
-  const 목표설정모달닫기 = () => {
-    set다이어트모드(true);
+  const 목표설정닫기 = () => {
     set목표모달열기((data) => !data);
   };
 
   const 목표체중입력함수 = (e) => {
-    set목표체중((data) => e.target.value);
+    set모달목표체중((data) => e.target.value);
   };
 
   const 목표기간입력함수 = (e) => {
-    set기간((data) => e.target.value);
+    set모달기간((data) => e.target.value);
   };
 
-  const 목표값여부 = 목표체중 && 기간;
+  const 모달목표값여부 = 모달목표체중 && 모달기간;
+  const 다이어트모드 = 목표체중 && 기간;
 
   return (
     <div className="회색배경">
@@ -174,18 +187,18 @@ const WeightInput = () => {
               color="primary"
               fullWidth
               onChange={체중입력함수}
-              value={체중}
+              value={모달체중}
               type="number"
             />
             <div style={{ display: "flex" }}>
               <Button
                 variant="contained"
                 onClick={체중수정모달}
-                disabled={체중 === ""}
+                disabled={모달체중 === ""}
               >
                 설정하기
               </Button>
-              <Button variant="contained" onClick={체중수정모달}>
+              <Button variant="contained" onClick={체중수정닫기}>
                 닫기
               </Button>
             </div>
@@ -194,7 +207,7 @@ const WeightInput = () => {
         {/* 경계선 */}
         <Modal
           open={목표모달열기}
-          onClose={목표설정모달닫기}
+          onClose={목표설정모달}
           aria-labelledby="modal-title"
         >
           <Box
@@ -227,7 +240,7 @@ const WeightInput = () => {
               color="primary"
               fullWidth
               onChange={목표체중입력함수}
-              value={목표체중}
+              value={모달목표체중}
               type="number"
             />
             <Typography id="modal-description" sx={{ mt: 2 }}>
@@ -238,18 +251,18 @@ const WeightInput = () => {
               color="primary"
               fullWidth
               onChange={목표기간입력함수}
-              value={기간}
+              value={모달기간}
               type="number"
             />
             <div style={{ display: "flex" }}>
               <Button
                 variant="contained"
-                onClick={목표설정모달닫기}
-                disabled={목표값여부 === ""}
+                onClick={목표설정모달}
+                disabled={모달목표값여부 === ""}
               >
                 설정하기
               </Button>
-              <Button variant="contained" onClick={목표설정모달닫기}>
+              <Button variant="contained" onClick={목표설정닫기}>
                 닫기
               </Button>
             </div>
