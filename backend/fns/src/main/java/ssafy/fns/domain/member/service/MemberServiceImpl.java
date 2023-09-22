@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import ssafy.fns.domain.member.controller.dto.MemberProfileRequestDto;
 import ssafy.fns.domain.member.controller.dto.SignUpRequestDto;
 import ssafy.fns.domain.member.entity.Member;
 import ssafy.fns.domain.member.entity.Provider;
@@ -31,6 +32,13 @@ public class MemberServiceImpl implements MemberService {
                 .build();
 
         memberRepository.save(member);
+    }
+
+    @Override
+    @Transactional
+    public void saveProfile(Member member, MemberProfileRequestDto requestDto) {
+        Member findMember = memberRepository.findByEmail(member.getEmail());
+        findMember.saveProfile(requestDto);
     }
 
 
