@@ -1,8 +1,10 @@
 package ssafy.fns.domain.member.entity;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -16,6 +18,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import ssafy.fns.domain.exercise.entity.Exercise;
 import ssafy.fns.global.entity.BaseEntity;
+import ssafy.fns.global.util.IntegerArrayConverter;
 
 @Entity
 @Getter
@@ -53,7 +56,12 @@ public class Member extends BaseEntity {
     private List<Exercise> exerciseList = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
-    private List<Base> baseList = new ArrayList<>();
+    private List<Base> baseNutrientList = new ArrayList<>();
+
+    //조깅, 사이클, 등산, 수영, 줄넘기, 계단 오르기, 요가, 축구, 야구, 테니스, 배구, 골프
+    @Convert(converter = IntegerArrayConverter.class)
+    private List<Integer> sportsBookmarkList = new ArrayList<>(
+            Arrays.asList(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
 
     @Builder
     public Member(String email, String password, Provider provider, String nickname,
