@@ -12,19 +12,19 @@ const BarGraph = ({ nutrient, name, maxNutrient }) => {
         container
         alignItems={"center"}
         justifyContent={"center"}
-        sx={{ width: "90%" }}
+        sx={{ width: "95%" }}
       >
         <Grid
           item
           container
-          xs={3}
+          xs={4}
           justifyContent={"flex-start"}
           alignItems={"flex-start"}
           sx={{ height: "100%" }}
         >
           <Typography
             sx={{
-              fontSize: "1.2rem",
+              fontSize: "1.1rem",
               whiteSpace: "nowrap",
               overflow: "hidden",
               textOverflow: "ellipsis",
@@ -37,7 +37,7 @@ const BarGraph = ({ nutrient, name, maxNutrient }) => {
         <Grid
           container
           item
-          xs={9}
+          xs={8}
           justifyContent={"center"}
           alignItems={"center"}
         >

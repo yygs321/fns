@@ -51,9 +51,10 @@ const SportItem = ({
 }) => (
   <Grid
     container
-    alignItems="center"
+    justifyContent={"space-between"}
+    alignItems={"center"}
     spacing={3}
-    style={{ marginBottom: "20px" }}
+    sx={{ paddingY: "1vh" }}
   >
     {isEditMode && (
       <Grid item xs={1} style={{ position: "relative", zIndex: 2 }}>
@@ -117,6 +118,16 @@ const SportsPage = () => {
     )
   );
 
+  const filteredSports = sportsData.filter(
+    (sport) => checkedSports[sport.name]
+  );
+  const renderSports = isEditMode ? sportsData : filteredSports;
+  const totalHours = Object.values(times).reduce((acc, val) => acc + val, 0);
+  const totalCalories = Object.entries(times).reduce((acc, [name, time]) => {
+    const kcal = sportsData.find((sport) => sport.name === name)?.kcal || 0;
+    return acc + kcal * time;
+  }, 0);
+
   const handleTimeChange = (name, time) => {
     setTimes((prevTimes) => ({
       ...prevTimes,
@@ -137,16 +148,6 @@ const SportsPage = () => {
   const handleSave = () => {
     setEditMode(false);
   };
-
-  const filteredSports = sportsData.filter(
-    (sport) => checkedSports[sport.name]
-  );
-  const renderSports = isEditMode ? sportsData : filteredSports;
-  const totalHours = Object.values(times).reduce((acc, val) => acc + val, 0);
-  const totalCalories = Object.entries(times).reduce((acc, [name, time]) => {
-    const kcal = sportsData.find((sport) => sport.name === name)?.kcal || 0;
-    return acc + kcal * time;
-  }, 0);
 
   const now = new Date();
   const before = new Date(now);
@@ -278,7 +279,6 @@ const SportsPage = () => {
 
       {/* Box 1 */}
       <div
-        className="noscroll"
         style={{
           width: "90%",
           height: "60vh",
@@ -289,7 +289,6 @@ const SportsPage = () => {
           textAlign: "center",
           boxSizing: "border-box",
           marginBottom: "2vh",
-          overflowY: "auto",
           marginTop: "2vh",
         }}
       >
@@ -297,86 +296,115 @@ const SportsPage = () => {
           container
           justifyContent={"center"}
           alignItems={"center"}
-          sx={{
-            paddingBottom: "10px",
-            marginBottom: "10px",
-            borderBottom: "1px solid #e7e7e7",
-          }}
+          sx={{ height: "100%" }}
         >
-          <Grid item xs={2}></Grid>
           <Grid
-            container
             item
-            xs={8}
+            container
             justifyContent={"center"}
             alignItems={"center"}
-          >
-            <Typography variant="h4" fontWeight={"bold"}>
-              운동 시간
-            </Typography>
-          </Grid>
-          <Grid
-            container
-            item
-            xs={2}
-            justifyContent={"center"}
-            alignItems={"center"}
-          >
-            <SettingsIcon
-              onClick={() => setEditMode(!isEditMode)}
-              sx={{
-                fontSize: "2.5rem",
-                color: isEditMode ? "#00E1AB" : "black",
-                cursor: "pointer",
-              }}
-            />
-          </Grid>
-        </Grid>
-        {!isEditMode && filteredSports.length === 0 && (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              width: "100%",
-              height: "80%",
-              // marginBottom: "10px",
-              cursor: "pointer",
+            sx={{
+              paddingBottom: "1vh",
+              borderBottom: "1px solid #e7e7e7",
+              height: "8vh",
             }}
-            onClick={() => setEditMode(!isEditMode)}
           >
-            <Typography
-              color="text.secondary"
-              fontSize={"1.2rem"}
-              fontWeight={"bold"}
+            <Grid item xs={2}></Grid>
+            <Grid
+              container
+              item
+              xs={8}
+              justifyContent={"center"}
+              alignItems={"center"}
             >
-              운동 설정하기
-            </Typography>
-          </div>
-        )}
-        {renderSports.map((sport) => (
-          <SportItem
-            key={sport.name}
-            name={sport.name}
-            kcal={sport.kcal}
-            icon={sport.icon}
-            onTimeChange={handleTimeChange}
-            isEditMode={isEditMode}
-            isChecked={checkedSports[sport.name]}
-            onCheckChange={handleCheckChange}
-          />
-        ))}
-
-        {isEditMode && (
-          <Button
-            onClick={handleSave}
-            variant="contained"
-            fullWidth
-            sx={{ color: "white", fontSize: "1.2rem", borderRadius: "10px" }}
+              <Typography variant="h4" fontWeight={"bold"}>
+                운동 시간
+              </Typography>
+            </Grid>
+            <Grid
+              container
+              item
+              xs={2}
+              justifyContent={"center"}
+              alignItems={"center"}
+            >
+              <SettingsIcon
+                onClick={() => setEditMode(!isEditMode)}
+                sx={{
+                  fontSize: "2.5rem",
+                  color: isEditMode ? "#00E1AB" : "black",
+                  cursor: "pointer",
+                }}
+              />
+            </Grid>
+          </Grid>
+          <Grid
+            className="noscroll"
+            item
+            container
+            justifyContent={"center"}
+            alignItems={"center"}
+            sx={{ height: isEditMode ? "38vh" : "46vh", overflowY: "scroll" }}
           >
-            추가
-          </Button>
-        )}
+            {!isEditMode && filteredSports.length === 0 && (
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  width: "100%",
+                  height: "80%",
+                  // marginBottom: "10px",
+                  cursor: "pointer",
+                }}
+                onClick={() => setEditMode(!isEditMode)}
+              >
+                <Typography
+                  color="text.secondary"
+                  fontSize={"1.2rem"}
+                  fontWeight={"bold"}
+                >
+                  운동 설정하기
+                </Typography>
+              </div>
+            )}
+            {renderSports.map((sport) => (
+              <SportItem
+                key={sport.name}
+                name={sport.name}
+                kcal={sport.kcal}
+                icon={sport.icon}
+                onTimeChange={handleTimeChange}
+                isEditMode={isEditMode}
+                isChecked={checkedSports[sport.name]}
+                onCheckChange={handleCheckChange}
+              />
+            ))}
+          </Grid>
+          {isEditMode && (
+            <Grid
+              container
+              item
+              justifyContent={"center"}
+              alignItems={"center"}
+              sx={{ borderTop: "1px solid #e7e7e7" }}
+            >
+              <Button
+                onClick={handleSave}
+                variant="contained"
+                fullWidth
+                sx={{
+                  color: "white",
+                  fontSize: "1.2rem",
+                  borderRadius: "10px",
+                  marginTop: "1vh",
+                }}
+              >
+                추가
+              </Button>
+            </Grid>
+          )}
+        </Grid>
       </div>
 
       {/* Box 2 */}
@@ -399,60 +427,86 @@ const SportsPage = () => {
           alignItems={"center"}
           sx={{ height: "12vh" }}
         >
-          <Grid
-            container
-            item
-            xs={6}
-            justifyContent={"center"}
-            alignItems={"center"}
-          >
-            <Grid
-              container
-              item
-              xs={12}
-              justifyContent={"center"}
-              alignItems={"center"}
-            >
-              <Typography fontSize={"1.1rem"}>총 운동 시간</Typography>
-            </Grid>
-            <Grid
-              container
-              item
-              xs={12}
-              justifyContent={"center"}
-              alignItems={"center"}
-            >
-              <Typography fontSize={"1.6rem"}>{totalHours}&nbsp;</Typography>
-              <Typography fontSize={"1rem"}>시간</Typography>
-            </Grid>
-          </Grid>
-          <Grid
-            container
-            item
-            xs={6}
-            justifyContent={"center"}
-            alignItems={"center"}
-          >
-            <Grid
-              container
-              item
-              xs={12}
-              justifyContent={"center"}
-              alignItems={"center"}
-            >
-              <Typography fontSize={"1.1rem"}>총 소모 칼로리</Typography>
-            </Grid>
-            <Grid
-              container
-              item
-              xs={12}
-              justifyContent={"center"}
-              alignItems={"center"}
-            >
-              <Typography fontSize={"1.6rem"}>{totalCalories}&nbsp;</Typography>
-              <Typography fontSize={"1rem"}>kcal</Typography>
-            </Grid>
-          </Grid>
+          {totalHours < 24 ? (
+            <>
+              <Grid
+                container
+                item
+                xs={6}
+                justifyContent={"center"}
+                alignItems={"center"}
+              >
+                <Grid
+                  container
+                  item
+                  xs={12}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                  sx={{
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                  }}
+                >
+                  <Typography fontSize={"1.1rem"} nowrap="true">
+                    총 운동 시간
+                  </Typography>
+                </Grid>
+                <Grid
+                  container
+                  item
+                  xs={12}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                  sx={{
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                  }}
+                >
+                  <Typography fontSize={"1.6rem"} nowrap="true">
+                    {totalHours}&nbsp;
+                  </Typography>
+                  <Typography fontSize={"1rem"}>시간</Typography>
+                </Grid>
+              </Grid>
+              <Grid
+                container
+                item
+                xs={6}
+                justifyContent={"center"}
+                alignItems={"center"}
+              >
+                <Grid
+                  container
+                  item
+                  xs={12}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                >
+                  <Typography fontSize={"1.1rem"}>총 소모 칼로리</Typography>
+                </Grid>
+                <Grid
+                  container
+                  item
+                  xs={12}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                >
+                  <Typography fontSize={"1.6rem"}>
+                    {totalCalories}&nbsp;
+                  </Typography>
+                  <Typography fontSize={"1rem"}>kcal</Typography>
+                </Grid>
+              </Grid>
+            </>
+          ) : (
+            <Typography fontSize={"1.4rem"} nowrap="true">
+              24시간 이내로
+              <br />
+              설정해주세요!
+            </Typography>
+          )}
         </Grid>
         <Grid
           container
@@ -471,6 +525,7 @@ const SportsPage = () => {
               fullWidth
               variant="contained"
               onClick={handleSaveData}
+              disabled={totalHours > 24}
               sx={{
                 // marginTop: "20px",
                 fontSize: "1.3rem",

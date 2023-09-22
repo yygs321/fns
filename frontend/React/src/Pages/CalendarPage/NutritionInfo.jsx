@@ -5,7 +5,7 @@ import BarGraph2 from "./BarGraph2";
 // import NavigateBeforeRoundedIcon from "@mui/icons-material/NavigateBeforeRounded";
 // import NavigateNextRoundedIcon from "@mui/icons-material/NavigateNextRounded";
 
-const NutritionInfo = ({ 날짜, set날짜, 오늘, 영양데이터 }) => {
+const NutritionInfo = ({ 날짜, set날짜, 오늘, 영양데이터, scrollDownInfo }) => {
   // const changeDayBefore = () => {
   //   const 어제 = 날짜.subtract(1, "day");
   //   if (!어제.isSame("1999-12-31", "day")) {
@@ -22,13 +22,21 @@ const NutritionInfo = ({ 날짜, set날짜, 오늘, 영양데이터 }) => {
   return (
     <div
       className="white-content-box"
-      style={{ width: "80%", padding: "20px" }}
+      style={{
+        width: "80%",
+        padding: "20px",
+        marginTop: scrollDownInfo ? "7vh" : 0,
+      }}
     >
       <Grid
         container
         justifyContent={"center"}
         alignItems={"center"}
-        sx={{ borderBottom: "1px solid #e7e7e7", paddingBottom: "10px" }}
+        sx={{
+          borderBottom: "1px solid #e7e7e7",
+          paddingBottom: "10px",
+          marginBottom: "10px",
+        }}
       >
         <Grid
           container
@@ -61,8 +69,19 @@ const NutritionInfo = ({ 날짜, set날짜, 오늘, 영양데이터 }) => {
             justifyContent={"center"}
             alignItems={"center"}
           > */}
-          <Typography textAlign="center" sx={{ fontSize: "1.5rem" }}>
+          <Typography textAlign="center" sx={{ fontSize: "1rem" }}>
             {날짜.format("M월 D일 (ddd)")}
+          </Typography>
+        </Grid>
+        <Grid
+          container
+          item
+          xs={12}
+          justifyContent={"center"}
+          alignItems={"center"}
+        >
+          <Typography textAlign="center" sx={{ fontSize: "1.4rem" }}>
+            오늘의 영양소
           </Typography>
           {/* </Grid> */}
           {/* <Grid
@@ -84,7 +103,7 @@ const NutritionInfo = ({ 날짜, set날짜, 오늘, 영양데이터 }) => {
           </Grid> */}
         </Grid>
       </Grid>
-      <Typography
+      {/* <Typography
         textAlign="center"
         sx={{
           paddingTop: "15px",
@@ -93,7 +112,7 @@ const NutritionInfo = ({ 날짜, set날짜, 오늘, 영양데이터 }) => {
         }}
       >
         오늘의 영양소 정보
-      </Typography>
+      </Typography> */}
       {Object.entries(영양데이터).map(([key, value], index) => (
         <BarGraph2
           key={index}
