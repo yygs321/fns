@@ -56,11 +56,11 @@ public class Member extends BaseEntity {
     private List<Exercise> exerciseList = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
-    private List<Base> baseList = new ArrayList<>();
+    private List<Base> baseNutrientList = new ArrayList<>();
 
     //조깅, 사이클, 등산, 수영, 줄넘기, 계단 오르기, 요가, 축구, 야구, 테니스, 배구, 골프
     @Convert(converter = IntegerArrayConverter.class)
-    private List<Integer> sportsList = new ArrayList<>(
+    private List<Integer> sportsBookmarkList = new ArrayList<>(
             Arrays.asList(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
 
     @Builder
