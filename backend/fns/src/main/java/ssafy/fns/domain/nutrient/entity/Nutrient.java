@@ -1,5 +1,6 @@
 package ssafy.fns.domain.nutrient.entity;
 
+import com.nimbusds.openid.connect.sdk.claims.Gender;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,7 +9,6 @@ import javax.persistence.Id;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import ssafy.fns.domain.member.entity.Gender;
 import ssafy.fns.global.entity.BaseEntity;
 
 @Entity
@@ -18,7 +18,7 @@ public class Nutrient extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="nutrient_id")
+    @Column(name = "nutrient_id")
     private Long id;
 
     private Long age;
