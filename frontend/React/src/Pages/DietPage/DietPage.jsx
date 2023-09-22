@@ -1,7 +1,3 @@
-// import React, { memo, useEffect, useState } from "react";
-
-// import { Box, Grid, Typography } from "@mui/material";
-
 import React, { memo, useState } from "react";
 
 import { Grid, Typography } from "@mui/material";
@@ -21,7 +17,6 @@ const DietPage = () => {
     day: "numeric",
     weekday: "short",
   };
-
   const today = now.toLocaleDateString("ko-KR", options).split(" ");
   const yesterday = before.toLocaleDateString("ko-KR", options).split(" ");
 
@@ -137,9 +132,14 @@ const DietPage = () => {
                 variant="caption"
                 component="div"
                 color="white"
-                fontSize={"1.2rem"}
+                fontSize={"1.5rem"}
                 fontWeight={"bold"}
-                sx={{ textShadow: "2px 2px 20px #c8c8c8" }}
+                sx={{
+                  textShadow: "2px 2px 20px #c8c8c8",
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                }}
               >
                 {isToday
                   ? `${today[0]}${today[1]}${today[2]}${today[3]}`

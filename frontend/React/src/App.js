@@ -11,7 +11,7 @@ import Info from "./Pages/LoginPage/InfoPage";
 import DietPage from "./Pages/DietPage/DietPage";
 import DietInputPage from "./Pages/DietPage/DietInputPage";
 import SearchFoodPage from "./Pages/SearchFoodPage/SearchFoodPage";
-import WeightInput from "./Pages/WeightInput/WeightInput";
+// import WeightInput from "./Pages/WeightInput/WeightInput";
 import SearchFood from "./Pages/DietPage/SearchFood";
 import FoodDetail from "./Pages/SearchFoodPage/FoodDetail";
 import SportsPage from "./Pages/SportsPage/SportsPage";
@@ -79,7 +79,7 @@ function App() {
               <Route path="/diet" element={<DietPage />} />
               <Route path="/diet/input" element={<DietInputPage />} />
               <Route path="/diet/input/search" element={<SearchFood />} />
-              <Route path="/weight" element={<WeightInput />} />
+              {/* <Route path="/weight" element={<WeightInput />} /> */}
               <Route path="/fit" element={<SportsPage />} />
               <Route path="/mypage" element={<MyPage />} />
               <Route

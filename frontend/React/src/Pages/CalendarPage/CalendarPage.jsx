@@ -10,6 +10,7 @@ import {
 } from "@mui/x-date-pickers";
 import NutritionInfo from "./NutritionInfo";
 import { WeightChart } from "./WeightChart";
+import FloatingInputButton from "../Common/Component/FloatingInputButton";
 import "./calendarcss.scss";
 import NavigateBeforeRoundedIcon from "@mui/icons-material/NavigateBeforeRounded";
 import NavigateNextRoundedIcon from "@mui/icons-material/NavigateNextRounded";
@@ -387,29 +388,44 @@ const CalendarPage = () => {
             set날짜={set날짜}
             오늘={오늘}
             영양데이터={영양데이터}
+            scrollDownInfo={scrollDownInfo}
           />
 
           {/* box3 */}
           <div className="운동배경">
-            <Typography
-              style={{
-                textAlign: "center",
-                marginTop: "2vh",
-                fontSize: "1.5rem",
+            <Grid
+              container
+              justifyContent={"center"}
+              alignItems={"center"}
+              sx={{
+                borderBottom: "1px solid #e7e7e7",
+                paddingBottom: "10px",
+                marginBottom: "10px",
               }}
             >
-              {날짜.format("M월 D일 (ddd)")}
-            </Typography>
-            <Typography
-              style={{
-                textAlign: "center",
-                fontSize: "2rem",
-                paddingBottom: "1vh",
-              }}
-            >
-              운동 현황
-            </Typography>
-
+              <Grid
+                container
+                item
+                xs={12}
+                justifyContent={"center"}
+                alignItems={"center"}
+              >
+                <Typography textAlign="center" sx={{ fontSize: "1rem" }}>
+                  {날짜.format("M월 D일 (ddd)")}
+                </Typography>
+              </Grid>
+              <Grid
+                container
+                item
+                xs={12}
+                justifyContent={"center"}
+                alignItems={"center"}
+              >
+                <Typography textAlign="center" sx={{ fontSize: "1.4rem" }}>
+                  오늘의 운동
+                </Typography>
+              </Grid>
+            </Grid>
             {운동한것들.map((운동, index) => {
               // 운동 이름으로 해당 운동을 찾습니다.
               const 운동정보 = sportsData.find(
@@ -417,12 +433,13 @@ const CalendarPage = () => {
               );
 
               return (
-                <div id="운동위치설정">
+                <div id="운동위치설정" key={`${운동}-${index}`}>
                   <Grid
                     container
-                    style={{ display: "flex", alignItems: "center" }}
+                    justifyContent={"center"}
+                    alignItems={"center"}
                   >
-                    <Grid xs={6}>
+                    <Grid item xs={6}>
                       <div
                         style={{
                           display: "flex",
@@ -433,7 +450,7 @@ const CalendarPage = () => {
                         {운동정보.icon} {운동.name}
                       </div>
                     </Grid>
-                    <Grid xs={6}>
+                    <Grid item xs={6}>
                       <div
                         style={{
                           display: "flex",
@@ -455,6 +472,7 @@ const CalendarPage = () => {
           <WeightChart 날짜={날짜} 오늘={오늘} set날짜={set날짜} />
         </Grid>
       </Grid>
+      <FloatingInputButton />
     </div>
   );
 };

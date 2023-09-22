@@ -40,7 +40,7 @@ const 차트스타일 = {
   display: "flex",
 
   width: "100%",
-  marginTop: "3vh",
+  marginTop: "1vh",
   height: "35vh",
 };
 
@@ -80,7 +80,11 @@ export function WeightChart({ 날짜, set날짜, 오늘 }) {
         container
         justifyContent={"center"}
         alignItems={"center"}
-        sx={{ borderBottom: "1px solid #e7e7e7", paddingBottom: "10px" }}
+        sx={{
+          borderBottom: "1px solid #e7e7e7",
+          paddingBottom: "10px",
+          marginBottom: "10px",
+        }}
       >
         <Grid
           container
@@ -89,64 +93,43 @@ export function WeightChart({ 날짜, set날짜, 오늘 }) {
           justifyContent={"center"}
           alignItems={"center"}
         >
-          {/* <Grid
-            container
-            item
-            xs={2}
-            justifyContent={"center"}
-            alignItems={"center"}
-          >
-            <NavigateBeforeRoundedIcon
-              sx={{
-                color: "#a5a5a5",
-                fontSize: "1.5rem",
-                paddingBottom: "0.2rem",
-                cursor: "pointer",
-              }}
-              onClick={changeDayBefore}
-            />
-          </Grid> */}
-          {/* <Grid
-            container
-            item
-            xs={8}
-            justifyContent={"center"}
-            alignItems={"center"}
-          > */}
-          <Typography textAlign="center" sx={{ fontSize: "1.5rem" }}>
+          <Typography textAlign="center" sx={{ fontSize: "1rem" }}>
             {날짜.format("M월 D일 (ddd)")}
           </Typography>
-          {/* </Grid> */}
-          {/* <Grid
-            container
-            item
-            xs={2}
-            justifyContent={"center"}
-            alignItems={"center"}
-          >
-            <NavigateNextRoundedIcon
-              sx={{
-                color: "#a5a5a5",
-                fontSize: "1.5rem",
-                paddingBottom: "0.2rem",
-                cursor: "pointer",
-              }}
-              onClick={changeDayAfter}
-            />
-          </Grid> */}
+        </Grid>
+        <Grid
+          container
+          item
+          xs={12}
+          justifyContent={"center"}
+          alignItems={"center"}
+        >
+          <Typography textAlign="center" sx={{ fontSize: "1.4rem" }}>
+            오늘의 체중
+          </Typography>
         </Grid>
       </Grid>
-      <Divider />
+
       <div style={차트스타일}>
         <Line data={data} options={options} />
       </div>
       <Divider />
-      <div style={{ marginTop: "3vh" }}>
-        <Typography sx={{ fontSize: "1.7rem", fontWeight: "bold" }}>
-          남은 기간 : {기간} 일
-        </Typography>
+      <div style={{ marginTop: "2vh" }}>
+        <Grid
+          container
+          item
+          xs={12}
+          justifyContent={"center"}
+          alignItems={"center"}
+          flexDirection={"column"}
+        >
+          <Typography sx={{ fontSize: "1.4rem" }}>남은 기간</Typography>
+          <Typography sx={{ fontSize: "1.8rem", marginTop: "1vh" }}>
+            {기간} 일
+          </Typography>
+        </Grid>
       </div>
-      <Grid container sx={{ mt: 3 }}>
+      <Grid container sx={{ mt: "1vh" }}>
         <Grid
           container
           item
@@ -154,26 +137,34 @@ export function WeightChart({ 날짜, set날짜, 오늘 }) {
           sx={{ borderRight: "1px solid #e7e7e7" }}
           justifyContent={"center"}
           alignItems={"center"}
+          flexDirection={"column"}
         >
           <Typography
             style={{
               textAlign: "center",
               fontSize: "1.3rem",
-              whiteSpace: "nowrap",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
             }}
           >
-            현재 :&nbsp;
+            현재
           </Typography>
-          <Typography
-            style={{
-              textAlign: "center",
-              fontSize: "1.5rem",
-            }}
-          >
-            {현재체중} kg
-          </Typography>
+          <Grid container justifyContent={"center"} alignItems={"center"}>
+            <Typography
+              style={{
+                textAlign: "center",
+                fontSize: "1.7rem",
+              }}
+            >
+              {현재체중}&nbsp;
+            </Typography>
+            <Typography
+              style={{
+                textAlign: "center",
+                fontSize: "1.1rem",
+              }}
+            >
+              kg
+            </Typography>
+          </Grid>
         </Grid>
         <Grid
           container
@@ -186,21 +177,28 @@ export function WeightChart({ 날짜, set날짜, 오늘 }) {
             style={{
               textAlign: "center",
               fontSize: "1.3rem",
-              whiteSpace: "nowrap",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
             }}
           >
-            목표 :&nbsp;
+            목표
           </Typography>
-          <Typography
-            style={{
-              textAlign: "center",
-              fontSize: "1.5rem",
-            }}
-          >
-            {목표체중} kg
-          </Typography>
+          <Grid container justifyContent={"center"} alignItems={"center"}>
+            <Typography
+              style={{
+                textAlign: "center",
+                fontSize: "1.7rem",
+              }}
+            >
+              {목표체중}&nbsp;
+            </Typography>
+            <Typography
+              style={{
+                textAlign: "center",
+                fontSize: "1.1rem",
+              }}
+            >
+              kg
+            </Typography>
+          </Grid>
         </Grid>
       </Grid>
       <Box sx={{ width: "100%", marginTop: "20px", marginBottom: "10px" }}>
@@ -210,6 +208,7 @@ export function WeightChart({ 날짜, set날짜, 오늘 }) {
           sx={{
             height: "1.5rem",
             borderRadius: "20px",
+            marginY: "1vh",
             backgroundColor: "#e7e7e7",
             "& .MuiLinearProgress-bar": {
               background: "linear-gradient(to right, #14caa0, #55ffd7)",
@@ -219,9 +218,12 @@ export function WeightChart({ 날짜, set날짜, 오늘 }) {
           }}
         />
         <Typography
-          style={{ textAlign: "center", marginTop: "10px", fontSize: "1.1rem" }}
+          style={{ textAlign: "center", paddingTop: "1vh", fontSize: "1.3rem" }}
         >
-          달성률 : {Math.round(percentage)}%
+          달성률
+        </Typography>
+        <Typography style={{ textAlign: "center", fontSize: "1.7rem" }}>
+          {Math.round(percentage)} %
         </Typography>
       </Box>
     </div>
