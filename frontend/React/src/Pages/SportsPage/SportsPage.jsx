@@ -14,7 +14,7 @@ import SportsTennisIcon from "@mui/icons-material/SportsTennis";
 import SportsVolleyballIcon from "@mui/icons-material/SportsVolleyball";
 import SportsGolfIcon from "@mui/icons-material/SportsGolf";
 import NavigateBeforeRoundedIcon from "@mui/icons-material/NavigateBeforeRounded";
-import NavigateNextRoundedIcon from '@mui/icons-material/NavigateNextRounded';
+import NavigateNextRoundedIcon from "@mui/icons-material/NavigateNextRounded";
 
 // 페이지 들어올 때 서버에 요청해서 저장된 내용 불러옴
 const handleSaveData = () => {
@@ -116,7 +116,7 @@ const SportsPage = () => {
       {}
     )
   );
-  
+
   const handleTimeChange = (name, time) => {
     setTimes((prevTimes) => ({
       ...prevTimes,
@@ -124,10 +124,8 @@ const SportsPage = () => {
     }));
   };
 
-
-  const [currentDate, setCurrentDate] = useState(new Date()); // 현재 화면에 표시되는 날짜
-  const today = new Date(); // 실제 오늘 날짜
-  
+  // const [currentDate, setCurrentDate] = useState(new Date()); // 현재 화면에 표시되는 날짜
+  // const today = new Date(); // 실제 오늘 날짜
 
   const handleCheckChange = (name) => {
     setCheckedSports((prevChecked) => ({
@@ -150,6 +148,26 @@ const SportsPage = () => {
     return acc + kcal * time;
   }, 0);
 
+  const now = new Date();
+  const before = new Date(now);
+  before.setDate(before.getDate() - 1);
+
+  const options = {
+    year: "2-digit",
+    month: "numeric",
+    day: "numeric",
+    weekday: "short",
+  };
+
+  const today = now.toLocaleDateString("ko-KR", options).split(" ");
+  const yesterday = before.toLocaleDateString("ko-KR", options).split(" ");
+
+  const [isToday, setIsToday] = useState(true);
+
+  const changeDay = () => {
+    setIsToday(!isToday);
+  };
+
   return (
     <div
       className="gray-pages"
@@ -157,109 +175,163 @@ const SportsPage = () => {
         minHeight: "92vh",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "center",
         alignItems: "center",
-        gap: "20px",
       }}
     >
-   {/* 날짜 및 화살표 UI */}
-   <Grid container justifyContent={"center"} alignItems={"center"} sx={{ height: "8vh", width: "90%", backgroundColor: "#00E1AB", borderRadius: "30px", marginBottom: "20px", boxShadow: "2px 2px 4px #a5a5a5" }}>
-
-   {/* 이전 날짜로 가기 위한 화살표 */}
-   <Grid container item xs={2} justifyContent={"center"} alignItems={"center"}>
-     {currentDate.toDateString() === today.toDateString() && (
-       <NavigateBeforeRoundedIcon
-         sx={{
-           color: "white",
-           fontSize: "1.8rem",
-           paddingBottom: "0.2rem",
-           cursor: "pointer",
-         }}
-         onClick={() => {
-           const yesterday = new Date(today);
-           yesterday.setDate(today.getDate() - 1);
-           setCurrentDate(yesterday);
-         }}
-       />
-    )}
-   </Grid>
-
-   {/* 날짜 표시 */}
-   <Grid container item xs={8} justifyContent={"center"} alignItems={"center"}>
-     <Typography
-       variant="caption"
-       component="div"
-       color="white"
-       fontSize={"1.2rem"}
-       fontWeight={"bold"}
-       sx={{ textShadow: "2px 2px 20px #c8c8c8" }}
-     >
-       {currentDate.toLocaleDateString("ko-KR", {
-         year: "2-digit",
-         month: "numeric",
-         day: "numeric",
-         weekday: "short",
-       })}
-     </Typography>
-   </Grid>
-
-   {/* 오늘 날짜로 돌아가기 위한 화살표 */}
-   <Grid container item xs={2} justifyContent={"center"} alignItems={"center"}>
-     {currentDate.toDateString() !== today.toDateString() && (
-       <NavigateNextRoundedIcon
-         sx={{
-         color: "white",
-         fontSize: "1.8rem",
-         paddingBottom: "0.2rem",
-         cursor: "pointer",
-        }}
-         onClick={() => setCurrentDate(today)}
-       />
-     )}
-    </Grid>
-   </Grid>
-
+      <Grid container justifyContent={"center"}>
+        <Grid
+          container
+          item
+          xs={12}
+          justifyContent={"center"}
+          alignItems={"center"}
+          sx={{ height: "8vh", backgroundColor: "#00E1AB" }}
+        >
+          <Grid
+            container
+            item
+            xs={2}
+            justifyContent={"center"}
+            alignItems={"center"}
+          ></Grid>
+          <Grid
+            container
+            item
+            xs={8}
+            justifyContent={"center"}
+            alignItems={"center"}
+          >
+            <Grid
+              container
+              item
+              xs={2}
+              justifyContent={"center"}
+              alignItems={"center"}
+            >
+              {isToday && (
+                <NavigateBeforeRoundedIcon
+                  sx={{
+                    color: "white",
+                    fontSize: "1.8rem",
+                    paddingBottom: "0.2rem",
+                    cursor: "pointer",
+                  }}
+                  onClick={changeDay}
+                />
+              )}
+            </Grid>
+            <Grid
+              container
+              item
+              xs={8}
+              justifyContent={"center"}
+              alignItems={"center"}
+            >
+              <Typography
+                variant="caption"
+                component="div"
+                color="white"
+                fontSize={"1.5rem"}
+                fontWeight={"bold"}
+                sx={{
+                  textShadow: "2px 2px 20px #c8c8c8",
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                }}
+              >
+                {isToday
+                  ? `${today[0]}${today[1]}${today[2]}${today[3]}`
+                  : `${yesterday[0]}${yesterday[1]}${yesterday[2]}${yesterday[3]}`}
+              </Typography>
+            </Grid>
+            <Grid
+              container
+              item
+              xs={2}
+              justifyContent={"center"}
+              alignItems={"center"}
+            >
+              {!isToday && (
+                <NavigateNextRoundedIcon
+                  sx={{
+                    color: "white",
+                    fontSize: "1.8rem",
+                    paddingBottom: "0.2rem",
+                    cursor: "pointer",
+                  }}
+                  onClick={changeDay}
+                />
+              )}
+            </Grid>
+          </Grid>
+          <Grid
+            container
+            item
+            xs={2}
+            justifyContent={"flex-end"}
+            alignItems={"center"}
+            // sx={{ paddingRight: "1rem" }}
+          ></Grid>
+        </Grid>
+      </Grid>
 
       {/* Box 1 */}
       <div
+        className="noscroll"
         style={{
           width: "90%",
+          height: "60vh",
           backgroundColor: "white",
           borderRadius: "30px",
           boxShadow: "2px 2px 4px #a5a5a5",
           padding: "20px",
           textAlign: "center",
           boxSizing: "border-box",
-          marginBottom: "20px",
+          marginBottom: "2vh",
           overflowY: "auto",
-          marginTop: "10px",
+          marginTop: "2vh",
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            width: "100%",
-            position: "relative",
-            marginBottom: "20px",
+        <Grid
+          container
+          justifyContent={"center"}
+          alignItems={"center"}
+          sx={{
+            paddingBottom: "10px",
+            marginBottom: "10px",
+            borderBottom: "1px solid #e7e7e7",
           }}
         >
-          <Typography variant="h4" fontWeight={"bold"}>
-            운동 시간
-          </Typography>
-
-          <SettingsIcon
-            onClick={() => setEditMode(!isEditMode)}
-            sx={{
-              position: "absolute",
-              right: 15,
-              top: "50%",
-              transform: "translateY(-50%)",
-              fontSize: "1.6rem",
-            }}
-          />
-        </div>
+          <Grid item xs={2}></Grid>
+          <Grid
+            container
+            item
+            xs={8}
+            justifyContent={"center"}
+            alignItems={"center"}
+          >
+            <Typography variant="h4" fontWeight={"bold"}>
+              운동 시간
+            </Typography>
+          </Grid>
+          <Grid
+            container
+            item
+            xs={2}
+            justifyContent={"center"}
+            alignItems={"center"}
+          >
+            <SettingsIcon
+              onClick={() => setEditMode(!isEditMode)}
+              sx={{
+                fontSize: "2.5rem",
+                color: isEditMode ? "#00E1AB" : "black",
+                cursor: "pointer",
+              }}
+            />
+          </Grid>
+        </Grid>
         {!isEditMode && filteredSports.length === 0 && (
           <div
             style={{
@@ -267,12 +339,17 @@ const SportsPage = () => {
               justifyContent: "center",
               alignItems: "center",
               width: "100%",
-              position: "relative",
-              marginBottom: "10px",
+              height: "80%",
+              // marginBottom: "10px",
+              cursor: "pointer",
             }}
             onClick={() => setEditMode(!isEditMode)}
           >
-            <Typography color="text.secondary" fontWeight={"bold"}>
+            <Typography
+              color="text.secondary"
+              fontSize={"1.2rem"}
+              fontWeight={"bold"}
+            >
               운동 설정하기
             </Typography>
           </div>
@@ -297,7 +374,7 @@ const SportsPage = () => {
             fullWidth
             sx={{ color: "white", fontSize: "1.2rem", borderRadius: "10px" }}
           >
-            저장
+            추가
           </Button>
         )}
       </div>
@@ -305,48 +382,110 @@ const SportsPage = () => {
       {/* Box 2 */}
       <div
         style={{
-          width: "90%",
+          width: "100%",
+          height: "20vh",
           backgroundColor: "white",
-          borderRadius: "30px",
-          boxShadow: "2px 2px 4px #a5a5a5",
-          padding: "20px",
+          // borderRadius: "30px",
+          // boxShadow: "2px 2px 4px #a5a5a5",
+          // padding: "20px",
           textAlign: "center",
           boxSizing: "border-box",
-          marginBottom: "10px",
+          // marginBottom: "10px",
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginTop: "20px",
-          }}
+        <Grid
+          container
+          justifyContent={"center"}
+          alignItems={"center"}
+          sx={{ height: "12vh" }}
         >
-          <div>
-            <Typography variant="h6">총 운동 시간:</Typography>
-            <Typography variant="h6">{totalHours}시간</Typography>
-          </div>
-
-          <div>
-            <Typography variant="h6">총 소모 칼로리:</Typography>
-            <Typography variant="h6">{totalCalories}cal</Typography>
-          </div>
-        </div>
-        <Button
-          fullWidth
-          variant="contained"
-          onClick={handleSaveData}
-          sx={{
-            marginTop: "20px",
-            fontSize: "1.5rem",
-            padding: "5px 100px",
-            borderRadius: "10px",
-            color: "white",
-          }}
+          <Grid
+            container
+            item
+            xs={6}
+            justifyContent={"center"}
+            alignItems={"center"}
+          >
+            <Grid
+              container
+              item
+              xs={12}
+              justifyContent={"center"}
+              alignItems={"center"}
+            >
+              <Typography fontSize={"1.1rem"}>총 운동 시간</Typography>
+            </Grid>
+            <Grid
+              container
+              item
+              xs={12}
+              justifyContent={"center"}
+              alignItems={"center"}
+            >
+              <Typography fontSize={"1.6rem"}>{totalHours}&nbsp;</Typography>
+              <Typography fontSize={"1rem"}>시간</Typography>
+            </Grid>
+          </Grid>
+          <Grid
+            container
+            item
+            xs={6}
+            justifyContent={"center"}
+            alignItems={"center"}
+          >
+            <Grid
+              container
+              item
+              xs={12}
+              justifyContent={"center"}
+              alignItems={"center"}
+            >
+              <Typography fontSize={"1.1rem"}>총 소모 칼로리</Typography>
+            </Grid>
+            <Grid
+              container
+              item
+              xs={12}
+              justifyContent={"center"}
+              alignItems={"center"}
+            >
+              <Typography fontSize={"1.6rem"}>{totalCalories}&nbsp;</Typography>
+              <Typography fontSize={"1rem"}>kcal</Typography>
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid
+          container
+          justifyContent={"center"}
+          alignItems={"center"}
+          sx={{ height: "8vh" }}
         >
-          저장
-        </Button>
+          <Grid
+            container
+            item
+            xs={10}
+            justifyContent={"center"}
+            alignItems={"center"}
+          >
+            <Button
+              fullWidth
+              variant="contained"
+              onClick={handleSaveData}
+              sx={{
+                // marginTop: "20px",
+                fontSize: "1.3rem",
+                // padding: "5px 100px",
+                borderRadius: "10px",
+                color: "white",
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+              }}
+            >
+              저장
+            </Button>
+          </Grid>
+        </Grid>
       </div>
     </div>
   );

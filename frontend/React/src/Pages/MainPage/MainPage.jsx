@@ -115,6 +115,11 @@ const MainPage = () => {
               color="white"
               fontSize={"1.5rem"}
               fontWeight={"bold"}
+              sx={{
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+              }}
             >
               {`${today[0]}${today[1]}${today[2]}${today[3]}`}
             </Typography>
