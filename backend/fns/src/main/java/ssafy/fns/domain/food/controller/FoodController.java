@@ -26,7 +26,6 @@ public class FoodController {
     private final FoodServiceImpl foodService;
     @GetMapping("")
     public ResponseEntity<?> searchFood(@RequestParam(value = "name")String name){
-
         return JsonResponse.ok("검색 완료", foodService.searchFood(name));
     }
 }
