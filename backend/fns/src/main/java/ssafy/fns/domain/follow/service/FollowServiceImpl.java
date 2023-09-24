@@ -37,6 +37,10 @@ public class FollowServiceImpl implements FollowService {
 
     @Override
     public String followInsert(Long fromMemberId,Long toMemberId) {
+        if(fromMemberId == toMemberId){ // 자기 자신을 팔로우 하려는 경우
+            return "Member 정보 확인 필요";
+        }
+        
         Optional<FollowCheckResponseDto> OptionalCheck = followRepository.findMemberIdByFromMemberAndToMember(fromMemberId, toMemberId);
 
         if(OptionalCheck.isEmpty()){ // 팔로우 이력이 없음
