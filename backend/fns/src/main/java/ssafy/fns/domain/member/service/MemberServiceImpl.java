@@ -3,9 +3,12 @@ package ssafy.fns.domain.member.service;
 import java.util.regex.Pattern;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import ssafy.fns.domain.auth.entity.MailHistory;
+import ssafy.fns.domain.auth.repository.MailHistoryRepository;
 import ssafy.fns.domain.member.controller.dto.MemberProfileRequestDto;
 import ssafy.fns.domain.member.controller.dto.SignUpRequestDto;
 import ssafy.fns.domain.member.entity.Member;
@@ -15,15 +18,19 @@ import ssafy.fns.global.exception.GlobalRuntimeException;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+    private final MailHistoryRepository mailHistoryRepository;
 
     @Override
     @Transactional
     public void signUp(SignUpRequestDto requestDto) {
         checkPassword(requestDto.getPassword(), requestDto.getPassword2());
+
+        checkMailAuthed(requestDto.getEmail());
 
         Member member = Member.builder()
                 .email(requestDto.getEmail())
@@ -32,6 +39,17 @@ public class MemberServiceImpl implements MemberService {
                 .build();
 
         memberRepository.save(member);
+    }
+
+    private void checkMailAuthed(String email) {
+        MailHistory mailHistory = mailHistoryRepository.findByEmail(email);
+        if (mailHistory == null) {
+            throw new GlobalRuntimeException("메일 전송을 완료해주세요", HttpStatus.NOT_FOUND);
+        }
+        if (!mailHistory.isAuthed()) {
+            log.info("인증안됨");
+            throw new GlobalRuntimeException("메일 인증을 완료해주세요", HttpStatus.UNPROCESSABLE_ENTITY);
+        }
     }
 
     @Override
