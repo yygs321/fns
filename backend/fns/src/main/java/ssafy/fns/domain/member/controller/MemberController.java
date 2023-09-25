@@ -40,6 +40,4 @@ public class MemberController {
         return JsonResponse.ok("프로필 등록 성공!");
     }
 
-    //TODO: 회원가입 하고나서 닉네임 안정했을때 로그인시 이를 검증하는 필터 구현해야댐
-
 }

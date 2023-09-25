@@ -6,6 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import ssafy.fns.domain.auth.controller.dto.OAuthLoginRequestDto;
+import ssafy.fns.domain.auth.entity.RefreshToken;
+import ssafy.fns.domain.auth.repository.RefreshTokenRepository;
 import ssafy.fns.domain.auth.service.dto.OAuthDetailDto;
 import ssafy.fns.domain.auth.service.dto.OAuthLoginResponseDto;
 import ssafy.fns.domain.auth.service.dto.TokenResponseDto;
@@ -25,6 +27,7 @@ public class OAuthServiceImpl implements OAuthService {
     private final KakaoProvider kakaoProvider;
     private final MemberRepository memberRepository;
     private final JwtTokenProvider jwtTokenProvider;
+    private final RefreshTokenRepository refreshTokenRepository;
 
 
     @Override
@@ -39,17 +42,13 @@ public class OAuthServiceImpl implements OAuthService {
         accessToken = oauthProvider.getToken(requestDto.getCode());
 
         OAuthDetailDto detailDto = getUserDetail(socialLoginType, accessToken);
-        boolean isDuplicated = isEmailDuplicated(socialLoginType, detailDto.getEmail());
+        checkEmailDuplicated(socialLoginType, detailDto.getEmail());
         boolean hasProfile = isProfileSaved(detailDto.getEmail());
 
-        if (!isDuplicated) {
-            tokenResponseDto = null;
-        } else {
-            Token token = jwtTokenProvider.createToken(detailDto.getEmail());
-            Long expirationTime = jwtTokenProvider.getExpirationTime(accessToken);
-
-            tokenResponseDto = TokenResponseDto.from(token, expirationTime);
-        }
+        Token token = jwtTokenProvider.createToken(detailDto.getEmail());
+        saveRefreshToken(detailDto.getEmail(), token);
+        Long expirationTime = jwtTokenProvider.getExpirationTime(token.getAccessToken());
+        tokenResponseDto = TokenResponseDto.from(token, expirationTime);
 
         oAuthLoginResponseDto = OAuthLoginResponseDto.builder()
                 .hasProfile(hasProfile)
@@ -94,14 +93,12 @@ public class OAuthServiceImpl implements OAuthService {
         return false;
     }
 
-    private boolean isEmailDuplicated(SocialLoginType socialLoginType, String email) {
+    private void checkEmailDuplicated(SocialLoginType socialLoginType, String email) {
         Member member = memberRepository.findByEmail(email);
 
         if (member != null) {
             checkProvider(socialLoginType, member);
-            return true;
         }
-        return false;
     }
 
     private static void checkProvider(SocialLoginType socialLoginType, Member member) {
@@ -109,5 +106,19 @@ public class OAuthServiceImpl implements OAuthService {
             throw new GlobalRuntimeException(member.getProvider() + "으로 가입된 이메일입니다.",
                     HttpStatus.CONFLICT);
         }
+    }
+
+    private void saveRefreshToken(String email, Token token) {
+        RefreshToken lastRefreshToken = refreshTokenRepository.findByEmail(email);
+        if (lastRefreshToken != null) {
+            refreshTokenRepository.deleteByEmail(email);
+        }
+
+        RefreshToken refreshToken = RefreshToken.builder()
+                .token(token.getRefreshToken())
+                .email(email)
+                .build();
+
+        refreshTokenRepository.save(refreshToken);
     }
 }
