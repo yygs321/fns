@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from database import engineconn
 from sqlalchemy import Table, MetaData
+from database import engineconn
 import redis
 
 app = FastAPI()
