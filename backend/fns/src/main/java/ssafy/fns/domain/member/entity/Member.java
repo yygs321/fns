@@ -52,7 +52,7 @@ public class Member extends BaseEntity {
 
     private Long weight;
 
-    private Integer age;
+    private Long age;
 
     private Long targetWeight;
 
@@ -72,7 +72,7 @@ public class Member extends BaseEntity {
 
     @Builder
     public Member(String email, String password, Provider provider, String nickname,
-            Boolean isPublished, String gender, Long height, Long weight, Integer age,
+            Boolean isPublished, String gender, Long height, Long weight, Long age,
             Long targetWeight) {
         this.email = email;
         this.password = password;

@@ -25,7 +25,7 @@ public class Nutrient extends BaseEntity {
 
     private Long endAge;
 
-    private Gender gender;
+    private String gender;
 
     private Double kcal;
 
@@ -64,7 +64,7 @@ public class Nutrient extends BaseEntity {
     private Double transFat;
 
     @Builder
-    public Nutrient(Long startAge, Long endAge, Gender gender, Double kcal, Double carbs, Double protein, Double fat,
+    public Nutrient(Long startAge, Long endAge, String gender, Double kcal, Double carbs, Double protein, Double fat,
             Double pollination, Double sugar, Double dietaryFiber, Double calcium, Double potassium,
             Double iron, Double phosphorus, Double sodium, Double vitaminA, Double vitaminC,
             Double vitaminD, Double cholesterol, Double acid, Double transFat) {

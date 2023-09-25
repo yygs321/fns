@@ -11,12 +11,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class MemberProfileRequestDto {
+public class BaseDietRequestDto {
+    private Long id;
 
-    private String nickname;
-    private Long age;
-    private Long height;
-    private Long weight;
-    private String gender;
-    private Boolean isPublished;
+    private Double rate;
 }
