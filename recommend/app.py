@@ -1,8 +1,11 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 from sqlalchemy import Table, MetaData
-from database import engineconn
+from recommend.database import engineconn
 import redis
+import sys
+
+print(sys.path)
 
 app = FastAPI()
 
@@ -14,7 +17,7 @@ class Offset(BaseModel):
 
 
 metadata = MetaData()
-Food = Table("food", metadata, autoload=True, autoload_with=engineconn().engine)
+Food = Table("food", metadata, autoload_with=engineconn().engine)
 
 redis_host = "http://13.124.188.144"
 redis_port = 6379
