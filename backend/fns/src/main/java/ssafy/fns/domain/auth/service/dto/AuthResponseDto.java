@@ -11,10 +11,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class OAuthLoginResponseDto {
+public class AuthResponseDto {
 
     private Boolean hasProfile;
-    private OAuthDetailDto detailDto;
     private TokenResponseDto tokenResponseDto;
-    private String socialLoginType;
 }
