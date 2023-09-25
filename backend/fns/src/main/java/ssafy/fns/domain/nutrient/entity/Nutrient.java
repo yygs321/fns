@@ -21,7 +21,9 @@ public class Nutrient extends BaseEntity {
     @Column(name = "nutrient_id")
     private Long id;
 
-    private Long age;
+    private Long startAge;
+
+    private Long endAge;
 
     private Gender gender;
 
@@ -62,11 +64,12 @@ public class Nutrient extends BaseEntity {
     private Double transFat;
 
     @Builder
-    public Nutrient(Long age, Gender gender, Double kcal, Double carbs, Double protein, Double fat,
+    public Nutrient(Long startAge, Long endAge, Gender gender, Double kcal, Double carbs, Double protein, Double fat,
             Double pollination, Double sugar, Double dietaryFiber, Double calcium, Double potassium,
             Double iron, Double phosphorus, Double sodium, Double vitaminA, Double vitaminC,
             Double vitaminD, Double cholesterol, Double acid, Double transFat) {
-        this.age = age;
+        this.startAge = startAge;
+        this.endAge = endAge;
         this.gender = gender;
         this.kcal = kcal;
         this.carbs = carbs;
