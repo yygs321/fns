@@ -132,6 +132,7 @@ ENV/
 env.bak/
 venv.bak/
 recommend/.venv
+settings.py
 
 # Spyder project settings
 .spyderproject

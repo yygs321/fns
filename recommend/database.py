@@ -1,7 +1,8 @@
 from sqlalchemy import *
 from sqlalchemy.orm import sessionmaker
+from settings import DATABASE_USER, DATABASE_PASSWORD
 
-DB_URL = 'mysql+pymysql://{USERNAME}:{PASSWORD}@{HOST}:{PORT}/{DBNAME}'
+DB_URL = f'mysql+pymysql://{DATABASE_USER}:{DATABASE_PASSWORD}@http://13.124.188.144:3306/fns_database'
 
 class engineconn:
 
