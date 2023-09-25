@@ -172,6 +172,7 @@ const SearchFoodPage = () => {
       {searchTerm ? (
         <div style={{ height: "71vh" }}>
           <Box
+            className="noscroll"
             spacing={1}
             style={{
               overflowX: "scroll",

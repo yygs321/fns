@@ -47,6 +47,7 @@ const CommunityPage = () => {
             container
             item
             xs={4}
+            sx={{ height: "100%" }}
             justifyContent={"center"}
             alignItems={"center"}
           >
