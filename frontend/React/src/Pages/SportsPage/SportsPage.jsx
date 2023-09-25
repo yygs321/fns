@@ -21,24 +21,33 @@ const handleSaveData = () => {
   // 여기에 나중에 API 연결 코드를 작성하면 됩니다.
   console.log("데이터가 저장되었습니다."); // 임시 메시지
 };
-export const sportsData = [
-  { name: "조깅", kcal: 500, icon: <DirectionsRunIcon fontSize="large" /> },
-  { name: "사이클", kcal: 500, icon: <DirectionsBikeIcon fontSize="large" /> },
-  { name: "등산", kcal: 500, icon: <HikingIcon fontSize="large" /> },
-  { name: "수영", kcal: 500, icon: <PoolIcon fontSize="large" /> },
-  {
-    name: "줄넘기",
-    kcal: 500,
-    icon: <AccessibilityNewIcon fontSize="large" />,
-  },
-  { name: "계단 오르기", kcal: 500, icon: <StairsIcon fontSize="large" /> },
-  { name: "요가", kcal: 500, icon: <SelfImprovementIcon fontSize="large" /> },
-  { name: "축구", kcal: 500, icon: <SportsSoccerIcon fontSize="large" /> },
-  { name: "야구", kcal: 500, icon: <SportsBaseballIcon fontSize="large" /> },
-  { name: "테니스", kcal: 500, icon: <SportsTennisIcon fontSize="large" /> },
-  { name: "배구", kcal: 500, icon: <SportsVolleyballIcon fontSize="large" /> },
-  { name: "골프", kcal: 500, icon: <SportsGolfIcon fontSize="large" /> },
+
+const exerciseResponseDto = {
+  sportsBookmarkList: [0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1],
+  sportsMetValue: [0, 2, 3.5, 5, 6, 7, 8, 4, 5.5, 4.5, 6.5, 5, 5.5],
+  exerciseTimeList: [0, 0, 1, 1.5, 0, 0, 2, 1, 1.5, 2, 0, 0, 1.5],
+  weight: 60
+};
+
+const sportNames = [null, "조깅", "사이클", "등산", "수영", "줄넘기", "계단 오르기", "요가", "축구", "야구", 
+"테니스", "배구", "골프"];
+const sportIcons = [null, <DirectionsRunIcon fontSize="large" />, <DirectionsBikeIcon fontSize="large" />, 
+<HikingIcon fontSize="large" />, <HikingIcon fontSize="large" />, <PoolIcon fontSize="large" />,
+ <AccessibilityNewIcon fontSize="large" />, <StairsIcon fontSize="large" />, <SelfImprovementIcon fontSize="large" />,
+ <SportsSoccerIcon fontSize="large" />, <SportsBaseballIcon fontSize="large" />, <SportsTennisIcon fontSize="large" />,
+ <SportsVolleyballIcon fontSize="large" />, <SportsGolfIcon fontSize="large" />
 ];
+
+export const sportsData = exerciseResponseDto.sportsMetValue.map((met, index) => {
+  if (index === 0) return null; // 0번 인덱스는 사용하지 않습니다.
+
+  const kcalPerHour = (3.5 * met * exerciseResponseDto.weight * 60) / 1000 * 5;
+  return {
+    name: sportNames[index],
+    kcal: kcalPerHour,
+    icon: sportIcons[index],
+  };
+}).filter(Boolean);
 
 const SportItem = ({
   name,
