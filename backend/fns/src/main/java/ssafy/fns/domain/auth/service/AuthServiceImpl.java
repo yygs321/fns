@@ -17,6 +17,7 @@ import ssafy.fns.domain.auth.entity.MailHistory;
 import ssafy.fns.domain.auth.entity.RefreshToken;
 import ssafy.fns.domain.auth.repository.MailHistoryRepository;
 import ssafy.fns.domain.auth.repository.RefreshTokenRepository;
+import ssafy.fns.domain.auth.service.dto.AuthResponseDto;
 import ssafy.fns.domain.auth.service.dto.TokenResponseDto;
 import ssafy.fns.domain.auth.vo.Token;
 import ssafy.fns.domain.member.entity.Member;
@@ -78,7 +79,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     @Transactional
-    public TokenResponseDto defaultSignIn(SignInRequestDto requestDto) {
+    public AuthResponseDto defaultSignIn(SignInRequestDto requestDto) {
         Member member = memberRepository.findByEmailAndProvider(requestDto.getEmail(),
                 Provider.DEFAULT);
 
@@ -87,6 +88,7 @@ public class AuthServiceImpl implements AuthService {
         }
 
         String password = member.getPassword();
+        boolean hasProfile = isProfileSaved(member.getEmail());
 
         if (!passwordEncoder.matches(requestDto.getPassword(), password)) {
             throw new GlobalRuntimeException("비밀번호가 틀립니다.", HttpStatus.BAD_REQUEST);
@@ -97,7 +99,13 @@ public class AuthServiceImpl implements AuthService {
         saveRefreshToken(requestDto, token);
 
         Long expirationTime = jwtTokenProvider.getExpirationTime(token.getAccessToken());
-        return TokenResponseDto.from(token, expirationTime);
+        TokenResponseDto tokenResponseDto = TokenResponseDto.from(token, expirationTime);
+        AuthResponseDto authResponseDto = AuthResponseDto.builder()
+                .hasProfile(hasProfile)
+                .tokenResponseDto(tokenResponseDto)
+                .build();
+
+        return authResponseDto;
     }
 
     @Override
@@ -143,5 +151,14 @@ public class AuthServiceImpl implements AuthService {
         if (member != null) {
             throw new GlobalRuntimeException("이미 존재하는 이메일입니다.", HttpStatus.BAD_REQUEST);
         }
+    }
+
+    private boolean isProfileSaved(String email) {
+        Member member = memberRepository.findByEmail(email);
+
+        if (member.getNickname() != null) {
+            return true;
+        }
+        return false;
     }
 }

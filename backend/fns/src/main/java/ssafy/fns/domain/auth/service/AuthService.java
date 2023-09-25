@@ -4,6 +4,7 @@ import ssafy.fns.domain.auth.controller.dto.CheckEmailRequestDto;
 import ssafy.fns.domain.auth.controller.dto.EmailRequestDto;
 import ssafy.fns.domain.auth.controller.dto.RefreshAccessTokenRequestDto;
 import ssafy.fns.domain.auth.controller.dto.SignInRequestDto;
+import ssafy.fns.domain.auth.service.dto.AuthResponseDto;
 import ssafy.fns.domain.auth.service.dto.TokenResponseDto;
 
 public interface AuthService {
@@ -12,7 +13,7 @@ public interface AuthService {
 
     void checkEmail(CheckEmailRequestDto requestDto);
 
-    TokenResponseDto defaultSignIn(SignInRequestDto requestDto);
+    AuthResponseDto defaultSignIn(SignInRequestDto requestDto);
 
     TokenResponseDto refreshAccessToken(RefreshAccessTokenRequestDto requestDto);
 }
