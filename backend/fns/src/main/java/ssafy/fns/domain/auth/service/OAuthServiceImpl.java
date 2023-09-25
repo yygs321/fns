@@ -10,10 +10,11 @@ import ssafy.fns.domain.auth.entity.RefreshToken;
 import ssafy.fns.domain.auth.repository.RefreshTokenRepository;
 import ssafy.fns.domain.auth.service.dto.OAuthDetailDto;
 import ssafy.fns.domain.auth.service.dto.OAuthLoginResponseDto;
-import ssafy.fns.domain.auth.service.dto.TokenResponseDto;
+import ssafy.fns.domain.auth.service.dto.TokenDto;
 import ssafy.fns.domain.auth.utility.SocialLoginType;
 import ssafy.fns.domain.auth.vo.Token;
 import ssafy.fns.domain.member.entity.Member;
+import ssafy.fns.domain.member.entity.Provider;
 import ssafy.fns.domain.member.repository.MemberRepository;
 import ssafy.fns.global.exception.GlobalRuntimeException;
 import ssafy.fns.global.security.JwtTokenProvider;
@@ -36,7 +37,7 @@ public class OAuthServiceImpl implements OAuthService {
             OAuthLoginRequestDto requestDto) {
         String accessToken;
         OAuthLoginResponseDto oAuthLoginResponseDto;
-        TokenResponseDto tokenResponseDto;
+        TokenDto tokenDto;
 
         OAuthProvider oauthProvider = findSocialProvider(socialLoginType);
         accessToken = oauthProvider.getToken(requestDto.getCode());
@@ -48,11 +49,11 @@ public class OAuthServiceImpl implements OAuthService {
         Token token = jwtTokenProvider.createToken(detailDto.getEmail());
         saveRefreshToken(detailDto.getEmail(), token);
         Long expirationTime = jwtTokenProvider.getExpirationTime(token.getAccessToken());
-        tokenResponseDto = TokenResponseDto.from(token, expirationTime);
+        tokenDto = TokenDto.from(token, expirationTime);
 
         oAuthLoginResponseDto = OAuthLoginResponseDto.builder()
                 .hasProfile(hasProfile)
-                .tokenResponseDto(tokenResponseDto)
+                .tokenDto(tokenDto)
                 .detailDto(detailDto)
                 .socialLoginType(socialLoginType.toString())
                 .build();
@@ -98,7 +99,17 @@ public class OAuthServiceImpl implements OAuthService {
 
         if (member != null) {
             checkProvider(socialLoginType, member);
+        } else {
+            saveSocialMember(socialLoginType, email);
         }
+    }
+
+    private void saveSocialMember(SocialLoginType socialLoginType, String email) {
+        Member newMember = Member.builder()
+                .email(email)
+                .provider(Provider.valueOf(socialLoginType.toString()))
+                .build();
+        memberRepository.save(newMember);
     }
 
     private static void checkProvider(SocialLoginType socialLoginType, Member member) {

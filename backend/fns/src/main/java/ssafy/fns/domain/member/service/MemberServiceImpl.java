@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ssafy.fns.domain.auth.entity.MailHistory;
 import ssafy.fns.domain.auth.repository.MailHistoryRepository;
+import ssafy.fns.domain.auth.service.dto.TokenDto;
 import ssafy.fns.domain.member.controller.dto.MemberProfileRequestDto;
 import ssafy.fns.domain.member.controller.dto.SignUpRequestDto;
 import ssafy.fns.domain.member.entity.Member;
@@ -56,6 +57,21 @@ public class MemberServiceImpl implements MemberService {
     public void saveProfile(Member member, MemberProfileRequestDto requestDto) {
         Member findMember = memberRepository.findByEmail(member.getEmail());
         findMember.saveProfile(requestDto);
+    }
+
+    @Override
+    public void checkNicknameDuplicated(MemberProfileRequestDto requestDto) {
+
+    }
+
+    @Override
+    public void logout(Member member, TokenDto tokenDto) {
+
+    }
+
+    @Override
+    public void deleteMember(Member member, TokenDto tokenDto) {
+
     }
 
 
