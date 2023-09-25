@@ -66,6 +66,17 @@ const SearchFood = () => {
     dispatch(deleteFromDiet(one));
   };
 
+  // 검색창 포커스되면 배경색 변하게 하기
+  const [isFocused, setIsFocused] = useState(false);
+
+  const handleFocus = () => {
+    setIsFocused(true);
+  };
+
+  const handleBlur = () => {
+    setIsFocused(false);
+  };
+
   return (
     <div className="white-pages">
       <Grid
@@ -143,20 +154,22 @@ const SearchFood = () => {
               sx: {
                 height: "6vh",
                 borderRadius: "30px",
-                backgroundColor: "#e7e7e7",
+                backgroundColor: isFocused ? "white" : "#e7e7e7",
                 cursor: "pointer",
               },
             }}
             sx={{
               cursor: "pointer",
               "& .MuiOutlinedInput-notchedOutline": {
-                border: "none",
+                border: isFocused ? "" : "none",
                 height: "6vh",
               },
             }}
             maxRows={1}
             onChange={(e) => setSearchTerm(e.target.value)}
             onKeyUp={handlePressEnter}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
           />
         </Grid>
       </Grid>

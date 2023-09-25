@@ -151,8 +151,8 @@ const CommunityPage = () => {
                 },
               }}
               inputProps={{
-                style: { cursor: "pointer" },
                 readOnly: true,
+                style: { cursor: "pointer" },
               }}
               sx={{
                 cursor: "pointer",

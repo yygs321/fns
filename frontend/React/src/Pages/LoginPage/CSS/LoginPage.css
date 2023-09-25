@@ -23,11 +23,16 @@
   width: 80%;
 }
 .로고 {
-  background-color: rgb(151, 151, 151);
+  /* background-color: rgb(151, 151, 151); */
   text-align: center;
-  height: 25vh;
+  height: 35vh;
   font-size: 5vh;
   /* margin-top: 5vh; */
   line-height: 25vh;
   border-radius: 20px;
+}
+.로고-이미지 {
+  object-fit: contain;
+  height: auto;
+  max-height: 35vh;
 }
