@@ -5,6 +5,6 @@ import ssafy.fns.domain.follow.service.dto.FollowResponseDto;
 
 public interface FollowService {
     List<FollowResponseDto> followList(Long fromMemberId);
-    String followInsert(Long FromMemberId,Long toMemberId);
-    String foillowDelete(Long FromMemberId,Long toMemberId);
+    String insertFollow(Long FromMemberId,Long toMemberId);
+    String deleteFollow(Long FromMemberId,Long toMemberId);
 }

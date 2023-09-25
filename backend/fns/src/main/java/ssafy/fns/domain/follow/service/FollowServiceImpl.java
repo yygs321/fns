@@ -3,8 +3,10 @@ package ssafy.fns.domain.follow.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import ssafy.fns.domain.follow.entity.Follow;
 import ssafy.fns.domain.follow.repository.FollowRepository;
@@ -12,6 +14,7 @@ import ssafy.fns.domain.follow.service.dto.FollowCheckResponseDto;
 import ssafy.fns.domain.follow.service.dto.FollowResponseDto;
 import ssafy.fns.domain.member.entity.Member;
 import ssafy.fns.domain.member.repository.MemberRepository;
+import ssafy.fns.global.exception.GlobalRuntimeException;
 
 @Service
 @RequiredArgsConstructor
@@ -36,9 +39,9 @@ public class FollowServiceImpl implements FollowService {
     }
 
     @Override
-    public String followInsert(Long fromMemberId,Long toMemberId) {
+    public String insertFollow(Long fromMemberId,Long toMemberId) {
         if(fromMemberId == toMemberId){ // 자기 자신을 팔로우 하려는 경우
-            return "Member 정보 확인 필요";
+            throw new GlobalRuntimeException("Member 정보 확인 필요", HttpStatus.BAD_REQUEST);
         }
         
         Optional<FollowCheckResponseDto> OptionalCheck = followRepository.findMemberIdByFromMemberAndToMember(fromMemberId, toMemberId);
@@ -47,7 +50,7 @@ public class FollowServiceImpl implements FollowService {
             Optional<Member> fromMember = memberRepository.findById(fromMemberId);
             Optional<Member> toMember = memberRepository.findById(toMemberId);
             if(toMember.isEmpty() || fromMember.isEmpty()) {
-                return "Member 정보 확인 필요";
+                throw new GlobalRuntimeException("Member 정보 확인 필요", HttpStatus.BAD_REQUEST);
             }
             Follow follow = new Follow(toMember.get(), fromMember.get());
             followRepository.save(follow);
@@ -55,7 +58,7 @@ public class FollowServiceImpl implements FollowService {
         } else{
             FollowCheckResponseDto followCheckResponseDto = OptionalCheck.get();
             if(followCheckResponseDto.getIsValid()){ // 팔로우 하고 있는 경우
-                return "이미 follow한 Member입니다.";
+                throw new GlobalRuntimeException("이미 follow한 Member입니다.", HttpStatus.BAD_REQUEST);
             }
             // 팔로우 취소했던 경우
             Follow follow = followRepository.findById(followCheckResponseDto.getFollowId()).get();
@@ -66,11 +69,11 @@ public class FollowServiceImpl implements FollowService {
     }
 
     @Override
-    public String foillowDelete(Long fromMemberId,Long toMemberId) {
+    public String deleteFollow(Long fromMemberId,Long toMemberId) {
         Optional<Follow> OptionalFollow = followRepository.findByFromMemberIdAndToMemberId(fromMemberId, toMemberId);
 
         if(OptionalFollow.isEmpty()){
-            return "Member를 확인해주세요.";
+            throw new GlobalRuntimeException("Member 정보 확인 필요", HttpStatus.BAD_REQUEST);
         }
 
         Follow follow = OptionalFollow.get();
