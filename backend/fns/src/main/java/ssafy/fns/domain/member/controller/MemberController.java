@@ -6,12 +6,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ssafy.fns.domain.auth.service.dto.TokenDto;
+import ssafy.fns.domain.member.controller.dto.EmailDuplicationRequestDto;
 import ssafy.fns.domain.member.controller.dto.MemberProfileRequestDto;
 import ssafy.fns.domain.member.controller.dto.SignUpRequestDto;
 import ssafy.fns.domain.member.entity.Member;
@@ -43,10 +43,9 @@ public class MemberController {
         return JsonResponse.ok("프로필 등록 성공!");
     }
 
-    @GetMapping(value = "/check-nickname-duplicate")
+    @PostMapping(value = "/check-nickname-duplicate")
     public ResponseEntity<?> checkNicknameDuplicated(
-            @RequestBody MemberProfileRequestDto requestDto) {
-
+            @RequestBody EmailDuplicationRequestDto requestDto) {
         memberService.checkNicknameDuplicated(requestDto);
         return JsonResponse.ok("사용가능한 닉네임 입니다");
     }

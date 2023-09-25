@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import ssafy.fns.domain.auth.entity.MailHistory;
 import ssafy.fns.domain.auth.repository.MailHistoryRepository;
 import ssafy.fns.domain.auth.service.dto.TokenDto;
+import ssafy.fns.domain.member.controller.dto.EmailDuplicationRequestDto;
 import ssafy.fns.domain.member.controller.dto.MemberProfileRequestDto;
 import ssafy.fns.domain.member.controller.dto.SignUpRequestDto;
 import ssafy.fns.domain.member.entity.Member;
@@ -60,8 +61,12 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void checkNicknameDuplicated(MemberProfileRequestDto requestDto) {
+    public void checkNicknameDuplicated(EmailDuplicationRequestDto requestDto) {
+        Member findMember = memberRepository.findByNickname(requestDto.getNickname());
 
+        if (findMember != null) {
+            throw new GlobalRuntimeException("이미 존재하는 닉네임 입니다.", HttpStatus.CONFLICT);
+        }
     }
 
     @Override
