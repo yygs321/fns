@@ -47,7 +47,6 @@ public class MemberServiceImpl implements MemberService {
             throw new GlobalRuntimeException("메일 전송을 완료해주세요", HttpStatus.NOT_FOUND);
         }
         if (!mailHistory.isAuthed()) {
-            log.info("인증안됨");
             throw new GlobalRuntimeException("메일 인증을 완료해주세요", HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }
