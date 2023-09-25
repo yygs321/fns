@@ -40,6 +40,7 @@ public class OAuthServiceImpl implements OAuthService {
 
         OAuthDetailDto detailDto = getUserDetail(socialLoginType, accessToken);
         boolean isDuplicated = isEmailDuplicated(socialLoginType, detailDto.getEmail());
+        boolean hasProfile = isProfileSaved(detailDto.getEmail());
 
         if (!isDuplicated) {
             tokenResponseDto = null;
@@ -51,6 +52,7 @@ public class OAuthServiceImpl implements OAuthService {
         }
 
         oAuthLoginResponseDto = OAuthLoginResponseDto.builder()
+                .hasProfile(hasProfile)
                 .tokenResponseDto(tokenResponseDto)
                 .detailDto(detailDto)
                 .socialLoginType(socialLoginType.toString())
@@ -81,6 +83,15 @@ public class OAuthServiceImpl implements OAuthService {
         OAuthProvider oAuthProvider = findSocialProvider(socialLoginType);
 
         return oAuthProvider.getOAuthDetail(token);
+    }
+
+    private boolean isProfileSaved(String email) {
+        Member member = memberRepository.findByEmail(email);
+
+        if (member != null && member.getNickname() != null) {
+            return true;
+        }
+        return false;
     }
 
     private boolean isEmailDuplicated(SocialLoginType socialLoginType, String email) {
