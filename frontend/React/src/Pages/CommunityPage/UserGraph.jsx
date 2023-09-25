@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import {
   Typography,
@@ -7,6 +7,9 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
+  Button,
+  Modal,
+  Box,
 } from "@mui/material";
 
 import CommunityBarGraph from "./CommunityBarGraph";
@@ -15,6 +18,22 @@ import CommunityBarGraph from "./CommunityBarGraph";
 
 const UserGraph = (props) => {
   const { user, index, selectedUser, handleUserChange } = props;
+
+  const [cancelFollowModal, setCancelFollowModal] = useState(false);
+
+  const openCancelFollowModal = (e) => {
+    e.stopPropagation();
+    setCancelFollowModal(true);
+  };
+
+  const closeCancelFollowModal = (e) => {
+    e.stopPropagation();
+    setCancelFollowModal(false);
+  };
+
+  const handleCancelFollow = (e) => {
+    e.stopPropagation();
+  };
 
   return (
     <Grid
@@ -128,56 +147,238 @@ const UserGraph = (props) => {
           </Grid>
         </AccordionSummary>
         <AccordionDetails>
-          <Grid
-            item
-            container
-            justifyContent={"center"}
-            alignItems={"center"}
-            sx={{ backgroundColor: "#e7e7e7", borderRadius: "10px" }}
-          >
+          <Grid item container justifyContent={"center"} alignItems={"center"}>
             <Grid
               item
               container
-              xs={11}
               justifyContent={"center"}
               alignItems={"center"}
-              sx={{ py: "1vh", borderBottom: "1px solid #a7a7a7" }}
+              sx={{ backgroundColor: "#e7e7e7", borderRadius: "10px" }}
             >
               <Grid
                 item
                 container
-                xs={2}
+                xs={11}
                 justifyContent={"center"}
                 alignItems={"center"}
+                sx={{ py: "1vh", borderBottom: "1px solid #a7a7a7" }}
               >
-                <Typography>시간</Typography>
+                <Grid
+                  item
+                  container
+                  xs={2}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                >
+                  <Typography>시간</Typography>
+                </Grid>
+                <Grid
+                  item
+                  container
+                  xs={5}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                >
+                  <Typography>음식</Typography>
+                </Grid>
+                <Grid
+                  item
+                  container
+                  xs={2}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                >
+                  <Typography>분량</Typography>
+                </Grid>
+                <Grid
+                  item
+                  container
+                  xs={3}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                >
+                  <Typography>kcal</Typography>
+                </Grid>
               </Grid>
               <Grid
                 item
                 container
-                xs={5}
+                xs={11}
                 justifyContent={"center"}
                 alignItems={"center"}
+                sx={{ py: "1vh", borderBottom: "1px solid #a7a7a7" }}
               >
-                <Typography>음식</Typography>
+                <Grid
+                  item
+                  container
+                  xs={2}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                >
+                  <Typography>아침</Typography>
+                </Grid>
+                <Grid
+                  item
+                  container
+                  xs={5}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                >
+                  <Typography>음식</Typography>
+                </Grid>
+                <Grid
+                  item
+                  container
+                  xs={2}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                >
+                  <Typography>분량</Typography>
+                </Grid>
+                <Grid
+                  item
+                  container
+                  xs={3}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                >
+                  <Typography>kcal</Typography>
+                </Grid>
               </Grid>
               <Grid
                 item
                 container
-                xs={2}
+                xs={11}
                 justifyContent={"center"}
                 alignItems={"center"}
+                sx={{ py: "1vh", borderBottom: "1px solid #a7a7a7" }}
               >
-                <Typography>분량</Typography>
+                <Grid
+                  item
+                  container
+                  xs={2}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                >
+                  <Typography>점심</Typography>
+                </Grid>
+                <Grid
+                  item
+                  container
+                  xs={5}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                >
+                  <Typography>음식</Typography>
+                </Grid>
+                <Grid
+                  item
+                  container
+                  xs={2}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                >
+                  <Typography>분량</Typography>
+                </Grid>
+                <Grid
+                  item
+                  container
+                  xs={3}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                >
+                  <Typography>kcal</Typography>
+                </Grid>
               </Grid>
               <Grid
                 item
                 container
-                xs={3}
+                xs={11}
                 justifyContent={"center"}
                 alignItems={"center"}
+                sx={{ py: "1vh", borderBottom: "1px solid #a7a7a7" }}
               >
-                <Typography>kcal</Typography>
+                <Grid
+                  item
+                  container
+                  xs={2}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                >
+                  <Typography>저녁</Typography>
+                </Grid>
+                <Grid
+                  item
+                  container
+                  xs={5}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                >
+                  <Typography>음식</Typography>
+                </Grid>
+                <Grid
+                  item
+                  container
+                  xs={2}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                >
+                  <Typography>분량</Typography>
+                </Grid>
+                <Grid
+                  item
+                  container
+                  xs={3}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                >
+                  <Typography>kcal</Typography>
+                </Grid>
+              </Grid>
+              <Grid
+                item
+                container
+                xs={11}
+                justifyContent={"center"}
+                alignItems={"center"}
+                sx={{ py: "1vh" }}
+              >
+                <Grid
+                  item
+                  container
+                  xs={2}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                >
+                  <Typography>간식</Typography>
+                </Grid>
+                <Grid
+                  item
+                  container
+                  xs={5}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                >
+                  <Typography>음식</Typography>
+                </Grid>
+                <Grid
+                  item
+                  container
+                  xs={2}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                >
+                  <Typography>분량</Typography>
+                </Grid>
+                <Grid
+                  item
+                  container
+                  xs={3}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                >
+                  <Typography>kcal</Typography>
+                </Grid>
               </Grid>
             </Grid>
             <Grid
@@ -186,183 +387,115 @@ const UserGraph = (props) => {
               xs={11}
               justifyContent={"center"}
               alignItems={"center"}
-              sx={{ py: "1vh", borderBottom: "1px solid #a7a7a7" }}
+              sx={{ pt: "2vh" }}
             >
-              <Grid
-                item
-                container
-                xs={2}
-                justifyContent={"center"}
-                alignItems={"center"}
+              <Button
+                variant="contained"
+                fullWidth
+                color="warning"
+                sx={{
+                  borderRadius: "10px",
+                  color: "white",
+                  textShadow: "2px 2px 20px #8b8b8b",
+                  fontSize: "1rem",
+                }}
+                onClick={(e) => openCancelFollowModal(e)}
               >
-                <Typography>아침</Typography>
-              </Grid>
-              <Grid
-                item
-                container
-                xs={5}
-                justifyContent={"center"}
-                alignItems={"center"}
-              >
-                <Typography>음식</Typography>
-              </Grid>
-              <Grid
-                item
-                container
-                xs={2}
-                justifyContent={"center"}
-                alignItems={"center"}
-              >
-                <Typography>분량</Typography>
-              </Grid>
-              <Grid
-                item
-                container
-                xs={3}
-                justifyContent={"center"}
-                alignItems={"center"}
-              >
-                <Typography>kcal</Typography>
-              </Grid>
-            </Grid>
-            <Grid
-              item
-              container
-              xs={11}
-              justifyContent={"center"}
-              alignItems={"center"}
-              sx={{ py: "1vh", borderBottom: "1px solid #a7a7a7" }}
-            >
-              <Grid
-                item
-                container
-                xs={2}
-                justifyContent={"center"}
-                alignItems={"center"}
-              >
-                <Typography>점심</Typography>
-              </Grid>
-              <Grid
-                item
-                container
-                xs={5}
-                justifyContent={"center"}
-                alignItems={"center"}
-              >
-                <Typography>음식</Typography>
-              </Grid>
-              <Grid
-                item
-                container
-                xs={2}
-                justifyContent={"center"}
-                alignItems={"center"}
-              >
-                <Typography>분량</Typography>
-              </Grid>
-              <Grid
-                item
-                container
-                xs={3}
-                justifyContent={"center"}
-                alignItems={"center"}
-              >
-                <Typography>kcal</Typography>
-              </Grid>
-            </Grid>
-            <Grid
-              item
-              container
-              xs={11}
-              justifyContent={"center"}
-              alignItems={"center"}
-              sx={{ py: "1vh", borderBottom: "1px solid #a7a7a7" }}
-            >
-              <Grid
-                item
-                container
-                xs={2}
-                justifyContent={"center"}
-                alignItems={"center"}
-              >
-                <Typography>저녁</Typography>
-              </Grid>
-              <Grid
-                item
-                container
-                xs={5}
-                justifyContent={"center"}
-                alignItems={"center"}
-              >
-                <Typography>음식</Typography>
-              </Grid>
-              <Grid
-                item
-                container
-                xs={2}
-                justifyContent={"center"}
-                alignItems={"center"}
-              >
-                <Typography>분량</Typography>
-              </Grid>
-              <Grid
-                item
-                container
-                xs={3}
-                justifyContent={"center"}
-                alignItems={"center"}
-              >
-                <Typography>kcal</Typography>
-              </Grid>
-            </Grid>
-            <Grid
-              item
-              container
-              xs={11}
-              justifyContent={"center"}
-              alignItems={"center"}
-              sx={{ py: "1vh" }}
-            >
-              <Grid
-                item
-                container
-                xs={2}
-                justifyContent={"center"}
-                alignItems={"center"}
-              >
-                <Typography>간식</Typography>
-              </Grid>
-              <Grid
-                item
-                container
-                xs={5}
-                justifyContent={"center"}
-                alignItems={"center"}
-              >
-                <Typography>음식</Typography>
-              </Grid>
-              <Grid
-                item
-                container
-                xs={2}
-                justifyContent={"center"}
-                alignItems={"center"}
-              >
-                <Typography>분량</Typography>
-              </Grid>
-              <Grid
-                item
-                container
-                xs={3}
-                justifyContent={"center"}
-                alignItems={"center"}
-              >
-                <Typography>kcal</Typography>
-              </Grid>
+                팔로우 취소
+              </Button>
             </Grid>
           </Grid>
         </AccordionDetails>
       </Accordion>
+      <Modal
+        open={cancelFollowModal}
+        onClose={(e) => closeCancelFollowModal(e)}
+        aria-labelledby="weight-modal"
+        sx={{ zIndex: 1000 }}
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            width: "80%",
+            maxWidth: "700px",
+            bgcolor: "background.paper",
+            // border: "2px solid #000",
+            boxShadow: 24,
+            p: 2,
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            borderRadius: "20px",
+            textAlign: "center",
+          }}
+        >
+          <Typography id="weight-input" variant="h5" sx={{ paddingY: "1vh" }}>
+            정말로 팔로우를 취소하시겠습니까?
+          </Typography>
+          <Grid
+            container
+            justifyContent={"center"}
+            alignItems={"center"}
+            sx={{ paddingY: "2vh" }}
+          >
+            <Grid
+              container
+              item
+              xs={11}
+              justifyContent={"space-between"}
+              alignItems={"center"}
+            >
+              <Grid
+                container
+                item
+                xs={5}
+                justifyContent={"center"}
+                alignItems={"center"}
+              >
+                <Button
+                  fullWidth
+                  color="warning"
+                  variant="contained"
+                  onClick={(e) => handleCancelFollow(e)}
+                  sx={{
+                    color: "white",
+                    fontSize: "1.1rem",
+                    borderRadius: "10px",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                  }}
+                >
+                  팔로우 취소
+                </Button>
+              </Grid>
+              <Grid
+                container
+                item
+                xs={5}
+                justifyContent={"center"}
+                alignItems={"center"}
+              >
+                <Button
+                  fullWidth
+                  variant="contained"
+                  onClick={closeCancelFollowModal}
+                  sx={{
+                    color: "white",
+                    fontSize: "1.1rem",
+                    borderRadius: "10px",
+                  }}
+                >
+                  닫기
+                </Button>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Box>
+      </Modal>
     </Grid>
   );
 };

@@ -15,9 +15,8 @@ const FoodCount = (props) => {
   const { one, addedDiet } = props;
 
   const [value, setValue] = useState(one.count || 1.0);
+  // eslint-disable-next-line no-unused-vars
   const [isAddedFood, setIsAddedFood] = useState(false);
-
-  console.log(isAddedFood);
 
   useEffect(() => {
     const index = addedDiet.findIndex((food) => food.name === one.name);

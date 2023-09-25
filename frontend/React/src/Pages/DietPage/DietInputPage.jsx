@@ -176,22 +176,186 @@ const DietInputPage = () => {
               justifyContent={"space-between"}
               alignItems={"center"}
             >
-              <Typography
-                variant="caption"
-                component="div"
-                fontSize={"1.4rem"}
-                fontWeight={"bold"}
+              <Grid
+                container
+                item
+                xs={7}
+                justifyContent={"flex-start"}
+                alignItems={"center"}
               >
-                {one.name}
-              </Typography>
-              <Typography
-                variant="caption"
-                component="div"
-                fontSize={"1.2rem"}
-                // fontWeight={"bold"}
+                <Typography
+                  variant="caption"
+                  component="div"
+                  fontSize={"1.4rem"}
+                  fontWeight={"bold"}
+                  whiteSpace="nowrap"
+                  overflow="hidden"
+                  textOverflow="ellipsis"
+                >
+                  {one.name}
+                </Typography>
+              </Grid>
+              <Grid
+                container
+                item
+                xs={5}
+                justifyContent={"space-between"}
+                alignItems={"center"}
               >
-                {one.kcal} kcal
-              </Typography>
+                <Grid
+                  container
+                  item
+                  xs={6}
+                  justifyContent={"flex-start"}
+                  alignItems={"center"}
+                >
+                  <Typography
+                    variant="caption"
+                    component="div"
+                    fontSize={"1rem"}
+                    fontWeight={"bold"}
+                  >
+                    칼로리
+                  </Typography>
+                </Grid>
+                <Grid
+                  container
+                  item
+                  xs={6}
+                  justifyContent={"flex-end"}
+                  alignItems={"center"}
+                >
+                  <Typography
+                    variant="caption"
+                    component="div"
+                    fontSize={"1rem"}
+                    fontWeight={"bold"}
+                    whiteSpace="nowrap"
+                    overflow="hidden"
+                    textOverflow="ellipsis"
+                  >
+                    {one.kcal} kcal
+                  </Typography>
+                </Grid>
+                <Grid
+                  container
+                  item
+                  xs={6}
+                  justifyContent={"flex-start"}
+                  alignItems={"center"}
+                >
+                  <Typography
+                    variant="caption"
+                    component="div"
+                    fontSize={"1rem"}
+                    whiteSpace="nowrap"
+                    overflow="hidden"
+                    textOverflow="ellipsis"
+                  >
+                    탄수화물
+                  </Typography>
+                </Grid>
+                <Grid
+                  container
+                  item
+                  xs={6}
+                  justifyContent={"flex-end"}
+                  alignItems={"center"}
+                >
+                  <Typography
+                    variant="caption"
+                    component="div"
+                    fontSize={"1rem"}
+                    whiteSpace="nowrap"
+                    overflow="hidden"
+                    textOverflow="ellipsis"
+                  >
+                    {one.carb} mg
+                  </Typography>
+                </Grid>
+                <Grid
+                  container
+                  item
+                  xs={6}
+                  justifyContent={"flex-start"}
+                  alignItems={"center"}
+                >
+                  <Typography
+                    variant="caption"
+                    component="div"
+                    fontSize={"1rem"}
+                  >
+                    단백질
+                  </Typography>
+                </Grid>
+                <Grid
+                  container
+                  item
+                  xs={6}
+                  justifyContent={"flex-end"}
+                  alignItems={"center"}
+                >
+                  <Typography
+                    variant="caption"
+                    component="div"
+                    fontSize={"1rem"}
+                    whiteSpace="nowrap"
+                    overflow="hidden"
+                    textOverflow="ellipsis"
+                  >
+                    {one.prot} mg
+                  </Typography>
+                </Grid>
+                <Grid
+                  container
+                  item
+                  xs={6}
+                  justifyContent={"flex-start"}
+                  alignItems={"center"}
+                >
+                  <Typography
+                    variant="caption"
+                    component="div"
+                    fontSize={"1rem"}
+                  >
+                    지방
+                  </Typography>
+                </Grid>
+                <Grid
+                  container
+                  item
+                  xs={6}
+                  justifyContent={"flex-end"}
+                  alignItems={"center"}
+                >
+                  <Typography
+                    variant="caption"
+                    component="div"
+                    fontSize={"1rem"}
+                    whiteSpace="nowrap"
+                    overflow="hidden"
+                    textOverflow="ellipsis"
+                  >
+                    {one.prov} mg
+                  </Typography>
+                </Grid>
+                <Grid
+                  container
+                  item
+                  xs={12}
+                  justifyContent={"flex-end"}
+                  alignItems={"center"}
+                  sx={{ borderTop: "1px solid #e7e7e7" }}
+                >
+                  <Typography
+                    variant="caption"
+                    component="div"
+                    fontSize={"0.8rem"}
+                  >
+                    1인분 기준
+                  </Typography>
+                </Grid>
+              </Grid>
             </Grid>
             <Grid
               container
@@ -268,26 +432,144 @@ const DietInputPage = () => {
           justifyContent={"space-between"}
           alignItems={"center"}
         >
-          <Typography
-            variant="caption"
-            component="div"
-            fontSize={"1.5rem"}
-            fontWeight={"bold"}
+          <Grid
+            container
+            item
+            xs={6}
+            justifyContent={"flex-start"}
+            alignItems={"center"}
           >
-            총 칼로리
-          </Typography>
-          <Typography
-            variant="caption"
-            component="div"
-            fontSize={"1.5rem"}
-            fontWeight={"bold"}
+            <Typography
+              variant="caption"
+              component="div"
+              fontSize={"1.3rem"}
+              fontWeight={"bold"}
+            >
+              총 칼로리
+            </Typography>
+          </Grid>
+          <Grid
+            container
+            item
+            xs={6}
+            justifyContent={"flex-end"}
+            alignItems={"center"}
           >
-            {nowDietList.reduce(
-              (totalKcal, food) => totalKcal + food.kcal * food.count,
-              0
-            )}{" "}
-            kcal
-          </Typography>
+            <Typography
+              variant="caption"
+              component="div"
+              fontSize={"1.3rem"}
+              fontWeight={"bold"}
+              whiteSpace="nowrap"
+              overflow="hidden"
+              textOverflow="ellipsis"
+            >
+              {nowDietList.reduce(
+                (totalKcal, food) => totalKcal + food.kcal * food.count,
+                0
+              )}{" "}
+              kcal
+            </Typography>
+          </Grid>
+          <Grid
+            container
+            item
+            xs={6}
+            justifyContent={"flex-start"}
+            alignItems={"center"}
+          >
+            <Typography variant="caption" component="div" fontSize={"1rem"}>
+              총 탄수화물
+            </Typography>
+          </Grid>
+          <Grid
+            container
+            item
+            xs={6}
+            justifyContent={"flex-end"}
+            alignItems={"center"}
+          >
+            <Typography
+              variant="caption"
+              component="div"
+              fontSize={"1rem"}
+              whiteSpace="nowrap"
+              overflow="hidden"
+              textOverflow="ellipsis"
+            >
+              {nowDietList.reduce(
+                (totalCarb, food) => totalCarb + food.carb * food.count,
+                0
+              )}{" "}
+              mg
+            </Typography>
+          </Grid>
+          <Grid
+            container
+            item
+            xs={6}
+            justifyContent={"flex-start"}
+            alignItems={"center"}
+          >
+            <Typography variant="caption" component="div" fontSize={"1rem"}>
+              총 단백질
+            </Typography>
+          </Grid>
+          <Grid
+            container
+            item
+            xs={6}
+            justifyContent={"flex-end"}
+            alignItems={"center"}
+          >
+            <Typography
+              variant="caption"
+              component="div"
+              fontSize={"1rem"}
+              whiteSpace="nowrap"
+              overflow="hidden"
+              textOverflow="ellipsis"
+            >
+              {nowDietList.reduce(
+                (totalProt, food) => totalProt + food.prot * food.count,
+                0
+              )}{" "}
+              mg
+            </Typography>
+          </Grid>
+          <Grid
+            container
+            item
+            xs={6}
+            justifyContent={"flex-start"}
+            alignItems={"center"}
+          >
+            <Typography variant="caption" component="div" fontSize={"1rem"}>
+              총 지방
+            </Typography>
+          </Grid>
+          <Grid
+            container
+            item
+            xs={6}
+            justifyContent={"flex-end"}
+            alignItems={"center"}
+          >
+            <Typography
+              variant="caption"
+              component="div"
+              fontSize={"1rem"}
+              whiteSpace="nowrap"
+              overflow="hidden"
+              textOverflow="ellipsis"
+            >
+              {nowDietList.reduce(
+                (totalProv, food) => totalProv + food.prov * food.count,
+                0
+              )}{" "}
+              mg
+            </Typography>
+          </Grid>
         </Grid>
         <Grid
           container
