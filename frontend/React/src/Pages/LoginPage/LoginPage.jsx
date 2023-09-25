@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 
-import kakaoButton from "../../assets/Image/kakao_login_asset.svg";
-import googleButton from "../../assets/Image/google_login_asset.svg";
+import kakaoButton from "../../assets/Image/Login/kakao_login_asset.svg";
+import googleButton from "../../assets/Image/Login/google_login_asset.svg";
+import FNS_logo from "../../assets/Image/Logo/FNS_512.png";
 
 import {
   Box,
@@ -56,21 +57,21 @@ const LoginPage = () => {
     <Container component="main" maxWidth="xs" sx={{ height: "100%" }}>
       <Box
         sx={{
-          height: "100vh",
+          minHeight: "100vh",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
         }}
       >
-        <FormControl className="로고" fullWidth>
-          Logo
-        </FormControl>
+        <Box className="로고">
+          <img className="로고-이미지" src={FNS_logo} alt="로고" />
+        </Box>
         <FormControl
           variant="outlined"
           className="아이디박스"
           required
-          sx={{ mt: 4 }}
+          sx={{ mt: "3vh" }}
         >
           <TextField
             className="아이디"
@@ -88,7 +89,7 @@ const LoginPage = () => {
           variant="outlined"
           className="비번박스"
           required
-          sx={{ mt: 3 }}
+          sx={{ mt: "2vh" }}
         >
           <InputLabel htmlFor="outlined-adornment-password">
             비밀번호
@@ -122,8 +123,8 @@ const LoginPage = () => {
               cursor: "pointer",
               color: "white",
               borderRadius: "10px",
-              height: "8vh",
-              mt: 4,
+              height: "7vh",
+              mt: "3vh",
               fontSize: "1.4rem",
               textShadow: "2px 2px 20px #8b8b8b",
             }}
@@ -136,7 +137,7 @@ const LoginPage = () => {
           container
           justifyContent={"space-evenly"}
           sx={{
-            mt: 3,
+            mt: "3vh",
             py: 2,
             borderTop: "1px solid #C5C5C5",
             borderBottom: "1px solid #C5C5C5",
@@ -168,7 +169,7 @@ const LoginPage = () => {
           </Grid>
         </Grid>
 
-        <FormControl className="카카오로그인" sx={{ mt: 3 }}>
+        <FormControl className="카카오로그인" sx={{ mt: "2vh" }}>
           <img
             src={kakaoButton}
             alt=""
@@ -176,7 +177,7 @@ const LoginPage = () => {
             style={{ cursor: "pointer" }}
           />
         </FormControl>
-        <FormControl className="구글로그인" sx={{ mt: 2 }}>
+        <FormControl className="구글로그인" sx={{ my: "2vh" }}>
           <img
             alt=""
             src={googleButton}

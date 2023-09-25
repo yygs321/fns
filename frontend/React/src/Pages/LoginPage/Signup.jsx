@@ -133,6 +133,7 @@ const Signup = () => {
                   overflow: "hidden",
                   textOverflow: "ellipsis",
                   borderRadius: "10px",
+                  fontSize: "1.1rem",
                 }}
                 onClick={중복체크버튼}
               >
@@ -198,6 +199,7 @@ const Signup = () => {
                   overflow: "hidden",
                   textOverflow: "ellipsis",
                   borderRadius: "10px",
+                  fontSize: "1.1rem",
                 }}
                 onClick={인증확인버튼}
                 disabled={!중복체크 ? true : false}
