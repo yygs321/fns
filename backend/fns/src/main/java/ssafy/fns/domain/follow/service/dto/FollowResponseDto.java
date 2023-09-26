@@ -1,11 +1,13 @@
 package ssafy.fns.domain.follow.service.dto;
 
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import ssafy.fns.domain.food.entity.Intake;
+import ssafy.fns.domain.food.service.dto.IntakeSelectOneResponseDto;
 import ssafy.fns.domain.member.entity.Member;
 
 @Getter
@@ -24,12 +26,12 @@ public class FollowResponseDto {
 
     private Double fat;
 
-    private Intake intake;
+    private List<IntakeSelectOneResponseDto> intake;
 
     @Builder
     public FollowResponseDto(Long memberId, String nickName, Double kcal, Double carbs,
             Double protein,
-            Double fat, Intake intake) {
+            Double fat, List<IntakeSelectOneResponseDto> intake) {
         this.memberId = memberId;
         this.nickName = nickName;
         this.kcal = kcal;
