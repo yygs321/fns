@@ -9,11 +9,39 @@ const MyCustomPage = () => {
     const initialCarbs = 250;
     const initialProtein = 50;
     const initialFat = 70;
+    const initialPollinationl = 2000;
+    const initialSugar = 250;
+    const initialDietaryFiber = 50;
+    const initialCalcium = 70;
+    const initialPotassium = 2000;
+    const initialIron = 250;
+    const initialPhosphorus = 50;
+    const initialSodium = 70;
+    const initialVitaminA = 50;
+    const initialVitaminC = 70;
+    const initialVitaminD = 2000;
+    const initialCholesterol = 250;
+    const initialAcid = 50;
+    const initialTransFat = 70;
 
     const [kcal, setKcal] = useState(initialKcal);
     const [carbs, setCarbs] = useState(initialCarbs);
     const [protein, setProtein] = useState(initialProtein);
     const [fat, setFat] = useState(initialFat);
+    const [pollinationl, setPollinationl] = useState(initialPollinationl);
+    const [sugar, setSugar] = useState(initialSugar);
+    const [dietaryfiber, setDietaryFiber] = useState(initialDietaryFiber);
+    const [calcium, setCalcium] = useState(initialCalcium);
+    const [potassium, setPotassium] = useState(initialPotassium);
+    const [iron, setIron] = useState(initialIron);
+    const [phosphorus, setPhosphorus] = useState(initialPhosphorus);
+    const [sodium, setSodium] = useState(initialSodium);
+    const [vitaminA, VitaminA] = useState(initialVitaminA);
+    const [vitaminC, VitaminC] = useState(initialVitaminC);
+    const [vitaminD, VitaminD] = useState(initialVitaminD);
+    const [cholesterol, setCholesterol] = useState(initialCholesterol);
+    const [acid, setAcid] = useState(initialAcid);
+    const [transfat, setTransFat] = useState(initialTransFat);
 
     const [openModal, setOpenModal] = useState(false); // 모달 상태 관리
     const navigate = useNavigate();
@@ -34,7 +62,7 @@ const MyCustomPage = () => {
     };
 
     return (
-        <div className="gray-pages" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <div className="gray-pages" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '92vh' }}>
             <div className="white-content-box" style={{ width: '80%', padding: '20px', backgroundColor: 'white', borderRadius: '10px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>
             <Typography variant="h5" gutterBottom align="center" style={{marginBottom: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
             나에게 맞는 영양소를 설정해보세요!
@@ -45,12 +73,27 @@ const MyCustomPage = () => {
             </Tooltip>
             </Typography>
 
-                <Grid container spacing={3}>
+                <Grid container spacing={3} className="noscroll"  sx={{ overflowY: "scroll", maxHeight: '50vh' }}>
                     {renderSlider("칼로리", kcal, setKcal, initialKcal)}
                     {renderSlider("탄수화물", carbs, setCarbs, initialCarbs)}
                     {renderSlider("단백질", protein, setProtein, initialProtein)}
                     {renderSlider("지방", fat, setFat, initialFat)}
-                    <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center' }}>
+                    {renderSlider("수분", pollinationl, setPollinationl, initialPollinationl)}
+                    {renderSlider("당류", sugar, setSugar, initialSugar)}
+                    {renderSlider("식이섬유", dietaryfiber, setDietaryFiber, initialDietaryFiber)}
+                    {renderSlider("칼슘", calcium, setCalcium, initialCalcium)}
+                    {renderSlider("칼륨", potassium, setPotassium, initialPotassium)}
+                    {renderSlider("철", iron, setIron, initialIron)}
+                    {renderSlider("인", phosphorus, setPhosphorus, initialPhosphorus)}
+                    {renderSlider("나트륨", sodium, setSodium, initialSodium)}
+                    {renderSlider("비타민A", vitaminA, VitaminA, initialVitaminA)}
+                    {renderSlider("비타민C", vitaminC, VitaminC, initialVitaminC)}
+                    {renderSlider("비타민D", vitaminD, VitaminD, initialVitaminD)}
+                    {renderSlider("콜레스테롤", cholesterol, setCholesterol, initialCholesterol)}
+                    {renderSlider("포화지방산", acid, setAcid, initialAcid)}
+                    {renderSlider("트랜스지방산", transfat, setTransFat, initialTransFat)}
+                    
+                    <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
                     <Button variant="contained" 
                       style={{ marginTop: '20px', fontSize: '20px', padding: '5px 100px' }}
                       onClick={handleSave}>
