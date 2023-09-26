@@ -1,13 +1,7 @@
 import { React, useState } from "react";
 import "../Common/CSS/BackgroundColor.css";
 import "./CSS/WeightInput.scss";
-import {
-  Button,
-  Modal,
-  Box,
-  Typography,
-  TextField,
-} from "@mui/material";
+import { Button, Modal, Box, Typography, TextField } from "@mui/material";
 
 export const 목표체중 = "80";
 export const 기간 = "50";
@@ -27,30 +21,29 @@ const WeightInput = () => {
   const [목표체중, set목표체중] = useState("");
   const [모달목표체중, set모달목표체중] = useState("");
 
-
   const [모달기간, set모달기간] = useState("");
   const [기간, set기간] = useState("");
-  const 일자 = ({
+  const 일자 = {
     month: 월,
     day: 일,
-  });
+  };
 
   const 체중입력함수 = (e) => {
-    set모달체중(data => e.target.value);
+    set모달체중((data) => e.target.value);
   };
 
   const 체중수정모달 = () => {
-    set체중(data => 모달체중);
+    set체중((data) => 모달체중);
     set수정모달열기((data) => !data);
   };
 
   const 체중수정닫기 = () => {
-    set수정모달열기(data => !data);
-  }
+    set수정모달열기((data) => !data);
+  };
 
   const 목표설정모달 = () => {
-    set목표체중(data => 모달목표체중);
-    set기간(data => 모달기간);
+    set목표체중((data) => 모달목표체중);
+    set기간((data) => 모달기간);
     set목표모달열기((data) => !data);
   };
 
@@ -71,14 +64,13 @@ const WeightInput = () => {
 
   return (
     <div className="회색배경">
-
       <div className="체중박스">
         <div className="일자">
           {일자.month}월 {일자.day}일
         </div>
         <div className="체중">
           {!다이어트모드 && (
-            <span className={`fontSize ${체중 ? '체중' : '체중없음'}`}>
+            <span className={`fontSize ${체중 ? "체중" : "체중없음"}`}>
               {체중 ? `${체중}kg` : "몸무게를 입력해주세요"}
             </span>
           )}
@@ -132,7 +124,7 @@ const WeightInput = () => {
                   marginTop: "1vh",
                 }}
               >
-                남은 기간 : {기간}일
+                남은 기간 : {기간} 일
               </div>
             </div>
           )}
@@ -274,4 +266,3 @@ const WeightInput = () => {
 };
 
 export default WeightInput;
-

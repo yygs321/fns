@@ -1,9 +1,4 @@
 import React, { useState } from "react";
-
-import kakaoButton from "../../assets/Image/Login/kakao_login_asset.svg";
-import googleButton from "../../assets/Image/Login/google_login_asset.svg";
-import FNS_logo from "../../assets/Image/Logo/FNS_512.png";
-
 import {
   Box,
   TextField,
@@ -18,20 +13,31 @@ import {
   Link,
 } from "@mui/material";
 import { VisibilityOff, Visibility } from "@mui/icons-material";
-import "./CSS/LoginPage.css";
-import "../Common/CSS/BackgroundColor.css";
 import { useNavigate } from "react-router-dom";
-
 import { useDispatch } from "react-redux";
 import { userLogin } from "../../Redux/actions/actions";
+import axios from "axios";
+
+import kakaoButton from "../../assets/Image/Login/kakao_login_asset.svg";
+import googleButton from "../../assets/Image/Login/google_login_asset.svg";
+import FNS_logo from "../../assets/Image/Logo/FNS_512.png";
+
+import "./CSS/LoginPage.css";
+import "../Common/CSS/BackgroundColor.css";
+import { RefreshToken } from "../Common/Component/RefreshToken";
 
 const LoginPage = () => {
   const REST_API_KEY = `${process.env.REACT_APP_KAKAO_REST_API_KEY}`;
   const REDIRECT_URI = `${process.env.REACT_APP_KAKAO_REDIRECT_URI}`;
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+  const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [유저아이디, set유저아이디] = useState("");
+  const [유저패스워드, set유저패스워드] = useState("");
+  const [로그인실패, set로그인실패] = useState(false);
 
   const [비밀번호보이기, set비밀번호보이기] = useState(false);
 
@@ -47,10 +53,53 @@ const LoginPage = () => {
 
   const 구글버튼활성화 = () => {};
 
-  const 버튼활성화 = () => {
-    dispatch(userLogin());
-    navigate("/main");
-    // 임시
+  // LoginPage.js 파일
+
+  // ...
+
+  const 버튼활성화 = async () => {
+    try {
+      const res = await axios({
+        method: "post",
+        url: `${SERVER_API_URL}/auth/sign-in`,
+        data: {
+          email: 유저아이디,
+          password: 유저패스워드,
+        },
+      });
+
+      console.log(res.data.message);
+      const tokenData = res.data.data.tokenResponseDto;
+
+      dispatch(
+        userLogin({
+          accessToken: tokenData.accessToken,
+          refreshToken: tokenData.refreshToken,
+        })
+      );
+
+      if (tokenData.expirationTime < 100000) {
+        await RefreshToken();
+      }
+
+      if (!res.data.hasProfile) {
+        // 프로필이 없다면 정보입력 페이지로 이동.
+        navigate(`/info`);
+      } else {
+        navigate(`/main`);
+      }
+    } catch (err) {
+      console.log(err);
+      set로그인실패(true);
+    }
+
+    // dispatch(userLogin({ accessToken: "", refreshToken: "" }));
+    // navigate("/main");
+    // console.log(axios && "야호");
+    // console.log(RefreshToken && "야호");
+    // console.log(SERVER_API_URL && "야호");
+    // console.log(set로그인실패 && "야호");
+    // 임시 코드
   };
 
   return (
@@ -70,33 +119,30 @@ const LoginPage = () => {
         <FormControl
           variant="outlined"
           className="아이디박스"
-          required
           sx={{ mt: "3vh" }}
         >
           <TextField
             className="아이디"
             fullWidth
-            required
+            error={로그인실패}
             color="primary"
             type="text"
-            label="아이디"
+            label="아이디(이메일)"
             InputProps={{
               sx: { borderRadius: "10px" },
             }}
+            value={유저아이디}
+            onChange={(e) => set유저아이디(e.target.value)}
           />
         </FormControl>
-        <FormControl
-          variant="outlined"
-          className="비번박스"
-          required
-          sx={{ mt: "2vh" }}
-        >
+        <FormControl variant="outlined" className="비번박스" sx={{ mt: "2vh" }}>
           <InputLabel htmlFor="outlined-adornment-password">
             비밀번호
           </InputLabel>
           <OutlinedInput
             id="outlined-adornment-password"
             type={비밀번호보이기 ? "text" : "password"}
+            error={로그인실패}
             endAdornment={
               <InputAdornment position="end">
                 <IconButton
@@ -111,6 +157,8 @@ const LoginPage = () => {
             }
             label="Password"
             sx={{ borderRadius: "10px" }}
+            value={유저패스워드}
+            onChange={(e) => set유저패스워드(e.target.value)}
           />
         </FormControl>
 
