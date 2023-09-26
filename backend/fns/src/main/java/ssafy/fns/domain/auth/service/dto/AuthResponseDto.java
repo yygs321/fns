@@ -14,5 +14,5 @@ import lombok.Setter;
 public class AuthResponseDto {
 
     private Boolean hasProfile;
-    private TokenResponseDto tokenResponseDto;
+    private TokenDto tokenDto;
 }

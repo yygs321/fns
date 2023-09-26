@@ -31,13 +31,8 @@ public class OAuthController {
             @RequestBody OAuthLoginRequestDto requestDto) {
         OAuthLoginResponseDto oAuthResponseDto
                 = oAuthService.login(socialLoginTypeConverter.convert(socialLoginType), requestDto);
-        String message = "login";
 
-        //TODO: 소셜로그인일때도 프로필이 null인지랑 토큰이랑 보내도록 수정
-        if (oAuthResponseDto.getTokenResponseDto() == null) {
-            message = "signup";
-        }
-        return JsonResponse.ok(message, oAuthResponseDto);
+        return JsonResponse.ok(socialLoginType.toString() + "로그인 완료!", oAuthResponseDto);
 
     }
 }

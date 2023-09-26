@@ -6,12 +6,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import ssafy.fns.domain.auth.controller.dto.OAuthLoginRequestDto;
+import ssafy.fns.domain.auth.entity.RefreshToken;
+import ssafy.fns.domain.auth.repository.RefreshTokenRepository;
 import ssafy.fns.domain.auth.service.dto.OAuthDetailDto;
 import ssafy.fns.domain.auth.service.dto.OAuthLoginResponseDto;
-import ssafy.fns.domain.auth.service.dto.TokenResponseDto;
+import ssafy.fns.domain.auth.service.dto.TokenDto;
 import ssafy.fns.domain.auth.utility.SocialLoginType;
 import ssafy.fns.domain.auth.vo.Token;
 import ssafy.fns.domain.member.entity.Member;
+import ssafy.fns.domain.member.entity.Provider;
 import ssafy.fns.domain.member.repository.MemberRepository;
 import ssafy.fns.global.exception.GlobalRuntimeException;
 import ssafy.fns.global.security.JwtTokenProvider;
@@ -25,6 +28,7 @@ public class OAuthServiceImpl implements OAuthService {
     private final KakaoProvider kakaoProvider;
     private final MemberRepository memberRepository;
     private final JwtTokenProvider jwtTokenProvider;
+    private final RefreshTokenRepository refreshTokenRepository;
 
 
     @Override
@@ -33,27 +37,23 @@ public class OAuthServiceImpl implements OAuthService {
             OAuthLoginRequestDto requestDto) {
         String accessToken;
         OAuthLoginResponseDto oAuthLoginResponseDto;
-        TokenResponseDto tokenResponseDto;
+        TokenDto tokenDto;
 
         OAuthProvider oauthProvider = findSocialProvider(socialLoginType);
         accessToken = oauthProvider.getToken(requestDto.getCode());
 
         OAuthDetailDto detailDto = getUserDetail(socialLoginType, accessToken);
-        boolean isDuplicated = isEmailDuplicated(socialLoginType, detailDto.getEmail());
+        checkEmailDuplicated(socialLoginType, detailDto.getEmail());
         boolean hasProfile = isProfileSaved(detailDto.getEmail());
 
-        if (!isDuplicated) {
-            tokenResponseDto = null;
-        } else {
-            Token token = jwtTokenProvider.createToken(detailDto.getEmail());
-            Long expirationTime = jwtTokenProvider.getExpirationTime(accessToken);
-
-            tokenResponseDto = TokenResponseDto.from(token, expirationTime);
-        }
+        Token token = jwtTokenProvider.createToken(detailDto.getEmail());
+        saveRefreshToken(detailDto.getEmail(), token);
+        Long expirationTime = jwtTokenProvider.getExpirationTime(token.getAccessToken());
+        tokenDto = TokenDto.from(token, expirationTime);
 
         oAuthLoginResponseDto = OAuthLoginResponseDto.builder()
                 .hasProfile(hasProfile)
-                .tokenResponseDto(tokenResponseDto)
+                .tokenDto(tokenDto)
                 .detailDto(detailDto)
                 .socialLoginType(socialLoginType.toString())
                 .build();
@@ -94,14 +94,22 @@ public class OAuthServiceImpl implements OAuthService {
         return false;
     }
 
-    private boolean isEmailDuplicated(SocialLoginType socialLoginType, String email) {
+    private void checkEmailDuplicated(SocialLoginType socialLoginType, String email) {
         Member member = memberRepository.findByEmail(email);
 
         if (member != null) {
             checkProvider(socialLoginType, member);
-            return true;
+        } else {
+            saveSocialMember(socialLoginType, email);
         }
-        return false;
+    }
+
+    private void saveSocialMember(SocialLoginType socialLoginType, String email) {
+        Member newMember = Member.builder()
+                .email(email)
+                .provider(Provider.valueOf(socialLoginType.toString()))
+                .build();
+        memberRepository.save(newMember);
     }
 
     private static void checkProvider(SocialLoginType socialLoginType, Member member) {
@@ -109,5 +117,19 @@ public class OAuthServiceImpl implements OAuthService {
             throw new GlobalRuntimeException(member.getProvider() + "으로 가입된 이메일입니다.",
                     HttpStatus.CONFLICT);
         }
+    }
+
+    private void saveRefreshToken(String email, Token token) {
+        RefreshToken lastRefreshToken = refreshTokenRepository.findByEmail(email);
+        if (lastRefreshToken != null) {
+            refreshTokenRepository.deleteByEmail(email);
+        }
+
+        RefreshToken refreshToken = RefreshToken.builder()
+                .token(token.getRefreshToken())
+                .email(email)
+                .build();
+
+        refreshTokenRepository.save(refreshToken);
     }
 }
