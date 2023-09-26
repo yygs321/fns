@@ -17,9 +17,17 @@ import CommunityBarGraph from "./CommunityBarGraph";
 // 아침, 점심, 저녁, 간식이 같은 형식으로 반복하니까 API 연결하면서 중복 코드 줄이기?
 
 const UserGraph = (props) => {
-  const { user, index, selectedUser, handleUserChange } = props;
+  const { user, index, selectedUser, setSelectedUser } = props;
 
   const [cancelFollowModal, setCancelFollowModal] = useState(false);
+
+  const handleUserChange = (e, newUserIndex) => {
+    if (selectedUser !== newUserIndex) {
+      setSelectedUser(newUserIndex);
+    } else {
+      setSelectedUser(null);
+    }
+  };
 
   const openCancelFollowModal = (e) => {
     e.stopPropagation();
@@ -46,7 +54,6 @@ const UserGraph = (props) => {
         borderBottom: "1px solid #e7e7e7",
         py: "1vh",
       }}
-      onClick={handleUserChange(index)}
     >
       <Accordion
         expanded={index === selectedUser ? true : false}
@@ -57,6 +64,7 @@ const UserGraph = (props) => {
           border: "none",
           boxShadow: "none",
         }}
+        onClick={(e) => handleUserChange(e, index)}
       >
         <AccordionSummary
           aria-controls="panel1bh-content"
@@ -410,7 +418,7 @@ const UserGraph = (props) => {
       <Modal
         open={cancelFollowModal}
         onClose={(e) => closeCancelFollowModal(e)}
-        aria-labelledby="weight-modal"
+        aria-labelledby="community-modal"
         sx={{ zIndex: 1000 }}
       >
         <Box
@@ -432,7 +440,11 @@ const UserGraph = (props) => {
             textAlign: "center",
           }}
         >
-          <Typography id="weight-input" variant="h5" sx={{ paddingY: "1vh" }}>
+          <Typography
+            id="community-input"
+            variant="h5"
+            sx={{ paddingY: "1vh" }}
+          >
             정말로 팔로우를 취소하시겠습니까?
           </Typography>
           <Grid
