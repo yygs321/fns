@@ -36,7 +36,12 @@ async def load_food_data_to_redis():
     foods = db.query(Food).all()
 
     for food in foods:
-        redis_db.set(str(food.food_id), str(food))
+        redis_db.hset(str(food.food_id), {
+            "id": food.food_id,
+            "kcal": food.kcal,
+            "carbs": food.carbs,
+            "protein": food.protein
+        })
 
     print("Data loaded to Redis at startup!")
 
