@@ -1,15 +1,22 @@
 import React, { useState, useRef } from 'react';
-import { Button, TextField, Typography, Modal, Box, Grid } from '@mui/material';
+import { Button, TextField, Typography, Modal, Box, Grid, RadioGroup, FormControlLabel, Radio, } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 const EditProfilePage = () => {
     const [nickname, setNickname] = useState('');
     const [height, setHeight] = useState('');
     const [weight, setWeight] = useState('');
+    const [age, setAge] = useState('');
     const [openModal, setOpenModal] = useState(false); // 모달 상태 관리
-
+    const [프로필공개여부, set프로필공개여부] = useState(true);
     const navigate = useNavigate();
     const timeoutRef = useRef(null);
+    const 체크박스 = (e) => {
+        set프로필공개여부(e.target.value);
+      };
+      const labelStyle = {
+        whiteSpace: "nowrap",
+      };  
 
     const handleSave = () => {
         console.log({ nickname, height, weight });
@@ -30,7 +37,7 @@ const EditProfilePage = () => {
     };
 
     return (
-        <div style={{ height: '100vh', backgroundColor: '#f0f0f0', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <div style={{ height: '92vh', backgroundColor: '#f0f0f0', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <div style={{ 
             width: '80%', 
             backgroundColor: 'white', 
@@ -64,13 +71,25 @@ const EditProfilePage = () => {
             <div style={{ display: 'flex', justifyContent: 'center', margin: '10px 0' }}>
                 <Button 
                     variant="contained"
-                    color="primary"
                     size="small"
                     onClick={handleCheckNickname}
+                    sx={{ color:"white", fontSize: "0.5rem",
+                        borderRadius: "10px",  }}
                 >
                     중복확인
                 </Button>
             </div>
+            <TextField 
+                fullWidth
+                margin="normal"
+                label="나이" 
+                type="number" 
+                value={age} 
+                onChange={(e) => setAge(e.target.value)}
+                InputProps={{
+                endAdornment: <Typography variant="caption">세</Typography>
+                        }}
+                />
 
                 <TextField 
                     fullWidth
@@ -95,11 +114,36 @@ const EditProfilePage = () => {
                     }}
                 />
 
+                <RadioGroup row value={프로필공개여부} onChange={체크박스}>
+                <Grid
+                  item
+                  container
+                  justifyContent={"space-evenly"}
+                  alignItems={"center"}
+                >
+                  <Grid item xs={6}>
+                    <FormControlLabel
+                      value="true"
+                      control={<Radio />}
+                      label="프로필공개"
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <FormControlLabel
+                      value="false"
+                      control={<Radio />}
+                      label="프로필비공개"
+                      sx={labelStyle}
+                    />
+                  </Grid>
+                </Grid>
+              </RadioGroup>
+
                 <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
                     <Button 
                         variant="contained" 
-                        color="primary" 
-                        style={{ fontSize: '20px', padding: '5px 100px' }}
+                        sx={{ padding: '5px 100px', color:"white", fontSize: "1.5rem",
+                        borderRadius: "10px",  }}
                         onClick={handleSave}
                     >
                         저장
