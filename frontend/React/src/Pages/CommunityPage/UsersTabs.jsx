@@ -68,14 +68,6 @@ const UsersTabs = () => {
 
   const [selectedUser, setSelectedUser] = useState(null);
 
-  const handleUserChange = (newUserIndex) => (event) => {
-    if (selectedUser !== newUserIndex) {
-      setSelectedUser(newUserIndex);
-    } else {
-      setSelectedUser(null);
-    }
-  };
-
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
@@ -113,7 +105,7 @@ const UsersTabs = () => {
             user={user}
             index={index}
             selectedUser={selectedUser}
-            handleUserChange={handleUserChange}
+            setSelectedUser={setSelectedUser}
             key={`follow-${user.username}-${index}`}
           />
         ))}
