@@ -16,6 +16,7 @@ import ssafy.fns.domain.auth.service.dto.TokenDto;
 import ssafy.fns.domain.member.controller.dto.EmailDuplicationRequestDto;
 import ssafy.fns.domain.member.controller.dto.MemberProfileRequestDto;
 import ssafy.fns.domain.member.controller.dto.SignUpRequestDto;
+import ssafy.fns.domain.member.controller.dto.UpdatePasswordRequestDto;
 import ssafy.fns.domain.member.controller.dto.UpdateProfileRequestDto;
 import ssafy.fns.domain.member.entity.Member;
 import ssafy.fns.domain.member.service.MemberService;
@@ -64,6 +65,14 @@ public class MemberController {
         memberService.updateProfile(member, requestDto);
         return JsonResponse.ok("멤버 프로필 변경 성공!");
     }
+
+    @PatchMapping
+    public ResponseEntity<?> updatePassword(@AuthenticationPrincipal Member member,
+            @RequestBody UpdatePasswordRequestDto requestDto) {
+        memberService.updatePassword(member, requestDto);
+        return JsonResponse.ok("회원 비밀번호 변경 성공!");
+    }
+
 
     @DeleteMapping("/logout")
     public ResponseEntity<?> logout(@AuthenticationPrincipal Member member,
