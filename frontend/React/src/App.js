@@ -23,6 +23,7 @@ import KakaoCallback from "./Pages/LoginPage/CallbackPage";
 import NotFound from "./Pages/Common/Component/NotFound";
 import LoginCheck from "./Pages/Common/Component/LoginCheck";
 import LoggedinCheck from "./Pages/Common/Component/LoggedinCheck";
+import ChangePassword from "./Pages/MyPage/ChangePassword";
 
 function App() {
   useEffect(() => {
@@ -87,6 +88,7 @@ function App() {
                 element={<EditProfilePage />}
               />
               <Route path="/mypage/mycustom" element={<MyCustom />} />
+              <Route path="/mypage/changepassword" element={<ChangePassword />} />
               <Route path="/search" element={<SearchFoodPage />} />
               <Route path="/search/food/:name" element={<FoodDetail />} />
               <Route path="/community" element={<CommunityPage />} />
