@@ -113,7 +113,7 @@ public class FollowServiceImpl implements FollowService {
     }
 
     @Override
-    public MemberListResponseDto selectAll(Long fromMemberId, String nickname) {
+    public List<MemberListResponseDto> selectAll(Long fromMemberId, String nickname) {
         List<MemberListResponseDto> memberList = new ArrayList<>();
         List<Member> selectedMembers = memberRepository.findAllByNickname(nickname);
 
@@ -129,6 +129,6 @@ public class FollowServiceImpl implements FollowService {
             }
         }
 
-        return (MemberListResponseDto) memberList;
+        return memberList;
     }
 }

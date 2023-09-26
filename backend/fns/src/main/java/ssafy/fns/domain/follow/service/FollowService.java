@@ -8,5 +8,5 @@ public interface FollowService {
     List<FollowResponseDto> followList(Long fromMemberId);
     String insertFollow(Long FromMemberId,Long toMemberId);
     String deleteFollow(Long FromMemberId,Long toMemberId);
-    MemberListResponseDto selectAll(Long fromMemberId, String nickname);
+    List<MemberListResponseDto> selectAll(Long fromMemberId, String nickname);
 }
