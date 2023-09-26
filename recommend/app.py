@@ -1,3 +1,5 @@
+import json
+
 from fastapi import FastAPI
 from pydantic import BaseModel
 from sqlalchemy import Table, MetaData
@@ -36,12 +38,14 @@ async def load_food_data_to_redis():
     foods = db.query(Food).all()
 
     for food in foods:
-        redis_db.hset(str(food.food_id), {
+        food_data = {
             "id": food.food_id,
             "kcal": food.kcal,
             "carbs": food.carbs,
             "protein": food.protein
-        })
+        }
+
+        redis_db.set(str(food.food_id), json.dumps(food_data))
 
     print("Data loaded to Redis at startup!")
 
