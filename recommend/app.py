@@ -41,7 +41,13 @@ async def load_food_data_to_redis():
     foods = db.query(Food).all()
 
     for food in foods:
-        redis_db.set("food:" + str(food.food_id), str(food))
+        data_dict = {
+            "food_id": food.food_id,
+            "kcal": float(food.kcal),
+            "carbs": float(carbs),
+            "protein": float(protein)
+        }
+        redis_db.set("food:" + str(food.food_id), json.dumps(data_dict))
 
     print("Data loaded to Redis at startup!")
 
@@ -55,19 +61,10 @@ async def test(offset: Offset):
 
     foods_data = []
 
-    context = {
-        "datetime": datetime,
-        "Decimal": Decimal
-    }
-
     for key in food_keys:
         value = redis_db.get(key)
-        data_tuple = ast.literal_eval(value, context)
-        food_id = data_tuple[0]
-        kcal = data_tuple[11]
-        carb = data_tuple[6]
-        protein = data_tuple[16]
-        foods_data.append((food_id, kcal, carb, protein))
+        data = json.loads(value)
+        foods_data.append(data)
 
     # weights = []
     # for food in foods:
