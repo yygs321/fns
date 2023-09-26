@@ -38,9 +38,7 @@ async def load_food_data_to_redis():
     foods = db.query(Food).all()
 
     for food in foods:
-        redis_db.set(str(food.food_id), str(food))
-    
-    print(redis_db.get('141').decode('utf-8'))
+        redis_db.set("food:"+str(food.food_id), str(food))
 
     print("Data loaded to Redis at startup!")
 
@@ -52,14 +50,14 @@ async def test(offset: Offset):
     user_diffs = (offset.calorie, offset.carbohydrate, offset.protein)
 
     food_keys = redis_db.keys("food:*")
-    foods_data = {}
+
+    foods_data = []
 
     for key in food_keys:
-        foods_data[key.decode()] = redis_db.hgetall(key)
+        value = redis_db.get(key)
+        foods_data.append(value)
 
-    for food_key, data in foods_data.items():
-        print(food_key, {k.decode(): v.decode() for k, v in data.items()})
-    #
+
     # weights = []
     # for food in foods:
     #
