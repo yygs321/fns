@@ -103,4 +103,6 @@ public class Member extends BaseEntity {
                 .originalFilename(originalFilename)
                 .member(this).build();
     }
+
+    
 }

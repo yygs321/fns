@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ssafy.fns.domain.auth.entity.MailHistory;
 import ssafy.fns.domain.auth.repository.MailHistoryRepository;
+import ssafy.fns.domain.auth.repository.RefreshTokenRepository;
 import ssafy.fns.domain.auth.service.dto.TokenDto;
 import ssafy.fns.domain.member.controller.dto.EmailDuplicationRequestDto;
 import ssafy.fns.domain.member.controller.dto.MemberProfileRequestDto;
@@ -16,6 +17,7 @@ import ssafy.fns.domain.member.controller.dto.SignUpRequestDto;
 import ssafy.fns.domain.member.entity.Member;
 import ssafy.fns.domain.member.entity.Provider;
 import ssafy.fns.domain.member.repository.MemberRepository;
+import ssafy.fns.global.config.RedisUtil;
 import ssafy.fns.global.exception.GlobalRuntimeException;
 
 @Service
@@ -26,6 +28,8 @@ public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final MailHistoryRepository mailHistoryRepository;
+    private final RefreshTokenRepository refreshTokenRepository;
+    private final RedisUtil redisUtil;
 
     @Override
     @Transactional
@@ -34,13 +38,18 @@ public class MemberServiceImpl implements MemberService {
 
         checkMailAuthed(requestDto.getEmail());
 
-        Member member = Member.builder()
-                .email(requestDto.getEmail())
-                .password(passwordEncoder.encode(requestDto.getPassword()))
-                .provider(Provider.valueOf(requestDto.getProvider()))
-                .build();
+        Member findMember = memberRepository.findByEmail(requestDto.getEmail());
+        if (findMember != null) {
+            findMember.add();
+        } else {
+            Member member = Member.builder()
+                    .email(requestDto.getEmail())
+                    .password(passwordEncoder.encode(requestDto.getPassword()))
+                    .provider(Provider.valueOf(requestDto.getProvider()))
+                    .build();
 
-        memberRepository.save(member);
+            memberRepository.save(member);
+        }
     }
 
     private void checkMailAuthed(String email) {
@@ -61,6 +70,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    @Transactional
     public void checkNicknameDuplicated(EmailDuplicationRequestDto requestDto) {
         Member findMember = memberRepository.findByNickname(requestDto.getNickname());
 
@@ -70,13 +80,26 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    @Transactional
     public void logout(Member member, TokenDto tokenDto) {
-
+        Long expirationTime = tokenDto.getExpirationTime();
+        refreshTokenRepository.deleteByEmail(member.getEmail());
+        redisUtil.setBlackList(tokenDto.getAccessToken(), "accessToken", expirationTime);
     }
 
     @Override
+    @Transactional
     public void deleteMember(Member member, TokenDto tokenDto) {
+        Member findMember = getMemberById(member.getId());
+        logout(findMember, tokenDto);
+        findMember.delete();
+    }
 
+    @Override
+    @Transactional
+    public Member getMemberById(Long id) {
+        return memberRepository.findById(id).orElseThrow(
+                () -> new GlobalRuntimeException("해당 ID의 유저가 없습니다", HttpStatus.BAD_REQUEST));
     }
 
 
@@ -89,6 +112,8 @@ public class MemberServiceImpl implements MemberService {
             throw new GlobalRuntimeException("Password 형식이 잘못되었습니다.", HttpStatus.BAD_REQUEST);
         }
     }
+
+
 }
 
 

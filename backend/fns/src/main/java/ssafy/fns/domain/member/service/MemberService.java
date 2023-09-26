@@ -18,5 +18,5 @@ public interface MemberService {
 
     void deleteMember(Member member, TokenDto tokenDto);
 
-    //void nicknameDuplication(String nickname);
+    Member getMemberById(Long id);
 }

@@ -83,7 +83,7 @@ public class AuthServiceImpl implements AuthService {
         Member member = memberRepository.findByEmailAndProvider(requestDto.getEmail(),
                 Provider.DEFAULT);
 
-        if (member == null) {
+        if (member == null || !member.getIsValid()) {
             throw new GlobalRuntimeException("가입되지 않은 Email 입니다.", HttpStatus.NOT_FOUND);
         }
 
