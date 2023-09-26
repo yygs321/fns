@@ -39,6 +39,8 @@ async def load_food_data_to_redis():
 
     for food in foods:
         redis_db.set(str(food.food_id), str(food))
+    
+    print(redis_db.get('141').decode('utf-8'))
 
     print("Data loaded to Redis at startup!")
 
