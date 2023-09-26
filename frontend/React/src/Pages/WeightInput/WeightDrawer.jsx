@@ -26,6 +26,8 @@ export default function WeightDrawer(props) {
   const [기간, set기간] = useState("");
   const [입력기간, set입력기간] = useState("");
 
+  // 기간 주 단위로 입력받고, 남은 기간은 몇 주 몇 일 단위로 보여줘야 할 듯.
+
   const 체중입력함수 = (e) => {
     if (e.target.value >= 0 && e.target.value <= 1000) {
       set입력체중((data) => e.target.value);
@@ -513,7 +515,7 @@ export default function WeightDrawer(props) {
                 InputProps={{
                   sx: { borderRadius: "10px", fontSize: "1.2rem" },
                   endAdornment: (
-                    <Typography color="text.secondary">(일)</Typography>
+                    <Typography color="text.secondary">(주)</Typography>
                   ),
                 }}
               />

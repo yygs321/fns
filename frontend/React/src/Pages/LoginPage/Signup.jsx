@@ -1,45 +1,153 @@
 import React from "react";
-// import {Grid, Container, FormControl, Box, TextField, Button} from '@mui/material';
 import {
   Grid,
   Container,
-  // FormControl,
   TextField,
   Button,
   Box,
   Typography,
-  // Typography,
+  Modal,
 } from "@mui/material";
 import "./CSS/Signup.scss";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { userLogin } from "../../Redux/actions/actions";
+import axios from "axios";
 
 const Signup = () => {
-  const [유효한닉네임, set유효한닉네임] = useState(false);
-  const [중복체크, set중복체크] = useState(false);
-  const [인증, set인증] = useState(false);
-  const 중복체크버튼 = () => {
-    set중복체크((중복체크) => !중복체크);
+  const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
+  const dispatch = useDispatch();
+
+  // const [유효한닉네임, set유효한닉네임] = useState(false);
+  const [이메일, set이메일] = useState("");
+  const [이메일전송, set이메일전송] = useState(false);
+  const [이메일모달버튼, set이메일모달버튼] = useState(false);
+  const [이메일인증번호, set이메일인증번호] = useState("");
+  const [이메일인증, set이메일인증] = useState(false);
+  const [이메일인증모달, set이메일인증모달] = useState(false);
+
+  const 이메일전송버튼 = async () => {
+    try {
+      await axios({
+        method: "post",
+        url: `${SERVER_API_URL}/auth/send-email`,
+        data: {
+          email: 이메일,
+        },
+      });
+
+      //   // 만약 response로 뭔가 하려면 await 앞에 const res = 같은거로 변수 선언 시켜놓고 res.data같은거 쓰면 됨.
+
+      set이메일전송(true);
+      set이메일모달버튼(true);
+      setTimeout(() => set이메일모달버튼(false), 2000);
+    } catch (err) {
+      console.log(err);
+    }
   };
-  const 인증확인버튼 = () => {};
-  console.log(유효한닉네임); // 임시코드입니다. 나중에 지워주세요!
-  console.log(set유효한닉네임); // 임시코드입니다. 나중에 지워주세요!
-  console.log(인증); // 임시코드입니다. 나중에 지워주세요!
-  console.log(set인증); // 임시코드입니다. 나중에 지워주세요!
+
+  const 이메일인증확인버튼 = async () => {
+    // 이메일 인증번호 check하고 맞으면 disabled가 켜지게 해야함
+    try {
+      const res = await axios({
+        method: "post",
+        url: `${SERVER_API_URL}/auth/check-email`,
+        data: {
+          email: 이메일,
+          code: 이메일인증번호,
+        },
+      });
+
+      if (res.data.success) {
+        set이메일인증(true);
+        set이메일인증모달(true);
+        setTimeout(() => set이메일인증모달(false), 2000);
+      } else {
+        set이메일인증(false);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const [비밀번호, set비밀번호] = useState("");
   const [비밀번호확인, set비밀번호확인] = useState("");
   const [일치여부확인, set일치여부확인] = useState(false);
-  const [비번양식확인, set비번양식확인] = useState(true);
+  const [비번양식확인, set비번양식확인] = useState(false);
 
   const navigate = useNavigate();
 
-  const 가입버튼 = () => {
-    // 비밀번호 양식 확인
-    // if (유효한닉네임) {
-    // if (일치여부확인 && 비번양식확인) {
-    navigate("/info");
-    // }
-    // }
+  const [가입실패, set가입실패] = useState("");
+  const [가입실패창, set가입실패창] = useState(false);
+
+  const 가입버튼 = async () => {
+    // 이메일 전송 안 했음
+    if (이메일전송) {
+      // 이메일 인증 확인
+      if (이메일인증) {
+        // 비밀번호 양식 확인
+        if (비번양식확인) {
+          // 비밀번호 재입력과 일치여부 확인
+          if (일치여부확인) {
+            try {
+              const res = await axios({
+                method: "post",
+                url: `${SERVER_API_URL}/members/sign-up`,
+                data: {
+                  requestDto: {
+                    email: 이메일,
+                    password: 비밀번호,
+                    password2: 비밀번호확인,
+                    provider: "DEFAULT",
+                  },
+                },
+              });
+              if (res.data.success) {
+                // info로 보내려면 미리 로그인 토큰들을 갖고 있어야하니까, 회원가입 시키면 로그인도 시켜야함
+                const res2 = await axios({
+                  method: "post",
+                  url: `${SERVER_API_URL}/auth/sign-in`,
+                  data: {
+                    email: 이메일,
+                    password: 비밀번호,
+                  },
+                });
+                console.log(res2.data.message);
+                const tokenData = res2.data.data.tokenResponseDto;
+                dispatch(
+                  userLogin({
+                    accessToken: tokenData.accessToken,
+                    refreshToken: tokenData.refreshToken,
+                  })
+                );
+                navigate("/info");
+              } else {
+                set가입실패(res.data.message);
+              }
+            } catch (err) {
+              console.log(err);
+            }
+          } else {
+            set가입실패("비밀번호 확인이 일치하지 않습니다.");
+          }
+        } else {
+          set가입실패("비밀번호 형식이 잘못되었습니다.");
+        }
+      } else {
+        set가입실패("메일 인증을 완료해주세요.");
+      }
+    } else {
+      set가입실패("메일 전송을 완료해주세요.");
+    }
+    set가입실패창(true);
+    setTimeout(() => {
+      set가입실패창(false);
+      set가입실패("");
+    }, 2000);
+
+    // navigate("/info");
+    // 임시
   };
 
   function 비번체크(password) {
@@ -59,8 +167,6 @@ const Signup = () => {
     set일치여부확인(e.target.value === 비밀번호 ? true : false);
   };
 
-  // const 최종확인 = 일치여부확인 && 비번양식확인;
-
   return (
     <Container maxWidth="xs" component="main" sx={{ height: "100%" }}>
       <Box
@@ -73,10 +179,7 @@ const Signup = () => {
         }}
       >
         <div className="회원가입박스">회원가입</div>
-        {/* <Grid sx={{ mt: 6, ml: 4 }} className="글자">
-          <span>ID</span>
-          <span id="이메일글씨크기">(이메일)</span>
-        </Grid> */}
+
         <Grid container justifyContent={"center"} alignItems={"center"}>
           <Grid
             container
@@ -85,19 +188,9 @@ const Signup = () => {
             alignItems={"center"}
             sx={{
               pb: 4,
-              // ml: 4, mt: 1, mr: 2
             }}
             className="아이디입력컨테이너"
           >
-            {/* <Grid
-            item
-            container
-            justifyContent={"flex-start"}
-            alignItems={"center"}
-            sx={{ pb: 1 }}
-          >
-            <Typography>아이디(이메일)</Typography>
-          </Grid> */}
             <Grid
               item
               container
@@ -111,7 +204,8 @@ const Signup = () => {
                 color="primary"
                 type="text"
                 label="아이디(이메일)"
-                required
+                value={이메일}
+                onChange={(e) => set이메일(e.target.value)}
                 InputProps={{
                   sx: { borderRadius: "10px" },
                 }}
@@ -126,6 +220,7 @@ const Signup = () => {
             >
               <Button
                 variant="contained"
+                disabled={!이메일}
                 sx={{
                   color: "white",
                   textShadow: "2px 2px 20px #8b8b8b",
@@ -135,30 +230,18 @@ const Signup = () => {
                   borderRadius: "10px",
                   fontSize: "1.1rem",
                 }}
-                onClick={중복체크버튼}
+                onClick={이메일전송버튼}
               >
-                중복체크
+                메일 인증
               </Button>
             </Grid>
           </Grid>
 
-          {/* <FormControl className="글자" sx={{ ml: 4, mt: 4 }}>
-          인증번호 입력
-        </FormControl> */}
           <Grid
             container
             justifyContent={"space-between"}
             alignItems={"center"}
-            // sx={{ ml: 4, mt: 1, mr: 2 }}
           >
-            {/* <Grid
-            item
-            container
-            justifyContent={"flex-start"}
-            alignItems={"center"}
-          >
-            <Typography>이메일 인증</Typography>
-          </Grid> */}
             <Grid
               item
               container
@@ -167,14 +250,16 @@ const Signup = () => {
               xs={8}
             >
               <TextField
-                disabled={!중복체크 ? true : false}
+                disabled={!이메일전송 || 이메일인증}
                 fullWidth
                 variant="outlined"
                 color="primary"
                 type="text"
                 label="인증번호"
+                value={이메일인증번호}
+                onChange={(e) => set이메일인증번호(e.target.value)}
                 sx={{
-                  backgroundColor: !중복체크 ? "#e7e7e7" : "white",
+                  backgroundColor: !이메일전송 ? "#e7e7e7" : "white",
                   borderRadius: "10px",
                 }}
                 InputProps={{
@@ -188,7 +273,6 @@ const Signup = () => {
               xs={3}
               justifyContent={"center"}
               alignItems={"center"}
-              // sx={{ mt: 1 }}
             >
               <Button
                 variant="contained"
@@ -201,17 +285,15 @@ const Signup = () => {
                   borderRadius: "10px",
                   fontSize: "1.1rem",
                 }}
-                onClick={인증확인버튼}
-                disabled={!중복체크 ? true : false}
+                onClick={이메일인증확인버튼}
+                disabled={!이메일전송 || 이메일인증}
               >
-                인증확인
+                {이메일인증 ? "인증 완료" : "인증 확인"}
               </Button>
             </Grid>
           </Grid>
         </Grid>
-        {/* <FormControl className="글자" sx={{ ml: 4, mt: 4 }}>
-          비밀번호
-        </FormControl> */}
+
         <Grid container justifyContent={"center"} alignItems={"center"}>
           <Grid
             item
@@ -225,7 +307,6 @@ const Signup = () => {
             </Typography>
           </Grid>
           <Grid
-            // sx={{ ml: 4, mt: 1, mr: 4 }}
             item
             container
             justifyContent={"center"}
@@ -252,11 +333,7 @@ const Signup = () => {
             />
           </Grid>
 
-          {/* <FormControl className="글자" sx={{ ml: 4, mt: 4 }}>
-          비밀번호 확인
-        </FormControl> */}
           <Grid
-            // sx={{ ml: 4, mt: 1, mr: 4 }}
             item
             container
             justifyContent={"center"}
@@ -301,6 +378,107 @@ const Signup = () => {
           </Button>
         </Grid>
       </Box>
+      <Modal
+        open={이메일모달버튼}
+        aria-labelledby="email-send-modal"
+        sx={{ zIndex: 1000 }}
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            width: "80%",
+            maxWidth: "700px",
+            bgcolor: "background.paper",
+            // border: "2px solid #000",
+            boxShadow: 24,
+            p: 2,
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            borderRadius: "20px",
+            textAlign: "center",
+          }}
+        >
+          <Typography
+            id="community-input"
+            variant="h6"
+            sx={{ paddingY: "1vh" }}
+          >
+            입력하신 메일 주소로
+            <br />
+            인증번호를 보냈습니다.
+          </Typography>
+        </Box>
+      </Modal>
+      <Modal
+        open={이메일인증모달}
+        aria-labelledby="email-check-modal"
+        sx={{ zIndex: 1000 }}
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            width: "80%",
+            maxWidth: "700px",
+            bgcolor: "background.paper",
+            // border: "2px solid #000",
+            boxShadow: 24,
+            p: 2,
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            borderRadius: "20px",
+            textAlign: "center",
+          }}
+        >
+          <Typography
+            id="community-input"
+            variant="h6"
+            sx={{ paddingY: "1vh" }}
+          >
+            인증 확인되었습니다.
+          </Typography>
+        </Box>
+      </Modal>
+      <Modal
+        open={가입실패창}
+        aria-labelledby="failed-signup-modal"
+        sx={{ zIndex: 1000 }}
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            width: "80%",
+            maxWidth: "700px",
+            bgcolor: "background.paper",
+            // border: "2px solid #000",
+            boxShadow: 24,
+            p: 2,
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            borderRadius: "20px",
+            textAlign: "center",
+          }}
+        >
+          <Typography
+            id="community-input"
+            variant="h6"
+            sx={{ paddingY: "1vh" }}
+          >
+            {가입실패}
+          </Typography>
+        </Box>
+      </Modal>
     </Container>
   );
 };

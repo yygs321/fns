@@ -8,13 +8,15 @@ import {
   Radio,
   RadioGroup,
   Typography,
+  Modal,
+  Box,
 } from "@mui/material";
 import "./CSS/InfoPage.scss";
 import ManRoundedIcon from "@mui/icons-material/ManRounded";
 import WomanRoundedIcon from "@mui/icons-material/WomanRounded";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { userLogin } from "../../Redux/actions/actions";
+import { useSelector } from "react-redux";
+import axios from "axios";
 
 function 닉네임확인함수(nickname) {
   const regex = /^[a-zA-Z0-9가-힣]{2,16}$/;
@@ -24,14 +26,23 @@ function 닉네임확인함수(nickname) {
 // 나중에 저장 버튼에서 모두 다 입력했는지 체크해야됨
 
 const InfoPage = () => {
+  const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
+  const accessToken = useSelector((state) => {
+    return state.auth.accessToken;
+  });
+
   const [닉네임, set닉네임] = useState("");
-  const [닉네임확인, set닉네임확인] = useState(true);
+  const [닉네임확인, set닉네임확인] = useState(false);
+  const [닉네임오류, set닉네임오류] = useState(undefined);
   const [프로필공개여부, set프로필공개여부] = useState(true);
   const [성별, set성별] = useState("");
 
   const [나이, set나이] = useState("");
   const [키, set키] = useState("");
   const [체중, set체중] = useState("");
+
+  const [저장실패, set저장실패] = useState("");
+  const [저장실패창, set저장실패창] = useState(false);
 
   const 닉네임입력 = (e) => {
     set닉네임(e.target.value);
@@ -66,20 +77,103 @@ const InfoPage = () => {
       set체중(value);
     }
   };
-  console.log(닉네임확인); // 임시로 닉네임확인 사용. 나중에 지워주세요!
-  console.log(닉네임입력); // 임시로 닉네임입력 사용. 나중에 지워주세요!
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
-  const 저장버튼 = () => {
-    navigate("/main");
-    dispatch(userLogin());
+  const 저장버튼 = async () => {
+    // 닉네임 입력 안 했음
+    if (닉네임) {
+      // 닉네임 확인 안 했음
+      if (닉네임확인) {
+        // 나이 입력 안 했음
+        if (나이) {
+          // 키 입력 안 했음
+          if (키) {
+            // 체중 입력 안 했음
+            if (체중) {
+              // 성별 안 고름
+              if (성별) {
+                try {
+                  const res = await axios({
+                    method: "post",
+                    url: `${SERVER_API_URL}/members/profile`,
+                    headers: {
+                      Authorization: accessToken,
+                    },
+                    data: {
+                      nickname: 닉네임,
+                      age: 나이,
+                      height: 키,
+                      weight: 체중,
+                      gender: 성별 === "남성" ? "MALE" : "FEMALE",
+                      isPublished: 프로필공개여부,
+                    },
+                  });
+
+                  if (res.data.success) {
+                    navigate("/main");
+                  } else {
+                    set저장실패("프로필 저장에 실패했습니다.");
+                  }
+                } catch (err) {
+                  console.log(err);
+                }
+              } else {
+                set저장실패("성별을 설정해주세요.");
+              }
+            } else {
+              set저장실패("체중을 입력해주세요.");
+            }
+          } else {
+            set저장실패("키를 입력해주세요.");
+          }
+        } else {
+          set저장실패("나이를 입력해주세요.");
+        }
+      } else {
+        set저장실패("닉네임 중복을 확인해주세요.");
+      }
+    } else {
+      set저장실패("닉네임을 입력해주세요.");
+    }
+    set저장실패창(true);
+    setTimeout(() => {
+      set저장실패창(false);
+      set저장실패("");
+    }, 2000);
   };
 
-  const 중복체크버튼 = () => {
+  const 중복체크버튼 = async () => {
     const 닉네임확인결과 = 닉네임확인함수(닉네임);
-    set닉네임확인(닉네임확인결과);
+
+    if (닉네임확인결과) {
+      try {
+        const 중복체크결과 = await axios({
+          method: "get",
+          url: `${SERVER_API_URL}/auth/check-nickname-duplicate`,
+          headers: {
+            Authorization: accessToken,
+          },
+          // get이라서 body는 아마 안 될거라 추후에 API 되면 확인
+          params: {
+            nickname: 닉네임,
+          },
+        });
+
+        if (중복체크결과.success) {
+          set닉네임확인(true);
+          set닉네임오류(undefined);
+        } else {
+          set닉네임확인(false);
+          set닉네임오류(중복체크결과.message);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      // 닉네임 양식 맞춰주라는 이야기
+      set닉네임오류("닉네임 형식이 잘못됐습니다.");
+    }
   };
 
   const 남성버튼 = () => {
@@ -138,12 +232,13 @@ const InfoPage = () => {
                 value={닉네임}
                 // label="닉네임"
 
-                required
                 className="닉네임입력"
                 onChange={닉네임입력}
                 InputProps={{
                   sx: { borderRadius: "10px" },
                 }}
+                error={닉네임오류 ? true : false}
+                helperText={닉네임오류}
               />
             </Grid>
 
@@ -222,7 +317,6 @@ const InfoPage = () => {
                 type="number"
                 // label="나이"
                 value={나이}
-                required
                 className="나이입력"
                 onChange={나이입력}
                 InputProps={{
@@ -267,7 +361,6 @@ const InfoPage = () => {
                 value={키}
                 // label="키"
 
-                required
                 className="키입력"
                 onChange={키입력}
                 InputProps={{
@@ -313,7 +406,6 @@ const InfoPage = () => {
                 value={체중}
                 // label="체중"
 
-                required
                 className="체중입력"
                 onChange={체중입력}
                 InputProps={{
@@ -409,14 +501,14 @@ const InfoPage = () => {
                     <FormControlLabel
                       value="true"
                       control={<Radio />}
-                      label="프로필공개"
+                      label="공개"
                     />
                   </Grid>
                   <Grid item xs={6}>
                     <FormControlLabel
                       value="false"
                       control={<Radio />}
-                      label="프로필비공개"
+                      label="비공개"
                       sx={labelStyle}
                     />
                   </Grid>
@@ -449,6 +541,39 @@ const InfoPage = () => {
           </Button>
         </Grid>
       </Grid>
+      <Modal
+        open={저장실패창}
+        aria-labelledby="failed-signup-modal"
+        sx={{ zIndex: 1000 }}
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            width: "80%",
+            maxWidth: "700px",
+            bgcolor: "background.paper",
+            // border: "2px solid #000",
+            boxShadow: 24,
+            p: 2,
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            borderRadius: "20px",
+            textAlign: "center",
+          }}
+        >
+          <Typography
+            id="community-input"
+            variant="h6"
+            sx={{ paddingY: "1vh" }}
+          >
+            {저장실패}
+          </Typography>
+        </Box>
+      </Modal>
     </Container>
   );
 };

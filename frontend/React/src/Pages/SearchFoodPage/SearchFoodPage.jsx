@@ -137,7 +137,7 @@ const SearchFoodPage = () => {
           <TextField
             fullWidth
             variant="outlined"
-            placeholder="유저 검색"
+            placeholder="음식 검색"
             InputProps={{
               endAdornment: (
                 <SearchIcon

@@ -19,7 +19,7 @@ import CommunityPage from "./Pages/CommunityPage/CommunityPage";
 import CalendarPage from "./Pages/CalendarPage/CalendarPage";
 import UserSearch from "./Pages/CommunityPage/UserSearch";
 import { useSelector } from "react-redux";
-import KakaoCallback from "./Pages/LoginPage/CallbackPage";
+import KakaoCallback from "./Pages/LoginPage/KakaoCallbackPage";
 import NotFound from "./Pages/Common/Component/NotFound";
 import LoginCheck from "./Pages/Common/Component/LoginCheck";
 import LoggedinCheck from "./Pages/Common/Component/LoggedinCheck";
