@@ -2,14 +2,11 @@ package ssafy.fns.domain.member.repository;
 
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import ssafy.fns.domain.member.entity.Base;
 import ssafy.fns.domain.member.entity.Member;
 import ssafy.fns.domain.member.entity.Provider;
 
-public interface MemberRepository extends JpaRepository<Member, Long> {
+public interface BaseRepository extends JpaRepository<Base, Long> {
 
-    Member findByEmail(String email);
-
-    Member findByNickname(String nickname);
-
-    Member findByEmailAndProvider(String email, Provider provider);
+    Optional<Base> findByMemberId(Long id);
 }
