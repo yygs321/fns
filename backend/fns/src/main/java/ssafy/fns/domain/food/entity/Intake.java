@@ -1,6 +1,7 @@
 package ssafy.fns.domain.food.entity;
 
-import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -15,6 +16,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
+import ssafy.fns.domain.member.entity.Member;
 import ssafy.fns.global.entity.BaseEntity;
 
 @Entity
@@ -28,7 +30,7 @@ public class Intake extends BaseEntity {
     private Long id;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date date;
+    private LocalDate date;
 
     @Enumerated(EnumType.STRING)
     private Time intakeTime;
@@ -40,11 +42,16 @@ public class Intake extends BaseEntity {
     @JoinColumn(name = "food_id")
     private Food food;
 
-    @Builder
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
 
-    public Intake(Date date, Time intakeTime, Double rate) {
+    @Builder
+    public Intake(LocalDate date, Time intakeTime, Double rate, Food food, Member member) {
         this.date = date;
         this.intakeTime = intakeTime;
         this.rate = rate;
+        this.food = food;
+        this.member = member;
     }
 }

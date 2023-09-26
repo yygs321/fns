@@ -56,6 +56,7 @@ public class SecurityConfig {
                             "/error",
                             "/api/db",
                             "/**/v3/api-docs", "/api/swagger*/**" //swagger 용
+                                    ,"/api/**"
                     );
         };
     }
