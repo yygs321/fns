@@ -19,6 +19,7 @@ pipeline {
                     credentialsId: 'a432e361-21de-400a-a3c2-8f8860f53b7f'
             }
         }
+
         stage('Setup Python Environment') {
             steps {
                 sh 'python3 -m venv myenv'
@@ -32,6 +33,17 @@ pipeline {
                 sh 'ls -al'
 
                 sh 'myenv/bin/pip install -r recommend/requirements.txt'
+            }
+        }
+
+        stage('Apply settings.py files') {
+            steps {
+                withCredentials([file(credentialsId: 'settings', variable: 'settings')]) {
+                    script {
+                        sh 'ls -al'
+                        sh 'cp $settings recommend/settings.py'
+                    }
+                }
             }
         }
 
