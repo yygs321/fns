@@ -24,30 +24,74 @@ const handleSaveData = () => {
 
 const exerciseResponseDto = {
   sportsBookmarkList: [0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1],
-  sportsMetValue: [0, 2, 3.5, 5, 6, 7, 8, 4, 5.5, 4.5, 6.5, 5, 5.5],
-  exerciseTimeList: [0, 0, 1, 1.5, 0, 0, 2, 1, 1.5, 2, 0, 0, 1.5],
-  weight: 60
+  weight: 60,
+  sportsDtoList: [
+    { sportsId: 1, met: 3, exerciseTime: 1.5 },
+    { sportsId: 2, met: 4, exerciseTime: 0.5 },
+    { sportsId: 3, met: 3.5, exerciseTime: 1.5 },
+    { sportsId: 4, met: 4, exerciseTime: 2 },
+    { sportsId: 5, met: 2, exerciseTime: 1.5 },
+    { sportsId: 6, met: 3, exerciseTime: 0.5 },
+    { sportsId: 7, met: 1, exerciseTime: 1.5 },
+    { sportsId: 8, met: 4.2, exerciseTime: 0.5 },
+    { sportsId: 9, met: 5, exerciseTime: 1.5 },
+    { sportsId: 10, met: 2, exerciseTime: 0.5 },
+    { sportsId: 11, met: 3, exerciseTime: 1.5 },
+    { sportsId: 12, met: 4.3, exerciseTime: 0.5 },
+  ]
 };
 
-const sportNames = [null, "조깅", "사이클", "등산", "수영", "줄넘기", "계단 오르기", "요가", "축구", "야구", 
-"테니스", "배구", "골프"];
-const sportIcons = [null, <DirectionsRunIcon fontSize="large" />, <DirectionsBikeIcon fontSize="large" />, 
-<HikingIcon fontSize="large" />, <HikingIcon fontSize="large" />, <PoolIcon fontSize="large" />,
- <AccessibilityNewIcon fontSize="large" />, <StairsIcon fontSize="large" />, <SelfImprovementIcon fontSize="large" />,
- <SportsSoccerIcon fontSize="large" />, <SportsBaseballIcon fontSize="large" />, <SportsTennisIcon fontSize="large" />,
- <SportsVolleyballIcon fontSize="large" />, <SportsGolfIcon fontSize="large" />
-];
+const sportNames = {
+  1: "조깅", 2: "사이클", 3: "등산", 4: "수영",  5: "줄넘기", 6: "계단 오르기", 7: "요가", 8: "축구", 9: "야구",
+  10: "테니스", 11: "배구", 12: "골프" };
 
-export const sportsData = exerciseResponseDto.sportsMetValue.map((met, index) => {
-  if (index === 0) return null; // 0번 인덱스는 사용하지 않습니다.
+const sportIcons = {
+  1: <DirectionsRunIcon fontSize="large" />,
+  2: <DirectionsBikeIcon fontSize="large" />,
+  3: <HikingIcon fontSize="large" />,
+  4: <PoolIcon fontSize="large" />,
+  5: <AccessibilityNewIcon fontSize="large" />,
+  6: <StairsIcon fontSize="large" />,
+  7: <SelfImprovementIcon fontSize="large" />,
+  8: <SportsSoccerIcon fontSize="large" />,
+  9: <SportsBaseballIcon fontSize="large" />,
+  10: <SportsTennisIcon fontSize="large" />,
+  11: <SportsVolleyballIcon fontSize="large" />,
+  12: <SportsGolfIcon fontSize="large" />
+};
 
-  const kcalPerHour = (3.5 * met * exerciseResponseDto.weight * 60) / 1000 * 5;
-  return {
-    name: sportNames[index],
-    kcal: kcalPerHour,
-    icon: sportIcons[index],
-  };
-}).filter(Boolean);
+const sportMETs = {
+  1: 5, 2: 8, 3: 7.5, 4: 7, 5: 10, 6: 8, 7: 2.5, 8: 7, 
+  9: 6.9, 10: 6.5, 11: 6, 12: 5
+};
+
+const baseSportsData = Object.keys(sportNames).map(sportsId => ({
+  sportsId: parseInt(sportsId),
+  name: sportNames[sportsId],
+  icon: sportIcons[sportsId],
+}));
+
+export const sportsData = baseSportsData.map(sport => {
+  // 서버에서 제공하는 정보 찾기
+  const serverData = exerciseResponseDto.sportsDtoList.find(s => s.sportsId === sport.sportsId);
+  
+  const kcalPerHour = (3.5 * sportMETs[sport.sportsId] * exerciseResponseDto.weight * 60) / 1000 * 5;
+  
+  if (serverData) {
+    return {
+      ...sport,
+      met: sportMETs[sport.sportsId],
+      exerciseTime: serverData.exerciseTime,
+      kcal: kcalPerHour
+    };
+  } else {
+    return {
+      ...sport,
+      met: sportMETs[sport.sportsId],
+      kcal: kcalPerHour
+    };  // 서버에서 정보가 제공되지 않는 경우 기본 데이터 사용
+  }
+});
 
 const SportItem = ({
   name,
@@ -177,6 +221,18 @@ const SportsPage = () => {
   const changeDay = () => {
     setIsToday(!isToday);
   };
+
+  // function formatDateToCustomString(date) {
+  //   const year = date.getFullYear();
+  //   const month = String(date.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하기 때문에 +1 해줍니다.
+  //   const day = String(date.getDate()).padStart(2, '0');
+  
+  //   return `${year}.${month}.${day}`;
+  // }
+  
+  // console.log(formatDateToCustomString(now));       // 오늘 날짜
+  // console.log(formatDateToCustomString(before));    // 어제 날짜
+  
 
   return (
     <div
