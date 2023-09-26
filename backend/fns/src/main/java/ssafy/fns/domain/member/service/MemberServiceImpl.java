@@ -17,6 +17,7 @@ import ssafy.fns.domain.member.controller.dto.SignUpRequestDto;
 import ssafy.fns.domain.member.entity.Member;
 import ssafy.fns.domain.member.entity.Provider;
 import ssafy.fns.domain.member.repository.MemberRepository;
+import ssafy.fns.domain.member.service.dto.MemberResponseDto;
 import ssafy.fns.global.config.RedisUtil;
 import ssafy.fns.global.exception.GlobalRuntimeException;
 
@@ -95,6 +96,14 @@ public class MemberServiceImpl implements MemberService {
         logout(findMember, tokenDto);
         removeMailHistory(findMember);
         findMember.delete();
+    }
+
+    @Override
+    @Transactional
+    public MemberResponseDto selectMember(Member member) {
+        Member findMember = memberRepository.findByEmail(member.getEmail());
+
+        return MemberResponseDto.from(findMember);
     }
 
     @Override

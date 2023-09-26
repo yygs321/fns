@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,6 +49,11 @@ public class MemberController {
             @RequestBody EmailDuplicationRequestDto requestDto) {
         memberService.checkNicknameDuplicated(requestDto);
         return JsonResponse.ok("사용가능한 닉네임 입니다");
+    }
+
+    @GetMapping
+    public ResponseEntity<?> selectMemberProfile(@AuthenticationPrincipal Member member) {
+        return JsonResponse.ok("멤버 회원정보 조회 성공!", memberService.selectMember(member));
     }
 
     @DeleteMapping("/logout")
