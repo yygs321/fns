@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { Typography, Slider, Button, Grid, Tooltip, IconButton, Modal, Box } from '@mui/material';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { useNavigate } from 'react-router-dom';
+import ReplayIcon from '@mui/icons-material/Replay';
 
 const MyCustomPage = () => {
     // 더미 데이터
@@ -60,6 +61,27 @@ const MyCustomPage = () => {
         clearTimeout(timeoutRef.current);
         navigate("/mypage");
     };
+    // 리셋 함수
+    const resetValues = () => {
+        setKcal(initialKcal);
+        setCarbs(initialCarbs);
+        setProtein(initialProtein);
+        setFat(initialFat);
+        setPollinationl(initialPollinationl);
+        setSugar(initialSugar);
+        setDietaryFiber(initialDietaryFiber);
+        setCalcium(initialCalcium);
+        setPotassium(initialPotassium);
+        setIron(initialIron);
+        setPhosphorus(initialPhosphorus);
+        setSodium(initialSodium);
+        VitaminA(initialVitaminA);
+        VitaminC(initialVitaminC);
+        VitaminD(initialVitaminD);
+        setCholesterol(initialCholesterol);
+        setAcid(initialAcid);
+        setTransFat(initialTransFat);
+    }
 
     return (
         <div className="gray-pages" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '92vh' }}>
@@ -71,27 +93,32 @@ const MyCustomPage = () => {
                     <HelpOutlineIcon />
                 </IconButton>
             </Tooltip>
+
+            {/* 리셋버튼 */}
+            <IconButton size="small" style={{marginLeft: '10px'}} onClick={resetValues}>  
+                <ReplayIcon />
+            </IconButton>
             </Typography>
 
                 <Grid container spacing={3} className="noscroll"  sx={{ overflowY: "scroll", maxHeight: '50vh' }}>
-                    {renderSlider("칼로리", kcal, setKcal, initialKcal)}
-                    {renderSlider("탄수화물", carbs, setCarbs, initialCarbs)}
-                    {renderSlider("단백질", protein, setProtein, initialProtein)}
-                    {renderSlider("지방", fat, setFat, initialFat)}
-                    {renderSlider("수분", pollinationl, setPollinationl, initialPollinationl)}
-                    {renderSlider("당류", sugar, setSugar, initialSugar)}
-                    {renderSlider("식이섬유", dietaryfiber, setDietaryFiber, initialDietaryFiber)}
-                    {renderSlider("칼슘", calcium, setCalcium, initialCalcium)}
-                    {renderSlider("칼륨", potassium, setPotassium, initialPotassium)}
-                    {renderSlider("철", iron, setIron, initialIron)}
-                    {renderSlider("인", phosphorus, setPhosphorus, initialPhosphorus)}
-                    {renderSlider("나트륨", sodium, setSodium, initialSodium)}
-                    {renderSlider("비타민A", vitaminA, VitaminA, initialVitaminA)}
-                    {renderSlider("비타민C", vitaminC, VitaminC, initialVitaminC)}
-                    {renderSlider("비타민D", vitaminD, VitaminD, initialVitaminD)}
+                    {renderSlider("칼로리(Kcal)", kcal, setKcal, initialKcal)}
+                    {renderSlider("탄수화물(g)", carbs, setCarbs, initialCarbs)}
+                    {renderSlider("단백질(g)", protein, setProtein, initialProtein)}
+                    {renderSlider("지방(g)", fat, setFat, initialFat)}
+                    {renderSlider("수분(g)", pollinationl, setPollinationl, initialPollinationl)}
+                    {renderSlider("당류(g)", sugar, setSugar, initialSugar)}
+                    {renderSlider("식이섬유(g)", dietaryfiber, setDietaryFiber, initialDietaryFiber)}
+                    {renderSlider("칼슘(mg)", calcium, setCalcium, initialCalcium)}
+                    {renderSlider("칼륨(mg)", potassium, setPotassium, initialPotassium)}
+                    {renderSlider("철(mg)", iron, setIron, initialIron)}
+                    {renderSlider("인(mg)", phosphorus, setPhosphorus, initialPhosphorus)}
+                    {renderSlider("나트륨(mg)", sodium, setSodium, initialSodium)}
+                    {renderSlider("비타민A(μg)", vitaminA, VitaminA, initialVitaminA)}
+                    {renderSlider("비타민C(mg)", vitaminC, VitaminC, initialVitaminC)}
+                    {renderSlider("비타민D(μg)", vitaminD, VitaminD, initialVitaminD)}
                     {renderSlider("콜레스테롤", cholesterol, setCholesterol, initialCholesterol)}
-                    {renderSlider("포화지방산", acid, setAcid, initialAcid)}
-                    {renderSlider("트랜스지방산", transfat, setTransFat, initialTransFat)}
+                    {renderSlider("포화지방산(g)", acid, setAcid, initialAcid)}
+                    {renderSlider("트랜스지방산(g)", transfat, setTransFat, initialTransFat)}
                     
                     <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
                     <Button variant="contained" 
@@ -154,10 +181,6 @@ const renderSlider = (label, value, setValue, initialValue) => {
                 />
         </Grid>
     );
-
-    
 }
-
-
 
 export default MyCustomPage;
