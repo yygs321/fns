@@ -25,13 +25,13 @@ public class Sports extends BaseEntity {
 
     private String sportsName;
 
-    private Double met;
+    private Long met;
 
     @OneToMany(mappedBy = "sports", fetch = FetchType.LAZY)
     private List<Exercise> exerciseList;
 
     @Builder
-    public Sports(String sportsName, Double met) {
+    public Sports(String sportsName, Long met) {
         this.sportsName = sportsName;
         this.met = met;
     }
