@@ -1,6 +1,7 @@
 package ssafy.fns.domain.food.controller.dto;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,7 +19,7 @@ import ssafy.fns.domain.food.entity.Time;
 @Builder
 public class IntakeInsertRequestDto {
     private Long foodId;
-    private Date date;
-    private Double rate;
+    private LocalDate date;
     private Time intakeTime;
+    private Double rate;
 }

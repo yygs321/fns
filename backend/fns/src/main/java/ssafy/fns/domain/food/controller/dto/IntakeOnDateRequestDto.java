@@ -1,6 +1,6 @@
 package ssafy.fns.domain.food.controller.dto;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,6 +15,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class IntakeSelectOneRequestDto {
-    private Date date;
+public class IntakeOnDateRequestDto {
+    private LocalDateTime date;
 }
