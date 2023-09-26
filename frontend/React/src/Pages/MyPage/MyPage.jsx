@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-import {
-  List,
-  ListItemText,
-  ListItemIcon,
-  Divider,
-  Typography,
-} from "@mui/material";
+import {List, ListItemText, ListItemIcon, Divider, Typography } from "@mui/material";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import "./MyPage.css";
@@ -14,7 +8,6 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Collapse from "@mui/material/Collapse";
 import ListItemButton from "@mui/material/ListItemButton";
 import { Link, useNavigate } from "react-router-dom";
-
 import { useDispatch } from "react-redux";
 import { userLogout } from "../../Redux/actions/actions";
 
@@ -134,6 +127,14 @@ const MyPage = () => {
               <ChevronRightIcon style={{ color: "#00E1AB" }} />
             </ListItemButton>
             <Divider />
+            <ListItemButton
+            component={Link}
+            to="/mypage/changepassword" 
+            style={{ paddingLeft: 32 }}  >
+            <ListItemText primary="비밀번호 변경" />
+            <ChevronRightIcon style={{ color: "#00E1AB" }} />
+        </ListItemButton>
+        <Divider />
             <ListItemButton style={{ paddingLeft: 32 }}>
               <ListItemText primary="회원탈퇴" />
               <ChevronRightIcon style={{ color: "#00E1AB" }} />
