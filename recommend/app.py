@@ -44,8 +44,8 @@ async def load_food_data_to_redis():
         data_dict = {
             "food_id": food.food_id,
             "kcal": float(food.kcal),
-            "carbs": float(carbs),
-            "protein": float(protein)
+            "carbs": float(food.carbs),
+            "protein": float(food.protein)
         }
         redis_db.set("food:" + str(food.food_id), json.dumps(data_dict))
 
