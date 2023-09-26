@@ -11,12 +11,11 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class MemberProfileRequestDto {
+public class UpdateProfileRequestDto {
 
     private String nickname;
-    private Long age;
     private Long height;
     private Long weight;
-    private String gender;
+    private Long age;
     private Boolean isPublished;
 }

@@ -21,6 +21,7 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import ssafy.fns.domain.exercise.entity.Exercise;
 import ssafy.fns.domain.member.controller.dto.MemberProfileRequestDto;
+import ssafy.fns.domain.member.controller.dto.UpdateProfileRequestDto;
 import ssafy.fns.global.entity.BaseEntity;
 import ssafy.fns.global.util.IntegerArrayConverter;
 
@@ -52,7 +53,7 @@ public class Member extends BaseEntity {
 
     private Long weight;
 
-    private Integer age;
+    private Long age;
 
     private Long targetWeight;
 
@@ -72,7 +73,7 @@ public class Member extends BaseEntity {
 
     @Builder
     public Member(String email, String password, Provider provider, String nickname,
-            Boolean isPublished, String gender, Long height, Long weight, Integer age,
+            Boolean isPublished, String gender, Long height, Long weight, Long age,
             Long targetWeight) {
         this.email = email;
         this.password = password;
@@ -106,6 +107,14 @@ public class Member extends BaseEntity {
 
     public void updatePassword(String password) {
         this.password = password;
+    }
+
+    public void updateProfile(UpdateProfileRequestDto requestDto) {
+        this.nickname = requestDto.getNickname();
+        this.height = requestDto.getHeight();
+        this.weight = requestDto.getWeight();
+        this.age = requestDto.getAge();
+        this.isPublished = requestDto.getIsPublished();
     }
 
 

@@ -13,7 +13,7 @@ import ssafy.fns.domain.member.entity.Member;
 public class MemberResponseDto {
 
     private String nickname;
-    private Integer age;
+    private Long age;
     private Long height;
     private Long weight;
     private String gender;

@@ -7,6 +7,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ import ssafy.fns.domain.auth.service.dto.TokenDto;
 import ssafy.fns.domain.member.controller.dto.EmailDuplicationRequestDto;
 import ssafy.fns.domain.member.controller.dto.MemberProfileRequestDto;
 import ssafy.fns.domain.member.controller.dto.SignUpRequestDto;
+import ssafy.fns.domain.member.controller.dto.UpdateProfileRequestDto;
 import ssafy.fns.domain.member.entity.Member;
 import ssafy.fns.domain.member.service.MemberService;
 import ssafy.fns.global.response.JsonResponse;
@@ -54,6 +56,13 @@ public class MemberController {
     @GetMapping
     public ResponseEntity<?> selectMemberProfile(@AuthenticationPrincipal Member member) {
         return JsonResponse.ok("멤버 회원정보 조회 성공!", memberService.selectMember(member));
+    }
+
+    @PatchMapping("/profile")
+    public ResponseEntity<?> updateProfile(@AuthenticationPrincipal Member member,
+            @RequestBody UpdateProfileRequestDto requestDto) {
+        memberService.updateProfile(member, requestDto);
+        return JsonResponse.ok("멤버 프로필 변경 성공!");
     }
 
     @DeleteMapping("/logout")
