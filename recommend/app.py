@@ -19,7 +19,7 @@ class Offset(BaseModel):
 metadata = MetaData()
 Food = Table("food", metadata, autoload_with=engineconn().engine)
 
-redis_host = "fns-redis-1"
+redis_host = "13.124.188.144/"
 redis_port = 6379
 try:
     redis_db = redis.StrictRedis(host=redis_host, port=redis_port, db=0)
