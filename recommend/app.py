@@ -33,19 +33,17 @@ except Exception as e:
 @app.on_event("startup")
 async def load_food_data_to_redis():
     db = engineconn().sessionmaker()
-
-    s = db.select([Food])
-    result = db.execute(s)
-    foods = result.fetchall()
+    foods = db.query(Food.food_id, Food.kcal, Food.carbs, Food.protein).all()
 
     for food in foods:
-        food_id = str(food[Food.c.food_id])  # Table column 접근 방식 변경
-        for column in Food.columns:
-            key = column.name
-            value = food[column]  # 인덱싱을 사용하여 값에 접근
-            redis_db.hset(food_id, key, value)
+        redis_db.hset(str(food.food_id), {
+            "kcal": food.kcal,
+            "carbs": food.carbs,
+            "protein": food.protein
+        })
 
     print("Data loaded to Redis at startup!")
+
 
 
 @app.post("/fastapi/recommend")
