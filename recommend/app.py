@@ -4,10 +4,13 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from sqlalchemy import Table, MetaData
 from recommend.database import engineconn
+from datetime import datetime
+from decimal import Decimal
 import redis
 import sys
 import numpy as np
 import math
+import ast
 
 print(sys.path)
 
@@ -38,10 +41,9 @@ async def load_food_data_to_redis():
     foods = db.query(Food).all()
 
     for food in foods:
-        redis_db.set("food:"+str(food.food_id), str(food))
+        redis_db.set("food:" + str(food.food_id), str(food))
 
     print("Data loaded to Redis at startup!")
-
 
 
 @app.post("/fastapi/recommend")
@@ -53,10 +55,19 @@ async def test(offset: Offset):
 
     foods_data = []
 
+    context = {
+        "datetime": datetime,
+        "Decimal": Decimal
+    }
+
     for key in food_keys:
         value = redis_db.get(key)
-        foods_data.append(value)
-
+        data_tuple = ast.literal_eval(value, context)
+        food_id = data_tuple[0]
+        kcal = data_tuple[11]
+        carb = data_tuple[6]
+        protein = data_tuple[16]
+        foods_data.append((food_id, kcal, carb, protein))
 
     # weights = []
     # for food in foods:
