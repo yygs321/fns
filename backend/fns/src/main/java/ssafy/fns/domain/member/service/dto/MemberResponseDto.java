@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import ssafy.fns.domain.member.controller.dto.MemberProfileRequestDto;
+import ssafy.fns.domain.member.entity.Member;
 
 @Getter
 @AllArgsConstructor
@@ -19,14 +19,14 @@ public class MemberResponseDto {
     private String gender;
     private Boolean isPublished;
 
-    public static MemberResponseDto from(MemberProfileRequestDto requestDto) {
+    public static MemberResponseDto from(Member member) {
         return MemberResponseDto.builder()
-                .nickname(requestDto.getNickname())
-                .age(requestDto.getAge())
-                .height(requestDto.getHeight())
-                .weight(requestDto.getWeight())
-                .gender(requestDto.getGender())
-                .isPublished(requestDto.getIsPublished())
+                .nickname(member.getNickname())
+                .age(member.getAge())
+                .height(member.getHeight())
+                .weight(member.getWeight())
+                .gender(member.getGender())
+                .isPublished(member.getIsPublished())
                 .build();
     }
 }

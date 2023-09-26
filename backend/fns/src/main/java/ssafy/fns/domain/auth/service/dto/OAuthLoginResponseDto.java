@@ -15,6 +15,6 @@ public class OAuthLoginResponseDto {
 
     private Boolean hasProfile;
     private OAuthDetailDto detailDto;
-    private TokenResponseDto tokenResponseDto;
+    private TokenDto tokenDto;
     private String socialLoginType;
 }

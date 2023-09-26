@@ -1,4 +1,4 @@
-package ssafy.fns.domain.auth.service.dto;
+package ssafy.fns.domain.member.controller.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,8 +11,9 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AuthResponseDto {
+public class UpdatePasswordRequestDto {
 
-    private Boolean hasProfile;
-    private TokenDto tokenDto;
+    private String prevPassword;
+    private String password;
+    private String password2;
 }

@@ -18,7 +18,7 @@ import ssafy.fns.domain.auth.entity.RefreshToken;
 import ssafy.fns.domain.auth.repository.MailHistoryRepository;
 import ssafy.fns.domain.auth.repository.RefreshTokenRepository;
 import ssafy.fns.domain.auth.service.dto.AuthResponseDto;
-import ssafy.fns.domain.auth.service.dto.TokenResponseDto;
+import ssafy.fns.domain.auth.service.dto.TokenDto;
 import ssafy.fns.domain.auth.vo.Token;
 import ssafy.fns.domain.member.entity.Member;
 import ssafy.fns.domain.member.entity.Provider;
@@ -83,7 +83,7 @@ public class AuthServiceImpl implements AuthService {
         Member member = memberRepository.findByEmailAndProvider(requestDto.getEmail(),
                 Provider.DEFAULT);
 
-        if (member == null) {
+        if (member == null || !member.getIsValid()) {
             throw new GlobalRuntimeException("가입되지 않은 Email 입니다.", HttpStatus.NOT_FOUND);
         }
 
@@ -99,10 +99,10 @@ public class AuthServiceImpl implements AuthService {
         saveRefreshToken(requestDto, token);
 
         Long expirationTime = jwtTokenProvider.getExpirationTime(token.getAccessToken());
-        TokenResponseDto tokenResponseDto = TokenResponseDto.from(token, expirationTime);
+        TokenDto tokenDto = TokenDto.from(token, expirationTime);
         AuthResponseDto authResponseDto = AuthResponseDto.builder()
                 .hasProfile(hasProfile)
-                .tokenResponseDto(tokenResponseDto)
+                .tokenDto(tokenDto)
                 .build();
 
         return authResponseDto;
@@ -110,7 +110,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     @Transactional
-    public TokenResponseDto refreshAccessToken(RefreshAccessTokenRequestDto requestDto) {
+    public TokenDto refreshAccessToken(RefreshAccessTokenRequestDto requestDto) {
 
         String accessToken = jwtTokenProvider.refreshAccessToken(requestDto.getRefreshToken());
         Long expirationTime = jwtTokenProvider.getExpirationTime(accessToken);
@@ -119,7 +119,7 @@ public class AuthServiceImpl implements AuthService {
                 .accessToken(accessToken)
                 .refreshToken(requestDto.getRefreshToken())
                 .build();
-        return TokenResponseDto.from(token, expirationTime);
+        return TokenDto.from(token, expirationTime);
     }
 
 
@@ -148,7 +148,7 @@ public class AuthServiceImpl implements AuthService {
 
         Member member = memberRepository.findByEmail(email);
 
-        if (member != null) {
+        if (member != null && member.getIsValid()) {
             throw new GlobalRuntimeException("이미 존재하는 이메일입니다.", HttpStatus.BAD_REQUEST);
         }
     }

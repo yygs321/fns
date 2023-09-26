@@ -33,12 +33,12 @@ spring:
     username: sa # username과 password는 자신의 설정에 맞게
     password:
     driver-class-name: org.h2.Driver
-#  datasource:
-#    url: jdbc:mysql://localhost:3306/fns
-#      # test 부분을 자신이 원하는 것으로 바꾸시면 됩니다.
-#    username: root # username과 password는 자신의 설정에 맞게
-#    password: root
-#    driver-class-name: com.mysql.jdbc.Driver
+  #  datasource:
+  #    url: jdbc:mysql://localhost:3306/fns
+  #      # test 부분을 자신이 원하는 것으로 바꾸시면 됩니다.
+  #    username: root # username과 password는 자신의 설정에 맞게
+  #    password: root
+  #    driver-class-name: com.mysql.jdbc.Driver
 
   jpa:
     hibernate:
@@ -63,8 +63,6 @@ spring:
             token-uri: https://kauth.kakao.com/oauth/token
             user-info-uri: https://kapi.kakao.com/v2/user/me
 
-  
-  
   redis:
     host: 127.0.0.1
     port: 6379
