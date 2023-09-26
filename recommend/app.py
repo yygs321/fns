@@ -33,14 +33,10 @@ except Exception as e:
 @app.on_event("startup")
 async def load_food_data_to_redis():
     db = engineconn().sessionmaker()
-    foods = db.query(Food.food_id, Food.kcal, Food.carbs, Food.protein).all()
+    foods = db.query(Food).all()
 
     for food in foods:
-        redis_db.hset(str(food.food_id), {
-            "kcal": food.kcal,
-            "carbs": food.carbs,
-            "protein": food.protein
-        })
+        redis_db.set(str(food.food_id), str(food))
 
     print("Data loaded to Redis at startup!")
 
