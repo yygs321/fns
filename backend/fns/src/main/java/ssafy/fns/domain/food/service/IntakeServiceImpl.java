@@ -48,29 +48,6 @@ public class IntakeServiceImpl implements IntakeService {
 //        intakeRepository.save(intake);
 //        return null;
 //    }
-
-//    @Override
-//    public String delete(Member member, Long intakeId) {
-//        Optional<Intake> optionalIntake = intakeRepository.findById(intakeId);
-//        if (!optionalIntake.isPresent()) throw new GlobalRuntimeException("intake id 확인 필요", HttpStatus.BAD_REQUEST);
-//
-//        Intake intake = optionalIntake.get();
-//        if(intake.getMember().getId() != member.getId()) throw new GlobalRuntimeException("본인의 섭취 내역이 아닙니다.", HttpStatus.BAD_REQUEST);
-//
-//        intakeRepository.delete(intake);
-//        return "삭제 완료";
-//    }
-
-//    @Override
-//    public IntakeSelectOneResponseDto selectOne(Member member, Long intakeId) {
-//        Optional<Intake> optionalIntake = intakeRepository.findById(intakeId);
-//        if (!optionalIntake.isPresent()) throw new GlobalRuntimeException("intake id 확인 필요", HttpStatus.BAD_REQUEST);
-//
-//        Intake intake = optionalIntake.get();
-//        if(intake.getMember().getId() != member.getId()) throw new GlobalRuntimeException("본인의 섭취 내역이 아닙니다.", HttpStatus.BAD_REQUEST);
-//
-//        return IntakeSelectOneResponseDto.from(intake);
-//    }
     @Override
     public IntakeSelectOneResponseDto insert(Member member, IntakeInsertRequestDto requestDto) {
         Optional<Food> optionalFood = foodRepository.findById(requestDto.getFoodId());
