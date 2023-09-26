@@ -33,13 +33,16 @@ except Exception as e:
 @app.on_event("startup")
 async def load_food_data_to_redis():
     db = engineconn().sessionmaker()
-    foods = db.query(Food).all()
+
+    s = db.select([Food])
+    result = db.execute(s)
+    foods = result.fetchall()
 
     for food in foods:
-        food_id = str(food.food_id)
-        for column in Food.__table__.columns:
+        food_id = str(food[Food.c.food_id])  # Table column 접근 방식 변경
+        for column in Food.columns:
             key = column.name
-            value = getattr(food, key)
+            value = food[column]  # 인덱싱을 사용하여 값에 접근
             redis_db.hset(food_id, key, value)
 
     print("Data loaded to Redis at startup!")
