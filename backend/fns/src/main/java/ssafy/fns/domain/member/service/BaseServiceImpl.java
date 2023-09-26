@@ -104,7 +104,6 @@ public class BaseServiceImpl implements BaseService {
         return "수정 완료";
     }
 
-
     @Override
     public BaseResponseDto diet(Member member, BaseDietRequestDto dietRequestDto) {
         Optional<Base> optionalBase = baseRepository.findByMemberId(1L);
