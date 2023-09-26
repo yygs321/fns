@@ -148,7 +148,7 @@ public class AuthServiceImpl implements AuthService {
 
         Member member = memberRepository.findByEmail(email);
 
-        if (member != null) {
+        if (member != null && member.getIsValid()) {
             throw new GlobalRuntimeException("이미 존재하는 이메일입니다.", HttpStatus.BAD_REQUEST);
         }
     }

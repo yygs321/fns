@@ -104,5 +104,9 @@ public class Member extends BaseEntity {
                 .member(this).build();
     }
 
-    
+    public void updatePassword(String password) {
+        this.password = password;
+    }
+
+
 }

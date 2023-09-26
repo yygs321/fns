@@ -64,4 +64,5 @@ public class MemberController {
         memberService.deleteMember(member, tokenDto);
         return JsonResponse.ok("회원 탈퇴가 완료되었습니다.");
     }
+
 }

@@ -41,6 +41,7 @@ public class MemberServiceImpl implements MemberService {
         Member findMember = memberRepository.findByEmail(requestDto.getEmail());
         if (findMember != null) {
             findMember.add();
+            findMember.updatePassword(passwordEncoder.encode(requestDto.getPassword()));
         } else {
             Member member = Member.builder()
                     .email(requestDto.getEmail())
@@ -92,6 +93,7 @@ public class MemberServiceImpl implements MemberService {
     public void deleteMember(Member member, TokenDto tokenDto) {
         Member findMember = getMemberById(member.getId());
         logout(findMember, tokenDto);
+        removeMailHistory(findMember);
         findMember.delete();
     }
 
@@ -102,6 +104,11 @@ public class MemberServiceImpl implements MemberService {
                 () -> new GlobalRuntimeException("해당 ID의 유저가 없습니다", HttpStatus.BAD_REQUEST));
     }
 
+    private void removeMailHistory(Member findMember) {
+        MailHistory mailHistory = mailHistoryRepository.findTop1ByEmailAndIsAuthedOrderByIdDesc(
+                findMember.getEmail(), true);
+        mailHistoryRepository.deleteById(mailHistory.getId());
+    }
 
     private void checkPassword(String password, String password2) {
         if (!password.equals(password2)) {
