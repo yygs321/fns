@@ -10,6 +10,6 @@ import lombok.Getter;
 public class ExerciseResponseDto {
 
     private List<Integer> sportsBookmarkList;
-    private Long weight;
+    private Double weight;
     private List<ExerciseDto> exerciseDtoList;
 }
