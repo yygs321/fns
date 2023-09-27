@@ -28,10 +28,8 @@ const KakaoCallback = () => {
         },
       });
 
-
       const tokenData = res.data.data.tokenDto;
-      console.log('#1');
-      console.log(tokenData.accessToken);
+      
       dispatch(
         userLogin({
           accessToken: tokenData.accessToken,
