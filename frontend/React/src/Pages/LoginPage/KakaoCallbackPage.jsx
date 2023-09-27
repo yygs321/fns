@@ -40,7 +40,7 @@ const KakaoCallback = () => {
           refreshToken: tokenData.refreshToken,
         })
       );
-      console.log(accessToken)
+      
       if (tokenData.expirationTime < 200000) {
         await RefreshToken();
       }
