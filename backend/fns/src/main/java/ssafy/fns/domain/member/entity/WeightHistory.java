@@ -1,38 +1,38 @@
-package ssafy.fns.domain.exercise.entity;
+package ssafy.fns.domain.member.entity;
 
-import java.util.List;
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import ssafy.fns.global.entity.BaseEntity;
 
-@Entity
 @Getter
+@Entity
 @NoArgsConstructor
-public class Sports extends BaseEntity {
+@Slf4j
+public class WeightHistory extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "sports_id")
+    @Column(name = "weight_id")
     private Long id;
 
-    private String sportsName;
+    private Long memberId;
 
-    private Long met;
-
-    @OneToMany(mappedBy = "sports", fetch = FetchType.LAZY)
-    private List<Exercise> exerciseList;
+    private Double weight;
 
     @Builder
-    public Sports(String sportsName, Long met) {
-        this.sportsName = sportsName;
-        this.met = met;
+    public WeightHistory(Long memberId, Double weight) {
+        this.memberId = memberId;
+        this.weight = weight;
     }
 }

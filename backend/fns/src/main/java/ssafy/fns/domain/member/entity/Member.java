@@ -49,31 +49,28 @@ public class Member extends BaseEntity {
 
     private String gender;
 
-    private Long height;
+    private Double height;
 
-    private Long weight;
+    private Double weight;
 
     private Long age;
 
     private Long targetWeight;
 
-    @OneToOne(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private MemberProfileImage memberProfileImage;
-
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<Exercise> exerciseList = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
-    private List<Base> baseNutrientList = new ArrayList<>();
+    private List<BaseNutrient> baseNutrientNutrientList = new ArrayList<>();
 
     //조깅, 사이클, 등산, 수영, 줄넘기, 계단 오르기, 요가, 축구, 야구, 테니스, 배구, 골프
     @Convert(converter = IntegerArrayConverter.class)
     private List<Integer> sportsBookmarkList = new ArrayList<>(
-            Arrays.asList(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
+            Arrays.asList(0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1));
 
     @Builder
     public Member(String email, String password, Provider provider, String nickname,
-            Boolean isPublished, String gender, Long height, Long weight, Long age,
+            Boolean isPublished, String gender, Double height, Double weight, Long age,
             Long targetWeight) {
         this.email = email;
         this.password = password;
@@ -96,15 +93,6 @@ public class Member extends BaseEntity {
         this.age = requestDto.getAge();
     }
 
-    public void saveProfileImage(String path, String originalFilename, String savedFilename) {
-        this.memberProfileImage = MemberProfileImage
-                .builder()
-                .savedFilename(savedFilename)
-                .savedPath(path)
-                .originalFilename(originalFilename)
-                .member(this).build();
-    }
-
     public void updatePassword(String password) {
         this.password = password;
     }
@@ -116,6 +104,5 @@ public class Member extends BaseEntity {
         this.age = requestDto.getAge();
         this.isPublished = requestDto.getIsPublished();
     }
-
 
 }
