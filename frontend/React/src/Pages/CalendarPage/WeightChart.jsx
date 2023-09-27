@@ -12,8 +12,9 @@ export const data = {
   datasets: [
     {
       label: "체중",
-      data: UserData.map((data) => data.weight),
+      data: UserData.map((data) => data ? data.weight : null),
       borderColor: "green",
+      spanGaps: true,
     },
   ],
 };
@@ -93,8 +94,8 @@ export function WeightChart({ 날짜, set날짜, 오늘 }) {
           justifyContent={"center"}
           alignItems={"center"}
         >
-          <Typography textAlign="center" sx={{ fontSize: "1rem" }}>
-            {날짜.format("M월 D일 (ddd)")}
+          <Typography textAlign="center" sx={{ fontSize: "2rem", mt : 1, mb : 1 }}>
+            {오늘.format("M월")}의 체중 그래프
           </Typography>
         </Grid>
         <Grid
@@ -104,9 +105,6 @@ export function WeightChart({ 날짜, set날짜, 오늘 }) {
           justifyContent={"center"}
           alignItems={"center"}
         >
-          <Typography textAlign="center" sx={{ fontSize: "1.4rem" }}>
-            오늘의 체중
-          </Typography>
         </Grid>
       </Grid>
 

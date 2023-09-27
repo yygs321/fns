@@ -9,11 +9,11 @@ export const UserData = [
     },
     {
         day : 3,
-        weight : 76,
+        weight : null,
     },
     {
         day : 4,
-        weight : 81,
+        weight : null,
     },
     {
         day : 5,
@@ -33,7 +33,7 @@ export const UserData = [
     },
     {
         day : 9,
-        weight : 69,
+        weight : null,
     },
     {
         day : 10,
@@ -49,7 +49,7 @@ export const UserData = [
     },
     {
         day : 14,
-        weight : 77,
+        weight : null,
     },
     {
         day : 15,
