@@ -57,9 +57,6 @@ public class Member extends BaseEntity {
 
     private Long targetWeight;
 
-    @OneToOne(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    private MemberProfileImage memberProfileImage;
-
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<Exercise> exerciseList = new ArrayList<>();
 
@@ -96,15 +93,6 @@ public class Member extends BaseEntity {
         this.age = requestDto.getAge();
     }
 
-    public void saveProfileImage(String path, String originalFilename, String savedFilename) {
-        this.memberProfileImage = MemberProfileImage
-                .builder()
-                .savedFilename(savedFilename)
-                .savedPath(path)
-                .originalFilename(originalFilename)
-                .member(this).build();
-    }
-
     public void updatePassword(String password) {
         this.password = password;
     }
@@ -116,6 +104,5 @@ public class Member extends BaseEntity {
         this.age = requestDto.getAge();
         this.isPublished = requestDto.getIsPublished();
     }
-
 
 }

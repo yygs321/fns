@@ -73,7 +73,7 @@ pipeline{
                 dir('backend/fns') {
                     sh'''
                         echo [BE] Build Docker Image!
-                        docker build -t server .
+                        docker build --no-cache -t server .
                         echo [BE] Run Docker Container!
                         docker run -dp 8081:8081 --name fns_server server
                     '''

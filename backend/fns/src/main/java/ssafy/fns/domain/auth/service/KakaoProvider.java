@@ -78,6 +78,8 @@ public class KakaoProvider implements OAuthProvider {
         String email = (String) kakao_account.get("email");
         String name = (String) properties.get("nickname");
 
+        log.info("user_info:"+user_info.toString());
+
         OAuthDetailDto detailDto = OAuthDetailDto.builder()
                 .name(name)
                 .email(email)
