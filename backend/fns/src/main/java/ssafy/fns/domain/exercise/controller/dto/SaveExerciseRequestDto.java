@@ -1,6 +1,6 @@
 package ssafy.fns.domain.exercise.controller.dto;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,8 +17,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ExerciseRequestDto {
+public class SaveExerciseRequestDto {
 
-    private LocalDateTime exerciseDate;
+    private LocalDate exerciseDate;
     private List<Long> exerciseTimeList;
 }

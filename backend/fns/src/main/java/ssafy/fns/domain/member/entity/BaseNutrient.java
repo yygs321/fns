@@ -18,7 +18,7 @@ import ssafy.fns.global.entity.BaseEntity;
 @Entity
 @Getter
 @NoArgsConstructor
-public class Base extends BaseEntity {
+public class BaseNutrient extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,7 +66,7 @@ public class Base extends BaseEntity {
     private Double transFat;
 
     @Builder
-    public Base(Member member, Double kcal, Double carbs, Double protein, Double fat,
+    public BaseNutrient(Member member, Double kcal, Double carbs, Double protein, Double fat,
             Double pollination, Double sugar, Double dietaryFiber, Double calcium, Double potassium,
             Double iron, Double phosphorus, Double sodium, Double vitaminA, Double vitaminC,
             Double vitaminD, Double cholesterol, Double acid, Double transFat) {
@@ -91,7 +91,7 @@ public class Base extends BaseEntity {
         this.transFat = transFat;
     }
 
-    public void clear(Member member, Nutrient nutrient){
+    public void clear(Member member, Nutrient nutrient) {
         this.member = member;
         this.kcal = nutrient.getKcal();
         this.carbs = nutrient.getCarbs();
@@ -113,7 +113,7 @@ public class Base extends BaseEntity {
         this.transFat = nutrient.getTransFat();
     }
 
-    public void update(BaseModifyRequestDto modifyRequestDto){
+    public void update(BaseModifyRequestDto modifyRequestDto) {
         this.kcal = modifyRequestDto.getKcal();
         this.carbs = modifyRequestDto.getCarbs();
         this.protein = modifyRequestDto.getProtein();
@@ -134,7 +134,7 @@ public class Base extends BaseEntity {
         this.transFat = modifyRequestDto.getTransFat();
     }
 
-    public void diet(Double rate){
+    public void diet(Double rate) {
         this.kcal = multi(this.kcal, rate);
         this.carbs = multi(this.carbs, rate);
         this.protein = multi(this.protein, rate);
@@ -155,8 +155,8 @@ public class Base extends BaseEntity {
         this.transFat = multi(this.transFat, rate);
     }
 
-    public Double multi(Double nutrition, Double rate){
-        Double temp = nutrition*rate;
-        return (double) Math.round(temp*10)/10.0;
+    public Double multi(Double nutrition, Double rate) {
+        Double temp = nutrition * rate;
+        return (double) Math.round(temp * 10) / 10.0;
     }
 }

@@ -11,5 +11,5 @@ public class ExerciseResponseDto {
 
     private List<Integer> sportsBookmarkList;
     private Long weight;
-    private List<sportsDto> sportsDtoList;
+    private List<ExerciseDto> exerciseDtoList;
 }

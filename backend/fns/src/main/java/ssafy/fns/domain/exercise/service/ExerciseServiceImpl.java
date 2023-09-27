@@ -3,15 +3,19 @@ package ssafy.fns.domain.exercise.service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import ssafy.fns.domain.exercise.controller.dto.ExerciseRequestDto;
+import ssafy.fns.domain.exercise.controller.dto.SaveExerciseRequestDto;
+import ssafy.fns.domain.exercise.controller.dto.SelectExerciseRequestDto;
 import ssafy.fns.domain.exercise.entity.Exercise;
 import ssafy.fns.domain.exercise.entity.Sports;
 import ssafy.fns.domain.exercise.repository.ExerciseRepository;
 import ssafy.fns.domain.exercise.repository.SportsRepository;
+import ssafy.fns.domain.exercise.service.dto.ExerciseDto;
+import ssafy.fns.domain.exercise.service.dto.ExerciseResponseDto;
 import ssafy.fns.domain.member.entity.Member;
 import ssafy.fns.domain.member.repository.MemberRepository;
 import ssafy.fns.global.exception.GlobalRuntimeException;
@@ -28,9 +32,7 @@ public class ExerciseServiceImpl implements ExerciseService {
             Arrays.asList(0L, 1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L, 11L, 12L));
 
     @Override
-    public void saveExercise(Member member, ExerciseRequestDto requestDto) {
-        List<Exercise> exerciseList =
-                exerciseRepository.findAllByExerciseDate(requestDto.getExerciseDate());
+    public void saveExercise(Member member, SaveExerciseRequestDto requestDto) {
         Member findMember = memberRepository.findByEmail(member.getEmail());
 
         for (int i = 1; i < 13; i++) {
@@ -45,6 +47,42 @@ public class ExerciseServiceImpl implements ExerciseService {
 
             exerciseRepository.save(exercise);
         }
+    }
+
+    @Override
+    @Transactional
+    public ExerciseResponseDto selectExercise(Member member, SelectExerciseRequestDto requestDto) {
+
+        List<Integer> sportsBookmarkList = exerciseRepository
+                .findTop1ByExerciseDate(requestDto.getExerciseDate()).getSportsBookmarkList();
+        Member findMember = memberRepository.findByEmail(member.getEmail());
+
+        if (sportsBookmarkList == null) {
+            return ExerciseResponseDto.builder().build();
+        }
+
+        List<ExerciseDto> exerciseDtoList = new ArrayList<>();
+        for (int idx = 1; idx < sportsBookmarkList.size(); idx++) {
+
+            Exercise exercise = exerciseRepository.findByExerciseDateAndMember_IdAndSports_Id(
+                    requestDto.getExerciseDate(), member.getId(), sportsIdList.get(idx));
+
+            if (sportsBookmarkList.get(idx) == 1) {
+                ExerciseDto exerciseDto = ExerciseDto.builder()
+                        .sportsId(exercise.getSports().getId())
+                        .met(exercise.getSports().getMet())
+                        .exerciseTime(exercise.getExerciseTime()).build();
+
+                exerciseDtoList.add(exerciseDto);
+            }
+        }
+
+        ExerciseResponseDto responseDto = ExerciseResponseDto.builder()
+                .sportsBookmarkList(sportsBookmarkList)
+                .exerciseDtoList(exerciseDtoList)
+                .weight(findMember.getWeight())
+                .build();
+        return responseDto;
     }
 
     private Sports getSportsById(Long idx) {

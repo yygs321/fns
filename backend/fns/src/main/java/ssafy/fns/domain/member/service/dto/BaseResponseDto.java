@@ -4,15 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import ssafy.fns.domain.member.controller.dto.MemberProfileRequestDto;
-import ssafy.fns.domain.member.entity.Base;
-import ssafy.fns.global.response.BaseResponse;
+import ssafy.fns.domain.member.entity.BaseNutrient;
 
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class BaseResponseDto {
+
     private Long id;
 
     private Double kcal;
@@ -51,27 +50,27 @@ public class BaseResponseDto {
 
     private Double transFat;
 
-    public static BaseResponseDto from(Base base) {
+    public static BaseResponseDto from(BaseNutrient baseNutrient) {
         return BaseResponseDto.builder()
-                .id(base.getId())
-                .kcal(base.getKcal())
-                .carbs(base.getCarbs())
-                .protein(base.getProtein())
-                .fat(base.getFat())
-                .pollination(base.getPollination())
-                .sugar(base.getSugar())
-                .dietaryFiber(base.getDietaryFiber())
-                .calcium(base.getCalcium())
-                .potassium(base.getPotassium())
-                .iron(base.getIron())
-                .phosphorus(base.getPhosphorus())
-                .sodium(base.getSodium())
-                .vitaminA(base.getVitaminA())
-                .vitaminC(base.getVitaminC())
-                .vitaminD(base.getVitaminD())
-                .cholesterol(base.getCholesterol())
-                .acid(base.getAcid())
-                .transFat(base.getTransFat())
+                .id(baseNutrient.getId())
+                .kcal(baseNutrient.getKcal())
+                .carbs(baseNutrient.getCarbs())
+                .protein(baseNutrient.getProtein())
+                .fat(baseNutrient.getFat())
+                .pollination(baseNutrient.getPollination())
+                .sugar(baseNutrient.getSugar())
+                .dietaryFiber(baseNutrient.getDietaryFiber())
+                .calcium(baseNutrient.getCalcium())
+                .potassium(baseNutrient.getPotassium())
+                .iron(baseNutrient.getIron())
+                .phosphorus(baseNutrient.getPhosphorus())
+                .sodium(baseNutrient.getSodium())
+                .vitaminA(baseNutrient.getVitaminA())
+                .vitaminC(baseNutrient.getVitaminC())
+                .vitaminD(baseNutrient.getVitaminD())
+                .cholesterol(baseNutrient.getCholesterol())
+                .acid(baseNutrient.getAcid())
+                .transFat(baseNutrient.getTransFat())
                 .build();
     }
 }

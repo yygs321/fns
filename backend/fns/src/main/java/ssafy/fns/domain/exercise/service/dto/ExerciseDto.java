@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class sportsDto {
+public class ExerciseDto {
 
     private Long sportsId;
     private Long met;
