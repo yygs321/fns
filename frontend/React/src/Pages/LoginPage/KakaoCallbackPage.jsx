@@ -27,12 +27,15 @@ const KakaoCallback = () => {
           code: code,
         },
       });
-      console.log(code)
-      console.log(res)
-      console.log(res.response.data.message);
+
+      console.log('#1');
       console.log(res.data.message);
+      console.log('#2');
       console.log(res.data.data.tokenResponseDto);
-      const tokenData = res.response.data.data.tokenDto;
+      console.log('#3');
+      console.log(res.data.data.tokenResponseDto.accessToken);
+      console.log(res.data.data.tokenResponseDto.refreshToken);
+      const tokenData = res.data.data.tokenDto;
 
       dispatch(
         userLogin({
