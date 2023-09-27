@@ -27,8 +27,11 @@ const KakaoCallback = () => {
           code: code,
         },
       });
-
+      console.log(code)
+      console.log(res)
       console.log(res.response.data.message);
+      console.log(res.data.message);
+      console.log(res.data.data.tokenResponseDto);
       const tokenData = res.response.data.data.tokenDto;
 
       dispatch(
@@ -37,7 +40,7 @@ const KakaoCallback = () => {
           refreshToken: tokenData.refreshToken,
         })
       );
-
+      console.log(accessToken)
       if (tokenData.expirationTime < 200000) {
         await RefreshToken();
       }
