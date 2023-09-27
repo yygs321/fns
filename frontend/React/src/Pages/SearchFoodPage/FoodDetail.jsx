@@ -1,23 +1,38 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Typography } from "@mui/material";
-
-const DUMMY_DATA = [
-  { name: "식품1", kcal: 80, carbs: 9, protein: 53, fat: 3 },
-  { name: "식품2", kcal: 150, carbs: 60, protein: 90, fat: 66 },
-  { name: "식품3", kcal: 300, carbs: 36, protein: 105, fat: 19 },
-  { name: "식품4", kcal: 400, carbs: 100, protein: 56, fat: 96 },
-  { name: "식품5", kcal: 200, carbs: 15, protein: 60, fat: 60 },
-  { name: "식품6", kcal: 300, carbs: 90, protein: 150, fat: 30 },
-  { name: "식품7", kcal: 720, carbs: 375, protein: 100, fat: 15 },
-  { name: "식품8", kcal: 500, carbs: 290, protein: 65, fat: 30 },
-];
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 function FoodDetail() {
-  const { name } = useParams(); // URL 파라미터에서 'name' 값을 가져옵니다.
+  const { name } = useParams();
+  const [foodItem, setFoodItem] = useState(null);
 
-  // 이름을 기준으로 더미 데이터에서 항목을 찾습니다.
-  const foodItem = DUMMY_DATA.find((item) => item.name === name);
+  const accessToken = useSelector((state) => state.auth.accessToken);
+  const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
+
+  useEffect(() => {
+    const fetchFoodDetail = async () => {
+      try {
+        const response = await axios.get(`${SERVER_API_URL}/foods`, {
+          params: { name },
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        });
+
+        if (response.data.success) {
+          setFoodItem(response.data.data[0]); // 첫 번째 항목을 선택합니다.
+        } else {
+          console.error("Failed to fetch food detail:", response.data.message);
+        }
+      } catch (error) {
+        console.error("Error fetching food detail:", error);
+      }
+    };
+
+    fetchFoodDetail();
+  }, [name, accessToken, SERVER_API_URL]);
 
   if (!foodItem) {
     return <div>음식을 찾을 수 없습니다.</div>;
@@ -32,6 +47,20 @@ function FoodDetail() {
       <Typography variant="body1">{`탄수화물: ${foodItem.carbs}`}</Typography>
       <Typography variant="body1">{`단백질: ${foodItem.protein}`}</Typography>
       <Typography variant="body1">{`지방: ${foodItem.fat}`}</Typography>
+      <Typography variant="body1">{`수분: ${foodItem.pollination}`}</Typography>
+      <Typography variant="body1">{`당: ${foodItem.sugar}`}</Typography>
+      <Typography variant="body1">{`식이섬유: ${foodItem.dietaryFiber}`}</Typography>
+      <Typography variant="body1">{`칼슘: ${foodItem.calcium}`}</Typography>
+      <Typography variant="body1">{`칼륨: ${foodItem.potassium}`}</Typography>
+      <Typography variant="body1">{`철: ${foodItem.iron}`}</Typography>
+      <Typography variant="body1">{`인: ${foodItem.phosphorus}`}</Typography>
+      <Typography variant="body1">{`나트륨: ${foodItem.sodium}`}</Typography>
+      <Typography variant="body1">{`비타민A: ${foodItem.vitaminA}`}</Typography>
+      <Typography variant="body1">{`비타민C: ${foodItem.vitaminC}`}</Typography>
+      <Typography variant="body1">{`비타민D: ${foodItem.vitaminD}`}</Typography>
+      <Typography variant="body1">{`콜레스테롤: ${foodItem.cholesterol}`}</Typography>
+      <Typography variant="body1">{`포화지방산: ${foodItem.acid}`}</Typography>
+      <Typography variant="body1">{`트랜스지방산: ${foodItem.transFat}`}</Typography>
     </div>
   );
 }
