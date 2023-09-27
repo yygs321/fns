@@ -76,6 +76,12 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     public void saveProfile(Member member, MemberProfileRequestDto requestDto) {
         Member findMember = memberRepository.findByEmail(member.getEmail());
+        //몸무게 기록
+        WeightHistory weight = WeightHistory.builder()
+                .memberId(member.getId())
+                .weight(requestDto.getWeight())
+                .build();
+        weightHistoryRepository.save(weight);
         findMember.saveProfile(requestDto);
     }
 
@@ -121,7 +127,7 @@ public class MemberServiceImpl implements MemberService {
         //몸무게 기록
         WeightHistory weight = WeightHistory.builder()
                             .memberId(member.getId())
-                            .weight(Double.valueOf(requestDto.getWeight()))
+                            .weight(requestDto.getWeight())
                             .build();
         weightHistoryRepository.save(weight);
         findMember.updateProfile(requestDto);

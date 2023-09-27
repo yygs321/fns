@@ -15,8 +15,8 @@ public class MemberListResponseDto {
     private String nickname;
     private Boolean already;
     private Long age;
-    private Long height;
-    private Long weight;
+    private Double height;
+    private Double weight;
     private String gender;
     private Boolean isPublished;
 
