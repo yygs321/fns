@@ -15,7 +15,7 @@ import ssafy.fns.domain.member.controller.dto.BaseModifyRequestDto;
 import ssafy.fns.domain.nutrient.entity.Nutrient;
 import ssafy.fns.global.entity.BaseEntity;
 
-//@Entity
+@Entity
 @Getter
 @NoArgsConstructor
 public class Base extends BaseEntity {
