@@ -43,10 +43,11 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional
     public void signUp(SignUpRequestDto requestDto) {
+        log.info("service start:"+requestDto.getPassword());
         checkPassword(requestDto.getPassword(), requestDto.getPassword2());
-
+        log.info("after check password:"+requestDto.getPassword());
         checkMailAuthed(requestDto.getEmail());
-
+        log.info("after checkMail:"+requestDto.getPassword());
         Member findMember = memberRepository.findByEmail(requestDto.getEmail());
         if (findMember != null) {
             findMember.add();
@@ -58,6 +59,7 @@ public class MemberServiceImpl implements MemberService {
                     .provider(Provider.valueOf(requestDto.getProvider()))
                     .build();
 
+            log.info("회원가입 후 멤버 password:"+member.getPassword());
             memberRepository.save(member);
         }
     }
