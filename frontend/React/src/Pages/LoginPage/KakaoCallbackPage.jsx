@@ -33,8 +33,10 @@ const KakaoCallback = () => {
       console.log('#2');
       console.log(res.data.data.tokenResponseDto);
       console.log('#3');
-      console.log(res.data.data.tokenResponseDto.accessToken);
-      console.log(res.data.data.tokenResponseDto.refreshToken);
+      console.log(res);
+      console.log(res.data);
+      console.log('#4');
+      console.log(res.data.data);
       const tokenData = res.data.data.tokenDto;
 
       dispatch(
