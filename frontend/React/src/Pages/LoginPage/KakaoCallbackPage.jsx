@@ -31,14 +31,14 @@ const KakaoCallback = () => {
       console.log('#1');
       console.log(res.data.message);
       console.log('#2');
-      console.log(res.data.data.tokenResponseDto);
+      console.log(res.data.data.tokenDto);
       console.log('#3');
-      console.log(res);
-      console.log(res.data);
-      console.log('#4');
-      console.log(res.data.data);
-      const tokenData = res.data.data.tokenDto;
+      console.log(res.data.data.tokenDto.accessToken);
+      console.log(res.data.data.tokenDto.refreshToken);
 
+      const tokenData = res.data.data.tokenDto;
+      console.log('#4');
+      console.log(tokenData.accessToken);
       dispatch(
         userLogin({
           accessToken: tokenData.accessToken,
