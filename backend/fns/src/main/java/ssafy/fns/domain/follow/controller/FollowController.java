@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ssafy.fns.domain.follow.service.FollowService;
 import ssafy.fns.domain.member.entity.Member;
@@ -47,5 +48,10 @@ public class FollowController {
     @DeleteMapping("/{member-id}")
     public ResponseEntity<?> deleteFollow(@PathVariable(name = "member-id") Long toMemberId){
         return JsonResponse.ok("팔로우 삭제 완료", followService.deleteFollow(1L, toMemberId));
+    }
+
+    @GetMapping("/member")
+    public ResponseEntity<?> findMember(@RequestParam(value = "nickname")String nickname){
+        return JsonResponse.ok("멤버 조회 완료", followService.selectAll(1L, nickname));
     }
 }
