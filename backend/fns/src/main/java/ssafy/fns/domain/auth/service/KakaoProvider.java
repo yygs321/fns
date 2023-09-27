@@ -83,7 +83,6 @@ public class KakaoProvider implements OAuthProvider {
         OAuthDetailDto detailDto = OAuthDetailDto.builder()
                 .name(name)
                 .email(email)
-
                 .build();
 
         return detailDto;

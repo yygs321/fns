@@ -32,11 +32,7 @@ public class OAuthController {
         OAuthLoginResponseDto oAuthResponseDto
                 = oAuthService.login(socialLoginTypeConverter.convert(socialLoginType), requestDto);
 
-        log.info("requestDto: "+ oAuthResponseDto.getDetailDto());
-        if (oAuthResponseDto.getTokenResponseDto() == null) {
-            return JsonResponse.ok("signup", oAuthResponseDto.getDetailDto());
-        } else {
-            return JsonResponse.ok("login", oAuthResponseDto.getTokenResponseDto());
-        }
+        return JsonResponse.ok(socialLoginType.toString() + "로그인 완료!", oAuthResponseDto);
+
     }
 }
