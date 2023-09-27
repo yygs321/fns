@@ -68,6 +68,9 @@ const LoginPage = () => {
         },
       });
 
+      console.log("로그인 버튼");
+      console.log(res.data);
+
       console.log(res.data.message);
       const tokenData = res.data.data.tokenResponseDto;
 

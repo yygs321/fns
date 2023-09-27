@@ -110,6 +110,9 @@ const InfoPage = () => {
                     },
                   });
 
+                  console.log("정보 보내기");
+                  console.log(res.data);
+
                   if (res.data.success) {
                     navigate("/main");
                   } else {

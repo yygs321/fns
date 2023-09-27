@@ -29,13 +29,16 @@ const Signup = () => {
 
   const 이메일전송버튼 = async () => {
     try {
-      await axios({
+      const res = await axios({
         method: "post",
         url: `${SERVER_API_URL}/auth/send-email`,
         data: {
           email: 이메일,
         },
       });
+
+      console.log("이메일 전송");
+      console.log(res.data);
 
       //   // 만약 response로 뭔가 하려면 await 앞에 const res = 같은거로 변수 선언 시켜놓고 res.data같은거 쓰면 됨.
 
@@ -58,6 +61,9 @@ const Signup = () => {
           code: 이메일인증번호,
         },
       });
+
+      console.log("이메일 인증 확인");
+      console.log(res.data);
 
       if (res.data.success) {
         set이메일인증(true);
@@ -103,6 +109,10 @@ const Signup = () => {
                   },
                 },
               });
+
+              console.log("가입 버튼");
+              console.log(res.data);
+
               if (res.data.success) {
                 // info로 보내려면 미리 로그인 토큰들을 갖고 있어야하니까, 회원가입 시키면 로그인도 시켜야함
                 const res2 = await axios({
