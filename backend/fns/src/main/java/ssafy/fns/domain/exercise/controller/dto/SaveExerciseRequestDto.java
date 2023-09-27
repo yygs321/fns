@@ -1,5 +1,7 @@
 package ssafy.fns.domain.exercise.controller.dto;
 
+import java.time.LocalDate;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -7,16 +9,16 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /*
-* 운동한 칼로리 저장 요청
-* */
+ * 운동한 칼로리 저장 요청
+ * */
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class ExerciseRequestDto {
-    private Long sportsId;
+public class SaveExerciseRequestDto {
 
-    private Long exerciseTime;
+    private LocalDate exerciseDate;
+    private List<Long> exerciseTimeList;
 }

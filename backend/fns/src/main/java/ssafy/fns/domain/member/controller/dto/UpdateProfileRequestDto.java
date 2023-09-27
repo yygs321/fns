@@ -14,8 +14,8 @@ import lombok.Setter;
 public class UpdateProfileRequestDto {
 
     private String nickname;
-    private Long height;
-    private Long weight;
+    private Double height;
+    private Double weight;
     private Long age;
     private Boolean isPublished;
 }

@@ -41,8 +41,9 @@ public class AuthServiceImpl implements AuthService {
     @Override
     @Transactional
     public void sendEmail(EmailRequestDto requestDto) {
+        log.info("service-sendEmail:"+requestDto.getEmail());
         emailDupicationCheck(requestDto.getEmail());
-
+        log.info("service-after dup check:"+requestDto.getEmail());
         String email = requestDto.getEmail();
         String code = generateAuthCode();
 
@@ -52,7 +53,9 @@ public class AuthServiceImpl implements AuthService {
                 .build();
 
         mailHistoryRepository.save(history);
+        log.info("service-before sendEmail:"+requestDto.getEmail());
         emailSender.sendEmail(email, code);
+        log.info("service-after sendEmail:"+requestDto.getEmail());
     }
 
     @Override
