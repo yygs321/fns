@@ -153,8 +153,8 @@ const InfoPage = () => {
     if (닉네임확인결과) {
       try {
         const 중복체크결과 = await axios({
-          method: "get",
-          url: `${SERVER_API_URL}/auth/check-nickname-duplicate`,
+          method: "post",
+          url: `${SERVER_API_URL}/members/check-nickname-duplicate`,
           headers: {
             Authorization: accessToken,
           },
