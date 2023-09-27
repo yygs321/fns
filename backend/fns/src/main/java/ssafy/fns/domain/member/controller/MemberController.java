@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ssafy.fns.domain.auth.service.dto.TokenDto;
 import ssafy.fns.domain.member.controller.dto.EmailDuplicationRequestDto;
@@ -18,6 +19,7 @@ import ssafy.fns.domain.member.controller.dto.MemberProfileRequestDto;
 import ssafy.fns.domain.member.controller.dto.SignUpRequestDto;
 import ssafy.fns.domain.member.controller.dto.UpdatePasswordRequestDto;
 import ssafy.fns.domain.member.controller.dto.UpdateProfileRequestDto;
+import ssafy.fns.domain.member.controller.dto.WeightRequestDto;
 import ssafy.fns.domain.member.entity.Member;
 import ssafy.fns.domain.member.service.MemberService;
 import ssafy.fns.global.response.JsonResponse;
@@ -89,4 +91,18 @@ public class MemberController {
         return JsonResponse.ok("회원 탈퇴가 완료되었습니다.");
     }
 
+    @PostMapping("/weight")
+    public ResponseEntity<?> addWeight(@RequestBody
+            WeightRequestDto requestDto){
+        return JsonResponse.ok("몸무게 등록이 완료되었습니다.", memberService.addWeight(new Member(), requestDto));
+    }
+
+//    @GetMapping("/weight")
+//    public ResponseEntity<?> selectWeight(@AuthenticationPrincipal Member member, @RequestParam(value = "date")String date){
+//        return JsonResponse.ok("몸무게 조회가 완료되었습니다.", memberService.selectAllWeight(member, date));
+//    }
+    @GetMapping("/weight")
+    public ResponseEntity<?> selectWeight(@RequestParam(value = "date")String date){
+        return JsonResponse.ok("몸무게 조회가 완료되었습니다.", memberService.selectAllWeight(new Member(), date));
+    }
 }
