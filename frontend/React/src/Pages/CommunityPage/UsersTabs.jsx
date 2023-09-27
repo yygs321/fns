@@ -8,6 +8,7 @@ import UserRecommend from "./UserRecommend";
 import Cat from "../../assets/Image/cat.jpg";
 
 const UsersTabs = () => {
+
   const users = [
     {
       username: "댕냥이",

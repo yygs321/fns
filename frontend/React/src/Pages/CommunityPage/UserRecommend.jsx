@@ -1,9 +1,31 @@
 import React, { useState } from "react";
+import axios from 'axios';
 
 import { Typography, Grid, Avatar, Button } from "@mui/material";
 
+const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
+
 const UserRecommend = (props) => {
+
   const { user } = props;
+
+  const memberId = '';
+
+  // post : id를 입력하면 follow를 입력한다.
+
+  const addFollower = async () => {
+
+    const requestId = {
+      id : memberId,
+    }
+    try {
+    const res = await axios.post(`${SERVER_API_URL}/api/follow/${requestId.id}`, requestId)
+    console.log(res.data)
+    }
+    catch(error){
+      console.log(error);
+    }
+  };
 
   const [addedFollow, setAddedFollow] = useState([]);
 
