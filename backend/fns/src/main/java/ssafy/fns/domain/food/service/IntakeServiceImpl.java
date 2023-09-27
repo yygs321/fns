@@ -10,8 +10,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import ssafy.fns.domain.food.controller.dto.IntakeDeletetRequestDto;
 import ssafy.fns.domain.food.controller.dto.IntakeInsertRequestDto;
 import ssafy.fns.domain.food.controller.dto.IntakeOnDateRequestDto;
+import ssafy.fns.domain.food.controller.dto.IntakeUpdateRequestDto;
 import ssafy.fns.domain.food.entity.Food;
 import ssafy.fns.domain.food.entity.Intake;
 import ssafy.fns.domain.food.repository.FoodRepository;
@@ -49,37 +51,57 @@ public class IntakeServiceImpl implements IntakeService {
 //        return null;
 //    }
     @Override
-    public IntakeSelectOneResponseDto insert(Member member, IntakeInsertRequestDto requestDto) {
-        Optional<Food> optionalFood = foodRepository.findById(requestDto.getFoodId());
+    public List<IntakeSelectOneResponseDto> insert(Member member, List<IntakeInsertRequestDto>  requestDtoList) {
+        List<IntakeSelectOneResponseDto> responseDtoList = new ArrayList<>();
+        for(IntakeInsertRequestDto requestDto : requestDtoList){
+            Optional<Food> optionalFood = foodRepository.findById(requestDto.getFoodId());
 
-        if(!optionalFood.isPresent()) throw new GlobalRuntimeException("음식 정보를 다시 확인해주세요.", HttpStatus.BAD_REQUEST);
+            if(!optionalFood.isPresent()) throw new GlobalRuntimeException("음식 정보를 다시 확인해주세요.", HttpStatus.BAD_REQUEST);
 
-        Food food = optionalFood.get();
+            Food food = optionalFood.get();
 
-        Optional<Member> member1 = memberRepository.findById(1L);
+            Optional<Member> member1 = memberRepository.findById(1L);
 
-        Intake intake = new Intake().builder()
-                .intakeTime(requestDto.getIntakeTime())
-                .date(requestDto.getDate())
-                .rate(requestDto.getRate())
-                .food(food)
-                .member(member1.get())
-                .build();
-        intakeRepository.save(intake);
-
-        return IntakeSelectOneResponseDto.from(intake);
+            Intake intake = new Intake().builder()
+                    .intakeTime(requestDto.getIntakeTime())
+                    .date(requestDto.getDate())
+                    .rate(requestDto.getRate())
+                    .food(food)
+                    .member(member1.get())
+                    .build();
+            intakeRepository.save(intake);
+            responseDtoList.add(new IntakeSelectOneResponseDto().from(intake));
+        }
+        return responseDtoList;
     }
 
     @Override
-    public String delete(Long memberId, Long intakeId) {
-        Optional<Intake> optionalIntake = intakeRepository.findById(intakeId);
-        if (!optionalIntake.isPresent()) throw new GlobalRuntimeException("intake id 확인 필요", HttpStatus.BAD_REQUEST);
+    public String delete(Long memberId, List<IntakeDeletetRequestDto> intakeIdList) {
+        for(IntakeDeletetRequestDto requestDto : intakeIdList){
+            Optional<Intake> optionalIntake = intakeRepository.findById(requestDto.getIntakeId());
+            if (!optionalIntake.isPresent()) throw new GlobalRuntimeException("intake id 확인 필요", HttpStatus.BAD_REQUEST);
 
-        Intake intake = optionalIntake.get();
-        if(intake.getMember().getId() != memberId) throw new GlobalRuntimeException("본인의 섭취 내역이 아닙니다.", HttpStatus.BAD_REQUEST);
+            Intake intake = optionalIntake.get();
+            if(intake.getMember().getId() != memberId) throw new GlobalRuntimeException("본인의 섭취 내역이 아닙니다.", HttpStatus.BAD_REQUEST);
 
-        intakeRepository.delete(intake);
+            intakeRepository.delete(intake);
+        }
         return "삭제 완료";
+    }
+
+    @Override
+    public String update(Long memberId, List<IntakeUpdateRequestDto> requestDtoList) {
+        for(IntakeUpdateRequestDto requestDto : requestDtoList){
+            Optional<Intake> optionalIntake = intakeRepository.findById(requestDto.getIntakeId());
+            if (!optionalIntake.isPresent()) throw new GlobalRuntimeException("intake id 확인 필요", HttpStatus.BAD_REQUEST);
+
+            Intake intake = optionalIntake.get();
+            if(intake.getMember().getId() != memberId) throw new GlobalRuntimeException("본인의 섭취 내역이 아닙니다.", HttpStatus.BAD_REQUEST);
+
+            intake.updateRate(requestDto.getRate());
+            intakeRepository.save(intake);
+        }
+        return "수정 완료";
     }
 
     @Override

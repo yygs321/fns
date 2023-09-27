@@ -54,4 +54,8 @@ public class Intake extends BaseEntity {
         this.food = food;
         this.member = member;
     }
+
+    public void updateRate(Double rate){
+        this.rate = rate;
+    }
 }
