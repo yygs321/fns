@@ -14,7 +14,7 @@ import { fixedFromDiet } from "../../Redux/actions/actions";
 const FoodCount = (props) => {
   const { one, addedDiet } = props;
 
-  const [value, setValue] = useState(one.count || 1.0);
+  const [value, setValue] = useState(one.rate || 1.0);
   // eslint-disable-next-line no-unused-vars
   const [isAddedFood, setIsAddedFood] = useState(false);
 
@@ -28,18 +28,14 @@ const FoodCount = (props) => {
   const handleValueChange = (values) => {
     const { floatValue } = values;
     setValue(floatValue);
-    dispatch(
-      fixedFromDiet({ name: one.name, kcal: one.kcal, count: floatValue })
-    );
+    dispatch(fixedFromDiet({ ...one, rate: floatValue }));
   };
 
   const handlePlus = () => {
     if (value < 99.5) {
       const newValue = value + 0.5;
       setValue(newValue);
-      dispatch(
-        fixedFromDiet({ name: one.name, kcal: one.kcal, count: newValue })
-      );
+      dispatch(fixedFromDiet({ ...one, rate: newValue }));
     }
   };
 
@@ -48,9 +44,7 @@ const FoodCount = (props) => {
       const newValue = value - 0.5;
       setValue(newValue);
 
-      dispatch(
-        fixedFromDiet({ name: one.name, kcal: one.kcal, count: newValue })
-      );
+      dispatch(fixedFromDiet({ ...one, rate: newValue }));
     }
   };
 

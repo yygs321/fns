@@ -6,18 +6,26 @@ import NavigateBeforeRoundedIcon from "@mui/icons-material/NavigateBeforeRounded
 import SearchIcon from "@mui/icons-material/Search";
 
 import { useLocation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { resetDiet, deleteFromDiet } from "../../Redux/actions/actions";
+import axios from "axios";
 
 import FoodCount from "./FoodCount";
 
-import { useDispatch, useSelector } from "react-redux";
-import { resetDiet, deleteFromDiet } from "../../Redux/actions/actions";
-
 const DietInputPage = () => {
+  const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
+  const accessToken = useSelector((state) => {
+    return state.auth.accessToken;
+  });
+
   // 여기 추후에 리덕스쪽에서 데이터 관리할 것임
   // 식단 데이터 받아온거 저장해놓고, 새로 추가하는 음식 데이터도 쌓다가 저장 누르면 api로 보내버리는 식.
 
   const location = useLocation();
   const state = location.state;
+
+  const today = state.today;
+  const intakeTime = state.intakeTime;
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -30,6 +38,14 @@ const DietInputPage = () => {
     return state.diet.addedDiet;
   });
 
+  const deletedDiet = useSelector((state) => {
+    return state.diet.deletedDiet;
+  });
+
+  const fixedDiet = useSelector((state) => {
+    return state.diet.fixedDiet;
+  });
+
   const goBackPage = () => {
     navigate(-1);
     dispatch(resetDiet());
@@ -37,15 +53,65 @@ const DietInputPage = () => {
 
   const goToSearch = () => {
     navigate("/diet/input/search", {
-      state: { name: state.name },
+      state: { name: state.name, today: today, intakeTime: intakeTime },
     });
   };
 
-  const handleSaveDietList = async () => {
-    // 백으로 add, delete, fix 보내는 로직을 async 먼저 써서 그거 완료된 뒤에 reset하고 navigate 되도록
+  console.log(addedDiet);
+  console.log(deletedDiet);
+  console.log(fixedDiet);
 
-    dispatch(resetDiet());
-    navigate("/diet");
+  const handleSaveDietList = async () => {
+    try {
+      console.log(axios, "야호");
+      console.log(SERVER_API_URL, "야호");
+      console.log(accessToken, "야호");
+
+      // 백으로 add, delete, fix 보내는 로직을 async 먼저 써서 그거 완료된 뒤에 reset하고 navigate 되도록
+
+      // const delete_res = await axios({
+      //   method: "post",
+      //   url: `${SERVER_API_URL}/intake`,
+      //   headers: {
+      //     Authorization: accessToken,
+      //   },
+      //   data: {
+      //     // 음식 리스트
+      //     date: today,
+      //   },
+      // });
+
+      // const add_res = await axios({
+      //   method: "post",
+      //   url: `${SERVER_API_URL}/intake`,
+      //   headers: {
+      //     Authorization: accessToken,
+      //   },
+      //   data: {
+      //     // 음식 리스트
+      //     date: today,
+      //   },
+      // });
+
+      // const fix_res = await axios({
+      //   method: "post",
+      //   url: `${SERVER_API_URL}/intake`,
+      //   headers: {
+      //     Authorization: accessToken,
+      //   },
+      //   data: {
+      //     // 음식 리스트
+      //     date: today,
+      //   },
+      // });
+
+      // console.log(res.data);
+
+      dispatch(resetDiet());
+      navigate("/diet");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleDeleteFood = (one) => {
@@ -270,7 +336,7 @@ const DietInputPage = () => {
                     overflow="hidden"
                     textOverflow="ellipsis"
                   >
-                    {one.carb} mg
+                    {one.carbs} mg
                   </Typography>
                 </Grid>
                 <Grid
@@ -303,7 +369,7 @@ const DietInputPage = () => {
                     overflow="hidden"
                     textOverflow="ellipsis"
                   >
-                    {one.prot} mg
+                    {one.protein} mg
                   </Typography>
                 </Grid>
                 <Grid
@@ -336,7 +402,7 @@ const DietInputPage = () => {
                     overflow="hidden"
                     textOverflow="ellipsis"
                   >
-                    {one.prov} mg
+                    {one.fat} mg
                   </Typography>
                 </Grid>
                 <Grid
@@ -498,7 +564,7 @@ const DietInputPage = () => {
               textOverflow="ellipsis"
             >
               {nowDietList.reduce(
-                (totalCarb, food) => totalCarb + food.carb * food.count,
+                (totalCarbs, food) => totalCarbs + food.carbs * food.count,
                 0
               )}{" "}
               mg
@@ -531,7 +597,8 @@ const DietInputPage = () => {
               textOverflow="ellipsis"
             >
               {nowDietList.reduce(
-                (totalProt, food) => totalProt + food.prot * food.count,
+                (totalProtein, food) =>
+                  totalProtein + food.protein * food.count,
                 0
               )}{" "}
               mg
@@ -564,7 +631,7 @@ const DietInputPage = () => {
               textOverflow="ellipsis"
             >
               {nowDietList.reduce(
-                (totalProv, food) => totalProv + food.prov * food.count,
+                (totalFat, food) => totalFat + food.fat * food.count,
                 0
               )}{" "}
               mg
