@@ -28,21 +28,15 @@ const KakaoCallback = () => {
         },
       });
 
-      console.log('#1');
-      console.log(res.data.message);
-      console.log('#2');
-      console.log(res.data.data.tokenDto);
-      console.log('#3');
-      console.log(res.data.data.tokenDto.accessToken);
-      console.log(res.data.data.tokenDto.refreshToken);
 
       const tokenData = res.data.data.tokenDto;
-      console.log('#4');
+      console.log('#1');
       console.log(tokenData.accessToken);
       dispatch(
         userLogin({
           accessToken: tokenData.accessToken,
           refreshToken: tokenData.refreshToken,
+          
         })
       );
       
@@ -50,7 +44,7 @@ const KakaoCallback = () => {
         await RefreshToken();
       }
 
-      if (!res.response.data.hasProfile) {
+      if (!res.data.data.hasProfile) {
         // 프로필이 없다면 정보입력 페이지로 이동.
         navigate(`/info`);
       } else {
