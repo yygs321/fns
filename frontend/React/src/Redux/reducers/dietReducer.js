@@ -9,20 +9,17 @@ const initialState = {
 };
 
 // 식단 관련 리듀서
-// 일단 food.name으로 해놓은 것들을 나중에 API 연결 하면서 음식 ID로 바꾸기
 
 export const dietReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.NOW_DIET:
       return {
         ...state,
-        // alreadyDiet: action.payload,
         nowDiet: action.payload,
       };
     case actionTypes.RESET_DIET:
       return {
         ...state,
-        // alreadyDiet: [],
         nowDiet: [],
         addedDiet: [],
         deletedDiet: [],
@@ -34,9 +31,9 @@ export const dietReducer = (state = initialState, action) => {
       let updatedAddedDiet = [...state.addedDiet];
 
       // 이미 삭제된 음식 목록에 있는 경우, 해당 음식을 삭제목록에서 제거
-      if (updatedDeletedDiet.some((food) => food.name === addFood.name)) {
+      if (updatedDeletedDiet.some((food) => food.foodId === addFood.foodId)) {
         updatedDeletedDiet = updatedDeletedDiet.filter(
-          (food) => food.name !== addFood.name
+          (food) => food.foodId !== addFood.foodId
         );
       }
       // 아니라면 새 음식으로 추가
@@ -53,7 +50,7 @@ export const dietReducer = (state = initialState, action) => {
       const deleteFood = action.payload;
 
       const existingAddedFoodIndex = state.addedDiet.findIndex(
-        (food) => food.name === deleteFood.name
+        (food) => food.foodId === deleteFood.foodId
       );
 
       if (existingAddedFoodIndex !== -1) {
@@ -63,13 +60,13 @@ export const dietReducer = (state = initialState, action) => {
 
         // 수정된 음식이면 수정목록에서도 제거
         const updatedFixedDiet = state.fixedDiet.filter(
-          (food) => food.name !== deleteFood.name
+          (food) => food.foodId !== deleteFood.foodId
         );
 
         return {
           ...state,
           nowDiet: state.nowDiet.filter(
-            (food) => food.name !== deleteFood.name
+            (food) => food.foodId !== deleteFood.foodId
           ),
           addedDiet: updatedAddedDiet,
           fixedDiet: updatedFixedDiet,
@@ -78,7 +75,7 @@ export const dietReducer = (state = initialState, action) => {
         return {
           ...state,
           nowDiet: state.nowDiet.filter(
-            (food) => food.name !== deleteFood.name
+            (food) => food.foodId !== deleteFood.foodId
           ),
           deletedDiet: [...state.deletedDiet, deleteFood],
         };
@@ -86,20 +83,20 @@ export const dietReducer = (state = initialState, action) => {
     case actionTypes.FIXED_FROM_DIET:
       const fixFood = action.payload;
       const existingFood = state.fixedDiet.find(
-        (food) => food.name === fixFood.name
+        (food) => food.foodId === fixFood.foodId
       );
       const existingAddIndex = state.addedDiet.findIndex(
-        (food) => food.name === fixFood.name
+        (food) => food.foodId === fixFood.foodId
       );
 
       if (existingFood) {
         const updatedFixedDiet = state.fixedDiet.map((food) =>
-          food.name === fixFood.name ? fixFood : food
+          food.foodId === fixFood.foodId ? fixFood : food
         );
         return {
           ...state,
           nowDiet: state.nowDiet.map((food) =>
-            food.name === fixFood.name ? fixFood : food
+            food.foodId === fixFood.foodId ? fixFood : food
           ),
           fixedDiet: updatedFixedDiet,
         };
@@ -109,7 +106,7 @@ export const dietReducer = (state = initialState, action) => {
         return {
           ...state,
           nowDiet: state.nowDiet.map((food) =>
-            food.name === fixFood.name ? fixFood : food
+            food.foodId === fixFood.foodId ? fixFood : food
           ),
           addedDiet: updatedAddedDiet,
         };
@@ -117,7 +114,7 @@ export const dietReducer = (state = initialState, action) => {
         return {
           ...state,
           nowDiet: state.nowDiet.map((food) =>
-            food.name === fixFood.name ? fixFood : food
+            food.foodId === fixFood.foodId ? fixFood : food
           ),
           fixedDiet: [...state.fixedDiet, fixFood],
         };

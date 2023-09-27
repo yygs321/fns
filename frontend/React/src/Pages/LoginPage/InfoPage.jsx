@@ -146,6 +146,7 @@ const InfoPage = () => {
     }, 2000);
   };
 
+  // 중복체크 확인에서 지금 axios network에러
   const 중복체크버튼 = async () => {
     const 닉네임확인결과 = 닉네임확인함수(닉네임);
 
@@ -158,7 +159,7 @@ const InfoPage = () => {
             Authorization: accessToken,
           },
           // get이라서 body는 아마 안 될거라 추후에 API 되면 확인
-          params: {
+          data: {
             nickname: 닉네임,
           },
         });

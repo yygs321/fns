@@ -38,9 +38,9 @@ const Signup = () => {
       });
 
       console.log("이메일 전송");
-      console.log(res.data);
+      console.log(res);
 
-      //   // 만약 response로 뭔가 하려면 await 앞에 const res = 같은거로 변수 선언 시켜놓고 res.data같은거 쓰면 됨.
+      // 만약 response로 뭔가 하려면 await 앞에 const res = 같은거로 변수 선언 시켜놓고 res.data같은거 쓰면 됨.
 
       set이메일전송(true);
       set이메일모달버튼(true);
@@ -63,7 +63,7 @@ const Signup = () => {
       });
 
       console.log("이메일 인증 확인");
-      console.log(res.data);
+      console.log(res);
 
       if (res.data.success) {
         set이메일인증(true);
@@ -96,25 +96,26 @@ const Signup = () => {
         if (비번양식확인) {
           // 비밀번호 재입력과 일치여부 확인
           if (일치여부확인) {
+            console.log(이메일);
+            console.log(비밀번호);
+            console.log(비밀번호확인);
+
             try {
               const res = await axios({
                 method: "post",
                 url: `${SERVER_API_URL}/members/sign-up`,
                 data: {
-                  requestDto: {
-                    email: 이메일,
-                    password: 비밀번호,
-                    password2: 비밀번호확인,
-                    provider: "DEFAULT",
-                  },
+                  email: 이메일,
+                  password: 비밀번호,
+                  password2: 비밀번호확인,
+                  provider: "DEFAULT",
                 },
               });
-
               console.log("가입 버튼");
-              console.log(res.data);
-
+              console.log(res);
               if (res.data.success) {
                 // info로 보내려면 미리 로그인 토큰들을 갖고 있어야하니까, 회원가입 시키면 로그인도 시켜야함
+
                 const res2 = await axios({
                   method: "post",
                   url: `${SERVER_API_URL}/auth/sign-in`,
@@ -123,8 +124,10 @@ const Signup = () => {
                     password: 비밀번호,
                   },
                 });
+
+                console.log(res2);
                 console.log(res2.data.message);
-                const tokenData = res2.data.data.tokenResponseDto;
+                const tokenData = res2.data.data.tokenDto;
                 dispatch(
                   userLogin({
                     accessToken: tokenData.accessToken,
@@ -137,6 +140,7 @@ const Signup = () => {
               }
             } catch (err) {
               console.log(err);
+              set가입실패(err.response.data.message);
             }
           } else {
             set가입실패("비밀번호 확인이 일치하지 않습니다.");
@@ -145,10 +149,10 @@ const Signup = () => {
           set가입실패("비밀번호 형식이 잘못되었습니다.");
         }
       } else {
-        set가입실패("메일 인증을 완료해주세요.");
+        set가입실패("메일 인증을 확인해주세요.");
       }
     } else {
-      set가입실패("메일 전송을 완료해주세요.");
+      set가입실패("메일 인증을 완료해주세요.");
     }
     set가입실패창(true);
     setTimeout(() => {
@@ -166,14 +170,19 @@ const Signup = () => {
   }
 
   const 비밀번호입력 = (e) => {
-    set비밀번호(e.target.value);
+    const new비밀번호 = e.target.value;
+    set비밀번호(new비밀번호);
 
+    console.log(new비밀번호);
     const 비번체크결과 = 비번체크(e.target.value);
     set비번양식확인(비번체크결과);
   };
 
   const 비밀번호확인입력 = (e) => {
-    set비밀번호확인(e.target.value);
+    const new비밀번호확인 = e.target.value;
+    set비밀번호확인(new비밀번호확인);
+
+    console.log(new비밀번호확인);
     set일치여부확인(e.target.value === 비밀번호 ? true : false);
   };
 

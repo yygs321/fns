@@ -9,8 +9,14 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 import { addToDiet, deleteFromDiet } from "../../Redux/actions/actions";
+import axios from "axios";
 
 const SearchFood = () => {
+  const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
+  const accessToken = useSelector((state) => {
+    return state.auth.accessToken;
+  });
+
   const [searchTerm, setSearchTerm] = useState("");
 
   console.log(searchTerm);
@@ -25,31 +31,51 @@ const SearchFood = () => {
 
   const state = location.state;
 
-  const searchResult = [
-    { name: "치킨버거", kcal: 10 },
-    { name: "새우버거", kcal: 11 },
-    { name: "야옹이", kcal: 15 },
-    { name: "버거킹", kcal: 5 },
-    { name: "치킨", kcal: 10 },
-    { name: "새우", kcal: 11 },
-    { name: "야옹", kcal: 15 },
-    { name: "버거", kcal: 5 },
-    { name: "치거", kcal: 10 },
-    { name: "새거", kcal: 11 },
-    { name: "야이", kcal: 15 },
-    { name: "버킹", kcal: 5 },
-    { name: "킨거", kcal: 10 },
-    { name: "우버", kcal: 11 },
-    { name: "이", kcal: 15 },
-    { name: "거", kcal: 5 },
-  ];
+  const [searchResult, setSearchResult] = useState([
+    // { name: "치킨버거", kcal: 10, carb: 20, prot: 20, prov: 20 },
+    // { name: "새우버거", kcal: 11, carb: 20, prot: 20, prov: 20 },
+    // { name: "야옹이", kcal: 15, carb: 20, prot: 20, prov: 20 },
+    // { name: "버거킹", kcal: 5, carb: 20, prot: 20, prov: 20 },
+    // { name: "치킨", kcal: 10, carb: 20, prot: 20, prov: 20 },
+    // { name: "새우", kcal: 11, carb: 20, prot: 20, prov: 20 },
+    // { name: "야옹", kcal: 15, carb: 20, prot: 20, prov: 20 },
+    // { name: "버거", kcal: 5, carb: 20, prot: 20, prov: 20 },
+    // { name: "치거", kcal: 10, carb: 20, prot: 20, prov: 20 },
+    // { name: "새거", kcal: 11, carb: 20, prot: 20, prov: 20 },
+    // { name: "야이", kcal: 15, carb: 20, prot: 20, prov: 20 },
+    // { name: "버킹", kcal: 5, carb: 20, prot: 20, prov: 20 },
+    // { name: "킨거", kcal: 10, carb: 20, prot: 20, prov: 20 },
+    // { name: "우버", kcal: 11, carb: 20, prot: 20, prov: 20 },
+    // { name: "이", kcal: 15, carb: 20, prot: 20, prov: 20 },
+    // { name: "거", kcal: 5, carb: 20, prot: 20, prov: 20 },
+  ]);
 
   const goBackPage = () => {
     navigate(-1);
   };
 
-  const handleSearchFood = () => {
+  const handleSearchFood = async () => {
     // 여기다 검색 api
+    try {
+      const res = await axios({
+        method: "get",
+        url: `${SERVER_API_URL}/foods`,
+        params: {
+          name: searchTerm,
+        },
+        headers: {
+          Authorization: accessToken,
+        },
+      });
+
+      console.log(res.data);
+
+      if (res.data.success) {
+        setSearchResult(res.data.data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handlePressEnter = (event) => {
@@ -59,7 +85,14 @@ const SearchFood = () => {
   };
 
   const handleAddFood = (one) => {
-    dispatch(addToDiet({ ...one, count: 1 }));
+    dispatch(
+      addToDiet({
+        ...one,
+        rate: 1,
+        date: state.today,
+        intakeTime: state.intakeTime,
+      })
+    );
   };
 
   const handleCancleFood = (one) => {

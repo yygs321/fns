@@ -12,7 +12,7 @@ import { useDispatch } from "react-redux";
 import { nowDiet, resetDiet } from "../../Redux/actions/actions";
 
 const DietAccordion = (props) => {
-  const { name, food } = props;
+  const { name, food, today, intakeTime } = props;
 
   const [isAccordionSelected, setIsAccordionSelected] = useState(false);
   const navigate = useNavigate();
@@ -28,7 +28,9 @@ const DietAccordion = (props) => {
     event.stopPropagation();
     await dispatch(resetDiet());
     await dispatch(nowDiet(food));
-    navigate("/diet/input", { state: { name: name } });
+    navigate("/diet/input", {
+      state: { name: name, today: today, intakeTime: intakeTime },
+    });
   };
 
   return (

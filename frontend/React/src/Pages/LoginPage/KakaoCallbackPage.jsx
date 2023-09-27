@@ -28,8 +28,8 @@ const KakaoCallback = () => {
         },
       });
 
-      console.log(res.data.message);
-      const tokenData = res.data.data.tokenResponseDto;
+      console.log(res.response.data.message);
+      const tokenData = res.response.data.data.tokenDto;
 
       dispatch(
         userLogin({
@@ -38,11 +38,11 @@ const KakaoCallback = () => {
         })
       );
 
-      if (tokenData.expirationTime < 100000) {
+      if (tokenData.expirationTime < 200000) {
         await RefreshToken();
       }
 
-      if (!res.data.hasProfile) {
+      if (!res.response.data.hasProfile) {
         // 프로필이 없다면 정보입력 페이지로 이동.
         navigate(`/info`);
       } else {

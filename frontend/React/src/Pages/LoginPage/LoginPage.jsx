@@ -72,7 +72,7 @@ const LoginPage = () => {
       console.log(res.data);
 
       console.log(res.data.message);
-      const tokenData = res.data.data.tokenResponseDto;
+      const tokenData = res.data.data.tokenDto;
 
       dispatch(
         userLogin({
@@ -81,11 +81,13 @@ const LoginPage = () => {
         })
       );
 
-      if (tokenData.expirationTime < 100000) {
+      if (tokenData.expirationTime < 200000) {
         await RefreshToken();
       }
 
-      if (!res.data.hasProfile) {
+      console.log(res.data.data.hasProfile);
+
+      if (!res.data.data.hasProfile) {
         // 프로필이 없다면 정보입력 페이지로 이동.
         navigate(`/info`);
       } else {
