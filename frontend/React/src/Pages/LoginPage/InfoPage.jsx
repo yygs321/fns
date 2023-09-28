@@ -30,7 +30,7 @@ const InfoPage = () => {
   const accessToken = useSelector((state) => {
     return state.auth.accessToken;
   });
-  console.log(accessToken)
+  
   const [닉네임, set닉네임] = useState("");
   const [닉네임확인, set닉네임확인] = useState(false);
   const [닉네임오류, set닉네임오류] = useState(undefined);
