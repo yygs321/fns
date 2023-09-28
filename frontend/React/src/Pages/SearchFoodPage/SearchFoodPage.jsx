@@ -27,6 +27,7 @@ const SearchFoodPage = () => {
 
   const handleSearch = async () => {
     try {
+      console.log("Search Term:", searchTerm);
       const response = await axios.get(`${SERVER_API_URL}/foods`, {
         params: { name: searchTerm },
         headers: {
@@ -34,7 +35,7 @@ const SearchFoodPage = () => {
           Authorization: accessToken,
         }
       });
-      console.log(params)
+      console.log("Params sent:", response.config.params);
       if (response.data.success) {
         setSearchResults(response.data.data);
       } else {

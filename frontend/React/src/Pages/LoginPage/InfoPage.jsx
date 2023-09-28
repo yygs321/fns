@@ -156,7 +156,8 @@ const InfoPage = () => {
           method: "post",
           url: `${SERVER_API_URL}/members/check-nickname-duplicate`,
           headers: {
-            Authorization: accessToken,
+            // Authorization: accessToken,
+            Authorization: `Bearer ${accessToken}`
           },
           // get이라서 body는 아마 안 될거라 추후에 API 되면 확인
           data: {
