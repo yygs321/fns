@@ -3,6 +3,8 @@ import { Typography, TextField, Grid, Chip, Divider, Box } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import FilteredSearchResults from "./FilteredSearchResults";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 const SearchFoodPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -10,17 +12,8 @@ const SearchFoodPage = () => {
   const [carbs, setCarbs] = useState("");
   const [protein, setProtein] = useState("");
   const [fat, setFat] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
 
-  const DUMMY_DATA = [
-    { name: "식품1", kcal: 80, carbs: 9, protein: 53, fat: 3 },
-    { name: "식품2", kcal: 150, carbs: 60, protein: 90, fat: 66 },
-    { name: "식품3", kcal: 300, carbs: 36, protein: 105, fat: 19 },
-    { name: "식품4", kcal: 400, carbs: 100, protein: 56, fat: 96 },
-    { name: "식품5", kcal: 200, carbs: 15, protein: 60, fat: 60 },
-    { name: "식품6", kcal: 300, carbs: 90, protein: 50, fat: 30 },
-    { name: "식품7", kcal: 720, carbs: 75, protein: 10, fat: 15 },
-    { name: "식품8", kcal: 500, carbs: 90, protein: 65, fat: 30 },
-  ];
   const filterKeyToLabel = {
     kcal: "kcal",
     carbs: "탄수화물",
@@ -28,9 +21,28 @@ const SearchFoodPage = () => {
     fat: "지방",
   };
 
-  const filteredData = DUMMY_DATA.filter((item) =>
-    item.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+
+  const accessToken = useSelector((state) => state.auth.accessToken);
+  const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
+
+  const handleSearch = async () => {
+    try {
+      const response = await axios.get(`${SERVER_API_URL}/foods`, {
+        params: { name: searchTerm },
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      });
+
+      if (response.data.success) {
+        setSearchResults(response.data.data);
+      } else {
+        console.error("Failed to fetch search results:", response.data.message);
+      }
+    } catch (error) {
+      console.error("Error while searching:", error);
+    }
+  };
 
   const filters = { kcal, carbs, protein, fat };
   const activeFilters = Object.keys(filters).filter((key) => filters[key]);
@@ -107,18 +119,7 @@ const SearchFoodPage = () => {
           alignItems="center"
         ></Grid>
       </Grid>
-      {/* <TextField
-        fullWidth
-        variant="outlined"
-        placeholder="음식을 검색하세요"
-        onChange={(e) => {
-          setSearchTerm(e.target.value);
-        }}
-        InputProps={{
-          endAdornment: <SearchIcon color="primary" />,
-          sx: { borderRadius: "10px" },
-        }}
-      /> */}
+
       <Grid
         container
         item
@@ -142,6 +143,7 @@ const SearchFoodPage = () => {
               endAdornment: (
                 <SearchIcon
                   color="text.secondary"
+                  onClick={handleSearch}
                   // onClick={handleSearchFollow}
                 />
               ),
@@ -222,7 +224,9 @@ const SearchFoodPage = () => {
             className="noscroll"
             style={{ height: "66vh", overflowY: "scroll" }}
           >
-            <FilteredSearchResults data={filteredData} filters={filters} />
+            <FilteredSearchResults data={searchResults} filters={filters} />
+            {/* <FilteredSearchResults data={searchResults} /> */}
+
           </div>
         </div>
       ) : (
