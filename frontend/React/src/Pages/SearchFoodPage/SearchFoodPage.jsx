@@ -30,10 +30,11 @@ const SearchFoodPage = () => {
       const response = await axios.get(`${SERVER_API_URL}/foods`, {
         params: { name: searchTerm },
         headers: {
-          Authorization: `Bearer ${accessToken}`
+          // Authorization: `Bearer ${accessToken}`
+          Authorization: accessToken,
         }
       });
-
+      console.log(params)
       if (response.data.success) {
         setSearchResults(response.data.data);
       } else {
