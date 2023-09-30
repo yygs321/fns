@@ -18,7 +18,7 @@ const DietAccordion = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const totalKcal = food.reduce((total, f) => total + f.kcal, 0);
+  const totalKcal = food.reduce((total, f) => total + f.kcal * f.rate, 0);
 
   const handleAccordion = () => {
     setIsAccordionSelected(!isAccordionSelected);
@@ -81,7 +81,7 @@ const DietAccordion = (props) => {
                 {food.map((f, index) => (
                   <React.Fragment key={index}>
                     <Typography sx={{ color: "text.secondary" }}>
-                      {f.name}
+                      {f.foodName}
                     </Typography>
                     {index !== food.length - 1 && (
                       <Typography sx={{ color: "text.secondary" }}>
@@ -98,10 +98,10 @@ const DietAccordion = (props) => {
                   container
                   xs={11}
                   justifyContent={"space-between"}
-                  key={`${f.name}-${index}`}
+                  key={`${f.foodName}-${index}`}
                 >
-                  <Typography sx={{}}>{f.name}</Typography>
-                  <Typography sx={{}}>{f.kcal || 0} kcal</Typography>
+                  <Typography sx={{}}>{f.foodName}</Typography>
+                  <Typography sx={{}}>{f.kcal * f.rate || 0} kcal</Typography>
                 </Grid>
               ))
             )}

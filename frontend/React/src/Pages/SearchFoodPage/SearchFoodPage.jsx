@@ -21,7 +21,6 @@ const SearchFoodPage = () => {
     fat: "지방",
   };
 
-
   const accessToken = useSelector((state) => state.auth.accessToken);
   const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
 
@@ -33,7 +32,7 @@ const SearchFoodPage = () => {
         headers: {
           // Authorization: `Bearer ${accessToken}`
           Authorization: accessToken,
-        }
+        },
       });
       console.log("Params sent:", response.config.params);
       if (response.data.success) {
@@ -228,7 +227,6 @@ const SearchFoodPage = () => {
           >
             <FilteredSearchResults data={searchResults} filters={filters} />
             {/* <FilteredSearchResults data={searchResults} /> */}
-
           </div>
         </div>
       ) : (

@@ -1,15 +1,19 @@
-import React, {
-  memo,
-  //  useState
-} from "react";
+import React, { memo, useEffect, useState } from "react";
 
 import { Grid, Typography } from "@mui/material";
 
-// import NavigateBeforeRoundedIcon from "@mui/icons-material/NavigateBeforeRounded";
-// import NavigateNextRoundedIcon from "@mui/icons-material/NavigateNextRounded";
+import NavigateBeforeRoundedIcon from "@mui/icons-material/NavigateBeforeRounded";
+import NavigateNextRoundedIcon from "@mui/icons-material/NavigateNextRounded";
 import DietAccordion from "./DietAccordion";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 const DietPage = () => {
+  const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
+  const accessToken = useSelector((state) => {
+    return state.auth.accessToken;
+  });
+
   const now = new Date();
   const before = new Date(now);
   before.setDate(before.getDate() - 1);
@@ -21,17 +25,50 @@ const DietPage = () => {
     weekday: "short",
   };
   const today = now.toLocaleDateString("ko-KR", options).split(" ");
-  // const yesterday = before.toLocaleDateString("ko-KR", options).split(" ");
+  const yesterday = before.toLocaleDateString("ko-KR", options).split(" ");
 
   const year = now.getFullYear();
   const month = (now.getMonth() + 1).toString().padStart(2, "0"); // 월은 0부터 시작하므로 1을 더하고 두 자리로 포맷팅합니다.
   const day = now.getDate().toString().padStart(2, "0"); // 일자를 두 자리로 포맷팅합니다.
-  const formattedToday = `${year}-${month}-${day}`;
+  const beforeDay = now.getDate().toString().padStart(2, "0");
 
-  // const [isToday, setIsToday] = useState(true);
+  const formattedToday = `${year}-${month}-${day}`;
+  const formattedYesterday = `${year}-${month}-${beforeDay}`;
+
+  const [isToday, setIsToday] = useState(true);
 
   // 임시로 일자 바꾸기랑 더미데이터..
   // 나중에 일자 바뀌면 떠있는 식단 데이터도 바뀌어야함.
+
+  // 500 에러로 일단 주석
+
+  const [mealData, setMealData] = useState([]);
+
+  // eslint-disable-next-line no-unused-vars
+  const getIntakeData = async () => {
+    try {
+      const res = axios({
+        method: "get",
+        url: `${SERVER_API_URL}/intake/total/${
+          isToday ? formattedToday : formattedYesterday
+        }`,
+        headers: {
+          Authorization: accessToken,
+        },
+      });
+      console.log(res);
+
+      setMealData(res.data);
+      console.log(mealData);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    // getIntakeData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const meals = [
     {
@@ -40,21 +77,21 @@ const DietPage = () => {
       // food: [],
       food: [
         {
-          name: "참",
+          foodName: "우유",
           kcal: 100,
-          carb: 20,
-          prot: 20,
-          prov: 20,
-          count: 1,
+          carbs: 20,
+          protein: 20,
+          fat: 20,
+          rate: 1,
           foodId: 1,
         },
         {
-          name: "치",
+          foodName: "씨리얼",
           kcal: 100,
-          carb: 20,
-          prot: 20,
-          prov: 20,
-          count: 2,
+          carbs: 20,
+          protein: 20,
+          fat: 20,
+          rate: 2,
           foodId: 2,
         },
       ],
@@ -65,30 +102,30 @@ const DietPage = () => {
       // food: [],
       food: [
         {
-          name: "참치",
+          foodName: "제육볶음",
           kcal: 155,
-          carb: 20,
-          prot: 20,
-          prov: 20,
-          count: 4,
+          carbs: 20,
+          protein: 20,
+          fat: 20,
+          rate: 4,
           foodId: 3,
         },
         {
-          name: "통",
+          foodName: "배추김치",
           kcal: 100,
-          carb: 20,
-          prot: 20,
-          prov: 20,
-          count: 2,
+          carbs: 20,
+          protein: 20,
+          fat: 20,
+          rate: 2,
           foodId: 4,
         },
         {
-          name: "조림",
+          foodName: "쌀밥",
           kcal: 100,
-          carb: 20,
-          prot: 20,
-          prov: 20,
-          count: 5,
+          carbs: 20,
+          protein: 20,
+          fat: 20,
+          rate: 5,
           foodId: 5,
         },
       ],
@@ -108,48 +145,48 @@ const DietPage = () => {
       // food: [],
       food: [
         {
-          name: "참치맛 크래커",
+          foodName: "참치맛 크래커",
           kcal: 5,
-          carb: 20,
-          prot: 20,
-          prov: 20,
-          count: 1,
+          carbs: 20,
+          protein: 20,
+          fat: 20,
+          rate: 1,
           foodId: 6,
         },
         {
-          name: "참치맛 감자칩",
+          foodName: "참치맛 감자칩",
           kcal: 10,
-          carb: 20,
-          prot: 20,
-          prov: 20,
-          count: 3,
+          carbs: 20,
+          protein: 20,
+          fat: 20,
+          rate: 3,
           foodId: 7,
         },
         {
-          name: "참치",
+          foodName: "참치맛 껌",
           kcal: 15,
-          carb: 20,
-          prot: 20,
-          prov: 20,
-          count: 5,
+          carbs: 20,
+          protein: 20,
+          fat: 20,
+          rate: 5,
           foodId: 15,
         },
         {
-          name: "참치맛 롱소드",
+          foodName: "참치맛 젤리",
           kcal: 20,
-          carb: 20,
-          prot: 20,
-          prov: 20,
-          count: 7,
+          carbs: 20,
+          protein: 20,
+          fat: 20,
+          rate: 7,
           foodId: 8,
         },
         {
-          name: "참치맛 머신건",
+          foodName: "참치맛 아이스크림",
           kcal: 5,
-          carb: 20,
-          prot: 20,
-          prov: 20,
-          count: 9,
+          carbs: 20,
+          protein: 20,
+          fat: 20,
+          rate: 9,
           foodId: 89,
         },
       ],
@@ -159,15 +196,15 @@ const DietPage = () => {
   const totalMealsKcal = meals.reduce((total, meal) => {
     const mealTotalKcal = meal.food
       ? meal.food.reduce((mealTotal, foodItem) => {
-          return mealTotal + foodItem.kcal;
+          return mealTotal + foodItem.kcal * foodItem.rate;
         }, 0)
       : 0;
     return total + mealTotalKcal;
   }, 0);
 
-  // const changeDay = () => {
-  //   setIsToday(!isToday);
-  // };
+  const changeDay = () => {
+    setIsToday(!isToday);
+  };
 
   return (
     <div className="gray-pages">
@@ -194,7 +231,7 @@ const DietPage = () => {
             justifyContent={"center"}
             alignItems={"center"}
           >
-            {/* <Grid
+            <Grid
               container
               item
               xs={2}
@@ -212,11 +249,11 @@ const DietPage = () => {
                   onClick={changeDay}
                 />
               )}
-            </Grid> */}
+            </Grid>
             <Grid
               container
               item
-              xs={12}
+              xs={8}
               justifyContent={"center"}
               alignItems={"center"}
             >
@@ -228,17 +265,17 @@ const DietPage = () => {
                 fontWeight={"bold"}
                 sx={{
                   textShadow: "2px 2px 20px #c8c8c8",
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
                 }}
+                whiteSpace="nowrap"
+                overflow="hidden"
+                textOverflow="ellipsis"
               >
-                {/* {isToday ? */}
-                {`${today[0]}${today[1]}${today[2]}${today[3]}`}
-                {/* // : `${yesterday[0]}${yesterday[1]}${yesterday[2]}${yesterday[3]}`} */}
+                {isToday
+                  ? `${today[0]}${today[1]}${today[2]}${today[3]}`
+                  : `${yesterday[0]}${yesterday[1]}${yesterday[2]}${yesterday[3]}`}
               </Typography>
             </Grid>
-            {/* <Grid
+            <Grid
               container
               item
               xs={2}
@@ -256,7 +293,7 @@ const DietPage = () => {
                   onClick={changeDay}
                 />
               )}
-            </Grid> */}
+            </Grid>
           </Grid>
           <Grid
             container
