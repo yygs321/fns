@@ -75,10 +75,7 @@ const DietInputPage = () => {
       //   headers: {
       //     Authorization: accessToken,
       //   },
-      //   data: {
-      //     // 음식 리스트
-      //     date: today,
-      //   },
+      //   data: deletedDiet,
       // });
 
       // const add_res = await axios({
@@ -87,10 +84,7 @@ const DietInputPage = () => {
       //   headers: {
       //     Authorization: accessToken,
       //   },
-      //   data: {
-      //     // 음식 리스트
-      //     date: today,
-      //   },
+      //   data: addedDiet,
       // });
 
       // const fix_res = await axios({
@@ -99,10 +93,7 @@ const DietInputPage = () => {
       //   headers: {
       //     Authorization: accessToken,
       //   },
-      //   data: {
-      //     // 음식 리스트
-      //     date: today,
-      //   },
+      //   data: fixedDiet,
       // });
 
       // console.log(res.data);
@@ -224,7 +215,7 @@ const DietInputPage = () => {
       >
         {nowDietList.map((one, index) => (
           <Grid
-            key={`${one.name}-detail-${index}`}
+            key={`${one.foodName}-detail-${index}`}
             container
             item
             xs={11}
@@ -258,7 +249,7 @@ const DietInputPage = () => {
                   overflow="hidden"
                   textOverflow="ellipsis"
                 >
-                  {one.name}
+                  {one.foodName}
                 </Typography>
               </Grid>
               <Grid
@@ -531,7 +522,7 @@ const DietInputPage = () => {
               textOverflow="ellipsis"
             >
               {nowDietList.reduce(
-                (totalKcal, food) => totalKcal + food.kcal * food.count,
+                (totalKcal, food) => totalKcal + food.kcal * food.rate,
                 0
               )}{" "}
               kcal
@@ -564,7 +555,7 @@ const DietInputPage = () => {
               textOverflow="ellipsis"
             >
               {nowDietList.reduce(
-                (totalCarbs, food) => totalCarbs + food.carbs * food.count,
+                (totalCarbs, food) => totalCarbs + food.carbs * food.rate,
                 0
               )}{" "}
               mg
@@ -597,8 +588,7 @@ const DietInputPage = () => {
               textOverflow="ellipsis"
             >
               {nowDietList.reduce(
-                (totalProtein, food) =>
-                  totalProtein + food.protein * food.count,
+                (totalProtein, food) => totalProtein + food.protein * food.rate,
                 0
               )}{" "}
               mg
@@ -631,7 +621,7 @@ const DietInputPage = () => {
               textOverflow="ellipsis"
             >
               {nowDietList.reduce(
-                (totalFat, food) => totalFat + food.fat * food.count,
+                (totalFat, food) => totalFat + food.fat * food.rate,
                 0
               )}{" "}
               mg

@@ -30,7 +30,7 @@ const InfoPage = () => {
   const accessToken = useSelector((state) => {
     return state.auth.accessToken;
   });
-  
+
   const [닉네임, set닉네임] = useState("");
   const [닉네임확인, set닉네임확인] = useState(false);
   const [닉네임오류, set닉네임오류] = useState(undefined);
@@ -80,6 +80,8 @@ const InfoPage = () => {
 
   const navigate = useNavigate();
 
+  // console.log(accessToken);
+
   const 저장버튼 = async () => {
     // 닉네임 입력 안 했음
     if (닉네임) {
@@ -98,7 +100,7 @@ const InfoPage = () => {
                     method: "post",
                     url: `${SERVER_API_URL}/members/profile`,
                     headers: {
-                      Authorization: accessToken,
+                      Authorization: `${accessToken}`,
                     },
                     data: {
                       nickname: 닉네임,
@@ -120,6 +122,7 @@ const InfoPage = () => {
                   }
                 } catch (err) {
                   console.log(err);
+                  set저장실패("프로필 저장에 실패했습니다.");
                 }
               } else {
                 set저장실패("성별을 설정해주세요.");
@@ -156,15 +159,16 @@ const InfoPage = () => {
           method: "post",
           url: `${SERVER_API_URL}/members/check-nickname-duplicate`,
           headers: {
-            // Authorization: accessToken,
-            Authorization: `Bearer ${accessToken}`
+            // Authorization: `JWT ${accessToken}`,
+            // Authorization: `Token ${accessToken}`,
+            // Authorization: `Bearer ${accessToken}`,
+            // Authorization: `${accessToken}`,
+            Authorization: accessToken,
           },
-          // get이라서 body는 아마 안 될거라 추후에 API 되면 확인
           data: {
             nickname: 닉네임,
           },
         });
-
         if (중복체크결과.success) {
           set닉네임확인(true);
           set닉네임오류(undefined);
@@ -175,6 +179,8 @@ const InfoPage = () => {
       } catch (err) {
         console.log(err);
       }
+
+      set닉네임확인(true);
     } else {
       // 닉네임 양식 맞춰주라는 이야기
       set닉네임오류("닉네임 형식이 잘못됐습니다.");

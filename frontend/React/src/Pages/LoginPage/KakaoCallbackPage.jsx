@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { userLogin } from "../../Redux/actions/actions";
 import { RefreshToken } from "../Common/Component/RefreshToken";
+import { Grid, Typography } from "@mui/material";
 
 const KakaoCallback = () => {
   const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
@@ -29,15 +30,14 @@ const KakaoCallback = () => {
       });
 
       const tokenData = res.data.data.tokenDto;
-      
+
       dispatch(
         userLogin({
           accessToken: tokenData.accessToken,
           refreshToken: tokenData.refreshToken,
-          
         })
       );
-      
+
       if (tokenData.expirationTime < 200000) {
         await RefreshToken();
       }
@@ -54,8 +54,22 @@ const KakaoCallback = () => {
   };
 
   return (
-    <div>
-      <p>로그인 중 입니다. 잠시만 기다려주세요.</p>
+    <div className="white-pages">
+      <Grid container justifyContent={"center"} alignItems={"center"}>
+        <Typography
+          variant="body1"
+          color="text.primary"
+          fontSize={"1rem"}
+          fontWeight={"bold"}
+          whiteSpace="nowrap"
+          overflow="hidden"
+          textOverflow="ellipsis"
+        >
+          로그인 중 입니다.
+          <br />
+          잠시만 기다려주세요.
+        </Typography>
+      </Grid>
     </div>
   );
 };
