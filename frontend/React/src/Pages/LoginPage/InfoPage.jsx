@@ -163,7 +163,8 @@ const InfoPage = () => {
             // Authorization: `Token ${accessToken}`,
             // Authorization: `Bearer ${accessToken}`,
             // Authorization: `${accessToken}`,
-            Authorization: accessToken,
+            // Authorization: accessToken,
+            'X-FNS-ACCESSTOKEN': accessToken,
           },
           data: {
             nickname: 닉네임,
