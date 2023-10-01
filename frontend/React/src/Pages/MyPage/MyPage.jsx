@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {List, ListItemText, ListItemIcon, Divider, Typography } from "@mui/material";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
@@ -18,14 +18,17 @@ const MyPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const profile = {
+  const [profile, setProfile] = useState({
     image: uploadedImage || profileimg,
     nickname: "선글라스킹냥이",
     age: 1,
     gender: "남",
     height: 34,
     weight: 10,
-  };
+});
+
+
+  const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -39,6 +42,36 @@ const MyPage = () => {
     navigate("/");
     // 임시
   };
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+        try {
+            const response = await axios.get(`${SERVER_API_URL}/api/members`, {
+                headers: {
+                    'X-FNS-ACCESSTOKEN': accessToken,  // accessToken이 필요하다면
+                },
+            });
+            console.log(response.data)
+            if (response.data.success) {
+                const { nickname, age, height, weight, gender } = response.data.data;
+                setProfile(prevProfile => ({
+                    ...prevProfile,
+                    nickname,
+                    age,
+                    height,
+                    weight,
+                    gender: gender === "FEMALE" ? "여" : "남",  // gender 값에 따라 한글로 변환
+                }));
+            } else {
+                console.error("Failed to fetch profile:", response.data.message);
+            }
+        } catch (error) {
+            console.error("Error while fetching profile:", error);
+        }
+    };
+
+    fetchProfile();
+}, []);
 
   return (
     <div className="mypage-container">
