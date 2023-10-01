@@ -33,8 +33,11 @@ const SearchFoodPage = () => {
           'X-FNS-ACCESSTOKEN': accessToken,
         },
       });
-      console.log("Params sent:", response.config.params);
+      
       if (response.data.success) {
+        console.log("Response Data:", response.data); 
+        console.log("Response Data:", response.data.data); 
+        console.log("Response Data:", response.data.data.name); 
         setSearchResults(response.data.data);
       } else {
         console.error("Failed to fetch search results:", response.data.message);
