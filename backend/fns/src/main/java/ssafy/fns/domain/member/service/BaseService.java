@@ -7,11 +7,11 @@ import ssafy.fns.domain.member.service.dto.BaseResponseDto;
 
 public interface BaseService {
 
-    String input(Member member);
+    BaseResponseDto selectOne(Long memberId);
 
-    String update(Member member, BaseModifyRequestDto modifyRequestDto);
+    String input(Long memberId);
 
-    BaseResponseDto selectOne(Member member);
+    String update(Long memberId, BaseModifyRequestDto modifyRequestDto);
 
-    BaseResponseDto diet(Member member, BaseDietRequestDto dietRequestDto);
+    BaseResponseDto diet(Long memberId, BaseDietRequestDto dietRequestDto);
 }
