@@ -17,7 +17,7 @@ function FoodDetail() {
         const response = await axios.get(`${SERVER_API_URL}/foods`, {
           params: { name },
           headers: {
-            Authorization: `Bearer ${accessToken}`
+            'X-FNS-ACCESSTOKEN': accessToken,
           }
         });
 

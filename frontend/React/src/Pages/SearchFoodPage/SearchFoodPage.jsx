@@ -30,8 +30,7 @@ const SearchFoodPage = () => {
       const response = await axios.get(`${SERVER_API_URL}/foods`, {
         params: { name: searchTerm },
         headers: {
-          // Authorization: `Bearer ${accessToken}`
-          Authorization: accessToken,
+          'X-FNS-ACCESSTOKEN': accessToken,
         },
       });
       console.log("Params sent:", response.config.params);

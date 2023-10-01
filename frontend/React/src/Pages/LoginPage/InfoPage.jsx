@@ -100,7 +100,7 @@ const InfoPage = () => {
                     method: "post",
                     url: `${SERVER_API_URL}/members/profile`,
                     headers: {
-                      Authorization: `${accessToken}`,
+                      'X-FNS-ACCESSTOKEN': accessToken,
                     },
                     data: {
                       nickname: 닉네임,
