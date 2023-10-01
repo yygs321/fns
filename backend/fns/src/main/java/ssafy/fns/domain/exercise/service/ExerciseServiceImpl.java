@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import ssafy.fns.domain.exercise.controller.dto.SaveExerciseRequestDto;
+import ssafy.fns.domain.exercise.controller.dto.SaveSportsBookmarkRequestDto;
 import ssafy.fns.domain.exercise.controller.dto.SelectExerciseRequestDto;
 import ssafy.fns.domain.exercise.entity.Exercise;
 import ssafy.fns.domain.exercise.entity.Sports;
@@ -44,6 +45,8 @@ public class ExerciseServiceImpl implements ExerciseService {
                     .exerciseTime(exerciseTime)
                     .sportsBookmarkList(member.getSportsBookmarkList())
                     .build();
+
+            findMember.addExercise(exercise);
 
             exerciseRepository.save(exercise);
         }
@@ -83,6 +86,19 @@ public class ExerciseServiceImpl implements ExerciseService {
                 .weight(findMember.getWeight())
                 .build();
         return responseDto;
+    }
+
+    @Override
+    @Transactional
+    public void saveSportsBookmark(Member member, SaveSportsBookmarkRequestDto requestDto) {
+        List<Long> sportsBookmarkList = requestDto.getSportsBookmarkList();
+        Member findMember = memberRepository.findByEmail(member.getEmail());
+        List<Integer> mySportsBookmarkList = findMember.getSportsBookmarkList();
+        for (int idx = 1; idx < sportsBookmarkList.size(); idx++) {
+            mySportsBookmarkList.set(idx, sportsBookmarkList.get(idx).intValue());
+        }
+
+        findMember.updateSportsBookmarkList(mySportsBookmarkList);
     }
 
     private Sports getSportsById(Long idx) {
