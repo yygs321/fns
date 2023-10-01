@@ -9,7 +9,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 
 const DietPage = () => {
-  const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
+  // const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
   const accessToken = useSelector((state) => {
     return state.auth.accessToken;
   });
@@ -30,10 +30,10 @@ const DietPage = () => {
   const year = now.getFullYear();
   const month = (now.getMonth() + 1).toString().padStart(2, "0"); // 월은 0부터 시작하므로 1을 더하고 두 자리로 포맷팅합니다.
   const day = now.getDate().toString().padStart(2, "0"); // 일자를 두 자리로 포맷팅합니다.
-  const beforeDay = now.getDate().toString().padStart(2, "0");
+  // const beforeDay = now.getDate().toString().padStart(2, "0");
 
   const formattedToday = `${year}-${month}-${day}`;
-  const formattedYesterday = `${year}-${month}-${beforeDay}`;
+  // const formattedYesterday = `${year}-${month}-${beforeDay}`;
 
   const [isToday, setIsToday] = useState(true);
 
@@ -49,9 +49,10 @@ const DietPage = () => {
     try {
       const res = axios({
         method: "get",
-        url: `${SERVER_API_URL}/intake/total/${
-          isToday ? formattedToday : formattedYesterday
-        }`,
+        // 식단 목록 api가 없음....... 이거 다른 api 주소
+        // url: `${SERVER_API_URL}/intake/total/${
+        //   isToday ? formattedToday : formattedYesterday
+        // }`,
         headers: {
           Authorization: accessToken,
         },
