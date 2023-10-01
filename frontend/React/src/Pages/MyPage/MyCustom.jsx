@@ -1,48 +1,81 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Typography, Slider, Button, Grid, Tooltip, IconButton, Modal, Box } from '@mui/material';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { useNavigate } from 'react-router-dom';
 import ReplayIcon from '@mui/icons-material/Replay';
+import axios from 'axios';
 
 const MyCustomPage = () => {
-    // 더미 데이터
-    const initialKcal = 2000;
-    const initialCarbs = 250;
-    const initialProtein = 50;
-    const initialFat = 70;
-    const initialPollinationl = 2000;
-    const initialSugar = 250;
-    const initialDietaryFiber = 50;
-    const initialCalcium = 70;
-    const initialPotassium = 2000;
-    const initialIron = 250;
-    const initialPhosphorus = 50;
-    const initialSodium = 70;
-    const initialVitaminA = 50;
-    const initialVitaminC = 70;
-    const initialVitaminD = 2000;
-    const initialCholesterol = 250;
-    const initialAcid = 50;
-    const initialTransFat = 70;
 
-    const [kcal, setKcal] = useState(initialKcal);
-    const [carbs, setCarbs] = useState(initialCarbs);
-    const [protein, setProtein] = useState(initialProtein);
-    const [fat, setFat] = useState(initialFat);
-    const [pollinationl, setPollinationl] = useState(initialPollinationl);
-    const [sugar, setSugar] = useState(initialSugar);
-    const [dietaryfiber, setDietaryFiber] = useState(initialDietaryFiber);
-    const [calcium, setCalcium] = useState(initialCalcium);
-    const [potassium, setPotassium] = useState(initialPotassium);
-    const [iron, setIron] = useState(initialIron);
-    const [phosphorus, setPhosphorus] = useState(initialPhosphorus);
-    const [sodium, setSodium] = useState(initialSodium);
-    const [vitaminA, VitaminA] = useState(initialVitaminA);
-    const [vitaminC, VitaminC] = useState(initialVitaminC);
-    const [vitaminD, VitaminD] = useState(initialVitaminD);
-    const [cholesterol, setCholesterol] = useState(initialCholesterol);
-    const [acid, setAcid] = useState(initialAcid);
-    const [transfat, setTransFat] = useState(initialTransFat);
+    const accessToken = useSelector((state) => state.auth.accessToken);
+    const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
+    
+   
+    const [kcal, setKcal] = useState(null);
+    const [carbs, setCarbs] = useState(null);
+    const [protein, setProtein] = useState(null);
+    const [fat, setFat] = useState(null);
+    const [pollination, setPollination] = useState(null);
+    const [sugar, setSugar] = useState(null);
+    const [dietaryfiber, setDietaryFiber] = useState(null);
+    const [calcium, setCalcium] = useState(null);
+    const [potassium, setPotassium] = useState(null);
+    const [iron, setIron] = useState(null);
+    const [phosphorus, setPhosphorus] = useState(null);
+    const [sodium, setSodium] = useState(null);
+    const [vitaminA, setVitaminA] = useState(null);     
+    const [vitaminC, setVitaminC] = useState(null);     
+    const [vitaminD, setVitaminD] = useState(null); 
+    const [cholesterol, setCholesterol] = useState(null);
+    const [acid, setAcid] = useState(null);
+    const [transfat, setTransFat] = useState(null);
+    const [initialValues, setInitialValues] = useState({});
+
+    
+
+    useEffect(() => {
+        console.log(response.data)
+        console.log(response.data.data)
+        const fetchBaseData = async () => {
+            try {
+                const response = await axios.get(`${SERVER_API_URL}/base`, {
+                    headers: {
+                        'X-FNS-ACCESSTOKEN': accessToken,
+                    },
+                });
+
+                if (response.data.success) {
+                    const data = response.data.data;
+                    setInitialValues(data);
+
+                    setKcal(data.kcal);
+                    setCarbs(data.carbs);
+                    setProtein(data.protein);
+                    setFat(data.fat);
+                    setPollination(data.pollination); 
+                    setSugar(data.sugar);
+                    setDietaryFiber(data.dietaryFiber);
+                    setCalcium(data.calcium);
+                    setPotassium(data.potassium);
+                    setIron(data.iron);
+                    setPhosphorus(data.phosphorus);
+                    setSodium(data.sodium);
+                    setVitaminA(data.vitaminA); 
+                    setVitaminC(data.vitaminC); 
+                    setVitaminD(data.vitaminD); 
+                    setCholesterol(data.cholesterol);
+                    setAcid(data.acid);
+                    setTransFat(data.transFat);
+                } else {
+                    console.error("Failed to fetch base data:", response.data.message);
+                }
+            } catch (error) {
+                console.error("Error while fetching base data:", error);
+            }
+        };
+
+        fetchBaseData();
+    }, [accessToken]); // accessToken이 변경될 때마다 데이터를 다시 불러옴
 
     const [openModal, setOpenModal] = useState(false); // 모달 상태 관리
     const navigate = useNavigate();
@@ -63,25 +96,26 @@ const MyCustomPage = () => {
     };
     // 리셋 함수
     const resetValues = () => {
-        setKcal(initialKcal);
-        setCarbs(initialCarbs);
-        setProtein(initialProtein);
-        setFat(initialFat);
-        setPollinationl(initialPollinationl);
-        setSugar(initialSugar);
-        setDietaryFiber(initialDietaryFiber);
-        setCalcium(initialCalcium);
-        setPotassium(initialPotassium);
-        setIron(initialIron);
-        setPhosphorus(initialPhosphorus);
-        setSodium(initialSodium);
-        VitaminA(initialVitaminA);
-        VitaminC(initialVitaminC);
-        VitaminD(initialVitaminD);
-        setCholesterol(initialCholesterol);
-        setAcid(initialAcid);
-        setTransFat(initialTransFat);
-    }
+        setKcal(initialValues.kcal || 0);
+        setCarbs(initialValues.carbs || 0);
+        setProtein(initialValues.protein || 0);
+        setFat(initialValues.fat || 0);
+        setPollination(initialValues.pollination || 0);
+        setSugar(initialValues.sugar || 0);
+        setDietaryFiber(initialValues.dietaryFiber || 0);
+        setCalcium(initialValues.calcium || 0);
+        setPotassium(initialValues.potassium || 0);
+        setIron(initialValues.iron || 0);
+        setPhosphorus(initialValues.phosphorus || 0);
+        setSodium(initialValues.sodium || 0);
+        setVitaminA(initialValues.vitaminA || 0);
+        setVitaminC(initialValues.vitaminC || 0);
+        setVitaminD(initialValues.vitaminD || 0);
+        setCholesterol(initialValues.cholesterol || 0);
+        setAcid(initialValues.acid || 0);
+        setTransFat(initialValues.transFat || 0);
+    };
+    
 
     return (
         <div className="gray-pages" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '92vh' }}>
@@ -105,7 +139,7 @@ const MyCustomPage = () => {
                     {renderSlider("탄수화물(g)", carbs, setCarbs, initialCarbs)}
                     {renderSlider("단백질(g)", protein, setProtein, initialProtein)}
                     {renderSlider("지방(g)", fat, setFat, initialFat)}
-                    {renderSlider("수분(g)", pollinationl, setPollinationl, initialPollinationl)}
+                    {renderSlider("수분(g)", pollination, setPollination, initialPollination)}
                     {renderSlider("당류(g)", sugar, setSugar, initialSugar)}
                     {renderSlider("식이섬유(g)", dietaryfiber, setDietaryFiber, initialDietaryFiber)}
                     {renderSlider("칼슘(mg)", calcium, setCalcium, initialCalcium)}
