@@ -54,8 +54,14 @@ const KakaoCallback = () => {
   };
 
   return (
-    <div className="white-pages">
-      <Grid container justifyContent={"center"} alignItems={"center"}>
+    <div className="white-pages" style={{ height: "100vh" }}>
+      <Grid
+        container
+        justifyContent={"center"}
+        alignItems={"center"}
+        textAlign={"center"}
+        sx={{ height: "100%" }}
+      >
         <Typography
           variant="body1"
           color="text.primary"

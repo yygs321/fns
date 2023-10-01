@@ -2,9 +2,7 @@ import React, { useEffect } from "react";
 import { Box, Typography, LinearProgress } from "@mui/material";
 
 const BarGraph = (props) => {
-  const { nutrient, setnutrient, name } = props;
-
-  const maxNutrient = 200; // 개인별 영양소 일일 권장 섭취량, 이것도 나중에 props로 받아와야됨
+  const { maxNutrient, nutrient, setnutrient, name } = props;
 
   useEffect(() => {
     let targetValue = 0;
