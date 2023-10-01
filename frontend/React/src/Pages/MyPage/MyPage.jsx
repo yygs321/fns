@@ -10,6 +10,8 @@ import ListItemButton from "@mui/material/ListItemButton";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { userLogout } from "../../Redux/actions/actions";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 const MyPage = () => {
   const [uploadedImage, setUploadedImage] = useState(null);
@@ -29,6 +31,7 @@ const MyPage = () => {
 
 
   const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
+  const accessToken = useSelector((state) => state.auth.accessToken);
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
