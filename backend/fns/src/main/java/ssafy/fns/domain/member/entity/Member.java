@@ -3,7 +3,6 @@ package ssafy.fns.domain.member.entity;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -14,7 +13,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -104,5 +102,14 @@ public class Member extends BaseEntity {
         this.age = requestDto.getAge();
         this.isPublished = requestDto.getIsPublished();
     }
+
+    public void addExercise(Exercise exercise) {
+        this.exerciseList.add(exercise);
+    }
+
+    public void updateSportsBookmarkList(List<Integer> newSportsBookmarkList) {
+        this.sportsBookmarkList = newSportsBookmarkList;
+    }
+
 
 }

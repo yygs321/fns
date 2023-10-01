@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ssafy.fns.domain.exercise.controller.dto.SaveExerciseRequestDto;
+import ssafy.fns.domain.exercise.controller.dto.SaveSportsBookmarkRequestDto;
 import ssafy.fns.domain.exercise.controller.dto.SelectExerciseRequestDto;
 import ssafy.fns.domain.exercise.service.ExerciseService;
 import ssafy.fns.domain.member.entity.Member;
@@ -37,5 +38,12 @@ public class ExerciseController {
             @RequestBody SelectExerciseRequestDto requestDto) {
         return JsonResponse.ok(requestDto.getExerciseDate() + "일자의 운동을 불러왔습니다.",
                 exerciseService.selectExercise(member, requestDto));
+    }
+
+    @PostMapping(value = "/bookmark")
+    public ResponseEntity<?> saveSportsBookmark(@AuthenticationPrincipal Member member,
+            @RequestBody SaveSportsBookmarkRequestDto requestDto) {
+        exerciseService.saveSportsBookmark(member, requestDto);
+        return JsonResponse.ok("운동 종목 즐겨찾기 성공!");
     }
 }
