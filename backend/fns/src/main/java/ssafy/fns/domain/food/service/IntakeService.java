@@ -6,6 +6,7 @@ import java.util.List;
 import ssafy.fns.domain.food.controller.dto.IntakeDeletetRequestDto;
 import ssafy.fns.domain.food.controller.dto.IntakeInsertRequestDto;
 import ssafy.fns.domain.food.controller.dto.IntakeUpdateRequestDto;
+import ssafy.fns.domain.food.service.dto.IntakeAllOnDateResponseDto;
 import ssafy.fns.domain.food.service.dto.IntakeOnDateResponseDto;
 import ssafy.fns.domain.food.service.dto.IntakeSelectOneResponseDto;
 import ssafy.fns.domain.member.entity.Member;
@@ -19,6 +20,8 @@ public interface IntakeService {
 
     IntakeSelectOneResponseDto selectOne(Long memberId, Long intakeId);
 
-    IntakeOnDateResponseDto onDate(Long memberId, String date);
+    IntakeOnDateResponseDto nutrientOnDate(Long memberId, String date);
+
+    List<IntakeAllOnDateResponseDto> allOnDate(Long memberId, String date);
 
 }

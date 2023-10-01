@@ -18,6 +18,7 @@ import ssafy.fns.domain.food.entity.Food;
 import ssafy.fns.domain.food.entity.Intake;
 import ssafy.fns.domain.food.repository.FoodRepository;
 import ssafy.fns.domain.food.repository.IntakeRepository;
+import ssafy.fns.domain.food.service.dto.IntakeAllOnDateResponseDto;
 import ssafy.fns.domain.food.service.dto.IntakeOnDateResponseDto;
 import ssafy.fns.domain.food.service.dto.IntakeSelectOneResponseDto;
 import ssafy.fns.domain.member.entity.Member;
@@ -31,25 +32,6 @@ public class IntakeServiceImpl implements IntakeService {
     private final IntakeRepository intakeRepository;
     private final FoodRepository foodRepository;
     private final MemberRepository memberRepository;
-
-//    @Override
-//    public IntakeSelectOneResponseDto insert(Member member, IntakeInsertRequestDto requestDto) {
-//        Optional<Food> optionalFood = foodRepository.findById(requestDto.getFoodId());
-//
-//        if(!optionalFood.isPresent()) throw new GlobalRuntimeException("음식 정보를 다시 확인해주세요.", HttpStatus.BAD_REQUEST);
-//
-//        Food food = optionalFood.get();
-//
-//        Intake intake = new Intake().builder()
-//                .intakeTime(requestDto.getIntakeTime())
-//                .date(requestDto.getDate())
-//                .rate(requestDto.getRate())
-//                .food(food)
-//                .member(member)
-//                .build();
-//        intakeRepository.save(intake);
-//        return null;
-//    }
     @Override
     public List<IntakeSelectOneResponseDto> insert(Member member, List<IntakeInsertRequestDto>  requestDtoList) {
         List<IntakeSelectOneResponseDto> responseDtoList = new ArrayList<>();
@@ -116,7 +98,7 @@ public class IntakeServiceImpl implements IntakeService {
     }
 
     @Override
-    public IntakeOnDateResponseDto onDate(Long memberId, String date) {
+    public IntakeOnDateResponseDto nutrientOnDate(Long memberId, String date) {
         List<Optional<Intake>> optionalIntakes = intakeRepository.findAllByDateAndMemberId(date, memberId);
         if(optionalIntakes.isEmpty()) throw new GlobalRuntimeException("member id 또는 날짜 확인 필요", HttpStatus.BAD_REQUEST);
 
@@ -126,5 +108,17 @@ public class IntakeServiceImpl implements IntakeService {
             intake.plus(optionalIntake.get());
         }
         return intake;
+    }
+
+    @Override
+    public List<IntakeAllOnDateResponseDto> allOnDate(Long memberId, String date) {
+        List<Optional<Intake>> optionalIntakes = intakeRepository.findAllByDateAndMemberId(date, memberId);
+        if(optionalIntakes.isEmpty()) throw new GlobalRuntimeException("member id 또는 날짜 확인 필요", HttpStatus.BAD_REQUEST);
+
+        List<IntakeAllOnDateResponseDto> intakeList = new ArrayList<>();
+        for(Optional<Intake> optionalIntake : optionalIntakes){
+            intakeList.add(new IntakeAllOnDateResponseDto(optionalIntake.get()));
+        }
+        return intakeList;
     }
 }
