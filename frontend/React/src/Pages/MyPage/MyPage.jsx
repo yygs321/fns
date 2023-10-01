@@ -49,7 +49,7 @@ const MyPage = () => {
   useEffect(() => {
     const fetchProfile = async () => {
         try {
-            const response = await axios.get(`${SERVER_API_URL}/api/members`, {
+            const response = await axios.get(`${SERVER_API_URL}/members`, {
                 headers: {
                     'X-FNS-ACCESSTOKEN': accessToken,  // accessToken이 필요하다면
                 },
