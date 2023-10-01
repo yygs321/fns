@@ -74,8 +74,8 @@ const MyPage = () => {
     };
 
     fetchProfile();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
 }, []);
-// eslint-disable-next-line react-hooks/exhaustive-deps
 
   return (
     <div className="mypage-container">
