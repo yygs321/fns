@@ -28,41 +28,22 @@ public class BaseController {
 
     private final BaseService baseService;
 
-//    @GetMapping(value = "")
-//    public ResponseEntity<?> myBase(@AuthenticationPrincipal Member member){
-//        return JsonResponse.ok("조회 완료", baseService.selectOne(member));
-//    }
-
-//    @PostMapping(value = "")
-//    public ResponseEntity<?> inputBase(@AuthenticationPrincipal Member member) {
-//        return JsonResponse.ok(baseService.input(member);
-//    }
-//    @PatchMapping("")
-//    public ResponseEntity<?> updateBase(@AuthenticationPrincipal Member member, @RequestBody BaseModifyRequestDto modifyRequestDto) {
-//        return JsonResponse.ok(baseService.update(member, modifyRequestDto));
-//    }
-
     @GetMapping(value = "")
-    public ResponseEntity<?> myBase(){
-        Member member = null;
-        return JsonResponse.ok("조회 완료", baseService.selectOne(member));
+    public ResponseEntity<?> myBase(@AuthenticationPrincipal Member member){
+        return JsonResponse.ok("조회 완료", baseService.selectOne(member.getId()));
     }
 
     @PostMapping(value = "")
-    public ResponseEntity<?> inputBase() {
-        Member member = null;
-        return JsonResponse.ok(baseService.input(member));
+    public ResponseEntity<?> inputBase(@AuthenticationPrincipal Member member) {
+        return JsonResponse.ok(baseService.input(member.getId()));
     }
-
     @PatchMapping("")
-    public ResponseEntity<?> updateBase(@RequestBody BaseModifyRequestDto modifyRequestDto) {
-        Member member = null;
-        return JsonResponse.ok(baseService.update(member, modifyRequestDto));
+    public ResponseEntity<?> updateBase(@AuthenticationPrincipal Member member, @RequestBody BaseModifyRequestDto modifyRequestDto) {
+        return JsonResponse.ok(baseService.update(member.getId(), modifyRequestDto));
     }
 
     @PatchMapping("/diet")
-    public ResponseEntity<?> dietMood(@RequestBody BaseDietRequestDto dietRequestDto) {
-        Member member = null;
-        return JsonResponse.ok("다이어트 모드 적용 완료",baseService.diet(member, dietRequestDto));
+    public ResponseEntity<?> dietMood(@AuthenticationPrincipal Member member, @RequestBody BaseDietRequestDto dietRequestDto) {
+        return JsonResponse.ok("다이어트 모드 적용 완료",baseService.diet(member.getId(), dietRequestDto));
     }
 }

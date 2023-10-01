@@ -36,6 +36,7 @@ public class MemberController {
 
     @PostMapping(value = "/sign-up")
     public ResponseEntity<?> signUp(@RequestBody SignUpRequestDto requestDto) {
+        log.info("before service:"+requestDto.getPassword());
         memberService.signUp(requestDto);
         return JsonResponse.ok("회원가입 성공!");
     }

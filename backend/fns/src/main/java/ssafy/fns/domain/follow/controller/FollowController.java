@@ -23,35 +23,23 @@ import ssafy.fns.global.response.JsonResponse;
 @Slf4j
 public class FollowController {
     private final FollowService followService;
-//    @GetMapping("")
-//    public ResponseEntity<?> followCheck(@AuthenticationPrincipal Member member, @PathVariable(name = "memeber_id") Long member_id){
-//        return JsonResponse.ok("팔로우 조회 완료", followService.followList(member.id));
-//    }
-//    @PostMapping("/{member-id}")
-//    public ResponseEntity<?> followAdd(@AuthenticationPrincipal Member member, @PathVariable(name = "memeber_id") Long member_id){
-//        return JsonResponse.ok(followService.insertFollow(member.id, toMemberId));
-//    }
-//
-//    @DeleteMapping("/{member-id}")
-//    public ResponseEntity<?> followDelete(@AuthenticationPrincipal Member member, @PathVariable(name = "memeber_id") Long member_id){
-//        return JsonResponse.ok("팔로우 삭제 완료", followService.deleteFollow(member.id, toMemberId));
-//    }
+
     @GetMapping("")
-    public ResponseEntity<?> checkFollow(){
-        return JsonResponse.ok("팔로우 조회 완료", followService.followList(1L));
+    public ResponseEntity<?> checkFollow(@AuthenticationPrincipal Member member){
+        return JsonResponse.ok("팔로우 조회 완료", followService.followList(member.getId()));
     }
     @PostMapping("/{member-id}")
-    public ResponseEntity<?> addFollow(@PathVariable(name = "member-id") Long toMemberId){
-        return JsonResponse.ok(followService.insertFollow(1L, toMemberId));
+    public ResponseEntity<?> addFollow(@AuthenticationPrincipal Member member, @PathVariable(name = "member-id") Long toMemberId){
+        return JsonResponse.ok(followService.insertFollow(member.getId(), toMemberId));
     }
 
     @DeleteMapping("/{member-id}")
-    public ResponseEntity<?> deleteFollow(@PathVariable(name = "member-id") Long toMemberId){
-        return JsonResponse.ok("팔로우 삭제 완료", followService.deleteFollow(1L, toMemberId));
+    public ResponseEntity<?> deleteFollow(@AuthenticationPrincipal Member member, @PathVariable(name = "member-id") Long toMemberId){
+        return JsonResponse.ok("팔로우 삭제 완료", followService.deleteFollow(member.getId(), toMemberId));
     }
 
     @GetMapping("/member")
-    public ResponseEntity<?> findMember(@RequestParam(value = "nickname")String nickname){
-        return JsonResponse.ok("멤버 조회 완료", followService.selectAll(1L, nickname));
+    public ResponseEntity<?> findMember(@AuthenticationPrincipal Member member, @RequestParam(value = "nickname")String nickname){
+        return JsonResponse.ok("멤버 조회 완료", followService.selectAll(member.getId(), nickname));
     }
 }
