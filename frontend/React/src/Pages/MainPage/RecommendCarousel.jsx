@@ -52,7 +52,6 @@ const RecommendCarousel = (props) => {
     dots: true,
     infinite: true,
     speed: 0,
-    arrows: true,
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
