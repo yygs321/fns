@@ -4,6 +4,7 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { useNavigate } from 'react-router-dom';
 import ReplayIcon from '@mui/icons-material/Replay';
 import axios from 'axios';
+import { useSelector } from "react-redux";
 
 const MyCustomPage = () => {
 
@@ -34,8 +35,7 @@ const MyCustomPage = () => {
     
 
     useEffect(() => {
-        console.log(response.data)
-        console.log(response.data.data)
+        
         const fetchBaseData = async () => {
             try {
                 const response = await axios.get(`${SERVER_API_URL}/base`, {
@@ -43,6 +43,8 @@ const MyCustomPage = () => {
                         'X-FNS-ACCESSTOKEN': accessToken,
                     },
                 });
+                console.log(response.data)
+                console.log(response.data.data)
 
                 if (response.data.success) {
                     const data = response.data.data;
@@ -135,24 +137,24 @@ const MyCustomPage = () => {
             </Typography>
 
                 <Grid container spacing={3} className="noscroll"  sx={{ overflowY: "scroll", maxHeight: '50vh' }}>
-                    {renderSlider("칼로리(Kcal)", kcal, setKcal, initialKcal)}
-                    {renderSlider("탄수화물(g)", carbs, setCarbs, initialCarbs)}
-                    {renderSlider("단백질(g)", protein, setProtein, initialProtein)}
-                    {renderSlider("지방(g)", fat, setFat, initialFat)}
-                    {renderSlider("수분(g)", pollination, setPollination, initialPollination)}
-                    {renderSlider("당류(g)", sugar, setSugar, initialSugar)}
-                    {renderSlider("식이섬유(g)", dietaryfiber, setDietaryFiber, initialDietaryFiber)}
-                    {renderSlider("칼슘(mg)", calcium, setCalcium, initialCalcium)}
-                    {renderSlider("칼륨(mg)", potassium, setPotassium, initialPotassium)}
-                    {renderSlider("철(mg)", iron, setIron, initialIron)}
-                    {renderSlider("인(mg)", phosphorus, setPhosphorus, initialPhosphorus)}
-                    {renderSlider("나트륨(mg)", sodium, setSodium, initialSodium)}
-                    {renderSlider("비타민A(μg)", vitaminA, VitaminA, initialVitaminA)}
-                    {renderSlider("비타민C(mg)", vitaminC, VitaminC, initialVitaminC)}
-                    {renderSlider("비타민D(μg)", vitaminD, VitaminD, initialVitaminD)}
-                    {renderSlider("콜레스테롤", cholesterol, setCholesterol, initialCholesterol)}
-                    {renderSlider("포화지방산(g)", acid, setAcid, initialAcid)}
-                    {renderSlider("트랜스지방산(g)", transfat, setTransFat, initialTransFat)}
+                    {renderSlider("칼로리(Kcal)", kcal, setKcal, initialValues.kcal)}
+                    {renderSlider("탄수화물(g)", carbs, setCarbs, initialValues.carbs)}
+                    {renderSlider("단백질(g)", protein, setProtein, initialValues.protein)}
+                    {renderSlider("지방(g)", fat, setFat, initialValues.fat)}
+                    {renderSlider("수분(g)", pollination, setPollination, initialValues.pollination)}
+                    {renderSlider("당류(g)", sugar, setSugar, initialValues.sugar)}
+                    {renderSlider("식이섬유(g)", dietaryfiber, setDietaryFiber, initialValues.dietaryFiber)}
+                    {renderSlider("칼슘(mg)", calcium, setCalcium, initialValues.calcium)}
+                    {renderSlider("칼륨(mg)", potassium, setPotassium, initialValues.potassium)}
+                    {renderSlider("철(mg)", iron, setIron, initialValues.iron)}
+                    {renderSlider("인(mg)", phosphorus, setPhosphorus, initialValues.phosphorus)}
+                    {renderSlider("나트륨(mg)", sodium, setSodium, initialValues.sodium)}
+                    {renderSlider("비타민A(μg)", vitaminA, vitaminA, initialValues.vitaminA)}
+                    {renderSlider("비타민C(mg)", vitaminC, vitaminC, initialValues.vitaminC)}
+                    {renderSlider("비타민D(μg)", vitaminD, vitaminD, initialValues.vitaminD)}
+                    {renderSlider("콜레스테롤", cholesterol, setCholesterol, initialValues.cholesterol)}
+                    {renderSlider("포화지방산(g)", acid, setAcid, initialValues.acid)}
+                    {renderSlider("트랜스지방산(g)", transfat, setTransFat, initialValues.transFat)}
                     
                     <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center' }}>
                     <Button variant="contained" 
