@@ -9,7 +9,8 @@ public interface BaseRepository extends JpaRepository<BaseNutrient, Long> {
 
     BaseNutrient findFirstByMemberIdOrderByCreatedAtDesc(Long memberId);
 
-    @Query(value = "SELECT b FROM BaseNutrient b WHERE b.member.id = :memberId AND TO_CHAR(b.createdAt, 'YYYY-MM-DD') LIKE CONCAT(:baseNutrientDate, '%') ORDER BY b.createdAt DESC")
+    @Query(value = "SELECT b FROM BaseNutrient b WHERE b.member.id = :memberId AND DATE_FORMAT(b.createdAt, '%Y-%m-%d') LIKE CONCAT(:baseNutrientDate, '%') ORDER BY b.createdAt DESC")
     List<BaseNutrient> findAllByMemberIdAndCreatedAtOrderByCreatedAtDesc(Long memberId,
             String baseNutrientDate);
+
 }
