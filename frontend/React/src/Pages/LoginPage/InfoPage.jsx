@@ -106,17 +106,17 @@ const InfoPage = () => {
 
                   if (res.data.success) {
                     // base 등록
-                    const baseResponse = await axios({
-                      method: "post",
-                      url: `${SERVER_API_URL}/base`,
-                      headers: {
-                          'X-FNS-ACCESSTOKEN': accessToken,
-                      },
-                      data: {},
-                  });
-                  console.log(baseResponse.data);
-                  console.log(baseResponse.data.message);
-                  console.log(baseResponse.data.success);
+                  //   const baseResponse = await axios({
+                  //     method: "post",
+                  //     url: `${SERVER_API_URL}/base`,
+                  //     headers: {
+                  //         'X-FNS-ACCESSTOKEN': accessToken,
+                  //     },
+                  //     data: {},
+                  // });
+                  // console.log(baseResponse.data);
+                  // console.log(baseResponse.data.message);
+                  // console.log(baseResponse.data.success);
                     navigate("/main");
                   } else {
                     set저장실패("프로필 저장에 실패했습니다.");
