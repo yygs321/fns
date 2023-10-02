@@ -14,7 +14,7 @@ const EditProfilePage = () => {
     const navigate = useNavigate();
     const timeoutRef = useRef(null);
     const [닉네임확인, set닉네임확인] = useState(false);
-    const [닉네임오류, set닉네임오류] = useState(undefined);
+    // const [닉네임오류, set닉네임오류] = useState(undefined);
     const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
     const accessToken = useSelector((state) => {
     return state.auth.accessToken;
@@ -77,10 +77,10 @@ const EditProfilePage = () => {
         });
         if (중복체크결과.data.success) {
           set닉네임확인(true);
-          set닉네임오류(undefined);
+          // set닉네임오류(undefined);
         } else {
           set닉네임확인(false);
-          set닉네임오류(중복체크결과.data.message);
+          // set닉네임오류(중복체크결과.data.message);
         }
       } catch (err) {
         console.log(err);
