@@ -56,13 +56,12 @@ public class ExerciseServiceImpl implements ExerciseService {
     @Transactional
     public ExerciseResponseDto selectExercise(Member member, SelectExerciseRequestDto requestDto) {
 
-        List<Integer> sportsBookmarkList = exerciseRepository
-                .findTop1ByExerciseDate(requestDto.getExerciseDate()).getSportsBookmarkList();
         Member findMember = memberRepository.findByEmail(member.getEmail());
 
-        if (sportsBookmarkList == null) {
-            return ExerciseResponseDto.builder().build();
-        }
+        checkExerciseExisted(requestDto);
+
+        List<Integer> sportsBookmarkList = exerciseRepository
+                .findTop1ByExerciseDate(requestDto.getExerciseDate()).getSportsBookmarkList();
 
         List<ExerciseDto> exerciseDtoList = new ArrayList<>();
         for (int idx = 1; idx < sportsBookmarkList.size(); idx++) {
@@ -87,6 +86,14 @@ public class ExerciseServiceImpl implements ExerciseService {
                 .build();
         return responseDto;
     }
+
+    private void checkExerciseExisted(SelectExerciseRequestDto requestDto) {
+        Exercise exercise = exerciseRepository.findByExerciseDate(requestDto.getExerciseDate());
+        if (exercise == null) {
+            throw new GlobalRuntimeException("해당일자에 운동데이터가 없습니다.", HttpStatus.BAD_REQUEST);
+        }
+    }
+
 
     @Override
     @Transactional

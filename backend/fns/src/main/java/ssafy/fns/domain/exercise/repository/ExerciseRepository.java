@@ -10,4 +10,6 @@ public interface ExerciseRepository extends JpaRepository<Exercise, Long> {
             Long sportsId);
 
     Exercise findTop1ByExerciseDate(LocalDate exerciseDate);
+
+    Exercise findByExerciseDate(LocalDate exerciseDate);
 }
