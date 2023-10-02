@@ -11,6 +11,7 @@ const EditProfilePage = () => {
     const [프로필공개여부, set프로필공개여부] = useState(true);
     const navigate = useNavigate();
     const timeoutRef = useRef(null);
+    const [닉네임확인, set닉네임확인] = useState(false);
     const 체크박스 = (e) => {
         set프로필공개여부(e.target.value);
       };
@@ -18,23 +19,67 @@ const EditProfilePage = () => {
         whiteSpace: "nowrap",
       };  
 
-    const handleSave = () => {
-        console.log({ nickname, height, weight });
-        setOpenModal(true); // 저장 버튼을 클릭하면 모달 열기
-        timeoutRef.current = setTimeout(() => {
-            navigate("/mypage");
-        }, 1000);
-    };
+      const handleSave = async () => {
+        try {
+          const res = await axios({
+            method: "patch",
+            url: `${SERVER_API_URL}/members/profile`,
+            headers: {
+              'X-FNS-ACCESSTOKEN': accessToken,
+            },
+            data: {
+              nickname: nickname,
+              age: age,
+              height: height,
+              weight: weight,
+              isPublished: 프로필공개여부 === "true",
+            },
+          });
+      
+          if (res.data.success) {
+            setOpenModal(true); // 저장에 성공하면 모달을 열어줍니다.
+            timeoutRef.current = setTimeout(() => {
+              navigate("/mypage");
+            }, 1000);
+          } else {
+            // 저장에 실패했을 때의 로직을 작성합니다.
+          }
+        } catch (err) {
+          console.log(err);
+          // 에러 핸들링 로직을 작성합니다.
+        }
+      };
+      
 
     const handleModalClose = () => {
         clearTimeout(timeoutRef.current);  // setTimeout 취소
         navigate("/mypage");
     };
 
-    const handleCheckNickname = () => {
-        // 나중에 닉네임 중복 확인 API 연결
-        console.log('닉네임 중복 확인');
+    const handleCheckNickname = async () => {
+      try {
+        const 중복체크결과 = await axios({
+          method: "post",
+          url: `${SERVER_API_URL}/members/check-nickname-duplicate`,
+          headers: {
+            'X-FNS-ACCESSTOKEN': accessToken,
+          },
+          data: {
+            nickname: nickname,
+          },
+        });
+        if (중복체크결과.data.success) {
+          set닉네임확인(true);
+          set닉네임오류(undefined);
+        } else {
+          set닉네임확인(false);
+          set닉네임오류(중복체크결과.data.message);
+        }
+      } catch (err) {
+        console.log(err);
+      }
     };
+    
 
     return (
         <div style={{ height: '92vh', backgroundColor: '#f0f0f0', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
@@ -71,6 +116,7 @@ const EditProfilePage = () => {
             <div style={{ display: 'flex', justifyContent: 'center', margin: '10px 0' }}>
                 <Button 
                     variant="contained"
+                    disabled={닉네임확인}
                     size="small"
                     onClick={handleCheckNickname}
                     sx={{ color:"white", fontSize: "0.5rem",
