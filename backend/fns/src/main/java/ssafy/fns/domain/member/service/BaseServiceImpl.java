@@ -25,14 +25,16 @@ public class BaseServiceImpl implements BaseService {
 
     @Override
     @Transactional
-    public BaseResponseDto selectOne(Long memberId) {
-//        Optional<BaseHistory> optionalBase = baseHistoryRepository.findByMemberId(memberId);
-//        if (!optionalBase.isPresent()) {
-//            throw new GlobalRuntimeException("영양 정보 입력을 먼저 해주세요.", HttpStatus.BAD_REQUEST);
-//        }
-//
-//        return BaseResponseDto.from(optionalBase.get());
-        return null;
+    public BaseResponseDto selectCurrentBase(Member member) {
+        Member findMember = memberRepository.findByEmail(member.getEmail());
+        BaseNutrient baseNutrient = baseRepository.findFirstByMemberIdOrderByCreatedAtDesc(
+                findMember.getId());
+
+        if (baseNutrient == null) {
+            throw new GlobalRuntimeException("등록된 기본 영양정보가 없습니다", HttpStatus.BAD_REQUEST);
+        }
+
+        return BaseResponseDto.from(baseNutrient);
     }
 
     @Override
@@ -75,7 +77,7 @@ public class BaseServiceImpl implements BaseService {
 
     @Override
     @Transactional
-    public String updateBase(Long memberId, BaseModifyRequestDto modifyRequestDto) {
+    public String updateBase(Member member, BaseModifyRequestDto modifyRequestDto) {
 //        Optional<BaseHistory> optionalBase = baseHistoryRepository.findByMemberId(memberId);
 //        if (!optionalBase.isPresent()) {
 //            throw new GlobalRuntimeException("영양 정보 입력을 먼저 해주세요.", HttpStatus.BAD_REQUEST);
@@ -90,7 +92,7 @@ public class BaseServiceImpl implements BaseService {
 
     @Override
     @Transactional
-    public BaseResponseDto diet(Long memberId, BaseDietRequestDto dietRequestDto) {
+    public BaseResponseDto diet(Member member, BaseDietRequestDto dietRequestDto) {
 //        Optional<BaseHistory> optionalBase = baseHistoryRepository.findByMemberId(memberId);
 //        if (!optionalBase.isPresent()) {
 //            throw new GlobalRuntimeException("영양 정보 입력을 먼저 해주세요.", HttpStatus.BAD_REQUEST);

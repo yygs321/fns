@@ -5,5 +5,5 @@ import ssafy.fns.domain.member.entity.BaseNutrient;
 
 public interface BaseRepository extends JpaRepository<BaseNutrient, Long> {
 
-    BaseNutrient findByMemberId(Long id);
+    BaseNutrient findFirstByMemberIdOrderByCreatedAtDesc(Long memberId);
 }

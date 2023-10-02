@@ -27,8 +27,8 @@ public class BaseController {
     private final BaseService baseService;
 
     @GetMapping(value = "")
-    public ResponseEntity<?> myBase(@AuthenticationPrincipal Member member) {
-        return JsonResponse.ok("조회 완료", baseService.selectOne(member.getId()));
+    public ResponseEntity<?> selectCurrentBase(@AuthenticationPrincipal Member member) {
+        return JsonResponse.ok("현재 기준 영양정보 조회 완료", baseService.selectCurrentBase(member));
     }
 
     @PostMapping(value = "")
@@ -40,13 +40,13 @@ public class BaseController {
     @PatchMapping("")
     public ResponseEntity<?> updateBase(@AuthenticationPrincipal Member member,
             @RequestBody BaseModifyRequestDto modifyRequestDto) {
-        return JsonResponse.ok(baseService.updateBase(member.getId(), modifyRequestDto));
+        return JsonResponse.ok(baseService.updateBase(member, modifyRequestDto));
     }
 
     @PatchMapping("/diet")
     public ResponseEntity<?> dietMood(@AuthenticationPrincipal Member member,
             @RequestBody BaseDietRequestDto dietRequestDto) {
         return JsonResponse.ok("다이어트 모드 적용 완료",
-                baseService.diet(member.getId(), dietRequestDto));
+                baseService.diet(member, dietRequestDto));
     }
 }
