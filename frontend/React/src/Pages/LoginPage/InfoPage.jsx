@@ -1,16 +1,5 @@
 import React, { useState } from "react";
-import {
-  Grid,
-  Container,
-  TextField,
-  Button,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
-  Typography,
-  Modal,
-  Box,
-} from "@mui/material";
+import {Grid, Container, TextField, Button, FormControlLabel, Radio, RadioGroup,Typography, Modal, Box} from "@mui/material";
 import "./CSS/InfoPage.scss";
 import ManRoundedIcon from "@mui/icons-material/ManRounded";
 import WomanRoundedIcon from "@mui/icons-material/WomanRounded";
@@ -116,6 +105,13 @@ const InfoPage = () => {
                   console.log(res.data);
 
                   if (res.data.success) {
+                    // base 등록
+                    const baseResponse = await axios.post(`${SERVER_API_URL}/base`, {
+                      headers: {
+                          'X-FNS-ACCESSTOKEN': accessToken,
+                      }
+                  });
+                  console.log(baseResponse.data.success);
                     navigate("/main");
                   } else {
                     set저장실패("프로필 저장에 실패했습니다.");
@@ -149,7 +145,7 @@ const InfoPage = () => {
     }, 2000);
   };
 
-  // 중복체크 확인에서 지금 axios network에러
+  
   const 중복체크버튼 = async () => {
     const 닉네임확인결과 = 닉네임확인함수(닉네임);
 
@@ -159,23 +155,18 @@ const InfoPage = () => {
           method: "post",
           url: `${SERVER_API_URL}/members/check-nickname-duplicate`,
           headers: {
-            // Authorization: `JWT ${accessToken}`,
-            // Authorization: `Token ${accessToken}`,
-            // Authorization: `Bearer ${accessToken}`,
-            // Authorization: `${accessToken}`,
-            // Authorization: accessToken,
             'X-FNS-ACCESSTOKEN': accessToken,
           },
           data: {
             nickname: 닉네임,
           },
         });
-        if (중복체크결과.success) {
+        if (중복체크결과.data.success) {
           set닉네임확인(true);
           set닉네임오류(undefined);
         } else {
           set닉네임확인(false);
-          set닉네임오류(중복체크결과.message);
+          set닉네임오류(중복체크결과.data.message);
         }
       } catch (err) {
         console.log(err);
