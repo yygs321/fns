@@ -1,4 +1,4 @@
-package ssafy.fns.domain.member.controller.dto;
+package ssafy.fns.domain.baseNutrient.controller.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +11,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class BaseModifyRequestDto {
+public class ModifyBaseRequestDto {
+
     private Long id;
 
     private Double kcal;

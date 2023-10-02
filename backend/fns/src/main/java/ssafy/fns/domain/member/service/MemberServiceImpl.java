@@ -12,6 +12,7 @@ import ssafy.fns.domain.auth.entity.MailHistory;
 import ssafy.fns.domain.auth.repository.MailHistoryRepository;
 import ssafy.fns.domain.auth.repository.RefreshTokenRepository;
 import ssafy.fns.domain.auth.service.dto.TokenDto;
+import ssafy.fns.domain.baseNutrient.service.BaseService;
 import ssafy.fns.domain.member.controller.dto.EmailDuplicationRequestDto;
 import ssafy.fns.domain.member.controller.dto.MemberProfileRequestDto;
 import ssafy.fns.domain.member.controller.dto.SignUpRequestDto;
@@ -139,16 +140,13 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     public void updatePassword(Member member, UpdatePasswordRequestDto requestDto) {
         Member findMember = memberRepository.findByEmail(member.getEmail());
-        log.info(findMember.getId().toString());
+
         if (!passwordEncoder.matches(requestDto.getPrevPassword(),
                 findMember.getPassword())) {
             throw new GlobalRuntimeException("비밀번호가 틀립니다.", HttpStatus.BAD_REQUEST);
         }
         checkPassword(requestDto.getPassword(), requestDto.getPassword2());
-        log.info(findMember.getPassword());
-        log.info(requestDto.getPassword());
         findMember.updatePassword(passwordEncoder.encode(requestDto.getPassword()));
-        log.info(findMember.getPassword());
 
     }
 

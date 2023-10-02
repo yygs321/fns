@@ -1,10 +1,10 @@
-package ssafy.fns.domain.member.service.dto;
+package ssafy.fns.domain.baseNutrient.service.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import ssafy.fns.domain.member.entity.BaseNutrient;
+import ssafy.fns.domain.baseNutrient.entity.BaseNutrient;
 
 @Getter
 @AllArgsConstructor
