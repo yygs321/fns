@@ -38,6 +38,7 @@ public class MemberServiceImpl implements MemberService {
     private final RefreshTokenRepository refreshTokenRepository;
     private final RedisUtil redisUtil;
     private final WeightHistoryRepository weightHistoryRepository;
+    private final BaseService baseService;
 
     @Override
     @Transactional

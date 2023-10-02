@@ -69,6 +69,7 @@ public class BaseServiceImpl implements BaseService {
                 .transFat(nutrient.getTransFat())
                 .build();
 
+        findMember.addBaseNutrient(baseNutrient);
         baseRepository.save(baseNutrient);
     }
 
