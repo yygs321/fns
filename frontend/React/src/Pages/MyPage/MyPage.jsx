@@ -32,7 +32,9 @@ const MyPage = () => {
 
   const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
   const accessToken = useSelector((state) => state.auth.accessToken);
-
+  const refreshToken = useSelector((state) => state.auth.refreshToken);
+  const expirationTime = useSelector((state) => state.auth.expirationTime);
+  
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -44,6 +46,32 @@ const MyPage = () => {
     dispatch(userLogout());
     navigate("/");
     // 임시
+  };
+
+  const handleMemberWithdrawal = async () => {
+    try {
+      const response = await axios.delete(`${SERVER_API_URL}/members`, {
+        headers: {
+          'X-FNS-ACCESSTOKEN': accessToken,
+        },
+        data: {
+          accessToken,
+          refreshToken,
+          expirationTime,
+        },
+      });
+
+      if (response.data.success) {
+        alert("회원 탈퇴가 성공적으로 완료되었습니다.");
+        dispatch(userLogout());  // 로그아웃 처리
+        navigate("/");         
+      } else {
+        alert("회원 탈퇴 중 오류가 발생했습니다. 다시 시도해 주세요.");
+      }
+    } catch (error) {
+      console.error("Error while withdrawing member:", error);
+      alert("회원 탈퇴 중 오류가 발생했습니다. 다시 시도해 주세요.");
+    }
   };
 
   useEffect(() => {
@@ -172,7 +200,7 @@ const MyPage = () => {
             <ChevronRightIcon style={{ color: "#00E1AB" }} />
         </ListItemButton>
         <Divider />
-            <ListItemButton style={{ paddingLeft: 32 }}>
+            <ListItemButton onClick={handleMemberWithdrawal} style={{ paddingLeft: 32 }}>
               <ListItemText primary="회원탈퇴" />
               <ChevronRightIcon style={{ color: "#00E1AB" }} />
             </ListItemButton>

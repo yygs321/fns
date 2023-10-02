@@ -35,6 +35,7 @@ const KakaoCallback = () => {
         userLogin({
           accessToken: tokenData.accessToken,
           refreshToken: tokenData.refreshToken,
+          expirationTime: tokenData.expirationTime,
         })
       );
 
