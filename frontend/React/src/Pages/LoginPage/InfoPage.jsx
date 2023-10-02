@@ -106,11 +106,15 @@ const InfoPage = () => {
 
                   if (res.data.success) {
                     // base 등록
-                    const baseResponse = await axios.post(`${SERVER_API_URL}/base`, {
+                    const baseResponse = await axios({
+                      method: "post",
+                      url: `${SERVER_API_URL}/base`,
                       headers: {
                           'X-FNS-ACCESSTOKEN': accessToken,
-                      }
+                      },
+                      data: {},
                   });
+                  
                   console.log(baseResponse.data.success);
                     navigate("/main");
                   } else {
