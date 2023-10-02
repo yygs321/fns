@@ -33,7 +33,7 @@ const MyCustomPage = () => {
     const [initialValues, setInitialValues] = useState({});
 
     
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         
         const fetchBaseData = async () => {
@@ -43,10 +43,10 @@ const MyCustomPage = () => {
                         'X-FNS-ACCESSTOKEN': accessToken,
                     },
                 });
-                console.log(response.data)
-                console.log(response.data.data)
 
                 if (response.data.success) {
+                    console.log(response.data)
+                console.log(response.data.data)
                     const data = response.data.data;
                     setInitialValues(data);
 
@@ -149,9 +149,9 @@ const MyCustomPage = () => {
                     {renderSlider("철(mg)", iron, setIron, initialValues.iron)}
                     {renderSlider("인(mg)", phosphorus, setPhosphorus, initialValues.phosphorus)}
                     {renderSlider("나트륨(mg)", sodium, setSodium, initialValues.sodium)}
-                    {renderSlider("비타민A(μg)", vitaminA, vitaminA, initialValues.vitaminA)}
-                    {renderSlider("비타민C(mg)", vitaminC, vitaminC, initialValues.vitaminC)}
-                    {renderSlider("비타민D(μg)", vitaminD, vitaminD, initialValues.vitaminD)}
+                    {renderSlider("비타민A(μg)", vitaminA, setVitaminA, initialValues.vitaminA)}
+                    {renderSlider("비타민C(mg)", vitaminC, setVitaminC, initialValues.vitaminC)}
+                    {renderSlider("비타민D(μg)", vitaminD, setVitaminD, initialValues.vitaminD)}
                     {renderSlider("콜레스테롤", cholesterol, setCholesterol, initialValues.cholesterol)}
                     {renderSlider("포화지방산(g)", acid, setAcid, initialValues.acid)}
                     {renderSlider("트랜스지방산(g)", transfat, setTransFat, initialValues.transFat)}
