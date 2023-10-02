@@ -77,7 +77,7 @@ const MyCustomPage = () => {
         };
 
         fetchBaseData();
-    }, [accessToken]); // accessToken이 변경될 때마다 데이터를 다시 불러옴
+    }, []); 
 
     const [openModal, setOpenModal] = useState(false); // 모달 상태 관리
     const navigate = useNavigate();
