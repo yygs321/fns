@@ -5,7 +5,7 @@ import { Grid, Typography } from "@mui/material";
 import NavigateBeforeRoundedIcon from "@mui/icons-material/NavigateBeforeRounded";
 import NavigateNextRoundedIcon from "@mui/icons-material/NavigateNextRounded";
 import DietAccordion from "./DietAccordion";
-import axiosInstance from "./axiosInstance";
+import axiosInstance from "../Common/Component/AxiosInstance";
 import { useSelector } from "react-redux";
 
 const DietPage = () => {

@@ -8,7 +8,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { resetDiet, deleteFromDiet } from "../../Redux/actions/actions";
-import axiosInstance from "./axiosInstance";
+import axiosInstance from "../Common/Component/AxiosInstance";
 
 import FoodCount from "./FoodCount";
 

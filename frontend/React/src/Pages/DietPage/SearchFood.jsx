@@ -9,7 +9,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 import { addToDiet, deleteFromDiet } from "../../Redux/actions/actions";
-import axiosInstance from "./axiosInstance";
+import axiosInstance from "../Common/Component/AxiosInstance";
 
 const SearchFood = () => {
   const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;

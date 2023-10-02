@@ -16,7 +16,7 @@ import ManRoundedIcon from "@mui/icons-material/ManRounded";
 import WomanRoundedIcon from "@mui/icons-material/WomanRounded";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import axiosInstance from "./axiosInstance";
+import axiosInstance from "../Common/Component/AxiosInstance";
 
 function 닉네임확인함수(nickname) {
   const regex = /^[a-zA-Z0-9가-힣]{2,16}$/;
@@ -123,12 +123,11 @@ const InfoPage = () => {
                       headers: {
                         "X-FNS-ACCESSTOKEN": accessToken,
                       },
-                      data: {},
                     });
                     console.log(baseResponse.data);
                     console.log(baseResponse.data.message);
                     console.log(baseResponse.data.success);
-                    navigate("/main");
+                    navigate("/main", { replace: true });
                   } else {
                     set저장실패("프로필 저장에 실패했습니다.");
                   }

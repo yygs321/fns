@@ -20,7 +20,7 @@ import "../Common/CSS/ContentBox.css";
 import FloatingInputButton from "../Common/Component/FloatingInputButton";
 import { useSelector } from "react-redux";
 import RecommendCarousel from "./RecommendCarousel";
-import axiosInstance from "./axiosInstance";
+import axiosInstance from "../Common/Component/AxiosInstance";
 
 const MainPage = () => {
   const [kcalories, setKcalories] = useState(0); // 칼로리
