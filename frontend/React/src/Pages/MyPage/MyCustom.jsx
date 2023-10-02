@@ -77,7 +77,7 @@ const MyCustomPage = () => {
         };
 
         fetchBaseData();
-    }, []); 
+    }, [accessToken, SERVER_API_URL]); 
 
     const [openModal, setOpenModal] = useState(false); // 모달 상태 관리
     const navigate = useNavigate();
