@@ -1,4 +1,4 @@
-package ssafy.fns.domain.member.entity;
+package ssafy.fns.domain.baseNutrient.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import ssafy.fns.domain.member.controller.dto.BaseModifyRequestDto;
+import ssafy.fns.domain.member.entity.Member;
 import ssafy.fns.domain.nutrient.entity.Nutrient;
 import ssafy.fns.global.entity.BaseEntity;
 
@@ -111,27 +111,6 @@ public class BaseNutrient extends BaseEntity {
         this.cholesterol = nutrient.getCholesterol();
         this.acid = nutrient.getAcid();
         this.transFat = nutrient.getTransFat();
-    }
-
-    public void update(BaseModifyRequestDto modifyRequestDto) {
-        this.kcal = modifyRequestDto.getKcal();
-        this.carbs = modifyRequestDto.getCarbs();
-        this.protein = modifyRequestDto.getProtein();
-        this.fat = modifyRequestDto.getFat();
-        this.pollination = modifyRequestDto.getPollination();
-        this.sugar = modifyRequestDto.getSugar();
-        this.dietaryFiber = modifyRequestDto.getDietaryFiber();
-        this.calcium = modifyRequestDto.getCalcium();
-        this.potassium = modifyRequestDto.getPotassium();
-        this.iron = modifyRequestDto.getIron();
-        this.phosphorus = modifyRequestDto.getPhosphorus();
-        this.sodium = modifyRequestDto.getSodium();
-        this.vitaminA = modifyRequestDto.getVitaminA();
-        this.vitaminC = modifyRequestDto.getVitaminC();
-        this.vitaminD = modifyRequestDto.getVitaminD();
-        this.cholesterol = modifyRequestDto.getCholesterol();
-        this.acid = modifyRequestDto.getAcid();
-        this.transFat = modifyRequestDto.getTransFat();
     }
 
     public void diet(Double rate) {
