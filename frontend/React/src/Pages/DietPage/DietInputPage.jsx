@@ -8,7 +8,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { resetDiet, deleteFromDiet } from "../../Redux/actions/actions";
-import axios from "axios";
+import axiosInstance from "./axiosInstance";
 
 import FoodCount from "./FoodCount";
 
@@ -65,7 +65,7 @@ const DietInputPage = () => {
     try {
       // 백으로 add, delete, fix 보내는 로직을 async 먼저 써서 그거 완료된 뒤에 reset하고 navigate 되도록
       if (deletedDiet.length > 0) {
-        const delete_res = await axios({
+        const delete_res = await axiosInstance({
           method: "delete",
           url: `${SERVER_API_URL}/intake`,
           headers: {
@@ -78,7 +78,7 @@ const DietInputPage = () => {
       }
 
       if (addedDiet.length > 0) {
-        const add_res = await axios({
+        const add_res = await axiosInstance({
           method: "post",
           url: `${SERVER_API_URL}/intake`,
           headers: {
@@ -91,7 +91,7 @@ const DietInputPage = () => {
       }
 
       if (fixedDiet.length > 0) {
-        const fix_res = await axios({
+        const fix_res = await axiosInstance({
           method: "patch",
           url: `${SERVER_API_URL}/intake`,
           headers: {

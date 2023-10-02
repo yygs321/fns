@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-// import axios from "axios";
+import axiosInstance from "./axiosInstance";
 // import { useSelector } from "react-redux";
 
 const RecommendCarousel = (props) => {
@@ -24,11 +24,11 @@ const RecommendCarousel = (props) => {
 
   const getRecommendFood = async () => {
     // try {
-    //   const res = axios({
+    //   const res = axiosInstance({
     //     method: "post",
     //     url: `${SERVER_API_URL}/fastapi/recommend`,
     //     headers: {
-    //       Authorization: `${accessToken}`,
+    //       "X-FNS-ACCESSTOKEN": accessToken,
     //     },
     //     // data: nutrient,
     //     data: {

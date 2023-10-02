@@ -5,7 +5,7 @@ import { Grid, Typography } from "@mui/material";
 import NavigateBeforeRoundedIcon from "@mui/icons-material/NavigateBeforeRounded";
 import NavigateNextRoundedIcon from "@mui/icons-material/NavigateNextRounded";
 import DietAccordion from "./DietAccordion";
-import axios from "axios";
+import axiosInstance from "./axiosInstance";
 import { useSelector } from "react-redux";
 
 const DietPage = () => {
@@ -47,7 +47,7 @@ const DietPage = () => {
     console.log(formattedYesterday);
 
     // try {
-    //   const res = axios({
+    //   const res = axiosInstance({
     //     method: "get",
 
     //     url: `${SERVER_API_URL}/intake/total/${

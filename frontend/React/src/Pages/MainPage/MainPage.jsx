@@ -20,7 +20,7 @@ import "../Common/CSS/ContentBox.css";
 import FloatingInputButton from "../Common/Component/FloatingInputButton";
 import { useSelector } from "react-redux";
 import RecommendCarousel from "./RecommendCarousel";
-import axios from "axios";
+import axiosInstance from "./axiosInstance";
 
 const MainPage = () => {
   const [kcalories, setKcalories] = useState(0); // 칼로리
@@ -64,19 +64,19 @@ const MainPage = () => {
   // eslint-disable-next-line no-unused-vars
   const getNeut = async () => {
     try {
-      const res = await axios({
+      const res = await axiosInstance({
         method: "get",
         url: `${SERVER_API_URL}/api/base`,
         headers: {
-          Authorization: `${accessToken}`,
+          "X-FNS-ACCESSTOKEN": accessToken,
         },
       });
 
-      const res2 = axios({
+      const res2 = axiosInstance({
         method: "get",
         url: `${SERVER_API_URL}/intake/total/${formattedToday}`,
         headers: {
-          Authorization: accessToken,
+          "X-FNS-ACCESSTOKEN": accessToken,
         },
       });
       console.log(res);

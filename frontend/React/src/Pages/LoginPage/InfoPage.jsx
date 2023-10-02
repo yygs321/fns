@@ -16,7 +16,7 @@ import ManRoundedIcon from "@mui/icons-material/ManRounded";
 import WomanRoundedIcon from "@mui/icons-material/WomanRounded";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import axios from "axios";
+import axiosInstance from "./axiosInstance";
 
 function 닉네임확인함수(nickname) {
   const regex = /^[a-zA-Z0-9가-힣]{2,16}$/;
@@ -96,7 +96,7 @@ const InfoPage = () => {
               // 성별 안 고름
               if (성별) {
                 try {
-                  const res = await axios({
+                  const res = await axiosInstance({
                     method: "post",
                     url: `${SERVER_API_URL}/members/profile`,
                     headers: {
@@ -117,7 +117,7 @@ const InfoPage = () => {
 
                   if (res.data.success) {
                     // base 등록
-                    const baseResponse = await axios({
+                    const baseResponse = await axiosInstance({
                       method: "post",
                       url: `${SERVER_API_URL}/base`,
                       headers: {
@@ -166,7 +166,7 @@ const InfoPage = () => {
 
     if (닉네임확인결과) {
       try {
-        const 중복체크결과 = await axios({
+        const 중복체크결과 = await axiosInstance({
           method: "post",
           url: `${SERVER_API_URL}/members/check-nickname-duplicate`,
           headers: {
