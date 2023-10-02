@@ -1,7 +1,6 @@
 package ssafy.fns.domain.member.service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.regex.Pattern;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -39,15 +38,16 @@ public class MemberServiceImpl implements MemberService {
     private final RefreshTokenRepository refreshTokenRepository;
     private final RedisUtil redisUtil;
     private final WeightHistoryRepository weightHistoryRepository;
+    private final BaseService baseService;
 
     @Override
     @Transactional
     public void signUp(SignUpRequestDto requestDto) {
-        log.info("service start:"+requestDto.getPassword());
+        log.info("service start:" + requestDto.getPassword());
         checkPassword(requestDto.getPassword(), requestDto.getPassword2());
-        log.info("after check password:"+requestDto.getPassword());
+        log.info("after check password:" + requestDto.getPassword());
         checkMailAuthed(requestDto.getEmail());
-        log.info("after checkMail:"+requestDto.getPassword());
+        log.info("after checkMail:" + requestDto.getPassword());
         Member findMember = memberRepository.findByEmail(requestDto.getEmail());
         if (findMember != null) {
             findMember.add();
@@ -59,7 +59,7 @@ public class MemberServiceImpl implements MemberService {
                     .provider(Provider.valueOf(requestDto.getProvider()))
                     .build();
 
-            log.info("회원가입 후 멤버 password:"+member.getPassword());
+            log.info("회원가입 후 멤버 password:" + member.getPassword());
             memberRepository.save(member);
         }
     }
@@ -128,9 +128,9 @@ public class MemberServiceImpl implements MemberService {
         Member findMember = getMemberById(member.getId());
         //몸무게 기록
         WeightHistory weight = WeightHistory.builder()
-                            .memberId(member.getId())
-                            .weight(requestDto.getWeight())
-                            .build();
+                .memberId(member.getId())
+                .weight(requestDto.getWeight())
+                .build();
         weightHistoryRepository.save(weight);
         findMember.updateProfile(requestDto);
     }
@@ -176,6 +176,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    @Transactional
     public WeightRequestDto addWeight(Member member, WeightRequestDto requestDto) {
         WeightHistory weight = WeightHistory.builder()
                 .memberId(1L)
@@ -186,26 +187,30 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    @Transactional
     public List<WeightHistory> selectAllWeight(Member member, String date) {
-        String startyear = date.substring(0,4);
-        String startMonth = date.substring(5,7);
-        int month = Integer.parseInt(startMonth)+1;
-        String year="";
-        if(month > 12){
+        String startyear = date.substring(0, 4);
+        String startMonth = date.substring(5, 7);
+        int month = Integer.parseInt(startMonth) + 1;
+        String year = "";
+        if (month > 12) {
             month = 1;
-            int  tempYear = Integer.parseInt(startyear)+1;
-            year = String.valueOf(tempYear)+"-";
-        }else {
-            year = startyear+"-";
+            int tempYear = Integer.parseInt(startyear) + 1;
+            year = String.valueOf(tempYear) + "-";
+        } else {
+            year = startyear + "-";
         }
         String endMonth = String.valueOf(month);
-        String startDate = year+startMonth+"-01";
-        String endDate = year+endMonth+"-01";
+        String startDate = year + startMonth + "-01";
+        String endDate = year + endMonth + "-01";
 
-        System.out.println("시작 : "+startDate);
-        System.out.println("끝 : "+endDate);
-        List<WeightHistory> optionalList = weightHistoryRepository.findAllByDateAndMemberId(startDate, endDate, 1L);
-        if (optionalList.isEmpty()) throw new GlobalRuntimeException("몸무게 기록이 없습니다", HttpStatus.BAD_REQUEST);
+        System.out.println("시작 : " + startDate);
+        System.out.println("끝 : " + endDate);
+        List<WeightHistory> optionalList = weightHistoryRepository.findAllByDateAndMemberId(
+                startDate, endDate, 1L);
+        if (optionalList.isEmpty()) {
+            throw new GlobalRuntimeException("몸무게 기록이 없습니다", HttpStatus.BAD_REQUEST);
+        }
         return optionalList;
     }
 }

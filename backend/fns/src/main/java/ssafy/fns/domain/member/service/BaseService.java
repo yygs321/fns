@@ -9,9 +9,9 @@ public interface BaseService {
 
     BaseResponseDto selectOne(Long memberId);
 
-    String input(Long memberId);
+    void saveBase(Member member);
 
-    String update(Long memberId, BaseModifyRequestDto modifyRequestDto);
+    String updateBase(Long memberId, BaseModifyRequestDto modifyRequestDto);
 
     BaseResponseDto diet(Long memberId, BaseDietRequestDto dietRequestDto);
 }
