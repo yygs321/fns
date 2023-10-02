@@ -140,16 +140,13 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     public void updatePassword(Member member, UpdatePasswordRequestDto requestDto) {
         Member findMember = memberRepository.findByEmail(member.getEmail());
-        log.info(findMember.getId().toString());
+
         if (!passwordEncoder.matches(requestDto.getPrevPassword(),
                 findMember.getPassword())) {
             throw new GlobalRuntimeException("비밀번호가 틀립니다.", HttpStatus.BAD_REQUEST);
         }
         checkPassword(requestDto.getPassword(), requestDto.getPassword2());
-        log.info(findMember.getPassword());
-        log.info(requestDto.getPassword());
         findMember.updatePassword(passwordEncoder.encode(requestDto.getPassword()));
-        log.info(findMember.getPassword());
 
     }
 
