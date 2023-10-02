@@ -1,6 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { Button, TextField, Typography, Modal, Box, Grid, RadioGroup, FormControlLabel, Radio, } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from "react-redux";
+import axios from "axios";
 
 const EditProfilePage = () => {
     const [nickname, setNickname] = useState('');
@@ -12,6 +14,11 @@ const EditProfilePage = () => {
     const navigate = useNavigate();
     const timeoutRef = useRef(null);
     const [닉네임확인, set닉네임확인] = useState(false);
+    const [닉네임오류, set닉네임오류] = useState(undefined);
+    const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
+    const accessToken = useSelector((state) => {
+    return state.auth.accessToken;
+  });
     const 체크박스 = (e) => {
         set프로필공개여부(e.target.value);
       };
