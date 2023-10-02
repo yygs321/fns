@@ -43,7 +43,7 @@ public class BaseServiceImpl implements BaseService {
             throw new GlobalRuntimeException("나이 정보를 확인해주세요.", HttpStatus.BAD_REQUEST);
         }
 
-        Optional<BaseNutrient> optionalBase = baseRepository.findByMemberId(1L);
+        Optional<BaseNutrient> optionalBase = baseRepository.findByMemberId(memberId);
         BaseNutrient baseNutrient = null;
         if (!optionalBase.isPresent()) { // 기존에 영양 정보가 없으면
             baseNutrient = new BaseNutrient();
