@@ -1,5 +1,16 @@
 import React, { useState } from "react";
-import {Grid, Container, TextField, Button, FormControlLabel, Radio, RadioGroup,Typography, Modal, Box} from "@mui/material";
+import {
+  Grid,
+  Container,
+  TextField,
+  Button,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
+  Typography,
+  Modal,
+  Box,
+} from "@mui/material";
 import "./CSS/InfoPage.scss";
 import ManRoundedIcon from "@mui/icons-material/ManRounded";
 import WomanRoundedIcon from "@mui/icons-material/WomanRounded";
@@ -69,8 +80,6 @@ const InfoPage = () => {
 
   const navigate = useNavigate();
 
-  // console.log(accessToken);
-
   const 저장버튼 = async () => {
     // 닉네임 입력 안 했음
     if (닉네임) {
@@ -89,7 +98,7 @@ const InfoPage = () => {
                     method: "post",
                     url: `${SERVER_API_URL}/members/profile`,
                     headers: {
-                      'X-FNS-ACCESSTOKEN': accessToken,
+                      Authorization: accessToken,
                     },
                     data: {
                       nickname: 닉네임,
@@ -105,25 +114,12 @@ const InfoPage = () => {
                   console.log(res.data);
 
                   if (res.data.success) {
-                    // base 등록
-                  //   const baseResponse = await axios({
-                  //     method: "post",
-                  //     url: `${SERVER_API_URL}/base`,
-                  //     headers: {
-                  //         'X-FNS-ACCESSTOKEN': accessToken,
-                  //     },
-                  //     data: {},
-                  // });
-                  // console.log(baseResponse.data);
-                  // console.log(baseResponse.data.message);
-                  // console.log(baseResponse.data.success);
                     navigate("/main");
                   } else {
                     set저장실패("프로필 저장에 실패했습니다.");
                   }
                 } catch (err) {
                   console.log(err);
-                  set저장실패("프로필 저장에 실패했습니다.");
                 }
               } else {
                 set저장실패("성별을 설정해주세요.");
@@ -150,34 +146,34 @@ const InfoPage = () => {
     }, 2000);
   };
 
-  
+  // 중복체크 확인에서 지금 axios network에러
   const 중복체크버튼 = async () => {
     const 닉네임확인결과 = 닉네임확인함수(닉네임);
 
     if (닉네임확인결과) {
       try {
         const 중복체크결과 = await axios({
-          method: "post",
-          url: `${SERVER_API_URL}/members/check-nickname-duplicate`,
+          method: "get",
+          url: `${SERVER_API_URL}/auth/check-nickname-duplicate`,
           headers: {
-            'X-FNS-ACCESSTOKEN': accessToken,
+            Authorization: accessToken,
           },
+          // get이라서 body는 아마 안 될거라 추후에 API 되면 확인
           data: {
             nickname: 닉네임,
           },
         });
-        if (중복체크결과.data.success) {
+
+        if (중복체크결과.success) {
           set닉네임확인(true);
           set닉네임오류(undefined);
         } else {
           set닉네임확인(false);
-          set닉네임오류(중복체크결과.data.message);
+          set닉네임오류(중복체크결과.message);
         }
       } catch (err) {
         console.log(err);
       }
-
-      set닉네임확인(true);
     } else {
       // 닉네임 양식 맞춰주라는 이야기
       set닉네임오류("닉네임 형식이 잘못됐습니다.");
@@ -266,7 +262,6 @@ const InfoPage = () => {
               >
                 <Button
                   variant="contained"
-                  disabled={닉네임확인}
                   sx={{
                     color: "white",
                     textShadow: "2px 2px 20px #8b8b8b",
@@ -276,7 +271,6 @@ const InfoPage = () => {
                     borderRadius: "10px",
                   }}
                   onClick={중복체크버튼}
-                 
                 >
                   중복체크
                 </Button>
