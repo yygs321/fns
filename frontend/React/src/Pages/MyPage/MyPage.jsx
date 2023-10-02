@@ -55,9 +55,9 @@ const MyPage = () => {
           'X-FNS-ACCESSTOKEN': accessToken,
         },
         data: {
-          accessToken,
-          refreshToken,
-          expirationTime,
+          accessToken: accessToken,
+          expirationTime: expirationTime,
+          refreshToken: refreshToken,
         },
       });
 
