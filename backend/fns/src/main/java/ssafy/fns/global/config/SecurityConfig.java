@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import ssafy.fns.global.filter.JwtAuthenticationFilter;
+import ssafy.fns.global.filter.LoggingFilter;
 import ssafy.fns.global.security.JwtTokenProvider;
 
 @Configuration
@@ -27,6 +28,8 @@ public class SecurityConfig {
 
     private final JwtTokenProvider jwtTokenProvider;
 
+    private final LoggingFilter loggingFilter;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable(); //csrf disable
@@ -39,6 +42,8 @@ public class SecurityConfig {
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
                         UsernamePasswordAuthenticationFilter.class);
+
+        http.addFilterBefore(loggingFilter, JwtAuthenticationFilter.class);
 
         http.formLogin()
                 .disable();
