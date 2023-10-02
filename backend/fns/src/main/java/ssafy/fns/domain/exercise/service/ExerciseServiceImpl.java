@@ -38,17 +38,19 @@ public class ExerciseServiceImpl implements ExerciseService {
 
         for (int i = 1; i < 13; i++) {
             Long exerciseTime = requestDto.getExerciseTimeList().get(i);
-            Exercise exercise = Exercise.builder()
-                    .sports(getSportsById(sportsIdList.get(i)))
-                    .member(findMember)
-                    .exerciseDate(requestDto.getExerciseDate())
-                    .exerciseTime(exerciseTime)
-                    .sportsBookmarkList(member.getSportsBookmarkList())
-                    .build();
+            if (findMember.getSportsBookmarkList().get(i) == 1) {
+                Exercise exercise = Exercise.builder()
+                        .sports(getSportsById(sportsIdList.get(i)))
+                        .member(findMember)
+                        .exerciseDate(requestDto.getExerciseDate())
+                        .exerciseTime(exerciseTime)
+                        .sportsBookmarkList(member.getSportsBookmarkList())
+                        .build();
 
-            findMember.addExercise(exercise);
+                findMember.addExercise(exercise);
 
-            exerciseRepository.save(exercise);
+                exerciseRepository.save(exercise);
+            }
         }
     }
 
