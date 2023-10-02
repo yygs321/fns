@@ -114,7 +114,8 @@ const InfoPage = () => {
                       },
                       data: {},
                   });
-                  
+                  console.log(baseResponse.data);
+                  console.log(baseResponse.data.message);
                   console.log(baseResponse.data.success);
                     navigate("/main");
                   } else {
@@ -265,6 +266,7 @@ const InfoPage = () => {
               >
                 <Button
                   variant="contained"
+                  disabled={닉네임확인}
                   sx={{
                     color: "white",
                     textShadow: "2px 2px 20px #8b8b8b",
@@ -274,6 +276,7 @@ const InfoPage = () => {
                     borderRadius: "10px",
                   }}
                   onClick={중복체크버튼}
+                 
                 >
                   중복체크
                 </Button>
