@@ -9,7 +9,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 
 const DietPage = () => {
-  // const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
+  const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
   const accessToken = useSelector((state) => {
     return state.auth.accessToken;
   });
@@ -30,10 +30,10 @@ const DietPage = () => {
   const year = now.getFullYear();
   const month = (now.getMonth() + 1).toString().padStart(2, "0"); // 월은 0부터 시작하므로 1을 더하고 두 자리로 포맷팅합니다.
   const day = now.getDate().toString().padStart(2, "0"); // 일자를 두 자리로 포맷팅합니다.
-  // const beforeDay = now.getDate().toString().padStart(2, "0");
+  const beforeDay = before.getDate().toString().padStart(2, "0");
 
   const formattedToday = `${year}-${month}-${day}`;
-  // const formattedYesterday = `${year}-${month}-${beforeDay}`;
+  const formattedYesterday = `${year}-${month}-${beforeDay}`;
 
   const [isToday, setIsToday] = useState(true);
 
@@ -42,32 +42,32 @@ const DietPage = () => {
 
   // 500 에러로 일단 주석
 
-  const [mealData, setMealData] = useState([]);
-
-  // eslint-disable-next-line no-unused-vars
   const getIntakeData = async () => {
-    try {
-      const res = axios({
-        method: "get",
-        // 식단 목록 api가 없음....... 이거 다른 api 주소
-        // url: `${SERVER_API_URL}/intake/total/${
-        //   isToday ? formattedToday : formattedYesterday
-        // }`,
-        headers: {
-          Authorization: accessToken,
-        },
-      });
-      console.log(res);
+    console.log(formattedToday);
+    console.log(formattedYesterday);
 
-      setMealData(res.data);
-      console.log(mealData);
-    } catch (err) {
-      console.log(err);
-    }
+    // try {
+    //   const res = axios({
+    //     method: "get",
+
+    //     url: `${SERVER_API_URL}/intake/total/${
+    //       isToday ? formattedToday : formattedYesterday
+    //     }`,
+    //     headers: {
+    //       "X-FNS-ACCESSTOKEN": accessToken,
+    //     },
+    //   });
+    //   console.log(res);
+
+    //   setMealData(res.data);
+    //   console.log(mealData);
+    // } catch (err) {
+    //   console.log(err);
+    // }
   };
 
   useEffect(() => {
-    // getIntakeData();
+    getIntakeData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -194,6 +194,20 @@ const DietPage = () => {
     },
   ];
 
+  const [mealData, setMealData] = useState([]);
+  const [morningData, setMorningData] = useState(
+    meals.filter((meal) => meal.intakeTime === "MORNING")[0].food
+  );
+  const [lunchData, setLunchData] = useState(
+    meals.filter((meal) => meal.intakeTime === "LUNCH")[0].food
+  );
+  const [dinnerData, setDinnerData] = useState(
+    meals.filter((meal) => meal.intakeTime === "DINNER")[0].food
+  );
+  const [etcData, setEtcData] = useState(
+    meals.filter((meal) => meal.intakeTime === "ETC")[0].food
+  );
+
   const totalMealsKcal = meals.reduce((total, meal) => {
     const mealTotalKcal = meal.food
       ? meal.food.reduce((mealTotal, foodItem) => {
@@ -316,15 +330,31 @@ const DietPage = () => {
             </Typography>
           </Grid>
         </Grid>
-        {meals.map((meal) => (
-          <DietAccordion
-            key={`diet-${meal.name}`}
-            name={meal.name}
-            food={meal.food}
-            today={formattedToday}
-            intakeTime={meal.intakeTime}
-          />
-        ))}
+
+        <DietAccordion
+          name={"아침"}
+          food={morningData}
+          today={formattedToday}
+          intakeTime={"MORNING"}
+        />
+        <DietAccordion
+          name={"점심"}
+          food={lunchData}
+          today={formattedToday}
+          intakeTime={"LUNCH"}
+        />
+        <DietAccordion
+          name={"저녁"}
+          food={dinnerData}
+          today={formattedToday}
+          intakeTime={"DINNER"}
+        />
+        <DietAccordion
+          name={"간식"}
+          food={etcData}
+          today={formattedToday}
+          intakeTime={"ETC"}
+        />
       </Grid>
     </div>
   );

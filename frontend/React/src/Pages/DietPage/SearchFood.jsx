@@ -64,7 +64,7 @@ const SearchFood = () => {
           name: searchTerm,
         },
         headers: {
-          Authorization: accessToken,
+          "X-FNS-ACCESSTOKEN": accessToken,
         },
       });
 
@@ -238,7 +238,7 @@ const SearchFood = () => {
               <Typography
                 variant="caption"
                 component="div"
-                fontSize={"1.4rem"}
+                fontSize={"1rem"}
                 fontWeight={"bold"}
               >
                 {one.name}

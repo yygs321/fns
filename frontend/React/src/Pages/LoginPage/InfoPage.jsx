@@ -1,5 +1,16 @@
 import React, { useState } from "react";
-import {Grid, Container, TextField, Button, FormControlLabel, Radio, RadioGroup,Typography, Modal, Box} from "@mui/material";
+import {
+  Grid,
+  Container,
+  TextField,
+  Button,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
+  Typography,
+  Modal,
+  Box,
+} from "@mui/material";
 import "./CSS/InfoPage.scss";
 import ManRoundedIcon from "@mui/icons-material/ManRounded";
 import WomanRoundedIcon from "@mui/icons-material/WomanRounded";
@@ -89,7 +100,7 @@ const InfoPage = () => {
                     method: "post",
                     url: `${SERVER_API_URL}/members/profile`,
                     headers: {
-                      'X-FNS-ACCESSTOKEN': accessToken,
+                      "X-FNS-ACCESSTOKEN": accessToken,
                     },
                     data: {
                       nickname: 닉네임,
@@ -106,17 +117,17 @@ const InfoPage = () => {
 
                   if (res.data.success) {
                     // base 등록
-                  //   const baseResponse = await axios({
-                  //     method: "post",
-                  //     url: `${SERVER_API_URL}/base`,
-                  //     headers: {
-                  //         'X-FNS-ACCESSTOKEN': accessToken,
-                  //     },
-                  //     data: {},
-                  // });
-                  // console.log(baseResponse.data);
-                  // console.log(baseResponse.data.message);
-                  // console.log(baseResponse.data.success);
+                    const baseResponse = await axios({
+                      method: "post",
+                      url: `${SERVER_API_URL}/base`,
+                      headers: {
+                        "X-FNS-ACCESSTOKEN": accessToken,
+                      },
+                      data: {},
+                    });
+                    console.log(baseResponse.data);
+                    console.log(baseResponse.data.message);
+                    console.log(baseResponse.data.success);
                     navigate("/main");
                   } else {
                     set저장실패("프로필 저장에 실패했습니다.");
@@ -150,7 +161,6 @@ const InfoPage = () => {
     }, 2000);
   };
 
-  
   const 중복체크버튼 = async () => {
     const 닉네임확인결과 = 닉네임확인함수(닉네임);
 
@@ -160,7 +170,7 @@ const InfoPage = () => {
           method: "post",
           url: `${SERVER_API_URL}/members/check-nickname-duplicate`,
           headers: {
-            'X-FNS-ACCESSTOKEN': accessToken,
+            "X-FNS-ACCESSTOKEN": accessToken,
           },
           data: {
             nickname: 닉네임,
@@ -175,9 +185,8 @@ const InfoPage = () => {
         }
       } catch (err) {
         console.log(err);
+        set닉네임확인(false);
       }
-
-      set닉네임확인(true);
     } else {
       // 닉네임 양식 맞춰주라는 이야기
       set닉네임오류("닉네임 형식이 잘못됐습니다.");
@@ -276,7 +285,6 @@ const InfoPage = () => {
                     borderRadius: "10px",
                   }}
                   onClick={중복체크버튼}
-                 
                 >
                   중복체크
                 </Button>
