@@ -17,6 +17,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import ssafy.fns.domain.baseNutrient.entity.BaseNutrient;
 import ssafy.fns.domain.exercise.entity.Exercise;
 import ssafy.fns.domain.member.controller.dto.MemberProfileRequestDto;
 import ssafy.fns.domain.member.controller.dto.UpdateProfileRequestDto;

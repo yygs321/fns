@@ -1,4 +1,4 @@
-package ssafy.fns.domain.member.controller;
+package ssafy.fns.domain.baseNutrient.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,11 +10,12 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ssafy.fns.domain.member.controller.dto.BaseDietRequestDto;
-import ssafy.fns.domain.member.controller.dto.BaseModifyRequestDto;
+import ssafy.fns.domain.baseNutrient.controller.dto.BaseDietRequestDto;
+import ssafy.fns.domain.baseNutrient.controller.dto.ModifyBaseRequestDto;
+import ssafy.fns.domain.baseNutrient.service.BaseService;
 import ssafy.fns.domain.member.entity.Member;
-import ssafy.fns.domain.member.service.BaseService;
 import ssafy.fns.global.response.JsonResponse;
 
 @RestController
@@ -26,21 +27,30 @@ public class BaseController {
 
     private final BaseService baseService;
 
-    @GetMapping(value = "")
-    public ResponseEntity<?> selectCurrentBase(@AuthenticationPrincipal Member member) {
-        return JsonResponse.ok("현재 기준 영양정보 조회 완료", baseService.selectCurrentBase(member));
-    }
-
     @PostMapping(value = "")
     public ResponseEntity<?> saveBase(@AuthenticationPrincipal Member member) {
         baseService.saveBase(member);
         return JsonResponse.ok("사용자 기준영양소 초기화 완료!");
     }
 
-    @PatchMapping("")
+    @PostMapping("/update")
     public ResponseEntity<?> updateBase(@AuthenticationPrincipal Member member,
-            @RequestBody BaseModifyRequestDto modifyRequestDto) {
-        return JsonResponse.ok(baseService.updateBase(member, modifyRequestDto));
+            @RequestBody ModifyBaseRequestDto modifyRequestDto) {
+        baseService.updateBase(member, modifyRequestDto);
+        return JsonResponse.ok("기준 영양정보 수정 완료!");
+    }
+
+    @GetMapping(value = "/current")
+    public ResponseEntity<?> selectCurrentBase(@AuthenticationPrincipal Member member) {
+        return JsonResponse.ok("현재 기준 영양정보 조회 완료", baseService.selectCurrentBase(member));
+    }
+
+    @GetMapping(value = "")
+    public ResponseEntity<?> selectBaseByDate(@AuthenticationPrincipal Member member,
+            @RequestParam("date") String baseNutrientDate) {
+        log.info(baseNutrientDate);
+        return JsonResponse.ok(baseNutrientDate + "일자 기준 영양정보 조회 완료",
+                baseService.selectBaseByDate(member, baseNutrientDate));
     }
 
     @PatchMapping("/diet")
