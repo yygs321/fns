@@ -8,6 +8,6 @@ import lombok.Getter;
 public class ExerciseDto {
 
     private Long sportsId;
-    private Long met;
+    private Double met;
     private Long exerciseTime;
 }
