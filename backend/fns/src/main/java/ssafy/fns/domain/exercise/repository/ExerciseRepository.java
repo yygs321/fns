@@ -9,7 +9,7 @@ public interface ExerciseRepository extends JpaRepository<Exercise, Long> {
     Exercise findByExerciseDateAndMember_IdAndSports_Id(LocalDate exerciseDate, Long memberId,
             Long sportsId);
 
-    Exercise findTop1ByExerciseDate(LocalDate exerciseDate);
+    Exercise findFirstByExerciseDateAndMember_Id(LocalDate exerciseDate, Long memberId);
 
     Exercise findByExerciseDate(LocalDate exerciseDate);
 }

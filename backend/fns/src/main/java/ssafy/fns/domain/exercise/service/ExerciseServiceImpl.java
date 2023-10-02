@@ -60,18 +60,21 @@ public class ExerciseServiceImpl implements ExerciseService {
 
         Member findMember = memberRepository.findByEmail(member.getEmail());
 
-        checkExerciseExisted(requestDto);
+        checkExerciseExisted(member, requestDto);
 
         List<Integer> sportsBookmarkList = exerciseRepository
-                .findTop1ByExerciseDate(requestDto.getExerciseDate()).getSportsBookmarkList();
+                .findFirstByExerciseDateAndMember_Id(requestDto.getExerciseDate(),
+                        findMember.getId()).getSportsBookmarkList();
 
         List<ExerciseDto> exerciseDtoList = new ArrayList<>();
+
         for (int idx = 1; idx < sportsBookmarkList.size(); idx++) {
 
-            Exercise exercise = exerciseRepository.findByExerciseDateAndMember_IdAndSports_Id(
-                    requestDto.getExerciseDate(), member.getId(), sportsIdList.get(idx));
-
             if (sportsBookmarkList.get(idx) == 1) {
+
+                Exercise exercise = exerciseRepository.findByExerciseDateAndMember_IdAndSports_Id(
+                        requestDto.getExerciseDate(), member.getId(), sportsIdList.get(idx));
+
                 ExerciseDto exerciseDto = ExerciseDto.builder()
                         .sportsId(exercise.getSports().getId())
                         .met(exercise.getSports().getMet())
@@ -89,14 +92,6 @@ public class ExerciseServiceImpl implements ExerciseService {
         return responseDto;
     }
 
-    private void checkExerciseExisted(SelectExerciseRequestDto requestDto) {
-        Exercise exercise = exerciseRepository.findByExerciseDate(requestDto.getExerciseDate());
-        if (exercise == null) {
-            throw new GlobalRuntimeException("해당일자에 운동데이터가 없습니다.", HttpStatus.BAD_REQUEST);
-        }
-    }
-
-
     @Override
     @Transactional
     public void saveSportsBookmark(Member member, SaveSportsBookmarkRequestDto requestDto) {
@@ -108,6 +103,14 @@ public class ExerciseServiceImpl implements ExerciseService {
         }
 
         findMember.updateSportsBookmarkList(mySportsBookmarkList);
+    }
+
+    private void checkExerciseExisted(Member member, SelectExerciseRequestDto requestDto) {
+        Exercise exercise = exerciseRepository.findFirstByExerciseDateAndMember_Id(
+                requestDto.getExerciseDate(), member.getId());
+        if (exercise == null) {
+            throw new GlobalRuntimeException("해당일자에 운동데이터가 없습니다.", HttpStatus.BAD_REQUEST);
+        }
     }
 
     private Sports getSportsById(Long idx) {
