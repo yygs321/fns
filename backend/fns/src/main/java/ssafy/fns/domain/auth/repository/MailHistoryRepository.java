@@ -7,7 +7,7 @@ public interface MailHistoryRepository extends JpaRepository<MailHistory, Long> 
 
     MailHistory findTop1ByEmailAndIsAuthedOrderByIdDesc(String email, boolean isAuthed);
 
-    MailHistory findByEmail(String email);
+    MailHistory findTop1ByEmailOrderByIdDesc(String email);
 
-    MailHistory deleteAllByEmail(String email);
+    void deleteAllByEmail(String email);
 }

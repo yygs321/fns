@@ -44,11 +44,9 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional
     public void signUp(SignUpRequestDto requestDto) {
-        log.info("service start:" + requestDto.getPassword());
         checkPassword(requestDto.getPassword(), requestDto.getPassword2());
-        log.info("after check password:" + requestDto.getPassword());
         checkMailAuthed(requestDto.getEmail());
-        log.info("after checkMail:" + requestDto.getPassword());
+
         Member findMember = memberRepository.findByEmail(requestDto.getEmail());
         if (findMember != null) {
             findMember.add();
@@ -60,17 +58,17 @@ public class MemberServiceImpl implements MemberService {
                     .provider(Provider.valueOf(requestDto.getProvider()))
                     .build();
 
-            log.info("회원가입 후 멤버 password:" + member.getPassword());
             memberRepository.save(member);
         }
     }
 
     private void checkMailAuthed(String email) {
-        MailHistory mailHistory = mailHistoryRepository.findByEmail(email);
+        MailHistory mailHistory = mailHistoryRepository.findTop1ByEmailOrderByIdDesc(email);
         if (mailHistory == null) {
             throw new GlobalRuntimeException("메일 전송을 완료해주세요", HttpStatus.NOT_FOUND);
         }
-        if (!mailHistory.isAuthed()) {
+
+        if (mailHistory.isAuthed() == false) {
             throw new GlobalRuntimeException("메일 인증을 완료해주세요", HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }
@@ -158,9 +156,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     private void removeMailHistory(Member findMember) {
-        MailHistory mailHistory = mailHistoryRepository.findTop1ByEmailAndIsAuthedOrderByIdDesc(
-                findMember.getEmail(), true);
-        mailHistoryRepository.deleteById(mailHistory.getId());
+        mailHistoryRepository.deleteAllByEmail(findMember.getEmail());
     }
 
     private void checkPassword(String password, String password2) {
