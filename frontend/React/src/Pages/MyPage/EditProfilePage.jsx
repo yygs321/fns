@@ -19,6 +19,11 @@ const EditProfilePage = () => {
     const accessToken = useSelector((state) => {
     return state.auth.accessToken;
   });
+  const handleModalClose = () => {
+    clearTimeout(timeoutRef.current);  // setTimeout 취소
+    navigate("/mypage");
+};
+
     const 체크박스 = (e) => {
         set프로필공개여부(e.target.value);
       };
