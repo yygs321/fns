@@ -161,20 +161,14 @@ public class MemberServiceImpl implements MemberService {
     }
 
     private Weight saveWeight(Member member, MemberProfileRequestDto requestDto) {
-        Weight weight = Weight.builder()
-                .member(member)
-                .weight(requestDto.getWeight())
-                .build();
+        Weight weight = Weight.from(member, requestDto);
         weightRepository.save(weight);
 
         return weight;
     }
 
     private Weight updateWeight(Member member, UpdateProfileRequestDto requestDto) {
-        Weight weight = Weight.builder()
-                .member(member)
-                .weight(requestDto.getWeight())
-                .build();
+        Weight weight = Weight.from(member, requestDto);
         weightRepository.save(weight);
 
         return weight;
