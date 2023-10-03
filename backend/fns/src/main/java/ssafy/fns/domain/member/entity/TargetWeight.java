@@ -28,12 +28,16 @@ public class TargetWeight extends BaseEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    private Double initialWeight;
     private Double targetWeight;
     private Long dietDuration;
 
+
     @Builder
-    public TargetWeight(Member member, Double targetWeight, Long dietDuration) {
+    public TargetWeight(Member member, Double initialWeight, Double targetWeight,
+            Long dietDuration) {
         this.member = member;
+        this.initialWeight = initialWeight;
         this.targetWeight = targetWeight;
         this.dietDuration = dietDuration;
     }

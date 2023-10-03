@@ -30,8 +30,9 @@ public class WeightServiceImpl implements WeightService {
     @Override
     @Transactional
     public void saveWeight(Member member, WeightRequestDto requestDto) {
+        Member findMember = memberRepository.findByEmail(member.getEmail());
         Weight weight = Weight.builder()
-                .member(member)
+                .member(findMember)
                 .weight(requestDto.getWeight())
                 .build();
         weightRepository.save(weight);
@@ -69,10 +70,16 @@ public class WeightServiceImpl implements WeightService {
     @Transactional
     public void saveTargetWeight(Member member, TargetWeightRequestDto requestDto) {
         Member findMember = memberRepository.findByEmail(member.getEmail());
+
+        if (findMember.getTargetWeight() != null) {
+            targetWeightRepository.delete(findMember.getTargetWeight());
+        }
+
         TargetWeight targetWeight = TargetWeight.builder()
+                .initialWeight(findMember.getCurrentWeight())
                 .targetWeight(requestDto.getTargetWeight())
                 .dietDuration(requestDto.getDuration())
-                .member(member)
+                .member(findMember)
                 .build();
 
         targetWeightRepository.save(targetWeight);
@@ -84,12 +91,23 @@ public class WeightServiceImpl implements WeightService {
         Member findMember = memberRepository.findByEmail(member.getEmail());
 
         Long remainingDays = getRemaingingDays(findMember);
+        Double currentWeight = findMember.getCurrentWeight();
+        Double targetWeight = findMember.getTargetWeight().getTargetWeight();
+        Double initialWeight = findMember.getTargetWeight().getInitialWeight();
+        Double progressRatio = 0.0;
+
+        if (currentWeight != targetWeight) {
+            progressRatio =
+                    ((initialWeight - currentWeight) / (initialWeight - targetWeight)) * 100;
+        }
 
         return TargetWeightResponseDto.builder()
-                .currentWeight(findMember.getCurrentWeight())
-                .targetWeight(member.getTargetWeight().getTargetWeight())
-                .duration(member.getTargetWeight().getDietDuration())
-                .remainingDays(remainingDays).build();
+                .currentWeight(currentWeight)
+                .targetWeight(targetWeight)
+                .duration(findMember.getTargetWeight().getDietDuration())
+                .remainingDays(remainingDays)
+                .progressRatio(progressRatio)
+                .build();
     }
 
     @NotNull

@@ -15,4 +15,5 @@ public class TargetWeightResponseDto {
     private Double targetWeight;
     private Long duration;
     private Long remainingDays;
+    private Double progressRatio;
 }
