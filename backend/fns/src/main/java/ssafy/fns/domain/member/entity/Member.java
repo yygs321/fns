@@ -13,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -50,11 +51,13 @@ public class Member extends BaseEntity {
 
     private Double height;
 
-    private Double weight;
-
     private Long age;
 
-    private Long targetWeight;
+    @OneToOne(mappedBy = "member", fetch = FetchType.LAZY)
+    private TargetWeight targetWeight;
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    private List<Weight> weightList = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<Exercise> exerciseList = new ArrayList<>();
@@ -69,8 +72,7 @@ public class Member extends BaseEntity {
 
     @Builder
     public Member(String email, String password, Provider provider, String nickname,
-            Boolean isPublished, String gender, Double height, Double weight, Long age,
-            Long targetWeight) {
+            Boolean isPublished, String gender, Double height, Long age) {
         this.email = email;
         this.password = password;
         this.provider = provider;
@@ -78,17 +80,15 @@ public class Member extends BaseEntity {
         this.isPublished = isPublished;
         this.gender = gender;
         this.height = height;
-        this.weight = weight;
         this.age = age;
-        this.targetWeight = targetWeight;
     }
+
 
     public void saveProfile(MemberProfileRequestDto requestDto) {
         this.nickname = requestDto.getNickname();
         this.isPublished = requestDto.getIsPublished();
         this.gender = requestDto.getGender();
         this.height = requestDto.getHeight();
-        this.weight = requestDto.getWeight();
         this.age = requestDto.getAge();
     }
 
@@ -99,9 +99,12 @@ public class Member extends BaseEntity {
     public void updateProfile(UpdateProfileRequestDto requestDto) {
         this.nickname = requestDto.getNickname();
         this.height = requestDto.getHeight();
-        this.weight = requestDto.getWeight();
         this.age = requestDto.getAge();
         this.isPublished = requestDto.getIsPublished();
+    }
+
+    public void updateTarget(TargetWeight targetWeight) {
+        this.targetWeight = targetWeight;
     }
 
     public void addExercise(Exercise exercise) {
@@ -116,5 +119,15 @@ public class Member extends BaseEntity {
         this.sportsBookmarkList = newSportsBookmarkList;
     }
 
+
+    public void addWeight(Weight weight) {
+        this.weightList.add(weight);
+    }
+
+    public Double getCurrentWeight() {
+        return this.getWeightList()
+                .get(this.getWeightList().size() - 1)
+                .getWeight();
+    }
 
 }

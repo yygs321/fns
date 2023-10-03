@@ -87,7 +87,8 @@ public class ExerciseServiceImpl implements ExerciseService {
         ExerciseResponseDto responseDto = ExerciseResponseDto.builder()
                 .sportsBookmarkList(sportsBookmarkList)
                 .exerciseDtoList(exerciseDtoList)
-                .weight(findMember.getWeight())
+                .weight(findMember.getWeightList().get(findMember.getWeightList().size() - 1)
+                        .getWeight())
                 .build();
         return responseDto;
     }

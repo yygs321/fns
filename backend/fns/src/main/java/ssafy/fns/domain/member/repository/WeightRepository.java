@@ -1,13 +1,12 @@
 package ssafy.fns.domain.member.repository;
 
 import java.util.List;
-import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import ssafy.fns.domain.member.entity.WeightHistory;
+import ssafy.fns.domain.member.entity.Weight;
 
-public interface WeightHistoryRepository extends JpaRepository<WeightHistory, Long> {
+public interface WeightRepository extends JpaRepository<Weight, Long> {
 
     @Query(nativeQuery = true, value = "select * from weight_history "
             + "where created_at IN("
@@ -16,5 +15,6 @@ public interface WeightHistoryRepository extends JpaRepository<WeightHistory, Lo
             + "GROUP BY date(created_at)) "
             + "AND (date(created_at) >= :startDate and date(created_at) < :EndDate) "
             + "and member_id = :memberId order by created_at")
-    List<WeightHistory> findAllByDateAndMemberId(@Param("startDate") String startDate, @Param("EndDate") String EndDate, @Param("memberId") Long memberId);
+    List<Weight> findAllByDateAndMemberId(@Param("startDate") String startDate,
+            @Param("EndDate") String EndDate, @Param("memberId") Long memberId);
 }
