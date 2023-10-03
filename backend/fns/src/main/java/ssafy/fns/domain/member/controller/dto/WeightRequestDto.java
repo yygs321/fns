@@ -1,6 +1,5 @@
 package ssafy.fns.domain.member.controller.dto;
 
-import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,5 +12,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 public class WeightRequestDto {
-    private double weight;
+
+    private Double weight;
 }

@@ -50,11 +50,12 @@ public class Member extends BaseEntity {
 
     private Double height;
 
-    private Double weight;
-
     private Long age;
 
     private Long targetWeight;
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    private List<Weight> weightList = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<Exercise> exerciseList = new ArrayList<>();
@@ -69,7 +70,7 @@ public class Member extends BaseEntity {
 
     @Builder
     public Member(String email, String password, Provider provider, String nickname,
-            Boolean isPublished, String gender, Double height, Double weight, Long age,
+            Boolean isPublished, String gender, Double height, Long age,
             Long targetWeight) {
         this.email = email;
         this.password = password;
@@ -78,17 +79,16 @@ public class Member extends BaseEntity {
         this.isPublished = isPublished;
         this.gender = gender;
         this.height = height;
-        this.weight = weight;
         this.age = age;
         this.targetWeight = targetWeight;
     }
+
 
     public void saveProfile(MemberProfileRequestDto requestDto) {
         this.nickname = requestDto.getNickname();
         this.isPublished = requestDto.getIsPublished();
         this.gender = requestDto.getGender();
         this.height = requestDto.getHeight();
-        this.weight = requestDto.getWeight();
         this.age = requestDto.getAge();
     }
 
@@ -99,7 +99,6 @@ public class Member extends BaseEntity {
     public void updateProfile(UpdateProfileRequestDto requestDto) {
         this.nickname = requestDto.getNickname();
         this.height = requestDto.getHeight();
-        this.weight = requestDto.getWeight();
         this.age = requestDto.getAge();
         this.isPublished = requestDto.getIsPublished();
     }
@@ -117,4 +116,7 @@ public class Member extends BaseEntity {
     }
 
 
+    public void addWeight(Weight weight) {
+        this.weightList.add(weight);
+    }
 }

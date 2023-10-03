@@ -1,6 +1,5 @@
 package ssafy.fns.domain.member.entity;
 
-import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,7 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,20 +18,22 @@ import ssafy.fns.global.entity.BaseEntity;
 @Entity
 @NoArgsConstructor
 @Slf4j
-public class WeightHistory extends BaseEntity {
+public class Weight extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "weight_id")
     private Long id;
 
-    private Long memberId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     private Double weight;
 
     @Builder
-    public WeightHistory(Long memberId, Double weight) {
-        this.memberId = memberId;
+    public Weight(Member member, Double weight) {
+        this.member = member;
         this.weight = weight;
     }
 }
