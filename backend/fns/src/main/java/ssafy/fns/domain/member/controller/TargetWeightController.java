@@ -22,14 +22,14 @@ public class TargetWeightController {
 
     private final WeightService weightService;
 
-    @PostMapping("/target-weight")
+    @PostMapping()
     public ResponseEntity<?> saveTargetWeight(@AuthenticationPrincipal Member member,
             @RequestBody TargetWeightRequestDto requestDto) {
         weightService.saveTargetWeight(member, requestDto);
         return JsonResponse.ok("감량 목표 등록 완료!");
     }
 
-    @GetMapping("/target-weight")
+    @GetMapping()
     public ResponseEntity<?> selectTargetWeight(@AuthenticationPrincipal Member member) {
         return JsonResponse.ok("감량 목표 조회 완료!", weightService.selectTargetWeight(member));
     }
