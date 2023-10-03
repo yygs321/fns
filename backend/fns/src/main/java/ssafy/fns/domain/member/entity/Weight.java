@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import ssafy.fns.domain.member.controller.dto.WeightRequestDto;
 import ssafy.fns.global.entity.BaseEntity;
 
 @Getter
@@ -33,5 +34,12 @@ public class Weight extends BaseEntity {
     public Weight(Member member, Double weight) {
         this.member = member;
         this.weight = weight;
+    }
+
+    public static Weight from(Member member, WeightRequestDto requestDto) {
+        return Weight.builder()
+                .member(member)
+                .weight(requestDto.getWeight())
+                .build();
     }
 }

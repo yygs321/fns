@@ -11,6 +11,7 @@ import javax.persistence.OneToOne;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import ssafy.fns.domain.member.controller.dto.TargetWeightRequestDto;
 import ssafy.fns.global.entity.BaseEntity;
 
 @Getter
@@ -32,7 +33,6 @@ public class TargetWeight extends BaseEntity {
     private Double targetWeight;
     private Long dietDuration;
 
-
     @Builder
     public TargetWeight(Member member, Double initialWeight, Double targetWeight,
             Long dietDuration) {
@@ -40,5 +40,14 @@ public class TargetWeight extends BaseEntity {
         this.initialWeight = initialWeight;
         this.targetWeight = targetWeight;
         this.dietDuration = dietDuration;
+    }
+
+    public static TargetWeight from(Member member, TargetWeightRequestDto requestDto) {
+        return TargetWeight.builder()
+                .initialWeight(member.getCurrentWeight())
+                .targetWeight(requestDto.getTargetWeight())
+                .dietDuration(requestDto.getDuration())
+                .member(member)
+                .build();
     }
 }
