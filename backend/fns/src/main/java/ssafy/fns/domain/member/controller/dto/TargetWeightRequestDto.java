@@ -9,7 +9,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class WeightRequestDto {
+public class TargetWeightRequestDto {
 
-    private Double weight;
+    private Double targetWeight;
+    private Long duration;
+
 }

@@ -28,8 +28,7 @@ public class MemberListResponseDto {
                 .nickname(member.getNickname())
                 .age(member.getAge())
                 .height(member.getHeight())
-                .weight(member.getWeightList().get(member.getWeightList().size() - 1)
-                        .getWeight())
+                .weight(member.getCurrentWeight())
                 .gender(member.getGender())
                 .isPublished(member.getIsPublished())
                 .build();

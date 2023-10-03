@@ -13,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -52,7 +53,8 @@ public class Member extends BaseEntity {
 
     private Long age;
 
-    private Long targetWeight;
+    @OneToOne(mappedBy = "member", fetch = FetchType.LAZY)
+    private TargetWeight targetWeight;
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<Weight> weightList = new ArrayList<>();
@@ -70,8 +72,7 @@ public class Member extends BaseEntity {
 
     @Builder
     public Member(String email, String password, Provider provider, String nickname,
-            Boolean isPublished, String gender, Double height, Long age,
-            Long targetWeight) {
+            Boolean isPublished, String gender, Double height, Long age) {
         this.email = email;
         this.password = password;
         this.provider = provider;
@@ -80,7 +81,6 @@ public class Member extends BaseEntity {
         this.gender = gender;
         this.height = height;
         this.age = age;
-        this.targetWeight = targetWeight;
     }
 
 
@@ -103,6 +103,10 @@ public class Member extends BaseEntity {
         this.isPublished = requestDto.getIsPublished();
     }
 
+    public void updateTarget(TargetWeight targetWeight) {
+        this.targetWeight = targetWeight;
+    }
+
     public void addExercise(Exercise exercise) {
         this.exerciseList.add(exercise);
     }
@@ -119,4 +123,11 @@ public class Member extends BaseEntity {
     public void addWeight(Weight weight) {
         this.weightList.add(weight);
     }
+
+    public Double getCurrentWeight() {
+        return this.getWeightList()
+                .get(this.getWeightList().size() - 1)
+                .getWeight();
+    }
+
 }

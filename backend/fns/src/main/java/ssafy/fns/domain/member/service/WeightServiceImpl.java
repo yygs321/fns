@@ -1,16 +1,22 @@
 package ssafy.fns.domain.member.service;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import ssafy.fns.domain.member.controller.dto.TargetWeightRequestDto;
 import ssafy.fns.domain.member.controller.dto.WeightRequestDto;
-import ssafy.fns.domain.member.controller.dto.WeightTargetRequestDto;
 import ssafy.fns.domain.member.entity.Member;
+import ssafy.fns.domain.member.entity.TargetWeight;
 import ssafy.fns.domain.member.entity.Weight;
 import ssafy.fns.domain.member.repository.MemberRepository;
+import ssafy.fns.domain.member.repository.TargetWeightRepository;
 import ssafy.fns.domain.member.repository.WeightRepository;
+import ssafy.fns.domain.member.service.dto.TargetWeightResponseDto;
 import ssafy.fns.global.exception.GlobalRuntimeException;
 
 @Service
@@ -19,6 +25,7 @@ public class WeightServiceImpl implements WeightService {
 
     private final MemberRepository memberRepository;
     private final WeightRepository weightRepository;
+    private final TargetWeightRepository targetWeightRepository;
 
     @Override
     @Transactional
@@ -59,9 +66,39 @@ public class WeightServiceImpl implements WeightService {
     }
 
     @Override
-    public void saveTargetWeight(Member member, WeightTargetRequestDto requestDto) {
-        Member findeMember = memberRepository.findByEmail(member.getEmail());
+    @Transactional
+    public void saveTargetWeight(Member member, TargetWeightRequestDto requestDto) {
+        Member findMember = memberRepository.findByEmail(member.getEmail());
+        TargetWeight targetWeight = TargetWeight.builder()
+                .targetWeight(requestDto.getTargetWeight())
+                .dietDuration(requestDto.getDuration())
+                .member(member)
+                .build();
 
+        targetWeightRepository.save(targetWeight);
+        findMember.updateTarget(targetWeight);
+    }
+
+    @Override
+    public TargetWeightResponseDto selectTargetWeight(Member member) {
+        Member findMember = memberRepository.findByEmail(member.getEmail());
+
+        Long remainingDays = getRemaingingDays(findMember);
+
+        return TargetWeightResponseDto.builder()
+                .currentWeight(findMember.getCurrentWeight())
+                .targetWeight(member.getTargetWeight().getTargetWeight())
+                .duration(member.getTargetWeight().getDietDuration())
+                .remainingDays(remainingDays).build();
+    }
+
+    @NotNull
+    private static Long getRemaingingDays(Member member) {
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        LocalDateTime createdAt = member.getTargetWeight().getCreatedAt();
+
+        Duration currentDuration = Duration.between(createdAt, currentDateTime);
+        return member.getTargetWeight().getDietDuration() - currentDuration.toDays();
     }
 
 }

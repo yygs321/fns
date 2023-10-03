@@ -7,7 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,22 +16,25 @@ import ssafy.fns.global.entity.BaseEntity;
 @Getter
 @Entity
 @NoArgsConstructor
-public class Weight extends BaseEntity {
+public class TargetWeight extends BaseEntity {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "weight_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
-    private Double weight;
+    private Double targetWeight;
+    private Long dietDuration;
 
     @Builder
-    public Weight(Member member, Double weight) {
+    public TargetWeight(Member member, Double targetWeight, Long dietDuration) {
         this.member = member;
-        this.weight = weight;
+        this.targetWeight = targetWeight;
+        this.dietDuration = dietDuration;
     }
 }

@@ -1,10 +1,11 @@
 package ssafy.fns.domain.member.service;
 
 import java.util.List;
+import ssafy.fns.domain.member.controller.dto.TargetWeightRequestDto;
 import ssafy.fns.domain.member.controller.dto.WeightRequestDto;
-import ssafy.fns.domain.member.controller.dto.WeightTargetRequestDto;
 import ssafy.fns.domain.member.entity.Member;
 import ssafy.fns.domain.member.entity.Weight;
+import ssafy.fns.domain.member.service.dto.TargetWeightResponseDto;
 
 public interface WeightService {
 
@@ -12,6 +13,7 @@ public interface WeightService {
 
     List<Weight> selectAllWeight(Member member, String date);
 
-    void saveTargetWeight(Member member, WeightTargetRequestDto requestDto);
+    void saveTargetWeight(Member member, TargetWeightRequestDto requestDto);
 
+    TargetWeightResponseDto selectTargetWeight(Member member);
 }

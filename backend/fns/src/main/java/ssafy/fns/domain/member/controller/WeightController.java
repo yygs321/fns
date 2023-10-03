@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import ssafy.fns.domain.member.controller.dto.TargetWeightRequestDto;
 import ssafy.fns.domain.member.controller.dto.WeightRequestDto;
-import ssafy.fns.domain.member.controller.dto.WeightTargetRequestDto;
 import ssafy.fns.domain.member.entity.Member;
 import ssafy.fns.domain.member.service.WeightService;
 import ssafy.fns.global.response.JsonResponse;
@@ -35,9 +35,14 @@ public class WeightController {
 
     @PostMapping("/target-weight")
     public ResponseEntity<?> saveTargetWeight(@AuthenticationPrincipal Member member,
-            @RequestBody WeightTargetRequestDto requestDto) {
+            @RequestBody TargetWeightRequestDto requestDto) {
         weightService.saveTargetWeight(member, requestDto);
         return JsonResponse.ok("감량 목표 등록 완료!");
+    }
+
+    @GetMapping("/target-weight")
+    public ResponseEntity<?> selectTargetWeight(@AuthenticationPrincipal Member member) {
+        return JsonResponse.ok("감량 목표 조회 완료!", weightService.selectTargetWeight(member));
     }
 
     //    @GetMapping("/weight")
