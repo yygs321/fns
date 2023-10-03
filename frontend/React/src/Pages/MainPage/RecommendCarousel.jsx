@@ -4,15 +4,14 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import axiosInstance from "../Common/Component/AxiosInstance";
-// import { useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 const RecommendCarousel = (props) => {
   // const { nutrient } = props;
 
-  // const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
-  // const accessToken = useSelector((state) => {
-  //   return state.auth.accessToken;
-  // });
+  const accessToken = useSelector((state) => {
+    return state.auth.accessToken;
+  });
 
   // eslint-disable-next-line no-unused-vars
   const [recommendedFood, setRecommendedFood] = useState([
@@ -23,24 +22,24 @@ const RecommendCarousel = (props) => {
   ]);
 
   const getRecommendFood = async () => {
-    // try {
-    //   const res = axiosInstance({
-    //     method: "post",
-    //     url: `${SERVER_API_URL}/fastapi/recommend`,
-    //     headers: {
-    //       "X-FNS-ACCESSTOKEN": accessToken,
-    //     },
-    //     // data: nutrient,
-    //     data: {
-    //       calorie: 200,
-    //       carbohydrate: 15.5,
-    //       protein: 24.0,
-    //     },
-    //   });
-    //   console.log(res);
-    // } catch (err) {
-    //   console.log(err);
-    // }
+    try {
+      const res = axiosInstance({
+        method: "post",
+        url: `http://j9a403.p.ssafy.io/fastapi/recommend`,
+        headers: {
+          "X-FNS-ACCESSTOKEN": accessToken,
+        },
+        // data: nutrient,
+        data: {
+          calorie: 200,
+          carbohydrate: 15.5,
+          protein: 24.0,
+        },
+      });
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {

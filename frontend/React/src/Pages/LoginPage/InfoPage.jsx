@@ -116,6 +116,18 @@ const InfoPage = () => {
                   console.log(res.data);
 
                   if (res.data.success) {
+                    const weightRes = await axiosInstance({
+                      method: "post",
+                      url: `${SERVER_API_URL}/members/weight`,
+                      headers: {
+                        "X-FNS-ACCESSTOKEN": accessToken,
+                      },
+                      data: {
+                        weight: 체중,
+                      },
+                    });
+
+                    console.log(weightRes);
                     // base 등록
                     const baseResponse = await axiosInstance({
                       method: "post",
@@ -125,9 +137,9 @@ const InfoPage = () => {
                       },
                     });
                     console.log(baseResponse.data);
-                    console.log(baseResponse.data.message);
-                    console.log(baseResponse.data.success);
-                    navigate("/main", { replace: true });
+
+                    navigate("/main");
+                    window.location.reload();
                   } else {
                     set저장실패("프로필 저장에 실패했습니다.");
                   }

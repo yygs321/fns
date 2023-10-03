@@ -46,24 +46,24 @@ const DietPage = () => {
     console.log(formattedToday);
     console.log(formattedYesterday);
 
-    // try {
-    //   const res = axiosInstance({
-    //     method: "get",
+    try {
+      const res = axiosInstance({
+        method: "get",
 
-    //     url: `${SERVER_API_URL}/intake/total/${
-    //       isToday ? formattedToday : formattedYesterday
-    //     }`,
-    //     headers: {
-    //       "X-FNS-ACCESSTOKEN": accessToken,
-    //     },
-    //   });
-    //   console.log(res);
+        url: `${SERVER_API_URL}/intake/total/${
+          isToday ? formattedToday : formattedYesterday
+        }`,
+        headers: {
+          "X-FNS-ACCESSTOKEN": accessToken,
+        },
+      });
+      console.log(res);
 
-    //   setMealData(res.data);
-    //   console.log(mealData);
-    // } catch (err) {
-    //   console.log(err);
-    // }
+      setMealData(res.data);
+      console.log(mealData);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {
@@ -78,7 +78,7 @@ const DietPage = () => {
       // food: [],
       food: [
         {
-          foodName: "우유",
+          name: "우유",
           kcal: 100,
           carbs: 20,
           protein: 20,
@@ -87,7 +87,7 @@ const DietPage = () => {
           foodId: 1,
         },
         {
-          foodName: "씨리얼",
+          name: "씨리얼",
           kcal: 100,
           carbs: 20,
           protein: 20,
@@ -103,7 +103,7 @@ const DietPage = () => {
       // food: [],
       food: [
         {
-          foodName: "제육볶음",
+          name: "제육볶음",
           kcal: 155,
           carbs: 20,
           protein: 20,
@@ -112,7 +112,7 @@ const DietPage = () => {
           foodId: 3,
         },
         {
-          foodName: "배추김치",
+          name: "배추김치",
           kcal: 100,
           carbs: 20,
           protein: 20,
@@ -121,7 +121,7 @@ const DietPage = () => {
           foodId: 4,
         },
         {
-          foodName: "쌀밥",
+          name: "쌀밥",
           kcal: 100,
           carbs: 20,
           protein: 20,
@@ -146,7 +146,7 @@ const DietPage = () => {
       // food: [],
       food: [
         {
-          foodName: "참치맛 크래커",
+          name: "참치맛 크래커",
           kcal: 5,
           carbs: 20,
           protein: 20,
@@ -155,7 +155,7 @@ const DietPage = () => {
           foodId: 6,
         },
         {
-          foodName: "참치맛 감자칩",
+          name: "참치맛 감자칩",
           kcal: 10,
           carbs: 20,
           protein: 20,
@@ -164,7 +164,7 @@ const DietPage = () => {
           foodId: 7,
         },
         {
-          foodName: "참치맛 껌",
+          name: "참치맛 껌",
           kcal: 15,
           carbs: 20,
           protein: 20,
@@ -173,7 +173,7 @@ const DietPage = () => {
           foodId: 15,
         },
         {
-          foodName: "참치맛 젤리",
+          name: "참치맛 젤리",
           kcal: 20,
           carbs: 20,
           protein: 20,
@@ -182,7 +182,7 @@ const DietPage = () => {
           foodId: 8,
         },
         {
-          foodName: "참치맛 아이스크림",
+          name: "참치맛 아이스크림",
           kcal: 5,
           carbs: 20,
           protein: 20,
