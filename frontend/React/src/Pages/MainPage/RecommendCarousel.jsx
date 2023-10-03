@@ -25,7 +25,7 @@ const RecommendCarousel = (props) => {
     try {
       const res = axiosInstance({
         method: "post",
-        url: `http://j9a403.p.ssafy.io/fastapi/recommend`,
+        url: `https://j9a403.p.ssafy.io/fastapi/recommend`,
         headers: {
           "X-FNS-ACCESSTOKEN": accessToken,
         },

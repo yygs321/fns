@@ -38,7 +38,7 @@ const MyCustomPage = () => {
         
         const fetchBaseData = async () => {
             try {
-                const response = await axios.get(`${SERVER_API_URL}/base`, {
+                const response = await axios.get(`${SERVER_API_URL}/base/current`, {
                     headers: {
                         'X-FNS-ACCESSTOKEN': accessToken,
                     },
@@ -46,7 +46,7 @@ const MyCustomPage = () => {
 
                 if (response.data.success) {
                     console.log(response.data)
-                console.log(response.data.data)
+                    console.log(response.data.data)
                     const data = response.data.data;
                     setInitialValues(data);
 
@@ -85,12 +85,51 @@ const MyCustomPage = () => {
 
     const [tooltipOpen, setTooltipOpen] = useState(false); // 툴팁의 상태를 관리
 
-    const handleSave = () => {
-        setOpenModal(true);
-        timeoutRef.current = setTimeout(() => {
-            navigate("/mypage");
-        }, 1000);
+    const handleSave = async () => {
+        try {
+            // 슬라이더에서 조절한 값을 포함한 데이터 생성
+            const requestData = {
+                acid: acid,
+                calcium: calcium,
+                carbs: carbs,
+                cholesterol: cholesterol,
+                dietaryFiber: dietaryfiber,
+                fat: fat,
+                iron: iron,
+                kcal: kcal,
+                phosphorus: phosphorus,
+                pollination: pollination,
+                potassium: potassium,
+                protein: protein,
+                sodium: sodium,
+                sugar: sugar,
+                transFat: transfat,
+                vitaminA: vitaminA,
+                vitaminC: vitaminC,
+                vitaminD: vitaminD,
+            };
+    
+            // 서버에 저장 요청
+            const response = await axios.post(`${SERVER_API_URL}/base/update`, requestData, {
+                headers: {
+                    'X-FNS-ACCESSTOKEN': accessToken,
+                },
+            });
+    
+            if (response.data.success) {
+                console.log("영양소 값 저장 성공");
+                setOpenModal(true);
+                timeoutRef.current = setTimeout(() => {
+                    navigate("/mypage");
+                }, 1000);
+            } else {
+                console.error("영양소 값 저장 실패:", response.data.message);
+            }
+        } catch (error) {
+            console.error("영양소 값 저장 중 오류 발생:", error);
+        }
     };
+    
 
     const handleModalClose = () => {
         clearTimeout(timeoutRef.current);
