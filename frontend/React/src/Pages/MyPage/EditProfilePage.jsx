@@ -44,23 +44,34 @@ const EditProfilePage = () => {
           });
       
           if (res.data.success) {
-            setOpenModal(true); // 저장에 성공하면 모달을 열어줍니다.
-            timeoutRef.current = setTimeout(() => {
-              navigate("/mypage");
-            }, 1000);
-          } else {
-            // 저장에 실패했을 때의 로직을 작성합니다.
-          }
-        } catch (err) {
-          console.log(err);
-          // 에러 핸들링 로직을 작성합니다.
-        }
-      };
-      
+            // 만약 프로필 저장 성공하면 base등록  
+            const baseResponse = await axios({
+                method: "post",
+                url: `${SERVER_API_URL}/base`,
+                headers: {
+                    'X-FNS-ACCESSTOKEN': accessToken,
+                },
+                data: {},
+            });
 
-    const handleModalClose = () => {
-        clearTimeout(timeoutRef.current);  // setTimeout 취소
-        navigate("/mypage");
+            // base 등록 성공시 콘솔로그
+            if (baseResponse.data.success) {
+                console.log("base 등록 성공!");
+            } else {
+                console.warn("base 등록 실패");
+            }
+
+            setOpenModal(true); // 다 등록되면 모달 띄우기
+            timeoutRef.current = setTimeout(() => {
+                navigate("/mypage");
+            }, 1000);
+        } else {
+            
+        }
+    } catch (err) {
+        console.log(err);
+        // Handle errors here
+    }
     };
 
     const handleCheckNickname = async () => {

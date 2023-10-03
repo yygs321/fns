@@ -38,7 +38,7 @@ const MyCustomPage = () => {
         
         const fetchBaseData = async () => {
             try {
-                const response = await axios.get(`${SERVER_API_URL}/base`, {
+                const response = await axios.get(`${SERVER_API_URL}/base/current`, {
                     headers: {
                         'X-FNS-ACCESSTOKEN': accessToken,
                     },
