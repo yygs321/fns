@@ -48,6 +48,10 @@ public class SecurityConfig {
         http.formLogin()
                 .disable();
 
+        http.exceptionHandling()
+                .authenticationEntryPoint((request, response, authException) -> {});
+
+
         return http.build();
     }
 
