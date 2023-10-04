@@ -91,7 +91,8 @@ const UserGraph = (props) => {
             >
               <Avatar
                 alt="MyName"
-                src={user.profileImg}
+                // 프로필 이미지 없으면 그냥 회색 이미지로 들어감
+                // src={user.profileImg}
                 sx={{ width: "5rem", height: "5rem" }}
               />
             </Grid>

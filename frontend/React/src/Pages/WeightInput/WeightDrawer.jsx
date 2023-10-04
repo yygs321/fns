@@ -60,14 +60,19 @@ export default function WeightDrawer(props) {
       console.log(res.data.data);
       const targetData = res.data.data.targetWeightResponseDto;
 
-      set다이어트모드(true);
-      set체중(res.data.data.weightList[0].weight);
-      set목표체중(targetData.targetWeight);
-      set기간(targetData.remainingDays);
-      set입력목표체중(targetData.targetWeight);
-      set입력기간(targetData.duration);
+      if (targetData.targetWeight) {
+        set다이어트모드(true);
+      }
+
+      set체중(
+        res.data.data.weightList ? res.data.data.weightList[0].weight : ""
+      );
+      set목표체중(targetData.targetWeight || "");
+      set기간(targetData.remainingDays || "");
+      set입력목표체중(targetData.targetWeight || "");
+      set입력기간(targetData.duration || "");
     } catch (err) {
-      // console.log(err);
+      console.log(err);
     }
   };
 
@@ -233,7 +238,7 @@ export default function WeightDrawer(props) {
             <div className="체중">
               {!다이어트모드 && (
                 <span className={`fontSize ${체중 ? "체중" : "체중없음"}`}>
-                  {체중 ? (
+                  {목표체중 ? (
                     <>
                       <Typography
                         id="target-weight-setting-modal-description"

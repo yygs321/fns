@@ -1,17 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import PropTypes from "prop-types";
 import { Tabs, Tab, Box } from "@mui/material";
 
 import UserGraph from "./UserGraph";
 import UserRecommend from "./UserRecommend";
-import Cat from "../../assets/Image/cat.jpg";
+import default_profile from "../../assets/Image/Profile/deafult_profile.jpg";
+// import Cat from "../../assets/Image/cat.jpg";
 
 const UsersTabs = () => {
-  const users = [
+  // const [followees, setFollowees] = useState([]);
+  // const [recommendedUsers, setRecommendedUsers] = useState([]);
+
+  // const getFollowees = async () => {};
+
+  useEffect(() => {}, []);
+
+  const followees = [
     {
       username: "댕냥이",
-      profileImg: Cat,
+      profileImg: default_profile,
       maxKcal: 2200,
       nowKcal: 2200,
       maxcarb: 200,
@@ -23,7 +31,7 @@ const UsersTabs = () => {
     },
     {
       username: "콩냥이",
-      profileImg: Cat,
+      profileImg: default_profile,
       maxKcal: 2000,
       nowKcal: 2500,
       maxcarb: 200,
@@ -35,7 +43,7 @@ const UsersTabs = () => {
     },
     {
       username: "활냥이",
-      profileImg: Cat,
+      profileImg: default_profile,
       maxKcal: 5000,
       nowKcal: 2000,
       maxcarb: 500,
@@ -47,7 +55,7 @@ const UsersTabs = () => {
     },
     {
       username: "물냥이",
-      profileImg: Cat,
+      profileImg: default_profile,
       maxKcal: 2000,
       nowKcal: 1800,
       maxcarb: 200,
@@ -60,10 +68,10 @@ const UsersTabs = () => {
   ];
 
   const recommendedUsers = [
-    { username: "짭냥이", profileImg: Cat, old: 10, BMI: 30 },
-    { username: "콘냥이", profileImg: Cat, old: 9, BMI: 25 },
-    { username: "얍냥이", profileImg: Cat, old: 8, BMI: 20 },
-    { username: "쩝냥이", profileImg: Cat, old: 7, BMI: 15 },
+    { username: "짭냥이", profileImg: default_profile, old: 10, BMI: 30 },
+    { username: "콘냥이", profileImg: default_profile, old: 9, BMI: 25 },
+    { username: "얍냥이", profileImg: default_profile, old: 8, BMI: 20 },
+    { username: "쩝냥이", profileImg: default_profile, old: 7, BMI: 15 },
   ];
 
   const [selectedUser, setSelectedUser] = useState(null);
@@ -100,7 +108,7 @@ const UsersTabs = () => {
         className="noscroll"
         sx={{ overflow: "scroll" }}
       >
-        {users.map((user, index) => (
+        {followees.map((user, index) => (
           <UserGraph
             user={user}
             index={index}

@@ -15,11 +15,12 @@ const BarGraph = (props) => {
         >
           {name}
         </Typography>
-        <Typography
-          variant="body2"
-          color="text.secondary"
-          fontSize={"0.7rem"}
-        >{`${nutrient} / ${maxNutrient}`}</Typography>
+        <Typography variant="body2" color="text.secondary" fontSize={"0.7rem"}>
+          {" "}
+          {Number.isInteger(nutrient)
+            ? `${nutrient} / ${maxNutrient}`
+            : `${nutrient.toFixed(1)} / ${maxNutrient}`}
+        </Typography>
       </Grid>
       <Box sx={{ width: "100%", mr: 1, pt: "0.5vh" }}>
         <LinearProgress

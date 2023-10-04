@@ -7,28 +7,56 @@ import SearchIcon from "@mui/icons-material/Search";
 
 import { useNavigate } from "react-router-dom";
 
-import Cat from "../../assets/Image/cat.jpg";
+// import Cat from "../../assets/Image/cat.jpg";
+import axiosInstance from "../Common/Component/AxiosInstance";
+import { useSelector } from "react-redux";
 
 const UserSearch = () => {
+  const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
+  const accessToken = useSelector((state) => {
+    return state.auth.accessToken;
+  });
+
   const [searchTerm, setSearchTerm] = useState("");
   const [addedFollow, setAddedFollow] = useState([]);
+  const [searchResult, setSearchResult] = useState([]);
 
   console.log(searchTerm);
 
   const navigate = useNavigate();
 
-  const searchResult = [
-    { username: "짭냥이", profileImg: Cat, old: 10, BMI: 30 },
-    { username: "콘냥이", profileImg: Cat, old: 9, BMI: 25 },
-    { username: "얍냥이", profileImg: Cat, old: 8, BMI: 20 },
-    { username: "쩝냥이", profileImg: Cat, old: 7, BMI: 15 },
-  ];
+  // const searchResult = [
+  //   { username: "짭냥이", profileImg: Cat, old: 10, BMI: 30 },
+  //   { username: "콘냥이", profileImg: Cat, old: 9, BMI: 25 },
+  //   { username: "얍냥이", profileImg: Cat, old: 8, BMI: 20 },
+  //   { username: "쩝냥이", profileImg: Cat, old: 7, BMI: 15 },
+  // ];
   const goBackPage = () => {
     navigate(-1);
   };
 
-  const handleSearchFollow = () => {
+  const handleSearchFollow = async () => {
     // 여기다 검색 api
+    try {
+      const res = await axiosInstance({
+        method: "get",
+        url: `${SERVER_API_URL}/follow/member`,
+        headers: {
+          "X-FNS-ACCESSTOKEN": accessToken,
+        },
+        params: {
+          nickname: searchTerm,
+        },
+      });
+
+      console.log(res);
+
+      const result = res.data.data;
+
+      setSearchResult(result);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handlePressEnter = (event) => {
@@ -198,7 +226,7 @@ const UserSearch = () => {
               >
                 <Avatar
                   alt="MyName"
-                  src={one.profileImg}
+                  // src={one.profileImg}
                   sx={{ width: "5rem", height: "5rem" }}
                 />
               </Grid>
@@ -219,7 +247,7 @@ const UserSearch = () => {
                   overflow="hidden"
                   textOverflow="ellipsis"
                 >
-                  {one.username}
+                  {one.nickname}
                 </Typography>
               </Grid>
             </Grid>
@@ -240,7 +268,7 @@ const UserSearch = () => {
                 overflow="hidden"
                 textOverflow="ellipsis"
               >
-                나이 : {one.old}
+                나이 : {one.age}
               </Typography>
               <Typography
                 variant="body1"
@@ -251,7 +279,7 @@ const UserSearch = () => {
                 overflow="hidden"
                 textOverflow="ellipsis"
               >
-                BMI : {one.BMI}
+                성별 : {one.gender === "MALE" ? "남자" : "여자"}
               </Typography>
             </Grid>
             <Grid
