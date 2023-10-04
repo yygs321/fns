@@ -67,6 +67,9 @@ const 운동한것들 = [
 dayjs.locale("ko");
 
 const CalendarPage = () => {
+
+  
+
   const [날짜, set날짜] = useState(dayjs());
   const 오늘 = dayjs();
 
@@ -469,7 +472,7 @@ const CalendarPage = () => {
           </div>
           {/* box4 */}
 
-          <WeightChart 날짜={날짜} 오늘={오늘} set날짜={set날짜} />
+          <WeightChart/>
         </Grid>
       </Grid>
       <FloatingInputButton />

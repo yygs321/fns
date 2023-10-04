@@ -1,23 +1,11 @@
-import React from "react";
+import {React, useState, useEffect} from "react";
+import { useSelector } from "react-redux";
 import "chart.js/auto";
 import { Line } from "react-chartjs-2";
-import { UserData } from "./Data";
 import { Typography, Divider, Grid, LinearProgress, Box } from "@mui/material";
-import { 목표체중, 기간, 현재체중, 시작체중 } from "../WeightInput/WeightInput";
+import axios from "axios";
 // import NavigateBeforeRoundedIcon from "@mui/icons-material/NavigateBeforeRounded";
 // import NavigateNextRoundedIcon from "@mui/icons-material/NavigateNextRounded";
-
-export const data = {
-  labels: UserData.map((data) => data.day),
-  datasets: [
-    {
-      label: "체중",
-      data: UserData.map((data) => data ? data.weight : null),
-      borderColor: "green",
-      spanGaps: true,
-    },
-  ],
-};
 
 export const options = {
   maintainAspectRatio: false,
@@ -37,6 +25,7 @@ export const options = {
     },
   },
 };
+
 const 차트스타일 = {
   display: "flex",
 
@@ -45,11 +34,65 @@ const 차트스타일 = {
   height: "35vh",
 };
 
-export function WeightChart({ 날짜, set날짜, 오늘 }) {
-  const percentage =
-    (1 -
-      (시작체중 - 목표체중 - (현재체중 - 목표체중)) / (시작체중 - 목표체중)) *
-    100;
+export function WeightChart() {
+
+  const [현재체중, set현재체중] = useState("");
+  const [목표체중, set목표체중] = useState("");
+  const [userData, setUserData] = useState([
+    {
+    weight : "80",
+    createdAt : "2023-09-20T02:58:28.707111"
+    }
+  ]);
+  const [기간, set기간] = useState("");
+  const [percentage, setPercentage] = useState("");
+
+  const accessToken = useSelector((state) => {
+    return state.auth.accessToken
+  });
+  const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
+  
+  useEffect(() => {
+  const 체중감량그래프API = async () => {
+    try {
+      const response = await axios.get(`${SERVER_API_URL}/weight/history`, {
+        headers: {
+          'X-FNS-ACCESSTOKEN': accessToken,
+        },
+      });
+
+      const targetData = response.data.data;
+      console.log("성공여부 : ", response.data.success);
+      if(response.data.success){
+      console.log("Response Data : ",response.data);
+      set현재체중(() => targetData.targetWeightResponseDto.currentWeight);
+      set목표체중(() => targetData.targetWeightResponseDto.targetWeight);
+      if(targetData.weightList){
+      setUserData(() => targetData.weightList);
+      }
+      set기간(() => targetData.remainingDays);
+      setPercentage(() => targetData.progressRatio)
+      }
+    } catch (error) {
+      console.error("Error while searching:", error);
+    }
+  };
+  체중감량그래프API();
+}, [accessToken, SERVER_API_URL]);
+
+
+  const data = {
+    labels: userData.map((data) => data.createdAt),
+    datasets: [
+      {
+        label: "체중",
+        data: userData.map((data) => data ? data.weight : null),
+        borderColor: "green",
+        spanGaps: true,
+      },
+    ],
+  };
+
 
   // const changeDayBefore = () => {
   //   const 어제 = 날짜.subtract(1, "day");
@@ -95,7 +138,7 @@ export function WeightChart({ 날짜, set날짜, 오늘 }) {
           alignItems={"center"}
         >
           <Typography textAlign="center" sx={{ fontSize: "2rem", mt : 1, mb : 1 }}>
-            {오늘.format("M월")}의 체중 그래프
+            다이어트 체중 그래프
           </Typography>
         </Grid>
         <Grid
@@ -227,5 +270,3 @@ export function WeightChart({ 날짜, set날짜, 오늘 }) {
     </div>
   );
 }
-
-export default WeightChart;
