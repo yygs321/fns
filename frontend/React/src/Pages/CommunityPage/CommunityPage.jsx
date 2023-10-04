@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import { Avatar, Grid, Typography, TextField } from "@mui/material";
 
@@ -6,182 +6,259 @@ import SearchIcon from "@mui/icons-material/Search";
 
 import CommunityBarGraph from "./CommunityBarGraph";
 import UsersTabs from "./UsersTabs";
-import Cat from "../../assets/Image/cat.jpg";
+import axiosInstance from "../Common/Component/AxiosInstance";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+// import default_profile from "../../assets/Image/Profile/deafult_profile.jpg";
+import Loading from "../Common/Component/Loading";
 
 const CommunityPage = () => {
+  const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
+  const accessToken = useSelector((state) => {
+    return state.auth.accessToken;
+  });
+
+  const now = new Date();
+
+  const year = now.getFullYear();
+  const month = (now.getMonth() + 1).toString().padStart(2, "0"); // 월은 0부터 시작하므로 1을 더하고 두 자리로 포맷팅합니다.
+  const day = now.getDate().toString().padStart(2, "0"); // 일자를 두 자리로 포맷팅합니다.
+
+  const formattedToday = `${year}-${month}-${day}`;
+
   const navigate = useNavigate();
 
-  const maxKcal = 2400;
-  const nowKcal = 2000;
-  const maxcarb = 200;
-  const nowcarb = 120;
-  const maxprot = 200;
-  const nowprot = 100;
-  const maxprov = 200;
-  const nowprov = 50;
+  const [kcalories, setKcalories] = useState(0); // 칼로리
+  const [baseKcalories, setBaseKcalories] = useState(9999); // 칼로리
+  const [carbohydrate, setCarbohydrate] = useState(0); // 탄수화물
+  const [baseCarbohydrate, setBaseCarbohydrate] = useState(999); // 탄수화물
+  const [protein, setProtein] = useState(0); // 단백질
+  const [baseProtein, setBaseProtein] = useState(999); // 단백질
+  const [fat, setFat] = useState(0); // 지방
+  const [baseFat, setBaseFat] = useState(999); // 지방
+  const [myProfile, setMyProfile] = useState(null); // 내 정보
+  const [isLoading, setIsLoading] = useState(false); // 로딩
 
-  const username = "귀여운 멍멍이";
+  const getMyData = async () => {
+    try {
+      const res = await axiosInstance({
+        method: "get",
+        url: `${SERVER_API_URL}/base/current`,
+        headers: {
+          "X-FNS-ACCESSTOKEN": accessToken,
+        },
+      });
+
+      const res2 = await axiosInstance({
+        method: "get",
+        url: `${SERVER_API_URL}/intake/simple/${formattedToday}`,
+        headers: {
+          "X-FNS-ACCESSTOKEN": accessToken,
+        },
+      });
+
+      const res3 = await axiosInstance({
+        method: "get",
+        url: `${SERVER_API_URL}/members`,
+        headers: {
+          "X-FNS-ACCESSTOKEN": accessToken,
+        },
+      });
+      console.log(res);
+      console.log(res2);
+      console.log(res3);
+
+      const baseData = res.data.data;
+      const nowData = res2.data.data;
+
+      setMyProfile(res3.data.data);
+      setBaseKcalories(baseData.kcal);
+      setBaseCarbohydrate(baseData.carbs);
+      setBaseProtein(baseData.protein);
+      setBaseFat(baseData.fat);
+      setKcalories(nowData.kcal);
+      setCarbohydrate(nowData.carbs);
+      setProtein(nowData.protein);
+      setFat(nowData.fat);
+
+      setIsLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    setIsLoading(true);
+
+    getMyData();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const goToSearch = () => {
     navigate("/community/search");
   };
 
-  return (
-    <div className="white-pages">
-      <Grid container justifyContent={"center"}>
-        <Grid
-          container
-          item
-          xs={11}
-          justifyContent={"center"}
-          alignItems={"center"}
-          sx={{
-            height: "22vh",
-            borderBottom: "1px solid #e7e7e7",
-            pt: "1vh",
-            pb: "2vh",
-          }}
-        >
+  if (isLoading) {
+    return <Loading />;
+  } else {
+    return (
+      <div className="white-pages">
+        <Grid container justifyContent={"center"}>
           <Grid
             container
             item
-            xs={4}
-            sx={{ height: "100%" }}
+            xs={11}
             justifyContent={"center"}
             alignItems={"center"}
+            sx={{
+              height: "22vh",
+              borderBottom: "1px solid #e7e7e7",
+              pt: "1vh",
+              pb: "2vh",
+            }}
           >
             <Grid
               container
               item
-              xs={12}
+              xs={4}
+              sx={{ height: "100%" }}
               justifyContent={"center"}
               alignItems={"center"}
             >
-              <Avatar
-                alt="MyName"
-                src={Cat}
-                sx={{ width: "5rem", height: "5rem" }}
-              />
-            </Grid>
-            <Grid
-              container
-              item
-              xs={12}
-              justifyContent={"center"}
-              alignItems={"center"}
-              textAlign={"center"}
-            >
-              <Typography
-                variant="body1"
-                color="text.primary"
-                fontSize={"1rem"}
-                fontWeight={"bold"}
-                whiteSpace="nowrap"
-                overflow="hidden"
-                textOverflow="ellipsis"
+              <Grid
+                container
+                item
+                xs={12}
+                justifyContent={"center"}
+                alignItems={"center"}
               >
-                {username}
-              </Typography>
+                <Avatar
+                  alt="MyName"
+                  // src={default_profile}
+                  sx={{ width: "5rem", height: "5rem" }}
+                />
+              </Grid>
+              <Grid
+                container
+                item
+                xs={12}
+                justifyContent={"center"}
+                alignItems={"center"}
+                textAlign={"center"}
+              >
+                <Typography
+                  variant="body1"
+                  color="text.primary"
+                  fontSize={"1rem"}
+                  fontWeight={"bold"}
+                  whiteSpace="nowrap"
+                  overflow="hidden"
+                  textOverflow="ellipsis"
+                >
+                  {/* {myProfile.nickname} */}
+                  {myProfile ? myProfile.nickname : "닉네임이 없습니다."}
+                </Typography>
+              </Grid>
+            </Grid>
+            <Grid
+              container
+              item
+              xs={8}
+              justifyContent={"center"}
+              alignItems={"center"}
+              direction={"column"}
+            >
+              <Grid item container xs={3} justifyContent={"center"}>
+                <CommunityBarGraph
+                  nutrient={kcalories}
+                  maxNutrient={baseKcalories}
+                  name={"칼로리"}
+                />
+              </Grid>
+              <Grid item container xs={3} justifyContent={"center"}>
+                <CommunityBarGraph
+                  nutrient={carbohydrate}
+                  maxNutrient={baseCarbohydrate}
+                  name={"탄수화물"}
+                />
+              </Grid>
+              <Grid item container xs={3} justifyContent={"center"}>
+                <CommunityBarGraph
+                  nutrient={protein}
+                  maxNutrient={baseProtein}
+                  name={"단백질"}
+                />
+              </Grid>
+              <Grid item container xs={3} justifyContent={"center"}>
+                <CommunityBarGraph
+                  nutrient={fat}
+                  maxNutrient={baseFat}
+                  name={"지방"}
+                />
+              </Grid>
             </Grid>
           </Grid>
           <Grid
             container
             item
-            xs={8}
+            xs={12}
             justifyContent={"center"}
             alignItems={"center"}
-            direction={"column"}
+            sx={{ height: "10vh" }}
           >
-            <Grid item container xs={3} justifyContent={"center"}>
-              <CommunityBarGraph
-                nutrient={nowKcal}
-                maxNutrient={maxKcal}
-                name={"칼로리"}
-              />
-            </Grid>
-            <Grid item container xs={3} justifyContent={"center"}>
-              <CommunityBarGraph
-                nutrient={nowcarb}
-                maxNutrient={maxcarb}
-                name={"탄수화물"}
-              />
-            </Grid>
-            <Grid item container xs={3} justifyContent={"center"}>
-              <CommunityBarGraph
-                nutrient={nowprot}
-                maxNutrient={maxprot}
-                name={"단백질"}
-              />
-            </Grid>
-            <Grid item container xs={3} justifyContent={"center"}>
-              <CommunityBarGraph
-                nutrient={nowprov}
-                maxNutrient={maxprov}
-                name={"지방"}
-              />
-            </Grid>
-          </Grid>
-        </Grid>
-        <Grid
-          container
-          item
-          xs={12}
-          justifyContent={"center"}
-          alignItems={"center"}
-          sx={{ height: "10vh" }}
-        >
-          <Grid
-            container
-            item
-            xs={9}
-            justifyContent={"center"}
-            alignItems={"center"}
-          >
-            <TextField
-              fullWidth
-              variant="outlined"
-              placeholder="유저 검색"
-              InputProps={{
-                endAdornment: <SearchIcon color="text.secondary" />,
-                sx: {
-                  height: "6vh",
-                  borderRadius: "30px",
-                  backgroundColor: "#e7e7e7",
+            <Grid
+              container
+              item
+              xs={9}
+              justifyContent={"center"}
+              alignItems={"center"}
+            >
+              <TextField
+                fullWidth
+                variant="outlined"
+                placeholder="유저 검색"
+                InputProps={{
+                  endAdornment: <SearchIcon color="text.secondary" />,
+                  sx: {
+                    height: "6vh",
+                    borderRadius: "30px",
+                    backgroundColor: "#e7e7e7",
+                    cursor: "pointer",
+                  },
+                }}
+                inputProps={{
+                  readOnly: true,
+                  style: { cursor: "pointer" },
+                }}
+                sx={{
                   cursor: "pointer",
-                },
-              }}
-              inputProps={{
-                readOnly: true,
-                style: { cursor: "pointer" },
-              }}
-              sx={{
-                cursor: "pointer",
-                "& .MuiOutlinedInput-notchedOutline": {
-                  border: "none",
-                  height: "6vh",
-                },
-              }}
-              maxRows={1}
-              onClick={goToSearch}
-            />
+                  "& .MuiOutlinedInput-notchedOutline": {
+                    border: "none",
+                    height: "6vh",
+                  },
+                }}
+                maxRows={1}
+                onClick={goToSearch}
+              />
+            </Grid>
+          </Grid>
+          <Grid
+            container
+            item
+            xs={11}
+            justifyContent={"center"}
+            alignItems={"center"}
+            sx={{
+              height: "60vh",
+            }}
+          >
+            <UsersTabs />
           </Grid>
         </Grid>
-        <Grid
-          container
-          item
-          xs={11}
-          justifyContent={"center"}
-          alignItems={"center"}
-          sx={{
-            height: "60vh",
-          }}
-        >
-          <UsersTabs />
-        </Grid>
-      </Grid>
-    </div>
-  );
+      </div>
+    );
+  }
 };
 
 export default CommunityPage;

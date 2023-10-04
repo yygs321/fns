@@ -72,7 +72,11 @@ const BarGraph = (props) => {
               borderRadius: "20px", // 바의 radius 설정
             },
           }}
-          value={(nutrient / maxNutrient) * 100}
+          value={
+            (nutrient / maxNutrient) * 100 > 100
+              ? 100
+              : (nutrient / maxNutrient) * 100
+          }
           {...nutrient}
         />
         <Box sx={{ minWidth: 10, paddingY: "0.3rem" }}>
@@ -80,7 +84,11 @@ const BarGraph = (props) => {
             variant="body2"
             color="text.secondary"
             fontSize={"0.9rem"}
-          >{`${nutrient} / ${maxNutrient}`}</Typography>
+          >
+            {Number.isInteger(nutrient)
+              ? `${nutrient} / ${maxNutrient}`
+              : `${nutrient.toFixed(1)} / ${maxNutrient}`}
+          </Typography>
         </Box>
       </Box>
     </Box>

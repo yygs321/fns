@@ -81,7 +81,7 @@ const DietAccordion = (props) => {
                 {food.map((f, index) => (
                   <React.Fragment key={index}>
                     <Typography sx={{ color: "text.secondary" }}>
-                      {f.name}
+                      {f.foodName}
                     </Typography>
                     {index !== food.length - 1 && (
                       <Typography sx={{ color: "text.secondary" }}>

@@ -185,6 +185,7 @@ const InfoPage = () => {
       } catch (err) {
         console.log(err);
         set닉네임확인(false);
+        set프로필모달("이미 등록된 닉네임입니다.");
       }
     } else {
       // 닉네임 양식 맞춰주라는 이야기
