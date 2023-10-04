@@ -31,12 +31,6 @@ public class WeightController {
         return JsonResponse.ok("몸무게 등록이 완료되었습니다.");
     }
 
-//    @GetMapping()
-//    public ResponseEntity<?> selectWeight(@RequestParam(value = "date") String date) {
-//        return JsonResponse.ok("몸무게 조회가 완료되었습니다.",
-//                weightService.selectAllWeight(new Member(), date));
-//    }
-
     @GetMapping("/history")
     private ResponseEntity<?> selectWeightHistory(@AuthenticationPrincipal Member member) {
         return JsonResponse.ok("몸무게 히스토리 조회", weightService.selectWeightHistory(member));
