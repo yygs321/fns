@@ -35,17 +35,45 @@ const MyPage = () => {
   const refreshToken = useSelector((state) => state.auth.refreshToken);
   const expirationTime = useSelector((state) => state.auth.expirationTime);
   
-  const handleImageUpload = (event) => {
+  // const handleImageUpload = (event) => {
+  //   const file = event.target.files[0];
+  //   if (file) {
+  //     setUploadedImage(URL.createObjectURL(file));
+  //   }
+  // };
+  const handleImageUpload = async (event) => {
     const file = event.target.files[0];
-    if (file) {
-      setUploadedImage(URL.createObjectURL(file));
+    if (!file) return;
+  
+    const formData = new FormData();
+    formData.append('profileImage', file);
+  
+    try {
+      const response = await axios.post(`${SERVER_API_URL}/members/image`, formData, {
+        headers: {
+          'X-FNS-ACCESSTOKEN': accessToken,
+          'Content-Type': 'multipart/form-data', // 중요: 이미지를 포함하는 formData를 전송할 때 필요합니다.
+        },
+      });
+  
+      if (response.data.success) {
+        const uploadedImageUrl = response.data.data.fileUrl;
+        setProfile(prevProfile => ({ ...prevProfile, image: uploadedImageUrl }));
+        alert("이미지가 성공적으로 업로드되었습니다.");
+      } else {
+        console.error("Failed to upload image:", response.data.message);
+        alert("이미지 업로드 중 오류가 발생했습니다. 다시 시도해 주세요.");
+      }
+    } catch (error) {
+      console.error("Error while uploading image:", error);
+      alert("이미지 업로드 중 오류가 발생했습니다. 다시 시도해 주세요.");
     }
   };
+  
 
   const handleLogout = () => {
     dispatch(userLogout());
     navigate("/");
-    // 임시
   };
 
   const handleMemberWithdrawal = async () => {
