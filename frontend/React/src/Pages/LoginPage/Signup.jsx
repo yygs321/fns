@@ -26,6 +26,7 @@ const Signup = () => {
   const [이메일인증번호, set이메일인증번호] = useState("");
   const [이메일인증, set이메일인증] = useState(false);
   const [이메일인증모달, set이메일인증모달] = useState(false);
+  const [이메일인증문구, set이메일인증문구] = useState("");
 
   const 이메일전송버튼 = async () => {
     try {
@@ -67,14 +68,20 @@ const Signup = () => {
 
       if (res.data.success) {
         set이메일인증(true);
-        set이메일인증모달(true);
-        setTimeout(() => set이메일인증모달(false), 2000);
+        set이메일인증문구("이메일 인증 확인");
       } else {
         set이메일인증(false);
+        set이메일인증문구("이메일 인증에 실패했습니다.");
       }
     } catch (err) {
       console.log(err);
+      set이메일인증문구("이메일 인증에 실패했습니다.");
     }
+    set이메일인증모달(true);
+    setTimeout(() => {
+      set이메일인증모달(false);
+      set이메일인증문구("");
+    }, 2000);
   };
 
   const [비밀번호, set비밀번호] = useState("");
@@ -461,7 +468,7 @@ const Signup = () => {
             variant="h6"
             sx={{ paddingY: "1vh" }}
           >
-            인증 확인되었습니다.
+            {이메일인증문구}
           </Typography>
         </Box>
       </Modal>

@@ -23,14 +23,15 @@ import axiosInstance from "../Common/Component/AxiosInstance";
 import RecommendCarousel from "./RecommendCarousel";
 
 const MainPage = () => {
-  const [kcalories, setKcalories] = useState(2000); // 칼로리
-  const [baseKcalories, setBaseKcalories] = useState(2600); // 칼로리
-  const [carbohydrate, setCarbohydrate] = useState(90); // 탄수화물
-  const [baseCarbohydrate, setBaseCarbohydrate] = useState(130); // 탄수화물
-  const [protein, setProtein] = useState(40); // 단백질
-  const [baseProtein, setBaseProtein] = useState(60); // 단백질
-  const [fat, setFat] = useState(35); // 지방
-  const [baseFat, setBaseFat] = useState(50); // 지방
+  const [kcalories, setKcalories] = useState(0); // 칼로리
+  const [orgKcal, setOrgKcal] = useState(0); // 칼로리
+  const [baseKcalories, setBaseKcalories] = useState(9999); // 칼로리
+  const [carbohydrate, setCarbohydrate] = useState(0); // 탄수화물
+  const [baseCarbohydrate, setBaseCarbohydrate] = useState(999); // 탄수화물
+  const [protein, setProtein] = useState(0); // 단백질
+  const [baseProtein, setBaseProtein] = useState(999); // 단백질
+  const [fat, setFat] = useState(0); // 지방
+  const [baseFat, setBaseFat] = useState(999); // 지방
 
   const [isOverKcal, setIsOverKcal] = useState(false); // 칼로리 초과
   const [overKcal, setOverKcal] = useState(0);
@@ -72,7 +73,7 @@ const MainPage = () => {
         },
       });
 
-      const res2 = axiosInstance({
+      const res2 = await axiosInstance({
         method: "get",
         url: `${SERVER_API_URL}/intake/simple/${formattedToday}`,
         headers: {
@@ -90,6 +91,7 @@ const MainPage = () => {
       setBaseProtein(baseData.protein);
       setBaseFat(baseData.fat);
       setKcalories(nowData.kcal);
+      setOrgKcal(nowData.kcal);
       setCarbohydrate(nowData.carbs);
       setProtein(nowData.protein);
       setFat(nowData.fat);
@@ -99,10 +101,10 @@ const MainPage = () => {
   };
 
   // 영양소 문제 해결되면 이 쪽 수정
-  const org_kcal = 2000;
+  // const org_kcal = 2000;
 
   useEffect(() => {
-    // getNeut();
+    getNeut();
 
     let targetValue = 0;
 
@@ -333,8 +335,11 @@ const MainPage = () => {
                         fontWeight={"bold"}
                         sx={{ position: "absolute", top: "36%" }}
                       >
-                        {kcalories > org_kcal || kcalories >= baseKcalories
+                        {/* {kcalories > org_kcal || kcalories >= baseKcalories
                           ? `${org_kcal}`
+                          : `${kcalories}`} */}
+                        {kcalories > orgKcal || kcalories >= baseKcalories
+                          ? `${orgKcal}`
                           : `${kcalories}`}
                       </Typography>
                     </Grid>
