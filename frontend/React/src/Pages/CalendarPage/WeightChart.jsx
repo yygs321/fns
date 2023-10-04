@@ -34,11 +34,16 @@ const 차트스타일 = {
   height: "35vh",
 };
 
-export default function WeightChart() {
+export function WeightChart() {
 
   const [현재체중, set현재체중] = useState("");
   const [목표체중, set목표체중] = useState("");
-  const [userData, setUserData] = useState([]);
+  const [userData, setUserData] = useState([
+    {
+    weight : "80",
+    createdAt : "2023-09-20T02:58:28.707111"
+    }
+  ]);
   const [기간, set기간] = useState("");
   const [percentage, setPercentage] = useState("");
 
@@ -55,14 +60,18 @@ export default function WeightChart() {
           'X-FNS-ACCESSTOKEN': accessToken,
         },
       });
+
+      const targetData = response.data.data;
       console.log("성공여부 : ", response.data.success);
       if(response.data.success){
       console.log("Response Data : ",response.data);
-      set현재체중(response.data.data.targetWeightResponseDto.currentWeight);
-      set목표체중(response.data.data.targetWeightResponseDto.targetWeight);
-      setUserData(response.data.data.weightList);
-      set기간(() => response.data.data.remainingDays);
-      setPercentage(() => response.data.data.progressRatio)
+      set현재체중(() => targetData.targetWeightResponseDto.currentWeight);
+      set목표체중(() => targetData.targetWeightResponseDto.targetWeight);
+      if(targetData.weightList){
+      setUserData(() => targetData.weightList);
+      }
+      set기간(() => targetData.remainingDays);
+      setPercentage(() => targetData.progressRatio)
       }
     } catch (error) {
       console.error("Error while searching:", error);
@@ -70,6 +79,7 @@ export default function WeightChart() {
   };
   체중감량그래프API();
 }, [accessToken, SERVER_API_URL]);
+
 
   const data = {
     labels: userData.map((data) => data.createdAt),
