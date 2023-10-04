@@ -34,7 +34,7 @@ const 차트스타일 = {
   height: "35vh",
 };
 
-export function WeightChart() {
+function WeightChart() {
 
   // const [현재체중, set현재체중] = useState("");
   const [목표체중, set목표체중] = useState("");
