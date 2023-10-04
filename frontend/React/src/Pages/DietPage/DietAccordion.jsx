@@ -79,8 +79,13 @@ const DietAccordion = (props) => {
             {!isAccordionSelected ? (
               <Grid item container xs={11} justifyContent={"flex-start"}>
                 {food.map((f, index) => (
-                  <React.Fragment key={index}>
-                    <Typography sx={{ color: "text.secondary" }}>
+                  <React.Fragment key={`${f.foodName}-${index}-selected`}>
+                    <Typography
+                      sx={{ color: "text.secondary" }}
+                      whiteSpace="nowrap"
+                      overflow="hidden"
+                      textOverflow="ellipsis"
+                    >
                       {f.foodName}
                     </Typography>
                     {index !== food.length - 1 && (
@@ -98,10 +103,22 @@ const DietAccordion = (props) => {
                   container
                   xs={11}
                   justifyContent={"space-between"}
-                  key={`${f.name}-${index}`}
+                  key={`${f.foodName}-${index}`}
                 >
-                  <Typography sx={{}}>{f.name}</Typography>
-                  <Typography sx={{}}>{f.kcal * f.rate || 0} kcal</Typography>
+                  <Typography
+                    whiteSpace="nowrap"
+                    overflow="hidden"
+                    textOverflow="ellipsis"
+                  >
+                    {f.foodName}
+                  </Typography>
+                  <Typography
+                    whiteSpace="nowrap"
+                    overflow="hidden"
+                    textOverflow="ellipsis"
+                  >
+                    {f.kcal * f.rate || 0} kcal
+                  </Typography>
                 </Grid>
               ))
             )}

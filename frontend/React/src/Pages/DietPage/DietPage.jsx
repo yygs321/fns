@@ -75,12 +75,7 @@ const DietPage = () => {
       console.log(meals);
 
       const totalKcal = meals.reduce((total, meal) => {
-        const mealTotalKcal = meal.food
-          ? meal.food.reduce((mealTotal, foodItem) => {
-              return mealTotal + foodItem.kcal * foodItem.rate;
-            }, 0)
-          : 0;
-        return total + mealTotalKcal;
+        return total + meal.kcal * meal.rate;
       }, 0);
 
       const morningMeals = meals.filter(
