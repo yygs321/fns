@@ -100,7 +100,9 @@ public class IntakeServiceImpl implements IntakeService {
     @Override
     public IntakeOnDateResponseDto nutrientOnDate(Long memberId, String date) {
         List<Optional<Intake>> optionalIntakes = intakeRepository.findAllByDateAndMemberId(date, memberId);
-        if(optionalIntakes.isEmpty()) throw new GlobalRuntimeException("member id 또는 날짜 확인 필요", HttpStatus.BAD_REQUEST);
+        if(optionalIntakes.isEmpty()) {
+            return new IntakeOnDateResponseDto((double) 0, (double) 0, (double) 0, (double) 0);
+        }
 
         IntakeOnDateResponseDto intake = new IntakeOnDateResponseDto((double) 0, (double) 0,
                 (double) 0, (double) 0);
@@ -113,7 +115,10 @@ public class IntakeServiceImpl implements IntakeService {
     @Override
     public List<IntakeAllOnDateResponseDto> allOnDate(Long memberId, String date) {
         List<Optional<Intake>> optionalIntakes = intakeRepository.findAllByDateAndMemberId(date, memberId);
-        if(optionalIntakes.isEmpty()) throw new GlobalRuntimeException("member id 또는 날짜 확인 필요", HttpStatus.BAD_REQUEST);
+        if(optionalIntakes.isEmpty()) {
+            List<IntakeAllOnDateResponseDto> nullList = new ArrayList<>();
+            return nullList;
+        }
 
         List<IntakeAllOnDateResponseDto> intakeList = new ArrayList<>();
         for(Optional<Intake> optionalIntake : optionalIntakes){

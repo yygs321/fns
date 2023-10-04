@@ -20,7 +20,6 @@ public class FoodServiceImpl implements FoodService {
 
     @Override
     public List<FoodSearchResponseDto> searchFood(String name) {
-        //System.out.println(foodRepository.findByNameLike("%"+name+"%"));
         List<FoodSearchResponseDto> foodList = foodRepository
                 .findAllByName(name)
                 .stream()
