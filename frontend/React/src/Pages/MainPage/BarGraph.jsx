@@ -17,7 +17,11 @@ const BarGraph = (props) => {
 
     const interval = setInterval(() => {
       if (currentValue < targetValue) {
-        currentValue += 1;
+        if (targetValue - currentValue > 10) {
+          currentValue += 10;
+        } else {
+          currentValue += 1;
+        }
         setnutrient(Math.round((currentValue / 100) * maxNutrient)); // kcalories 값을 업데이트
       } else {
         clearInterval(interval); // 목표 값에 도달하면 애니메이션 중지

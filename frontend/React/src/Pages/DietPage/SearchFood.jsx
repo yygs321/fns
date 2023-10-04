@@ -9,7 +9,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 import { addToDiet, deleteFromDiet } from "../../Redux/actions/actions";
-import axios from "axios";
+import axiosInstance from "../Common/Component/AxiosInstance";
 
 const SearchFood = () => {
   const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
@@ -57,14 +57,14 @@ const SearchFood = () => {
   const handleSearchFood = async () => {
     // 여기다 검색 api
     try {
-      const res = await axios({
+      const res = await axiosInstance({
         method: "get",
         url: `${SERVER_API_URL}/foods`,
         params: {
           name: searchTerm,
         },
         headers: {
-          Authorization: accessToken,
+          "X-FNS-ACCESSTOKEN": accessToken,
         },
       });
 
@@ -238,7 +238,7 @@ const SearchFood = () => {
               <Typography
                 variant="caption"
                 component="div"
-                fontSize={"1.4rem"}
+                fontSize={"1rem"}
                 fontWeight={"bold"}
               >
                 {one.name}

@@ -3,16 +3,15 @@ import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-// import axios from "axios";
-// import { useSelector } from "react-redux";
+import axiosInstance from "../Common/Component/AxiosInstance";
+import { useSelector } from "react-redux";
 
 const RecommendCarousel = (props) => {
   // const { nutrient } = props;
 
-  // const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
-  // const accessToken = useSelector((state) => {
-  //   return state.auth.accessToken;
-  // });
+  const accessToken = useSelector((state) => {
+    return state.auth.accessToken;
+  });
 
   // eslint-disable-next-line no-unused-vars
   const [recommendedFood, setRecommendedFood] = useState([
@@ -22,29 +21,30 @@ const RecommendCarousel = (props) => {
     "돈까스",
   ]);
 
+  // eslint-disable-next-line no-unused-vars
   const getRecommendFood = async () => {
-    // try {
-    //   const res = axios({
-    //     method: "post",
-    //     url: `${SERVER_API_URL}/fastapi/recommend`,
-    //     headers: {
-    //       Authorization: `${accessToken}`,
-    //     },
-    //     // data: nutrient,
-    //     data: {
-    //       calorie: 200,
-    //       carbohydrate: 15.5,
-    //       protein: 24.0,
-    //     },
-    //   });
-    //   console.log(res);
-    // } catch (err) {
-    //   console.log(err);
-    // }
+    try {
+      const res = axiosInstance({
+        method: "post",
+        url: `https://j9a403.p.ssafy.io/fastapi/recommend`,
+        headers: {
+          "X-FNS-ACCESSTOKEN": accessToken,
+        },
+        // data: nutrient,
+        data: {
+          calorie: 200,
+          carbohydrate: 15.5,
+          protein: 24.0,
+        },
+      });
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {
-    getRecommendFood();
+    // getRecommendFood();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

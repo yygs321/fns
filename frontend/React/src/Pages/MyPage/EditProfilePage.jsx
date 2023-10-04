@@ -1,6 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { Button, TextField, Typography, Modal, Box, Grid, RadioGroup, FormControlLabel, Radio, } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from "react-redux";
+import axios from "axios";
 
 const EditProfilePage = () => {
     const [nickname, setNickname] = useState('');
@@ -11,6 +13,17 @@ const EditProfilePage = () => {
     const [프로필공개여부, set프로필공개여부] = useState(true);
     const navigate = useNavigate();
     const timeoutRef = useRef(null);
+    const [닉네임확인, set닉네임확인] = useState(false);
+    // const [닉네임오류, set닉네임오류] = useState(undefined);
+    const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
+    const accessToken = useSelector((state) => {
+    return state.auth.accessToken;
+  });
+  const handleModalClose = () => {
+    clearTimeout(timeoutRef.current);  // setTimeout 취소
+    navigate("/mypage");
+};
+
     const 체크박스 = (e) => {
         set프로필공개여부(e.target.value);
       };
@@ -18,23 +31,78 @@ const EditProfilePage = () => {
         whiteSpace: "nowrap",
       };  
 
-    const handleSave = () => {
-        console.log({ nickname, height, weight });
-        setOpenModal(true); // 저장 버튼을 클릭하면 모달 열기
-        timeoutRef.current = setTimeout(() => {
-            navigate("/mypage");
-        }, 1000);
+      const handleSave = async () => {
+        try {
+          const res = await axios({
+            method: "patch",
+            url: `${SERVER_API_URL}/members/profile`,
+            headers: {
+              'X-FNS-ACCESSTOKEN': accessToken,
+            },
+            data: {
+              nickname: nickname,
+              age: age,
+              height: height,
+              weight: weight,
+              isPublished: 프로필공개여부 === "true",
+            },
+          });
+      
+          if (res.data.success) {
+            // 만약 프로필 저장 성공하면 base등록  
+            const baseResponse = await axios({
+                method: "post",
+                url: `${SERVER_API_URL}/base`,
+                headers: {
+                    'X-FNS-ACCESSTOKEN': accessToken,
+                },
+                data: {},
+            });
+
+            // base 등록 성공시 콘솔로그
+            if (baseResponse.data.success) {
+                console.log("base 등록 성공!");
+            } else {
+                console.warn("base 등록 실패");
+            }
+
+            setOpenModal(true); // 다 등록되면 모달 띄우기
+            timeoutRef.current = setTimeout(() => {
+                navigate("/mypage");
+            }, 1000);
+        } else {
+            
+        }
+    } catch (err) {
+        console.log(err);
+        // Handle errors here
+    }
     };
 
-    const handleModalClose = () => {
-        clearTimeout(timeoutRef.current);  // setTimeout 취소
-        navigate("/mypage");
+    const handleCheckNickname = async () => {
+      try {
+        const 중복체크결과 = await axios({
+          method: "post",
+          url: `${SERVER_API_URL}/members/check-nickname-duplicate`,
+          headers: {
+            'X-FNS-ACCESSTOKEN': accessToken,
+          },
+          data: {
+            nickname: nickname,
+          },
+        });
+        if (중복체크결과.data.success) {
+          set닉네임확인(true);
+          // set닉네임오류(undefined);
+        } else {
+          set닉네임확인(false);
+          // set닉네임오류(중복체크결과.data.message);
+        }
+      } catch (err) {
+        console.log(err);
+      }
     };
-
-    const handleCheckNickname = () => {
-        // 나중에 닉네임 중복 확인 API 연결
-        console.log('닉네임 중복 확인');
-    };
+    
 
     return (
         <div style={{ height: '92vh', backgroundColor: '#f0f0f0', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
@@ -71,6 +139,7 @@ const EditProfilePage = () => {
             <div style={{ display: 'flex', justifyContent: 'center', margin: '10px 0' }}>
                 <Button 
                     variant="contained"
+                    disabled={닉네임확인}
                     size="small"
                     onClick={handleCheckNickname}
                     sx={{ color:"white", fontSize: "0.5rem",

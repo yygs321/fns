@@ -81,7 +81,7 @@ const LoginPage = () => {
         })
       );
 
-      if (tokenData.expirationTime < 200000) {
+      if (tokenData.expirationTime < 500000) {
         await RefreshToken();
       }
 

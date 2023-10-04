@@ -16,7 +16,7 @@ import ManRoundedIcon from "@mui/icons-material/ManRounded";
 import WomanRoundedIcon from "@mui/icons-material/WomanRounded";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import axios from "axios";
+import axiosInstance from "../Common/Component/AxiosInstance";
 
 function 닉네임확인함수(nickname) {
   const regex = /^[a-zA-Z0-9가-힣]{2,16}$/;
@@ -94,11 +94,11 @@ const InfoPage = () => {
               // 성별 안 고름
               if (성별) {
                 try {
-                  const res = await axios({
+                  const res = await axiosInstance({
                     method: "post",
                     url: `${SERVER_API_URL}/members/profile`,
                     headers: {
-                      Authorization: accessToken,
+                      "X-FNS-ACCESSTOKEN": accessToken,
                     },
                     data: {
                       nickname: 닉네임,
@@ -114,7 +114,18 @@ const InfoPage = () => {
                   console.log(res.data);
 
                   if (res.data.success) {
+                    // base 등록
+                    const baseResponse = await axiosInstance({
+                      method: "post",
+                      url: `${SERVER_API_URL}/base`,
+                      headers: {
+                        "X-FNS-ACCESSTOKEN": accessToken,
+                      },
+                    });
+                    console.log(baseResponse.data);
+
                     navigate("/main");
+                    window.location.reload();
                   } else {
                     set저장실패("프로필 저장에 실패했습니다.");
                   }
@@ -146,17 +157,16 @@ const InfoPage = () => {
     }, 2000);
   };
 
-  // 중복체크 확인에서 지금 axios network에러
   const 중복체크버튼 = async () => {
     const 닉네임확인결과 = 닉네임확인함수(닉네임);
 
     if (닉네임확인결과) {
       try {
-        const 중복체크결과 = await axios({
-          method: "get",
+        const 중복체크결과 = await axiosInstance({
+          method: "post",
           url: `${SERVER_API_URL}/auth/check-nickname-duplicate`,
           headers: {
-            Authorization: accessToken,
+            "X-FNS-ACCESSTOKEN": accessToken,
           },
           // get이라서 body는 아마 안 될거라 추후에 API 되면 확인
           data: {
@@ -173,6 +183,7 @@ const InfoPage = () => {
         }
       } catch (err) {
         console.log(err);
+        set닉네임확인(false);
       }
     } else {
       // 닉네임 양식 맞춰주라는 이야기
