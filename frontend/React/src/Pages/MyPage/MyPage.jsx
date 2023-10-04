@@ -52,7 +52,7 @@ const MyPage = () => {
       const response = await axios.post(`${SERVER_API_URL}/members/image`, formData, {
         headers: {
           'X-FNS-ACCESSTOKEN': accessToken,
-          'Content-Type': 'multipart/form-data', // 중요: 이미지를 포함하는 formData를 전송할 때 필요합니다.
+          'Content-Type': 'multipart/form-data',
         },
       });
   
