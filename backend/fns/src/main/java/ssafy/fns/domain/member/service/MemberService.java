@@ -1,5 +1,6 @@
 package ssafy.fns.domain.member.service;
 
+import org.springframework.web.multipart.MultipartFile;
 import ssafy.fns.domain.auth.service.dto.TokenDto;
 import ssafy.fns.domain.member.controller.dto.EmailDuplicationRequestDto;
 import ssafy.fns.domain.member.controller.dto.MemberProfileRequestDto;
@@ -30,4 +31,5 @@ public interface MemberService {
     void updatePassword(Member member, UpdatePasswordRequestDto requestDto);
 
 
+    void uploadProfileImage(Member member, MultipartFile file);
 }
