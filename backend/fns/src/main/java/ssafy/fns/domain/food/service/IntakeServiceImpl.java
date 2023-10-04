@@ -42,7 +42,7 @@ public class IntakeServiceImpl implements IntakeService {
 
             Food food = optionalFood.get();
 
-            Optional<Member> member1 = memberRepository.findById(1L);
+            Optional<Member> member1 = memberRepository.findById(member.getId());
 
             Intake intake = new Intake().builder()
                     .intakeTime(requestDto.getIntakeTime())
