@@ -34,15 +34,17 @@ const 차트스타일 = {
   height: "35vh",
 };
 
-const WeightChart = () => {
+export default function WeightChart() {
 
-  // const [현재체중, set현재체중] = useState("");
+  const [현재체중, set현재체중] = useState("");
   const [목표체중, set목표체중] = useState("");
   const [userData, setUserData] = useState([]);
   const [기간, set기간] = useState("");
   const [percentage, setPercentage] = useState("");
 
-  const accessToken = useSelector((state) => state.auth.accessToken);
+  const accessToken = useSelector((state) => {
+    return state.auth.accessToken
+  });
   const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
   
   useEffect(() => {
@@ -54,13 +56,14 @@ const WeightChart = () => {
         },
       });
       console.log("성공여부 : ", response.data.success);
+      if(response.data.success){
       console.log("Response Data : ",response.data);
-      // set현재체중(response.data.data.targetWeightResponseDto.currentWeight);
+      set현재체중(response.data.data.targetWeightResponseDto.currentWeight);
       set목표체중(response.data.data.targetWeightResponseDto.targetWeight);
       setUserData(response.data.data.weightList);
       set기간(() => response.data.data.remainingDays);
       setPercentage(() => response.data.data.progressRatio)
-
+      }
     } catch (error) {
       console.error("Error while searching:", error);
     }
@@ -182,7 +185,7 @@ const WeightChart = () => {
                 fontSize: "1.7rem",
               }}
             >
-              {/* {현재체중}&nbsp; */}
+              {현재체중}&nbsp;
             </Typography>
             <Typography
               style={{
@@ -257,5 +260,3 @@ const WeightChart = () => {
     </div>
   );
 }
-
-export default WeightChart;
