@@ -45,8 +45,11 @@ public class SecurityConfig {
 
         http.addFilterBefore(loggingFilter, JwtAuthenticationFilter.class);
 
+
         http.formLogin()
                 .disable();
+
+    
 
         return http.build();
     }
