@@ -18,6 +18,7 @@ public class MemberResponseDto {
     private Double weight;
     private String gender;
     private Boolean isPublished;
+    private String fileUrl;
 
     public static MemberResponseDto from(Member member) {
         return MemberResponseDto.builder()
@@ -27,6 +28,7 @@ public class MemberResponseDto {
                 .weight(member.getCurrentWeight())
                 .gender(member.getGender())
                 .isPublished(member.getIsPublished())
+                .fileUrl(member.getProfileImageURL())
                 .build();
     }
 }
