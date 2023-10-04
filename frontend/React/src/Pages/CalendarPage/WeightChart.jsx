@@ -1,4 +1,4 @@
-import {React, useState} from "react";
+import {React, useState, useEffect} from "react";
 import { useSelector } from "react-redux";
 import "chart.js/auto";
 import { Line } from "react-chartjs-2";
@@ -44,7 +44,8 @@ export function WeightChart() {
 
   const accessToken = useSelector((state) => state.auth.accessToken);
   const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
-
+  
+  useEffect(() => {
   const 체중감량그래프API = async () => {
     try {
       const response = await axios.get(`${SERVER_API_URL}/weight/history`, {
@@ -55,12 +56,12 @@ export function WeightChart() {
       console.log("성공여부 : ", response.data.success);
 
       if (response.data.success) {
-        console.log("Response Data:", response);
-        set현재체중(response.data.targetWeightResponseDto.currentWeight);
-        set목표체중(response.data.targetWeightResponseDto.targetWeight);
-        setUserData(response.data.weightList);
-        set기간(() => response.data.remainingDays);
-        setPercentage(() => response.data.progressRatio)
+        console.log("Response Data:", response.data);
+        set현재체중(response.data.data.targetWeightResponseDto.currentWeight);
+        set목표체중(response.data.data.targetWeightResponseDto.targetWeight);
+        setUserData(response.data.data.weightList);
+        set기간(() => response.data.data.remainingDays);
+        setPercentage(() => response.data.data.progressRatio)
 
       } else {
         console.error("Failed to fetch search results:", response.data.message);
@@ -69,8 +70,8 @@ export function WeightChart() {
       console.error("Error while searching:", error);
     }
   };
-
   체중감량그래프API();
+}, [accessToken, SERVER_API_URL]);
 
   const data = {
     labels: userData.map((data) => data.createdAt),
