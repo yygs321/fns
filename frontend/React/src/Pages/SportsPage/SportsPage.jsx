@@ -117,15 +117,16 @@ const SportItem = ({
 const SportsPage = () => {
   const [times, setTimes] = useState({});
   const [isEditMode, setEditMode] = useState(false);
+  // 체크된 스포츠 편집. 즐겨찾기
   const [checkedSports, setCheckedSports] = useState(
-    sportsData.reduce(
-      (acc, sport) => ({
+    sportsData.reduce((acc, sport, index) => {
+      return {
         ...acc,
-        [sport.name]: false,
-      }),
-      {}
-    )
+        [sport.name]: exerciseResponseDto.sportsBookmarkList[index] === 1,  // 1이면 true, 0이면 false
+      };
+    }, {})
   );
+  
 
   const filteredSports = sportsData.filter(
     (sport) => checkedSports[sport.name]
