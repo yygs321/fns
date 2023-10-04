@@ -54,18 +54,13 @@ export function WeightChart() {
         },
       });
       console.log("성공여부 : ", response.data.success);
+      console.log("Response Data : ",response.data);
+      set현재체중(response.data.data.targetWeightResponseDto.currentWeight);
+      set목표체중(response.data.data.targetWeightResponseDto.targetWeight);
+      setUserData(response.data.data.weightList);
+      set기간(() => response.data.data.remainingDays);
+      setPercentage(() => response.data.data.progressRatio)
 
-      if (response.data.success) {
-        console.log("Response Data:", response.data);
-        set현재체중(response.data.data.targetWeightResponseDto.currentWeight);
-        set목표체중(response.data.data.targetWeightResponseDto.targetWeight);
-        setUserData(response.data.data.weightList);
-        set기간(() => response.data.data.remainingDays);
-        setPercentage(() => response.data.data.progressRatio)
-
-      } else {
-        console.error("Failed to fetch search results:", response.data.message);
-      }
     } catch (error) {
       console.error("Error while searching:", error);
     }
