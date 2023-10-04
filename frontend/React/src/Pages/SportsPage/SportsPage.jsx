@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Typography, Button, Grid, TextField } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
@@ -15,16 +15,21 @@ import SportsVolleyballIcon from "@mui/icons-material/SportsVolleyball";
 import SportsGolfIcon from "@mui/icons-material/SportsGolf";
 import NavigateBeforeRoundedIcon from "@mui/icons-material/NavigateBeforeRounded";
 import NavigateNextRoundedIcon from "@mui/icons-material/NavigateNextRounded";
-import { useSelector } from "react-redux";
 
-const SportsPage = () => {
-  const [exerciseResponseDto, setExerciseResponseDto] = useState({
-    sportsBookmarkList: [0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1],
-    sportsMetValue: [0, 2, 3.5, 5, 6, 7, 8, 4, 5.5, 4.5, 6.5, 5, 5.5],
-    exerciseTimeList: [0, 0, 1, 1.5, 0, 0, 2, 1, 1.5, 2, 0, 0, 1.5],
-    weight: 60
-  });
-  const sportNames = [null, "조깅", "사이클", "등산", "수영", "줄넘기", "계단 오르기", "요가", "축구", "야구", 
+// 페이지 들어올 때 서버에 요청해서 저장된 내용 불러옴
+const handleSaveData = () => {
+  // 여기에 나중에 API 연결 코드를 작성하면 됩니다.
+  console.log("데이터가 저장되었습니다."); // 임시 메시지
+};
+
+const exerciseResponseDto = {
+  sportsBookmarkList: [0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1],
+  sportsMetValue: [0, 2, 3.5, 5, 6, 7, 8, 4, 5.5, 4.5, 6.5, 5, 5.5],
+  exerciseTimeList: [0, 0, 1, 1.5, 0, 0, 2, 1, 1.5, 2, 0, 0, 1.5],
+  weight: 60
+};
+
+const sportNames = [null, "조깅", "사이클", "등산", "수영", "줄넘기", "계단 오르기", "요가", "축구", "야구", 
 "테니스", "배구", "골프"];
 const sportIcons = [null, <DirectionsRunIcon fontSize="large" />, <DirectionsBikeIcon fontSize="large" />, 
 <HikingIcon fontSize="large" />, <HikingIcon fontSize="large" />, <PoolIcon fontSize="large" />,
@@ -33,7 +38,7 @@ const sportIcons = [null, <DirectionsRunIcon fontSize="large" />, <DirectionsBik
  <SportsVolleyballIcon fontSize="large" />, <SportsGolfIcon fontSize="large" />
 ];
 
-  const sportsData = exerciseResponseDto.sportsMetValue.map((met, index) => {
+export const sportsData = exerciseResponseDto.sportsMetValue.map((met, index) => {
   if (index === 0) return null; // 0번 인덱스는 사용하지 않습니다.
 
   const kcalPerHour = (3.5 * met * exerciseResponseDto.weight * 60) / 1000 * 5;
@@ -108,8 +113,8 @@ const SportItem = ({
     )}
   </Grid>
 );
-  const accessToken = useSelector((state) => state.auth.accessToken);
-  const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
+
+const SportsPage = () => {
   const [times, setTimes] = useState({});
   const [isEditMode, setEditMode] = useState(false);
   // 체크된 스포츠 편집. 즐겨찾기
@@ -169,46 +174,7 @@ const SportItem = ({
   const changeDay = () => {
     setIsToday(!isToday);
   };
-  useEffect(() => {
-    const fetchExerciseData = async () => {
-      try {
-        const dateToSend = isToday ? now : before;
-        const formattedDate = `${dateToSend.getFullYear()}-${String(dateToSend.getMonth() + 1).padStart(2, '0')}-${String(dateToSend.getDate()).padStart(2, '0')}`;
-        const response = await fetch(`${SERVER_API_URL}/exercise`, {
-          method: 'GET',
-          headers: {
-            'X-FNS-ACCESSTOKEN': accessToken,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            exerciseDate: formattedDate
-          })
-        });
-  
-        const data = await response.json();
-  
-        if (data.success) {
-          const updatedData = {
-            ...exerciseResponseDto,
-            sportsBookmarkList: data.data.sportsBookmarkList,
-            weight: data.data.weight,
-            exerciseTimeList: data.data.exerciseTimeList
-          };
-          setExerciseResponseDto(updatedData);
-        } else {
-          console.error('Failed to fetch exercise data:', data.message);
-        }
-      } catch (error) {
-        console.error('API request error:', error);
-      }
-    };
-  
-    fetchExerciseData();
-  }, [isToday, now, before, SERVER_API_URL, accessToken, exerciseResponseDto]);
-  const handleSaveData = () => {
-    // 여기에 나중에 API 연결 코드를 작성하면 됩니다.
-    console.log("데이터가 저장되었습니다."); // 임시 메시지
-  };
+
   return (
     <div
       className="gray-pages"
