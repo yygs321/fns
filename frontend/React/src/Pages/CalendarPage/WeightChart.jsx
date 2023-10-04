@@ -36,7 +36,7 @@ const 차트스타일 = {
 
 export function WeightChart() {
 
-  const [현재체중, set현재체중] = useState("");
+  // const [현재체중, set현재체중] = useState("");
   const [목표체중, set목표체중] = useState("");
   const [userData, setUserData] = useState([]);
   const [기간, set기간] = useState("");
@@ -55,7 +55,7 @@ export function WeightChart() {
       });
       console.log("성공여부 : ", response.data.success);
       console.log("Response Data : ",response.data);
-      set현재체중(response.data.data.targetWeightResponseDto.currentWeight);
+      // set현재체중(response.data.data.targetWeightResponseDto.currentWeight);
       set목표체중(response.data.data.targetWeightResponseDto.targetWeight);
       setUserData(response.data.data.weightList);
       set기간(() => response.data.data.remainingDays);
@@ -182,7 +182,7 @@ export function WeightChart() {
                 fontSize: "1.7rem",
               }}
             >
-              {현재체중}&nbsp;
+              {/* {현재체중}&nbsp; */}
             </Typography>
             <Typography
               style={{
