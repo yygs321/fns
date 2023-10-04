@@ -53,6 +53,8 @@ public class Member extends BaseEntity {
 
     private Long age;
 
+    private String profileImageURL;
+
     @OneToOne(mappedBy = "member", fetch = FetchType.LAZY)
     private TargetWeight targetWeight;
 
@@ -128,6 +130,10 @@ public class Member extends BaseEntity {
         return this.getWeightList()
                 .get(this.getWeightList().size() - 1)
                 .getWeight();
+    }
+
+    public void updateProfileImageURL(String profileImageURL) {
+        this.profileImageURL = profileImageURL;
     }
 
 }
