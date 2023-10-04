@@ -11,6 +11,7 @@ import ssafy.fns.domain.member.entity.Member;
 @NoArgsConstructor
 @Builder
 public class MemberListResponseDto {
+
     private Long id;
     private String nickname;
     private Boolean already;
@@ -27,7 +28,7 @@ public class MemberListResponseDto {
                 .nickname(member.getNickname())
                 .age(member.getAge())
                 .height(member.getHeight())
-                .weight(member.getWeight())
+                .weight(member.getCurrentWeight())
                 .gender(member.getGender())
                 .isPublished(member.getIsPublished())
                 .build();

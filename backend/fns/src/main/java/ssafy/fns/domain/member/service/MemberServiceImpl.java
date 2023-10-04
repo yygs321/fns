@@ -1,7 +1,5 @@
 package ssafy.fns.domain.member.service;
 
-import java.util.List;
-import java.util.Optional;
 import java.util.regex.Pattern;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -18,12 +16,11 @@ import ssafy.fns.domain.member.controller.dto.MemberProfileRequestDto;
 import ssafy.fns.domain.member.controller.dto.SignUpRequestDto;
 import ssafy.fns.domain.member.controller.dto.UpdatePasswordRequestDto;
 import ssafy.fns.domain.member.controller.dto.UpdateProfileRequestDto;
-import ssafy.fns.domain.member.controller.dto.WeightRequestDto;
 import ssafy.fns.domain.member.entity.Member;
 import ssafy.fns.domain.member.entity.Provider;
-import ssafy.fns.domain.member.entity.WeightHistory;
+import ssafy.fns.domain.member.entity.Weight;
 import ssafy.fns.domain.member.repository.MemberRepository;
-import ssafy.fns.domain.member.repository.WeightHistoryRepository;
+import ssafy.fns.domain.member.repository.WeightRepository;
 import ssafy.fns.domain.member.service.dto.MemberResponseDto;
 import ssafy.fns.global.config.RedisUtil;
 import ssafy.fns.global.exception.GlobalRuntimeException;
@@ -38,13 +35,12 @@ public class MemberServiceImpl implements MemberService {
     private final MailHistoryRepository mailHistoryRepository;
     private final RefreshTokenRepository refreshTokenRepository;
     private final RedisUtil redisUtil;
-    private final WeightHistoryRepository weightHistoryRepository;
+    private final WeightRepository weightRepository;
 
     @Override
     @Transactional
     public void signUp(SignUpRequestDto requestDto) {
         checkPassword(requestDto.getPassword(), requestDto.getPassword2());
-
         checkMailAuthed(requestDto.getEmail());
 
         Member findMember = memberRepository.findByEmail(requestDto.getEmail());
@@ -63,11 +59,12 @@ public class MemberServiceImpl implements MemberService {
     }
 
     private void checkMailAuthed(String email) {
-        MailHistory mailHistory = mailHistoryRepository.findByEmail(email);
+        MailHistory mailHistory = mailHistoryRepository.findTop1ByEmailOrderByIdDesc(email);
         if (mailHistory == null) {
             throw new GlobalRuntimeException("메일 전송을 완료해주세요", HttpStatus.NOT_FOUND);
         }
-        if (!mailHistory.isAuthed()) {
+
+        if (mailHistory.isAuthed() == false) {
             throw new GlobalRuntimeException("메일 인증을 완료해주세요", HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }
@@ -76,13 +73,11 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     public void saveProfile(Member member, MemberProfileRequestDto requestDto) {
         Member findMember = memberRepository.findByEmail(member.getEmail());
-        //몸무게 기록
-        WeightHistory weight = WeightHistory.builder()
-                .memberId(member.getId())
-                .weight(requestDto.getWeight())
-                .build();
-        weightHistoryRepository.save(weight);
+
+        Weight weight = saveWeight(member, requestDto);
+        findMember.addWeight(weight);
         findMember.saveProfile(requestDto);
+
     }
 
     @Override
@@ -124,12 +119,9 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     public void updateProfile(Member member, UpdateProfileRequestDto requestDto) {
         Member findMember = getMemberById(member.getId());
-        //몸무게 기록
-        WeightHistory weight = WeightHistory.builder()
-                            .memberId(member.getId())
-                            .weight(requestDto.getWeight())
-                            .build();
-        weightHistoryRepository.save(weight);
+        Weight weight = updateWeight(member, requestDto);
+        findMember.addWeight(weight);
+
         findMember.updateProfile(requestDto);
     }
 
@@ -137,16 +129,13 @@ public class MemberServiceImpl implements MemberService {
     @Transactional
     public void updatePassword(Member member, UpdatePasswordRequestDto requestDto) {
         Member findMember = memberRepository.findByEmail(member.getEmail());
-        log.info(findMember.getId().toString());
+
         if (!passwordEncoder.matches(requestDto.getPrevPassword(),
                 findMember.getPassword())) {
             throw new GlobalRuntimeException("비밀번호가 틀립니다.", HttpStatus.BAD_REQUEST);
         }
         checkPassword(requestDto.getPassword(), requestDto.getPassword2());
-        log.info(findMember.getPassword());
-        log.info(requestDto.getPassword());
         findMember.updatePassword(passwordEncoder.encode(requestDto.getPassword()));
-        log.info(findMember.getPassword());
 
     }
 
@@ -158,9 +147,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     private void removeMailHistory(Member findMember) {
-        MailHistory mailHistory = mailHistoryRepository.findTop1ByEmailAndIsAuthedOrderByIdDesc(
-                findMember.getEmail(), true);
-        mailHistoryRepository.deleteById(mailHistory.getId());
+        mailHistoryRepository.deleteAllByEmail(findMember.getEmail());
     }
 
     private void checkPassword(String password, String password2) {
@@ -173,38 +160,18 @@ public class MemberServiceImpl implements MemberService {
         }
     }
 
-    @Override
-    public WeightRequestDto addWeight(Member member, WeightRequestDto requestDto) {
-        WeightHistory weight = WeightHistory.builder()
-                .memberId(1L)
-                .weight(requestDto.getWeight())
-                .build();
-        weightHistoryRepository.save(weight);
-        return requestDto;
+    private Weight saveWeight(Member member, MemberProfileRequestDto requestDto) {
+        Weight weight = Weight.from(member, requestDto);
+        weightRepository.save(weight);
+
+        return weight;
     }
 
-    @Override
-    public List<WeightHistory> selectAllWeight(Member member, String date) {
-        String startyear = date.substring(0,4);
-        String startMonth = date.substring(5,7);
-        int month = Integer.parseInt(startMonth)+1;
-        String year="";
-        if(month > 12){
-            month = 1;
-            int  tempYear = Integer.parseInt(startyear)+1;
-            year = String.valueOf(tempYear)+"-";
-        }else {
-            year = startyear+"-";
-        }
-        String endMonth = String.valueOf(month);
-        String startDate = year+startMonth+"-01";
-        String endDate = year+endMonth+"-01";
+    private Weight updateWeight(Member member, UpdateProfileRequestDto requestDto) {
+        Weight weight = Weight.from(member, requestDto);
+        weightRepository.save(weight);
 
-        System.out.println("시작 : "+startDate);
-        System.out.println("끝 : "+endDate);
-        List<WeightHistory> optionalList = weightHistoryRepository.findAllByDateAndMemberId(startDate, endDate, 1L);
-        if (optionalList.isEmpty()) throw new GlobalRuntimeException("몸무게 기록이 없습니다", HttpStatus.BAD_REQUEST);
-        return optionalList;
+        return weight;
     }
 }
 

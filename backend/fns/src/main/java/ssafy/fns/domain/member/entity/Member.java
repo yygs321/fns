@@ -3,7 +3,6 @@ package ssafy.fns.domain.member.entity;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -19,6 +18,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import ssafy.fns.domain.baseNutrient.entity.BaseNutrient;
 import ssafy.fns.domain.exercise.entity.Exercise;
 import ssafy.fns.domain.member.controller.dto.MemberProfileRequestDto;
 import ssafy.fns.domain.member.controller.dto.UpdateProfileRequestDto;
@@ -51,17 +51,19 @@ public class Member extends BaseEntity {
 
     private Double height;
 
-    private Double weight;
-
     private Long age;
 
-    private Long targetWeight;
+    @OneToOne(mappedBy = "member", fetch = FetchType.LAZY)
+    private TargetWeight targetWeight;
+
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    private List<Weight> weightList = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private List<Exercise> exerciseList = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
-    private List<BaseNutrient> baseNutrientNutrientList = new ArrayList<>();
+    private List<BaseNutrient> baseNutrientList = new ArrayList<>();
 
     //조깅, 사이클, 등산, 수영, 줄넘기, 계단 오르기, 요가, 축구, 야구, 테니스, 배구, 골프
     @Convert(converter = IntegerArrayConverter.class)
@@ -70,8 +72,7 @@ public class Member extends BaseEntity {
 
     @Builder
     public Member(String email, String password, Provider provider, String nickname,
-            Boolean isPublished, String gender, Double height, Double weight, Long age,
-            Long targetWeight) {
+            Boolean isPublished, String gender, Double height, Long age) {
         this.email = email;
         this.password = password;
         this.provider = provider;
@@ -79,17 +80,15 @@ public class Member extends BaseEntity {
         this.isPublished = isPublished;
         this.gender = gender;
         this.height = height;
-        this.weight = weight;
         this.age = age;
-        this.targetWeight = targetWeight;
     }
+
 
     public void saveProfile(MemberProfileRequestDto requestDto) {
         this.nickname = requestDto.getNickname();
         this.isPublished = requestDto.getIsPublished();
         this.gender = requestDto.getGender();
         this.height = requestDto.getHeight();
-        this.weight = requestDto.getWeight();
         this.age = requestDto.getAge();
     }
 
@@ -100,9 +99,35 @@ public class Member extends BaseEntity {
     public void updateProfile(UpdateProfileRequestDto requestDto) {
         this.nickname = requestDto.getNickname();
         this.height = requestDto.getHeight();
-        this.weight = requestDto.getWeight();
         this.age = requestDto.getAge();
         this.isPublished = requestDto.getIsPublished();
+    }
+
+    public void updateTarget(TargetWeight targetWeight) {
+        this.targetWeight = targetWeight;
+    }
+
+    public void addExercise(Exercise exercise) {
+        this.exerciseList.add(exercise);
+    }
+
+    public void addBaseNutrient(BaseNutrient baseNutrient) {
+        this.baseNutrientList.add(baseNutrient);
+    }
+
+    public void updateSportsBookmarkList(List<Integer> newSportsBookmarkList) {
+        this.sportsBookmarkList = newSportsBookmarkList;
+    }
+
+
+    public void addWeight(Weight weight) {
+        this.weightList.add(weight);
+    }
+
+    public Double getCurrentWeight() {
+        return this.getWeightList()
+                .get(this.getWeightList().size() - 1)
+                .getWeight();
     }
 
 }

@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import ssafy.fns.domain.exercise.controller.dto.SaveExerciseRequestDto;
+import ssafy.fns.domain.exercise.controller.dto.SaveSportsBookmarkRequestDto;
 import ssafy.fns.domain.exercise.controller.dto.SelectExerciseRequestDto;
 import ssafy.fns.domain.exercise.entity.Exercise;
 import ssafy.fns.domain.exercise.entity.Sports;
@@ -37,15 +38,19 @@ public class ExerciseServiceImpl implements ExerciseService {
 
         for (int i = 1; i < 13; i++) {
             Long exerciseTime = requestDto.getExerciseTimeList().get(i);
-            Exercise exercise = Exercise.builder()
-                    .sports(getSportsById(sportsIdList.get(i)))
-                    .member(findMember)
-                    .exerciseDate(requestDto.getExerciseDate())
-                    .exerciseTime(exerciseTime)
-                    .sportsBookmarkList(member.getSportsBookmarkList())
-                    .build();
+            if (findMember.getSportsBookmarkList().get(i) == 1) {
+                Exercise exercise = Exercise.builder()
+                        .sports(getSportsById(sportsIdList.get(i)))
+                        .member(findMember)
+                        .exerciseDate(requestDto.getExerciseDate())
+                        .exerciseTime(exerciseTime)
+                        .sportsBookmarkList(member.getSportsBookmarkList())
+                        .build();
 
-            exerciseRepository.save(exercise);
+                findMember.addExercise(exercise);
+
+                exerciseRepository.save(exercise);
+            }
         }
     }
 
@@ -53,21 +58,23 @@ public class ExerciseServiceImpl implements ExerciseService {
     @Transactional
     public ExerciseResponseDto selectExercise(Member member, SelectExerciseRequestDto requestDto) {
 
-        List<Integer> sportsBookmarkList = exerciseRepository
-                .findTop1ByExerciseDate(requestDto.getExerciseDate()).getSportsBookmarkList();
         Member findMember = memberRepository.findByEmail(member.getEmail());
 
-        if (sportsBookmarkList == null) {
-            return ExerciseResponseDto.builder().build();
-        }
+        checkExerciseExisted(member, requestDto);
+
+        List<Integer> sportsBookmarkList = exerciseRepository
+                .findFirstByExerciseDateAndMember_Id(requestDto.getExerciseDate(),
+                        findMember.getId()).getSportsBookmarkList();
 
         List<ExerciseDto> exerciseDtoList = new ArrayList<>();
+
         for (int idx = 1; idx < sportsBookmarkList.size(); idx++) {
 
-            Exercise exercise = exerciseRepository.findByExerciseDateAndMember_IdAndSports_Id(
-                    requestDto.getExerciseDate(), member.getId(), sportsIdList.get(idx));
-
             if (sportsBookmarkList.get(idx) == 1) {
+
+                Exercise exercise = exerciseRepository.findByExerciseDateAndMember_IdAndSports_Id(
+                        requestDto.getExerciseDate(), member.getId(), sportsIdList.get(idx));
+
                 ExerciseDto exerciseDto = ExerciseDto.builder()
                         .sportsId(exercise.getSports().getId())
                         .met(exercise.getSports().getMet())
@@ -80,9 +87,31 @@ public class ExerciseServiceImpl implements ExerciseService {
         ExerciseResponseDto responseDto = ExerciseResponseDto.builder()
                 .sportsBookmarkList(sportsBookmarkList)
                 .exerciseDtoList(exerciseDtoList)
-                .weight(findMember.getWeight())
+                .weight(findMember.getWeightList().get(findMember.getWeightList().size() - 1)
+                        .getWeight())
                 .build();
         return responseDto;
+    }
+
+    @Override
+    @Transactional
+    public void saveSportsBookmark(Member member, SaveSportsBookmarkRequestDto requestDto) {
+        List<Long> sportsBookmarkList = requestDto.getSportsBookmarkList();
+        Member findMember = memberRepository.findByEmail(member.getEmail());
+        List<Integer> mySportsBookmarkList = findMember.getSportsBookmarkList();
+        for (int idx = 1; idx < sportsBookmarkList.size(); idx++) {
+            mySportsBookmarkList.set(idx, sportsBookmarkList.get(idx).intValue());
+        }
+
+        findMember.updateSportsBookmarkList(mySportsBookmarkList);
+    }
+
+    private void checkExerciseExisted(Member member, SelectExerciseRequestDto requestDto) {
+        Exercise exercise = exerciseRepository.findFirstByExerciseDateAndMember_Id(
+                requestDto.getExerciseDate(), member.getId());
+        if (exercise == null) {
+            throw new GlobalRuntimeException("해당일자에 운동데이터가 없습니다.", HttpStatus.BAD_REQUEST);
+        }
     }
 
     private Sports getSportsById(Long idx) {
