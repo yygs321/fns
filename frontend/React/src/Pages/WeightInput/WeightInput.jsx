@@ -9,6 +9,7 @@ export const 현재체중 = "88";
 export const 시작체중 = "92";
 
 const WeightInput = () => {
+
   const 월 = 9;
   const 일 = 15;
 
