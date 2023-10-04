@@ -2,6 +2,7 @@ package ssafy.fns.domain.exercise.service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +16,6 @@ import ssafy.fns.domain.exercise.entity.Exercise;
 import ssafy.fns.domain.exercise.entity.Sports;
 import ssafy.fns.domain.exercise.repository.ExerciseRepository;
 import ssafy.fns.domain.exercise.repository.SportsRepository;
-import ssafy.fns.domain.exercise.service.dto.ExerciseDto;
 import ssafy.fns.domain.exercise.service.dto.ExerciseResponseDto;
 import ssafy.fns.domain.member.entity.Member;
 import ssafy.fns.domain.member.repository.MemberRepository;
@@ -37,7 +37,7 @@ public class ExerciseServiceImpl implements ExerciseService {
         Member findMember = memberRepository.findByEmail(member.getEmail());
 
         for (int i = 1; i < 13; i++) {
-            Long exerciseTime = requestDto.getExerciseTimeList().get(i);
+            Double exerciseTime = requestDto.getExerciseTimeList().get(i);
             if (findMember.getSportsBookmarkList().get(i) == 1) {
                 Exercise exercise = Exercise.builder()
                         .sports(getSportsById(sportsIdList.get(i)))
@@ -60,18 +60,21 @@ public class ExerciseServiceImpl implements ExerciseService {
 
         Member findMember = memberRepository.findByEmail(member.getEmail());
 
-        checkExerciseExisted(member, requestDto);
-
-        List<Integer> sportsBookmarkList = exerciseRepository
+        Exercise exercise = exerciseRepository
                 .findFirstByExerciseDateAndMember_Id(requestDto.getExerciseDate(),
-                        findMember.getId()).getSportsBookmarkList();
+                        findMember.getId());
+        if (exercise == null) {
+            return ExerciseResponseDto.from(findMember, null, null);
+        }
 
-        List<ExerciseDto> exerciseDtoList = new ArrayList<>();
+        List<Integer> sportsBookmarkList = exercise.getSportsBookmarkList();
 
-        getExerciseDtoListValue(member, requestDto, sportsBookmarkList, exerciseDtoList);
+        List<Double> exerciseTimeList = Arrays.asList(new Double[13]);
+        Collections.fill(exerciseTimeList, 0.0);
+        getExerciseTime(member, requestDto, exerciseTimeList);
 
-        ExerciseResponseDto responseDto = ExerciseResponseDto.from(findMember, sportsBookmarkList,
-                exerciseDtoList);
+        ExerciseResponseDto responseDto =
+                ExerciseResponseDto.from(findMember, sportsBookmarkList, exerciseTimeList);
 
         return responseDto;
     }
@@ -89,32 +92,19 @@ public class ExerciseServiceImpl implements ExerciseService {
         findMember.updateSportsBookmarkList(mySportsBookmarkList);
     }
 
-    private void getExerciseDtoListValue(Member member, SelectExerciseRequestDto requestDto,
-            List<Integer> sportsBookmarkList, List<ExerciseDto> exerciseDtoList) {
-        for (int idx = 1; idx < sportsBookmarkList.size(); idx++) {
+    private void getExerciseTime(Member member, SelectExerciseRequestDto requestDto,
+            List<Double> exerciseTimeList) {
+        for (int idx = 0; idx < 13; idx++) {
 
-            if (sportsBookmarkList.get(idx) == 1) {
+            Exercise exercise = exerciseRepository.findTop1ByExerciseDateAndMember_IdAndSports_IdOrderByIdDesc(
+                    requestDto.getExerciseDate(), member.getId(), sportsIdList.get(idx));
 
-                Exercise exercise = exerciseRepository.findByExerciseDateAndMember_IdAndSports_Id(
-                        requestDto.getExerciseDate(), member.getId(), sportsIdList.get(idx));
-
-                ExerciseDto exerciseDto = ExerciseDto.builder()
-                        .sportsId(exercise.getSports().getId())
-                        .met(exercise.getSports().getMet())
-                        .exerciseTime(exercise.getExerciseTime()).build();
-
-                exerciseDtoList.add(exerciseDto);
+            if (exercise != null) {
+                exerciseTimeList.set(idx, exercise.getExerciseTime());
             }
         }
     }
 
-    private void checkExerciseExisted(Member member, SelectExerciseRequestDto requestDto) {
-        Exercise exercise = exerciseRepository.findFirstByExerciseDateAndMember_Id(
-                requestDto.getExerciseDate(), member.getId());
-        if (exercise == null) {
-            throw new GlobalRuntimeException("해당일자에 운동데이터가 없습니다.", HttpStatus.BAD_REQUEST);
-        }
-    }
 
     private Sports getSportsById(Long idx) {
         log.info(String.valueOf(idx));

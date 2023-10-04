@@ -12,15 +12,14 @@ public class ExerciseResponseDto {
 
     private List<Integer> sportsBookmarkList;
     private Double weight;
-    private List<ExerciseDto> exerciseDtoList;
+    private List<Double> exerciseTimeList;
 
     public static ExerciseResponseDto from(Member member, List<Integer> sportsBookmarkList,
-            List<ExerciseDto> exerciseDtoList) {
+            List<Double> exerciseTimeList) {
         return ExerciseResponseDto.builder()
                 .sportsBookmarkList(sportsBookmarkList)
-                .exerciseDtoList(exerciseDtoList)
-                .weight(member.getWeightList().get(member.getWeightList().size() - 1)
-                        .getWeight())
+                .weight(member.getCurrentWeight())
+                .exerciseTimeList(exerciseTimeList)
                 .build();
     }
 }

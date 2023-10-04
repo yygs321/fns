@@ -20,5 +20,5 @@ import lombok.Setter;
 public class SaveExerciseRequestDto {
 
     private LocalDate exerciseDate;
-    private List<Long> exerciseTimeList;
+    private List<Double> exerciseTimeList;
 }
