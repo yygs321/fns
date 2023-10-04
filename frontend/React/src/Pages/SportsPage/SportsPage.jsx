@@ -17,15 +17,14 @@ import NavigateBeforeRoundedIcon from "@mui/icons-material/NavigateBeforeRounded
 import NavigateNextRoundedIcon from "@mui/icons-material/NavigateNextRounded";
 import { useSelector } from "react-redux";
 
-
-const [exerciseResponseDto, setExerciseResponseDto] = useState({
-  sportsBookmarkList: [0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1],
-  sportsMetValue: [0, 2, 3.5, 5, 6, 7, 8, 4, 5.5, 4.5, 6.5, 5, 5.5],
-  exerciseTimeList: [0, 0, 1, 1.5, 0, 0, 2, 1, 1.5, 2, 0, 0, 1.5],
-  weight: 60
-});
-
-const sportNames = [null, "조깅", "사이클", "등산", "수영", "줄넘기", "계단 오르기", "요가", "축구", "야구", 
+const SportsPage = () => {
+  const [exerciseResponseDto, setExerciseResponseDto] = useState({
+    sportsBookmarkList: [0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1],
+    sportsMetValue: [0, 2, 3.5, 5, 6, 7, 8, 4, 5.5, 4.5, 6.5, 5, 5.5],
+    exerciseTimeList: [0, 0, 1, 1.5, 0, 0, 2, 1, 1.5, 2, 0, 0, 1.5],
+    weight: 60
+  });
+  const sportNames = [null, "조깅", "사이클", "등산", "수영", "줄넘기", "계단 오르기", "요가", "축구", "야구", 
 "테니스", "배구", "골프"];
 const sportIcons = [null, <DirectionsRunIcon fontSize="large" />, <DirectionsBikeIcon fontSize="large" />, 
 <HikingIcon fontSize="large" />, <HikingIcon fontSize="large" />, <PoolIcon fontSize="large" />,
@@ -34,7 +33,7 @@ const sportIcons = [null, <DirectionsRunIcon fontSize="large" />, <DirectionsBik
  <SportsVolleyballIcon fontSize="large" />, <SportsGolfIcon fontSize="large" />
 ];
 
-export const sportsData = exerciseResponseDto.sportsMetValue.map((met, index) => {
+  const sportsData = exerciseResponseDto.sportsMetValue.map((met, index) => {
   if (index === 0) return null; // 0번 인덱스는 사용하지 않습니다.
 
   const kcalPerHour = (3.5 * met * exerciseResponseDto.weight * 60) / 1000 * 5;
@@ -109,8 +108,6 @@ const SportItem = ({
     )}
   </Grid>
 );
-
-const SportsPage = () => {
   const accessToken = useSelector((state) => state.auth.accessToken);
   const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
   const [times, setTimes] = useState({});
@@ -208,7 +205,10 @@ const SportsPage = () => {
   
     fetchExerciseData();
   }, [isToday, now, before]);
-  
+  const handleSaveData = () => {
+    // 여기에 나중에 API 연결 코드를 작성하면 됩니다.
+    console.log("데이터가 저장되었습니다."); // 임시 메시지
+  };
   return (
     <div
       className="gray-pages"
