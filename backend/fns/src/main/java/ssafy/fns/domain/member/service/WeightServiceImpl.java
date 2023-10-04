@@ -1,14 +1,10 @@
 package ssafy.fns.domain.member.service;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.jetbrains.annotations.NotNull;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import ssafy.fns.domain.member.controller.dto.TargetWeightRequestDto;
 import ssafy.fns.domain.member.controller.dto.WeightRequestDto;
@@ -21,7 +17,6 @@ import ssafy.fns.domain.member.repository.WeightRepository;
 import ssafy.fns.domain.member.service.dto.TargetWeightResponseDto;
 import ssafy.fns.domain.member.service.dto.WeightHistoryResponseDto;
 import ssafy.fns.domain.member.service.dto.WeightResponseDto;
-import ssafy.fns.global.exception.GlobalRuntimeException;
 
 @Service
 @RequiredArgsConstructor
@@ -67,13 +62,16 @@ public class WeightServiceImpl implements WeightService {
     public WeightHistoryResponseDto selectWeightHistory(Member member) {
         Member findMember = memberRepository.findByEmail(member.getEmail());
         TargetWeightResponseDto targetWeightResponseDto = selectTargetWeight(findMember);
-        TargetWeight targetWeight = targetWeightRepository.findByMember_Email(
-                findMember.getEmail());
-        List<Long> weightIdList = weightRepository.findAllWeightIdByTargetWeightCreatAtAndMemberId(
-                findMember.getId(), targetWeight.getCreatedAt());
+        TargetWeight targetWeight = findMember.getTargetWeight();
+        List<Long> weightIdList = new ArrayList<>();
 
-        if (weightIdList == null) {
-            throw new GlobalRuntimeException("목표 설정 후 저장된 몸무게 기록이 없습니다.", HttpStatus.BAD_REQUEST);
+        if (targetWeight != null) {
+            weightIdList = weightRepository.findAllWeightIdByTargetWeightCreatAtAndMemberId(
+                    findMember.getId(), targetWeight.getCreatedAt());
+        }
+
+        if (weightIdList.isEmpty()) {
+            return WeightHistoryResponseDto.from(targetWeightResponseDto, null);
         }
 
         List<WeightResponseDto> weightResponseDtoList = new ArrayList<>();
@@ -95,13 +93,5 @@ public class WeightServiceImpl implements WeightService {
         }
     }
 
-    @NotNull
-    private static Long getRemaingingDays(Member member) {
-        LocalDateTime currentDateTime = LocalDateTime.now();
-        LocalDateTime createdAt = member.getTargetWeight().getCreatedAt();
-
-        Duration currentDuration = Duration.between(createdAt, currentDateTime);
-        return member.getTargetWeight().getDietDuration() - currentDuration.toDays();
-    }
 
 }
