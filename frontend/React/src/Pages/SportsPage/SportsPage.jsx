@@ -122,7 +122,7 @@ const SportsPage = () => {
     sportsData.reduce((acc, sport, index) => {
       return {
         ...acc,
-        [sport.name]: exerciseResponseDto.sportsBookmarkList[index] === 1,  // 1이면 true, 0이면 false
+        [sport.name]: exerciseResponseDto.sportsBookmarkList[index + 1] === 1,  // 1이면 true, 0이면 false
       };
     }, {})
   );
