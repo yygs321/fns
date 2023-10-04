@@ -44,14 +44,16 @@ public class SecurityConfig {
                         UsernamePasswordAuthenticationFilter.class);
 
         http.addFilterBefore(loggingFilter, JwtAuthenticationFilter.class);
+        
+        http.exceptionHandling()
+                .authenticationEntryPoint((request, response, authException) -> {
+                    response.setStatus(HttpStatus.UNAUTHORIZED.value());
+                });
 
         http.formLogin()
                 .disable();
 
-        http.exceptionHandling()
-        .authenticationEntryPoint((request, response, authException) -> 
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized"));
-
+    
 
         return http.build();
     }
