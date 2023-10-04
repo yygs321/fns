@@ -11,11 +11,6 @@ import {
 import { useSelector } from "react-redux";
 import axiosInstance from "../Common/Component/AxiosInstance";
 
-export const 목표체중 = "80";
-export const 기간 = "50";
-export const 현재체중 = "88";
-export const 시작체중 = "92";
-
 export default function WeightDrawer(props) {
   const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
   const accessToken = useSelector((state) => {
@@ -72,7 +67,7 @@ export default function WeightDrawer(props) {
       set입력목표체중(targetData.targetWeight);
       set입력기간(targetData.duration);
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   };
 
@@ -422,7 +417,7 @@ export default function WeightDrawer(props) {
             variant="contained"
             className="목표버튼"
             onClick={목표설정모달}
-            disabled={체중 === "" ? true : false}
+            // disabled={체중 === "" ? true : false}
             sx={{
               color: "white",
               fontSize: "1.4rem",

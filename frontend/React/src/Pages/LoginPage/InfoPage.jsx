@@ -176,7 +176,7 @@ const InfoPage = () => {
         if (중복체크결과.data.success) {
           set닉네임확인(true);
           set닉네임오류(undefined);
-          set프로필모달("등록된 닉네임이 없습니다.");
+          set프로필모달("등록 가능한 닉네임입니다.");
         } else {
           set닉네임확인(false);
           set닉네임오류(중복체크결과.data.message);
