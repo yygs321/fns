@@ -55,7 +55,7 @@ export function WeightChart() {
       console.log("성공여부 : ", response.data.success);
 
       if (response.data.success) {
-        console.log("Response Data:", response.message);
+        console.log("Response Data:", response);
         set현재체중(response.data.targetWeightResponseDto.currentWeight);
         set목표체중(response.data.targetWeightResponseDto.targetWeight);
         setUserData(response.data.weightList);
