@@ -1,12 +1,17 @@
 package ssafy.fns.domain.member.service;
 
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import java.io.IOException;
 import java.util.regex.Pattern;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import ssafy.fns.domain.auth.entity.MailHistory;
 import ssafy.fns.domain.auth.repository.MailHistoryRepository;
 import ssafy.fns.domain.auth.repository.RefreshTokenRepository;
@@ -23,6 +28,7 @@ import ssafy.fns.domain.member.repository.MemberRepository;
 import ssafy.fns.domain.member.repository.WeightRepository;
 import ssafy.fns.domain.member.service.dto.MemberResponseDto;
 import ssafy.fns.global.config.RedisUtil;
+import ssafy.fns.global.config.S3Config;
 import ssafy.fns.global.exception.GlobalRuntimeException;
 
 @Service
@@ -31,11 +37,21 @@ import ssafy.fns.global.exception.GlobalRuntimeException;
 public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
+
     private final PasswordEncoder passwordEncoder;
+
     private final MailHistoryRepository mailHistoryRepository;
+
     private final RefreshTokenRepository refreshTokenRepository;
+
     private final RedisUtil redisUtil;
+
     private final WeightRepository weightRepository;
+
+    private final AmazonS3Client amazonS3Client;
+
+    @Value("${cloud.aws.s3.bucket}")
+    private String bucket;
 
     @Override
     @Transactional
@@ -138,6 +154,34 @@ public class MemberServiceImpl implements MemberService {
         findMember.updatePassword(passwordEncoder.encode(requestDto.getPassword()));
 
     }
+
+    @Override
+    @Transactional
+    public void uploadProfileImage(Member member, MultipartFile file) {
+        if(member == null){
+            throw new GlobalRuntimeException("인증 실패",HttpStatus.UNAUTHORIZED);
+        }
+
+        Member findMember = getMemberById(member.getId());
+
+        String fileName = file.getOriginalFilename();
+
+        String fileUrl = S3Config.getFilePath(bucket, findMember.getId());
+
+        ObjectMetadata metadata = new ObjectMetadata();
+
+        metadata.setContentType(file.getContentType());
+        metadata.setContentLength(file.getSize());
+        try {
+            amazonS3Client.putObject(bucket, fileName,file.getInputStream(),metadata);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new GlobalRuntimeException("파일 저장 실패",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
 
     @Override
     @Transactional

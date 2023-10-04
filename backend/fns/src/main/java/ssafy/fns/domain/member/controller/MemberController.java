@@ -1,7 +1,9 @@
 package ssafy.fns.domain.member.controller;
 
+import com.amazonaws.services.s3.AmazonS3Client;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -11,7 +13,9 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import ssafy.fns.domain.auth.service.dto.TokenDto;
 import ssafy.fns.domain.member.controller.dto.EmailDuplicationRequestDto;
 import ssafy.fns.domain.member.controller.dto.MemberProfileRequestDto;
@@ -30,6 +34,7 @@ import ssafy.fns.global.response.JsonResponse;
 public class MemberController {
 
     private final MemberService memberService;
+
 
 
     @PostMapping(value = "/sign-up")
@@ -88,5 +93,11 @@ public class MemberController {
             @RequestBody TokenDto tokenDto) {
         memberService.deleteMember(member, tokenDto);
         return JsonResponse.ok("회원 탈퇴가 완료되었습니다.");
+    }
+
+    @PostMapping("/image")
+    public ResponseEntity<?> uploadProfileImage(@AuthenticationPrincipal Member member, @RequestParam("file")MultipartFile file){
+        memberService.uploadProfileImage(member,file);
+        return JsonResponse.ok("프로필 이미지 업로드 완료.");
     }
 }
