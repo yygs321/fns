@@ -1,4 +1,4 @@
-import {React, useState, useEffect} from "react";
+import { React, useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import "chart.js/auto";
 import { Line } from "react-chartjs-2";
@@ -35,64 +35,67 @@ const 차트스타일 = {
 };
 
 export function WeightChart() {
-
   const [현재체중, set현재체중] = useState("");
   const [목표체중, set목표체중] = useState("");
   const [userData, setUserData] = useState([
     {
-    weight : "80",
-    createdAt : "2023-09-20T02:58:28.707111"
-    }
+      weight: "80",
+      createdAt: "2023-09-20T02:58:28.707111",
+    },
   ]);
   const [기간, set기간] = useState("");
   const [percentage, setPercentage] = useState("");
 
   const accessToken = useSelector((state) => {
-    return state.auth.accessToken
+    return state.auth.accessToken;
   });
   const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
-  
+
   useEffect(() => {
-  const 체중감량그래프API = async () => {
-    try {
-      const response = await axios.get(`${SERVER_API_URL}/weight/history`, {
-        headers: {
-          'X-FNS-ACCESSTOKEN': accessToken,
-        },
-      });
+    const 체중감량그래프API = async () => {
+      try {
+        const response = await axios.get(`${SERVER_API_URL}/weight/history`, {
+          headers: {
+            "X-FNS-ACCESSTOKEN": accessToken,
+          },
+        });
 
-      const targetData = response.data.data;
-      console.log("성공여부 : ", response.data.success);
-      if(response.data.success){
-      console.log("Response Data : ",response.data);
-      set현재체중(() => targetData.targetWeightResponseDto.currentWeight);
-      set목표체중(() => targetData.targetWeightResponseDto.targetWeight);
-      if(targetData.weightList){
-      setUserData(() => targetData.weightList);
+        const targetData = response.data.data;
+        console.log("성공여부 : ", response.data.success);
+        if (response.data.success) {
+          console.log("Response Data_1 : ", response.data.success);
+          console.log("Response Data_1 : ", response.data.message);
+          
+          console.log("체크_1");
+          set현재체중(() => targetData.targetWeightResponseDto.currentWeight);
+          set목표체중(() => targetData.targetWeightResponseDto.targetWeight);
+          if (targetData.weightList) {
+            setUserData(() => targetData.weightList);
+          }
+          console.log("체크_2");
+          set기간(() => targetData.remainingDays);
+          setPercentage(() => targetData.progressRatio);
+        }
+      } catch (error) {
+        console.error("Error while searching:", error);
       }
-      set기간(() => targetData.remainingDays);
-      setPercentage(() => targetData.progressRatio)
-      }
-    } catch (error) {
-      console.error("Error while searching:", error);
-    }
-  };
-  체중감량그래프API();
-}, [accessToken, SERVER_API_URL]);
-
+    };
+    console.log("체크_3");
+    체중감량그래프API();
+    console.log("체크_4");
+  }, [accessToken, SERVER_API_URL]);
 
   const data = {
     labels: userData.map((data) => data.createdAt),
     datasets: [
       {
         label: "체중",
-        data: userData.map((data) => data ? data.weight : null),
+        data: userData.map((data) => (data ? data.weight : null)),
         borderColor: "green",
         spanGaps: true,
       },
     ],
   };
-
 
   // const changeDayBefore = () => {
   //   const 어제 = 날짜.subtract(1, "day");
@@ -137,7 +140,10 @@ export function WeightChart() {
           justifyContent={"center"}
           alignItems={"center"}
         >
-          <Typography textAlign="center" sx={{ fontSize: "2rem", mt : 1, mb : 1 }}>
+          <Typography
+            textAlign="center"
+            sx={{ fontSize: "2rem", mt: 1, mb: 1 }}
+          >
             다이어트 체중 그래프
           </Typography>
         </Grid>
@@ -147,8 +153,7 @@ export function WeightChart() {
           xs={12}
           justifyContent={"center"}
           alignItems={"center"}
-        >
-        </Grid>
+        ></Grid>
       </Grid>
 
       <div style={차트스타일}>
