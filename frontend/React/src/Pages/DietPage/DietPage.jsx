@@ -42,6 +42,7 @@ const DietPage = () => {
 
   // 500 에러로 일단 주석
 
+  // eslint-disable-next-line no-unused-vars
   const getIntakeData = async () => {
     console.log(formattedToday);
     console.log(formattedYesterday);
@@ -67,7 +68,7 @@ const DietPage = () => {
   };
 
   useEffect(() => {
-    getIntakeData();
+    // getIntakeData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -195,18 +196,27 @@ const DietPage = () => {
   ];
 
   const [mealData, setMealData] = useState([]);
-  const [morningData, setMorningData] = useState(
-    meals.filter((meal) => meal.intakeTime === "MORNING")[0].food
-  );
-  const [lunchData, setLunchData] = useState(
-    meals.filter((meal) => meal.intakeTime === "LUNCH")[0].food
-  );
-  const [dinnerData, setDinnerData] = useState(
-    meals.filter((meal) => meal.intakeTime === "DINNER")[0].food
-  );
-  const [etcData, setEtcData] = useState(
-    meals.filter((meal) => meal.intakeTime === "ETC")[0].food
-  );
+  // const [morningData, setMorningData] = useState(
+  //   meals.filter((meal) => meal.intakeTime === "MORNING")[0].food
+  // );
+  // const [lunchData, setLunchData] = useState(
+  //   meals.filter((meal) => meal.intakeTime === "LUNCH")[0].food
+  // );
+  // const [dinnerData, setDinnerData] = useState(
+  //   meals.filter((meal) => meal.intakeTime === "DINNER")[0].food
+  // );
+  // const [etcData, setEtcData] = useState(
+  //   meals.filter((meal) => meal.intakeTime === "ETC")[0].food
+  // );
+  const morningData = meals.filter((meal) => meal.intakeTime === "MORNING")[0]
+    .food;
+
+  const lunchData = meals.filter((meal) => meal.intakeTime === "LUNCH")[0].food;
+
+  const dinnerData = meals.filter((meal) => meal.intakeTime === "DINNER")[0]
+    .food;
+
+  const etcData = meals.filter((meal) => meal.intakeTime === "ETC")[0].food;
 
   const totalMealsKcal = meals.reduce((total, meal) => {
     const mealTotalKcal = meal.food

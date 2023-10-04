@@ -50,6 +50,7 @@ export default function WeightDrawer(props) {
 
   // 기간 주 단위로 입력받고, 남은 기간은 몇 주 몇 일 단위로 보여줘야 할 듯.
 
+  // eslint-disable-next-line no-unused-vars
   const 체중데이터받기 = async () => {
     try {
       const res = await axiosInstance({
@@ -106,7 +107,7 @@ export default function WeightDrawer(props) {
   };
 
   useEffect(() => {
-    체중데이터받기();
+    // 체중데이터받기();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -122,8 +123,6 @@ export default function WeightDrawer(props) {
   };
 
   const 체중입력하기 = () => {
-    // 입력한 체중 보내기
-    // 그 뒤 saveBase 해야함
     체중등록();
     기준영양소등록();
     set입력모달열기((data) => !data);

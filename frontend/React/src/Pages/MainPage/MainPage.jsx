@@ -23,13 +23,13 @@ import axiosInstance from "../Common/Component/AxiosInstance";
 import RecommendCarousel from "./RecommendCarousel";
 
 const MainPage = () => {
-  const [kcalories, setKcalories] = useState(0); // 칼로리
+  const [kcalories, setKcalories] = useState(2000); // 칼로리
   const [baseKcalories, setBaseKcalories] = useState(2600); // 칼로리
-  const [carbohydrate, setCarbohydrate] = useState(0); // 탄수화물
+  const [carbohydrate, setCarbohydrate] = useState(90); // 탄수화물
   const [baseCarbohydrate, setBaseCarbohydrate] = useState(130); // 탄수화물
-  const [protein, setProtein] = useState(0); // 단백질
+  const [protein, setProtein] = useState(40); // 단백질
   const [baseProtein, setBaseProtein] = useState(60); // 단백질
-  const [fat, setFat] = useState(0); // 지방
+  const [fat, setFat] = useState(35); // 지방
   const [baseFat, setBaseFat] = useState(50); // 지방
 
   const [isOverKcal, setIsOverKcal] = useState(false); // 칼로리 초과
@@ -61,6 +61,7 @@ const MainPage = () => {
 
   // 영양소 받아온 후, 출력용 요청
 
+  // eslint-disable-next-line no-unused-vars
   const getNeut = async () => {
     try {
       const res = await axiosInstance({
@@ -98,9 +99,10 @@ const MainPage = () => {
   };
 
   // 영양소 문제 해결되면 이 쪽 수정
+  const org_kcal = 2000;
 
   useEffect(() => {
-    getNeut();
+    // getNeut();
 
     let targetValue = 0;
 
@@ -331,7 +333,9 @@ const MainPage = () => {
                         fontWeight={"bold"}
                         sx={{ position: "absolute", top: "36%" }}
                       >
-                        {kcalories}
+                        {kcalories > org_kcal || kcalories >= baseKcalories
+                          ? `${org_kcal}`
+                          : `${kcalories}`}
                       </Typography>
                     </Grid>
                     <Grid

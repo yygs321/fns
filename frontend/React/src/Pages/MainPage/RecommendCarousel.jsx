@@ -21,6 +21,7 @@ const RecommendCarousel = (props) => {
     "돈까스",
   ]);
 
+  // eslint-disable-next-line no-unused-vars
   const getRecommendFood = async () => {
     try {
       const res = axiosInstance({
@@ -43,7 +44,7 @@ const RecommendCarousel = (props) => {
   };
 
   useEffect(() => {
-    getRecommendFood();
+    // getRecommendFood();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
