@@ -3,7 +3,7 @@ import {List, ListItemText, ListItemIcon, Divider, Typography } from "@mui/mater
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import "./MyPage.css";
-import profileimg from "../../assets/Image/cat.jpg";
+import defaultProfileImg from "../../assets/Image/Profile/deafult_profile.jpg";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Collapse from "@mui/material/Collapse";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -21,12 +21,12 @@ const MyPage = () => {
   const navigate = useNavigate();
 
   const [profile, setProfile] = useState({
-    image: uploadedImage || profileimg,
-    nickname: "선글라스킹냥이",
-    age: 1,
-    gender: "남",
-    height: 34,
-    weight: 10,
+    image: uploadedImage || defaultProfileImg,
+    nickname: "",
+    age: 0,
+    gender: "",
+    height: 0,
+    weight: 0,
 });
 
 
@@ -79,12 +79,14 @@ const MyPage = () => {
         try {
             const response = await axios.get(`${SERVER_API_URL}/members`, {
                 headers: {
-                    'X-FNS-ACCESSTOKEN': accessToken,  // accessToken이 필요하다면
+                    'X-FNS-ACCESSTOKEN': accessToken,  
                 },
             });
-            console.log(response.data)
+           
             if (response.data.success) {
-                const { nickname, age, height, weight, gender } = response.data.data;
+                const { nickname, age, height, weight, gender, fileUrl } = response.data.data;
+                
+                let userImage = fileUrl ? fileUrl : defaultProfileImg;
                 setProfile(prevProfile => ({
                     ...prevProfile,
                     nickname,
@@ -92,6 +94,7 @@ const MyPage = () => {
                     height,
                     weight,
                     gender: gender === "FEMALE" ? "여" : "남",  // gender 값에 따라 한글로 변환
+                    image: userImage
                 }));
             } else {
                 console.error("Failed to fetch profile:", response.data.message);
