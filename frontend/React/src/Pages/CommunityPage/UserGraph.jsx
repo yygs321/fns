@@ -13,11 +13,18 @@ import {
 } from "@mui/material";
 
 import CommunityBarGraph from "./CommunityBarGraph";
+import axiosInstance from "../Common/Component/AxiosInstance";
+import { useSelector } from "react-redux";
 
 // 아침, 점심, 저녁, 간식이 같은 형식으로 반복하니까 API 연결하면서 중복 코드 줄이기?
 
 const UserGraph = (props) => {
   const { user, index, selectedUser, setSelectedUser } = props;
+
+  const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
+  const accessToken = useSelector((state) => {
+    return state.auth.accessToken;
+  });
 
   const [cancelFollowModal, setCancelFollowModal] = useState(false);
 
@@ -26,6 +33,23 @@ const UserGraph = (props) => {
       setSelectedUser(newUserIndex);
     } else {
       setSelectedUser(null);
+    }
+  };
+
+  const handleCancelFollowAxios = async () => {
+    // 여기다 팔로우 삭제 api
+    try {
+      const res = await axiosInstance({
+        method: "post",
+        url: `${SERVER_API_URL}/follow/${user.memberId}`,
+        headers: {
+          "X-FNS-ACCESSTOKEN": accessToken,
+        },
+      });
+
+      console.log(res);
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -41,6 +65,7 @@ const UserGraph = (props) => {
 
   const handleCancelFollow = (e) => {
     e.stopPropagation();
+    handleCancelFollowAxios();
   };
 
   return (
@@ -113,7 +138,7 @@ const UserGraph = (props) => {
                 overflow="hidden"
                 textOverflow="ellipsis"
               >
-                {user.username}
+                {user.nickName}
               </Typography>
             </Grid>
           </Grid>
@@ -127,29 +152,29 @@ const UserGraph = (props) => {
           >
             <Grid item container xs={3} justifyContent={"center"}>
               <CommunityBarGraph
-                nutrient={user.nowKcal}
-                maxNutrient={user.maxKcal}
+                nutrient={user.kcal}
+                maxNutrient={9999}
                 name={"칼로리"}
               />
             </Grid>
             <Grid item container xs={3} justifyContent={"center"}>
               <CommunityBarGraph
-                nutrient={user.nowcarb}
-                maxNutrient={user.maxcarb}
+                nutrient={user.carbs}
+                maxNutrient={999}
                 name={"탄수화물"}
               />
             </Grid>
             <Grid item container xs={3} justifyContent={"center"}>
               <CommunityBarGraph
-                nutrient={user.nowprot}
-                maxNutrient={user.maxprot}
+                nutrient={user.protein}
+                maxNutrient={999}
                 name={"단백질"}
               />
             </Grid>
             <Grid item container xs={3} justifyContent={"center"}>
               <CommunityBarGraph
-                nutrient={user.nowprov}
-                maxNutrient={user.maxprov}
+                nutrient={user.fat}
+                maxNutrient={999}
                 name={"지방"}
               />
             </Grid>

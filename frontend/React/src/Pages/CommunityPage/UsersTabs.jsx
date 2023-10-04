@@ -6,66 +6,93 @@ import { Tabs, Tab, Box } from "@mui/material";
 import UserGraph from "./UserGraph";
 import UserRecommend from "./UserRecommend";
 import default_profile from "../../assets/Image/Profile/deafult_profile.jpg";
+import axiosInstance from "../Common/Component/AxiosInstance";
+import { useSelector } from "react-redux";
 // import Cat from "../../assets/Image/cat.jpg";
 
 const UsersTabs = () => {
-  // const [followees, setFollowees] = useState([]);
+  const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
+  const accessToken = useSelector((state) => {
+    return state.auth.accessToken;
+  });
+
+  const [followees, setFollowees] = useState([]);
   // const [recommendedUsers, setRecommendedUsers] = useState([]);
+  // const followees = [
+  //   {
+  //     username: "댕냥이",
+  //     profileImg: default_profile,
+  //     maxKcal: 2200,
+  //     nowKcal: 2200,
+  //     maxcarb: 200,
+  //     nowcarb: 200,
+  //     maxprot: 200,
+  //     nowprot: 200,
+  //     maxprov: 200,
+  //     nowprov: 200,
+  //   },
+  //   {
+  //     username: "콩냥이",
+  //     profileImg: default_profile,
+  //     maxKcal: 2000,
+  //     nowKcal: 2500,
+  //     maxcarb: 200,
+  //     nowcarb: 250,
+  //     maxprot: 200,
+  //     nowprot: 250,
+  //     maxprov: 200,
+  //     nowprov: 250,
+  //   },
+  //   {
+  //     username: "활냥이",
+  //     profileImg: default_profile,
+  //     maxKcal: 5000,
+  //     nowKcal: 2000,
+  //     maxcarb: 500,
+  //     nowcarb: 200,
+  //     maxprot: 500,
+  //     nowprot: 200,
+  //     maxprov: 500,
+  //     nowprov: 200,
+  //   },
+  //   {
+  //     username: "물냥이",
+  //     profileImg: default_profile,
+  //     maxKcal: 2000,
+  //     nowKcal: 1800,
+  //     maxcarb: 200,
+  //     nowcarb: 180,
+  //     maxprot: 200,
+  //     nowprot: 180,
+  //     maxprov: 200,
+  //     nowprov: 180,
+  //   },
+  // ];
 
-  // const getFollowees = async () => {};
+  const getFollowee = async () => {
+    try {
+      const res = await axiosInstance({
+        method: "get",
+        url: `${SERVER_API_URL}/follow`,
+        headers: {
+          "X-FNS-ACCESSTOKEN": accessToken,
+        },
+      });
 
-  useEffect(() => {}, []);
+      console.log(res);
 
-  const followees = [
-    {
-      username: "댕냥이",
-      profileImg: default_profile,
-      maxKcal: 2200,
-      nowKcal: 2200,
-      maxcarb: 200,
-      nowcarb: 200,
-      maxprot: 200,
-      nowprot: 200,
-      maxprov: 200,
-      nowprov: 200,
-    },
-    {
-      username: "콩냥이",
-      profileImg: default_profile,
-      maxKcal: 2000,
-      nowKcal: 2500,
-      maxcarb: 200,
-      nowcarb: 250,
-      maxprot: 200,
-      nowprot: 250,
-      maxprov: 200,
-      nowprov: 250,
-    },
-    {
-      username: "활냥이",
-      profileImg: default_profile,
-      maxKcal: 5000,
-      nowKcal: 2000,
-      maxcarb: 500,
-      nowcarb: 200,
-      maxprot: 500,
-      nowprot: 200,
-      maxprov: 500,
-      nowprov: 200,
-    },
-    {
-      username: "물냥이",
-      profileImg: default_profile,
-      maxKcal: 2000,
-      nowKcal: 1800,
-      maxcarb: 200,
-      nowcarb: 180,
-      maxprot: 200,
-      nowprot: 180,
-      maxprov: 200,
-      nowprov: 180,
-    },
-  ];
+      const result = res.data.data;
+
+      setFollowees(result);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getFollowee();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const recommendedUsers = [
     { username: "짭냥이", profileImg: default_profile, old: 10, BMI: 30 },
