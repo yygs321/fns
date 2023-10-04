@@ -144,9 +144,6 @@ const SportsPage = () => {
     }));
   };
 
-  // const [currentDate, setCurrentDate] = useState(new Date()); // 현재 화면에 표시되는 날짜
-  // const today = new Date(); // 실제 오늘 날짜
-
   const handleCheckChange = (name) => {
     setCheckedSports((prevChecked) => ({
       ...prevChecked,
@@ -281,7 +278,6 @@ const SportsPage = () => {
             xs={2}
             justifyContent={"flex-end"}
             alignItems={"center"}
-            // sx={{ paddingRight: "1rem" }}
           ></Grid>
         </Grid>
       </Grid>
@@ -363,7 +359,6 @@ const SportsPage = () => {
                   alignItems: "center",
                   width: "100%",
                   height: "80%",
-                  // marginBottom: "10px",
                   cursor: "pointer",
                 }}
                 onClick={() => setEditMode(!isEditMode)}
@@ -422,12 +417,8 @@ const SportsPage = () => {
           width: "100%",
           height: "20vh",
           backgroundColor: "white",
-          // borderRadius: "30px",
-          // boxShadow: "2px 2px 4px #a5a5a5",
-          // padding: "20px",
           textAlign: "center",
           boxSizing: "border-box",
-          // marginBottom: "10px",
         }}
       >
         <Grid
@@ -536,9 +527,7 @@ const SportsPage = () => {
               onClick={handleSaveData}
               disabled={totalHours > 24}
               sx={{
-                // marginTop: "20px",
                 fontSize: "1.3rem",
-                // padding: "5px 100px",
                 borderRadius: "10px",
                 color: "white",
                 whiteSpace: "nowrap",
