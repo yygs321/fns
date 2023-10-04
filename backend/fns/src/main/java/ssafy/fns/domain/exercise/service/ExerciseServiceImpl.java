@@ -68,6 +68,29 @@ public class ExerciseServiceImpl implements ExerciseService {
 
         List<ExerciseDto> exerciseDtoList = new ArrayList<>();
 
+        getExerciseDtoListValue(member, requestDto, sportsBookmarkList, exerciseDtoList);
+
+        ExerciseResponseDto responseDto = ExerciseResponseDto.from(findMember, sportsBookmarkList,
+                exerciseDtoList);
+
+        return responseDto;
+    }
+
+    @Override
+    @Transactional
+    public void saveSportsBookmark(Member member, SaveSportsBookmarkRequestDto requestDto) {
+        List<Long> sportsBookmarkList = requestDto.getSportsBookmarkList();
+        Member findMember = memberRepository.findByEmail(member.getEmail());
+        List<Integer> mySportsBookmarkList = findMember.getSportsBookmarkList();
+        for (int idx = 1; idx < sportsBookmarkList.size(); idx++) {
+            mySportsBookmarkList.set(idx, sportsBookmarkList.get(idx).intValue());
+        }
+
+        findMember.updateSportsBookmarkList(mySportsBookmarkList);
+    }
+
+    private void getExerciseDtoListValue(Member member, SelectExerciseRequestDto requestDto,
+            List<Integer> sportsBookmarkList, List<ExerciseDto> exerciseDtoList) {
         for (int idx = 1; idx < sportsBookmarkList.size(); idx++) {
 
             if (sportsBookmarkList.get(idx) == 1) {
@@ -83,27 +106,6 @@ public class ExerciseServiceImpl implements ExerciseService {
                 exerciseDtoList.add(exerciseDto);
             }
         }
-
-        ExerciseResponseDto responseDto = ExerciseResponseDto.builder()
-                .sportsBookmarkList(sportsBookmarkList)
-                .exerciseDtoList(exerciseDtoList)
-                .weight(findMember.getWeightList().get(findMember.getWeightList().size() - 1)
-                        .getWeight())
-                .build();
-        return responseDto;
-    }
-
-    @Override
-    @Transactional
-    public void saveSportsBookmark(Member member, SaveSportsBookmarkRequestDto requestDto) {
-        List<Long> sportsBookmarkList = requestDto.getSportsBookmarkList();
-        Member findMember = memberRepository.findByEmail(member.getEmail());
-        List<Integer> mySportsBookmarkList = findMember.getSportsBookmarkList();
-        for (int idx = 1; idx < sportsBookmarkList.size(); idx++) {
-            mySportsBookmarkList.set(idx, sportsBookmarkList.get(idx).intValue());
-        }
-
-        findMember.updateSportsBookmarkList(mySportsBookmarkList);
     }
 
     private void checkExerciseExisted(Member member, SelectExerciseRequestDto requestDto) {

@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import ssafy.fns.domain.member.entity.Member;
+import ssafy.fns.domain.member.entity.TargetWeight;
 
 @Getter
 @AllArgsConstructor
@@ -23,15 +24,22 @@ public class TargetWeightResponseDto {
 
     public static TargetWeightResponseDto from(Member member) {
         Double currentWeight = member.getCurrentWeight();
-        Double targetWeight = member.getTargetWeight().getTargetWeight();
-        Double initialWeight = member.getTargetWeight().getInitialWeight();
-        Double progressRatio = getProgressRatio(currentWeight, targetWeight, initialWeight);
-        Long remainingDays = getRemaingingDays(member);
+        Double targetWeight = null; // 초기값으로 null 설정
+        Double progressRatio = null; // 초기값으로 null 설정
+        Long remainingDays = null; // 초기값으로 null 설정
+
+        TargetWeight targetWeightEntity = member.getTargetWeight();
+        if (targetWeightEntity != null) {
+            targetWeight = targetWeightEntity.getTargetWeight();
+            Double initialWeight = targetWeightEntity.getInitialWeight();
+            progressRatio = getProgressRatio(currentWeight, targetWeight, initialWeight);
+            remainingDays = getRemaingingDays(member);
+        }
 
         return TargetWeightResponseDto.builder()
                 .currentWeight(currentWeight)
                 .targetWeight(targetWeight)
-                .duration(member.getTargetWeight().getDietDuration())
+                .duration(targetWeightEntity != null ? targetWeightEntity.getDietDuration() : null)
                 .remainingDays(remainingDays)
                 .progressRatio(progressRatio)
                 .build();
