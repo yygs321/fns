@@ -21,7 +21,7 @@ export default function WeightDrawer(props) {
   const accessToken = useSelector((state) => {
     return state.auth.accessToken;
   });
-
+  const { drawerOpen, setDrawerOpen } = props;
   const now = new Date();
   // const options = {
   //   year: "2-digit",
@@ -35,6 +35,7 @@ export default function WeightDrawer(props) {
   const month = (now.getMonth() + 1).toString().padStart(2, "0"); // 월은 0부터 시작하므로 1을 더하고 두 자리로 포맷팅합니다.
   const day = now.getDate().toString().padStart(2, "0"); // 일자를 두 자리로 포맷팅합니다.
 
+  // eslint-disable-next-line no-unused-vars
   const formattedToday = `${year}-${month}-${day}`;
 
   const [입력모달열기, set입력모달열기] = useState(false);
@@ -55,15 +56,21 @@ export default function WeightDrawer(props) {
     try {
       const res = await axiosInstance({
         method: "get",
-        url: `${SERVER_API_URL}/weight?date=${formattedToday}`,
+        url: `${SERVER_API_URL}/weight/history`,
         headers: {
           "X-FNS-ACCESSTOKEN": accessToken,
         },
       });
 
-      console.log(res.data);
+      console.log(res.data.data);
+      const targetData = res.data.data.targetWeightResponseDto;
 
-      set체중(res.data[0].weight);
+      set다이어트모드(true);
+      set체중(res.data.data.weightList[0].weight);
+      set목표체중(targetData.targetWeight);
+      set기간(targetData.remainingDays);
+      set입력목표체중(targetData.targetWeight);
+      set입력기간(targetData.duration);
     } catch (err) {
       console.log(err);
     }
@@ -107,7 +114,7 @@ export default function WeightDrawer(props) {
   };
 
   useEffect(() => {
-    // 체중데이터받기();
+    체중데이터받기();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -125,6 +132,7 @@ export default function WeightDrawer(props) {
   const 체중입력하기 = () => {
     체중등록();
     기준영양소등록();
+    체중데이터받기();
     set입력모달열기((data) => !data);
   };
 
@@ -136,12 +144,35 @@ export default function WeightDrawer(props) {
     set목표모달열기((data) => !data);
   };
 
+  const 목표설정 = async () => {
+    try {
+      const res = await axiosInstance({
+        method: "post",
+        url: `${SERVER_API_URL}/target-weight`,
+        headers: {
+          "X-FNS-ACCESSTOKEN": accessToken,
+        },
+        data: {
+          targetWeight: 입력목표체중,
+          duration: 입력기간,
+        },
+      });
+
+      console.log(res.data);
+
+      set입력목표체중("");
+      set입력기간("");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const 목표설정하기 = () => {
     set다이어트모드(true);
-    set목표체중(입력목표체중);
-    set기간(입력기간);
-    set입력목표체중("");
-    set입력기간("");
+
+    목표설정();
+    체중데이터받기();
+
     set목표모달열기((data) => !data);
   };
 
@@ -160,8 +191,6 @@ export default function WeightDrawer(props) {
   };
 
   const 목표값여부 = 입력목표체중 && 입력기간;
-
-  const { drawerOpen, setDrawerOpen } = props;
 
   const weightInput = () => (
     <Box
@@ -603,7 +632,7 @@ export default function WeightDrawer(props) {
                 InputProps={{
                   sx: { borderRadius: "10px", fontSize: "1.2rem" },
                   endAdornment: (
-                    <Typography color="text.secondary">(주)</Typography>
+                    <Typography color="text.secondary">(일)</Typography>
                   ),
                 }}
               />

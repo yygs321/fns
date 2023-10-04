@@ -41,8 +41,8 @@ const InfoPage = () => {
   const [키, set키] = useState("");
   const [체중, set체중] = useState("");
 
-  const [저장실패, set저장실패] = useState("");
-  const [저장실패창, set저장실패창] = useState(false);
+  const [프로필모달, set프로필모달] = useState("");
+  const [프로필모달창, set프로필모달창] = useState(false);
 
   const 닉네임입력 = (e) => {
     set닉네임(e.target.value);
@@ -127,33 +127,34 @@ const InfoPage = () => {
                     navigate("/main");
                     window.location.reload();
                   } else {
-                    set저장실패("프로필 저장에 실패했습니다.");
+                    set프로필모달("기준 영양소 등록에 실패했습니다.");
                   }
                 } catch (err) {
                   console.log(err);
+                  set프로필모달("프로필 저장에 실패했습니다.");
                 }
               } else {
-                set저장실패("성별을 설정해주세요.");
+                set프로필모달("성별을 설정해주세요.");
               }
             } else {
-              set저장실패("체중을 입력해주세요.");
+              set프로필모달("체중을 입력해주세요.");
             }
           } else {
-            set저장실패("키를 입력해주세요.");
+            set프로필모달("키를 입력해주세요.");
           }
         } else {
-          set저장실패("나이를 입력해주세요.");
+          set프로필모달("나이를 입력해주세요.");
         }
       } else {
-        set저장실패("닉네임 중복을 확인해주세요.");
+        set프로필모달("닉네임 중복을 확인해주세요.");
       }
     } else {
-      set저장실패("닉네임을 입력해주세요.");
+      set프로필모달("닉네임을 입력해주세요.");
     }
-    set저장실패창(true);
+    set프로필모달창(true);
     setTimeout(() => {
-      set저장실패창(false);
-      set저장실패("");
+      set프로필모달창(false);
+      set프로필모달("");
     }, 2000);
   };
 
@@ -164,22 +165,22 @@ const InfoPage = () => {
       try {
         const 중복체크결과 = await axiosInstance({
           method: "post",
-          url: `${SERVER_API_URL}/auth/check-nickname-duplicate`,
+          url: `${SERVER_API_URL}/members/check-nickname-duplicate`,
           headers: {
             "X-FNS-ACCESSTOKEN": accessToken,
           },
-          // get이라서 body는 아마 안 될거라 추후에 API 되면 확인
           data: {
             nickname: 닉네임,
           },
         });
-
-        if (중복체크결과.success) {
+        if (중복체크결과.data.success) {
           set닉네임확인(true);
           set닉네임오류(undefined);
+          set프로필모달("등록된 닉네임이 없습니다.");
         } else {
           set닉네임확인(false);
-          set닉네임오류(중복체크결과.message);
+          set닉네임오류(중복체크결과.data.message);
+          set프로필모달("이미 등록된 닉네임입니다.");
         }
       } catch (err) {
         console.log(err);
@@ -188,7 +189,13 @@ const InfoPage = () => {
     } else {
       // 닉네임 양식 맞춰주라는 이야기
       set닉네임오류("닉네임 형식이 잘못됐습니다.");
+      set프로필모달("잘못된 닉네임입니다.");
     }
+    set프로필모달창(true);
+    setTimeout(() => {
+      set프로필모달창(false);
+      set프로필모달("");
+    }, 2000);
   };
 
   const 남성버튼 = () => {
@@ -557,7 +564,7 @@ const InfoPage = () => {
         </Grid>
       </Grid>
       <Modal
-        open={저장실패창}
+        open={프로필모달창}
         aria-labelledby="failed-signup-modal"
         sx={{ zIndex: 1000 }}
       >
@@ -585,7 +592,7 @@ const InfoPage = () => {
             variant="h6"
             sx={{ paddingY: "1vh" }}
           >
-            {저장실패}
+            {프로필모달}
           </Typography>
         </Box>
       </Modal>

@@ -57,47 +57,65 @@ const DietInputPage = () => {
     });
   };
 
-  console.log(addedDiet);
-  console.log(deletedDiet);
-  console.log(fixedDiet);
-
   const handleSaveDietList = async () => {
     try {
       // 백으로 add, delete, fix 보내는 로직을 async 먼저 써서 그거 완료된 뒤에 reset하고 navigate 되도록
-      if (deletedDiet.length > 0) {
+      console.log(deletedDiet);
+      console.log(addedDiet);
+      console.log(fixedDiet);
+
+      const saveDeletedDiet = deletedDiet.map((food) => ({
+        intakeId: food.intakeId,
+      }));
+      const saveAddedDiet = addedDiet.map((food) => ({
+        date: food.date,
+        foodId: food.foodId,
+        intakeTime: food.intakeTime,
+        rate: food.rate,
+      }));
+      const saveFixedDiet = fixedDiet.map((food) => ({
+        intakeId: food.intakeId,
+        rate: food.rate,
+      }));
+
+      console.log(saveDeletedDiet);
+      console.log(saveAddedDiet);
+      console.log(saveFixedDiet);
+
+      if (saveDeletedDiet.length > 0) {
         const delete_res = await axiosInstance({
           method: "delete",
           url: `${SERVER_API_URL}/intake`,
           headers: {
             "X-FNS-ACCESSTOKEN": accessToken,
           },
-          data: deletedDiet,
+          data: saveDeletedDiet,
         });
 
         console.log(delete_res);
       }
 
-      if (addedDiet.length > 0) {
+      if (saveAddedDiet.length > 0) {
         const add_res = await axiosInstance({
           method: "post",
           url: `${SERVER_API_URL}/intake`,
           headers: {
             "X-FNS-ACCESSTOKEN": accessToken,
           },
-          data: addedDiet,
+          data: saveAddedDiet,
         });
 
         console.log(add_res);
       }
 
-      if (fixedDiet.length > 0) {
+      if (saveFixedDiet.length > 0) {
         const fix_res = await axiosInstance({
           method: "patch",
           url: `${SERVER_API_URL}/intake`,
           headers: {
             "X-FNS-ACCESSTOKEN": accessToken,
           },
-          data: fixedDiet,
+          data: saveFixedDiet,
         });
 
         console.log(fix_res);

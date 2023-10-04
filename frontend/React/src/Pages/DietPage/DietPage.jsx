@@ -48,7 +48,7 @@ const DietPage = () => {
     console.log(formattedYesterday);
 
     try {
-      const res = axiosInstance({
+      const res = await axiosInstance({
         method: "get",
 
         url: `${SERVER_API_URL}/intake/total/${
@@ -59,7 +59,6 @@ const DietPage = () => {
         },
       });
       console.log(res);
-
       setMealData(res.data);
       console.log(mealData);
     } catch (err) {
@@ -68,7 +67,7 @@ const DietPage = () => {
   };
 
   useEffect(() => {
-    // getIntakeData();
+    getIntakeData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

@@ -267,7 +267,7 @@ const SearchFood = () => {
               justifyContent={"flex-end"}
               alignItems={"center"}
             >
-              {!nowDietList.some((food) => food.name === one.name) ? (
+              {!nowDietList.some((food) => food.foodId === one.foodId) ? (
                 <Button
                   variant="contained"
                   sx={{
