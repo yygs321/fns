@@ -81,7 +81,7 @@ const DietAccordion = (props) => {
                 {food.map((f, index) => (
                   <React.Fragment key={index}>
                     <Typography sx={{ color: "text.secondary" }}>
-                      {f.foodName}
+                      {f.name}
                     </Typography>
                     {index !== food.length - 1 && (
                       <Typography sx={{ color: "text.secondary" }}>
@@ -98,9 +98,9 @@ const DietAccordion = (props) => {
                   container
                   xs={11}
                   justifyContent={"space-between"}
-                  key={`${f.foodName}-${index}`}
+                  key={`${f.name}-${index}`}
                 >
-                  <Typography sx={{}}>{f.foodName}</Typography>
+                  <Typography sx={{}}>{f.name}</Typography>
                   <Typography sx={{}}>{f.kcal * f.rate || 0} kcal</Typography>
                 </Grid>
               ))

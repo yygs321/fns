@@ -1,11 +1,22 @@
 import React, { useState } from "react";
-import {Grid, Container, TextField, Button, FormControlLabel, Radio, RadioGroup,Typography, Modal, Box} from "@mui/material";
+import {
+  Grid,
+  Container,
+  TextField,
+  Button,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
+  Typography,
+  Modal,
+  Box,
+} from "@mui/material";
 import "./CSS/InfoPage.scss";
 import ManRoundedIcon from "@mui/icons-material/ManRounded";
 import WomanRoundedIcon from "@mui/icons-material/WomanRounded";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import axios from "axios";
+import axiosInstance from "../Common/Component/AxiosInstance";
 
 function 닉네임확인함수(nickname) {
   const regex = /^[a-zA-Z0-9가-힣]{2,16}$/;
@@ -85,11 +96,11 @@ const InfoPage = () => {
               // 성별 안 고름
               if (성별) {
                 try {
-                  const res = await axios({
+                  const res = await axiosInstance({
                     method: "post",
                     url: `${SERVER_API_URL}/members/profile`,
                     headers: {
-                      'X-FNS-ACCESSTOKEN': accessToken,
+                      "X-FNS-ACCESSTOKEN": accessToken,
                     },
                     data: {
                       nickname: 닉네임,
@@ -105,19 +116,30 @@ const InfoPage = () => {
                   console.log(res.data);
 
                   if (res.data.success) {
+                    const weightRes = await axiosInstance({
+                      method: "post",
+                      url: `${SERVER_API_URL}/members/weight`,
+                      headers: {
+                        "X-FNS-ACCESSTOKEN": accessToken,
+                      },
+                      data: {
+                        weight: 체중,
+                      },
+                    });
+
+                    console.log(weightRes);
                     // base 등록
-                    const baseResponse = await axios({
+                    const baseResponse = await axiosInstance({
                       method: "post",
                       url: `${SERVER_API_URL}/base`,
                       headers: {
-                          'X-FNS-ACCESSTOKEN': accessToken,
+                        "X-FNS-ACCESSTOKEN": accessToken,
                       },
-                      data: {},
-                  });
-                  console.log(baseResponse.data);
-                  console.log(baseResponse.data.message);
-                  console.log(baseResponse.data.success);
+                    });
+                    console.log(baseResponse.data);
+
                     navigate("/main");
+                    window.location.reload();
                   } else {
                     set저장실패("프로필 저장에 실패했습니다.");
                   }
@@ -150,17 +172,16 @@ const InfoPage = () => {
     }, 2000);
   };
 
-  
   const 중복체크버튼 = async () => {
     const 닉네임확인결과 = 닉네임확인함수(닉네임);
 
     if (닉네임확인결과) {
       try {
-        const 중복체크결과 = await axios({
+        const 중복체크결과 = await axiosInstance({
           method: "post",
           url: `${SERVER_API_URL}/members/check-nickname-duplicate`,
           headers: {
-            'X-FNS-ACCESSTOKEN': accessToken,
+            "X-FNS-ACCESSTOKEN": accessToken,
           },
           data: {
             nickname: 닉네임,
@@ -175,9 +196,8 @@ const InfoPage = () => {
         }
       } catch (err) {
         console.log(err);
+        set닉네임확인(false);
       }
-
-      set닉네임확인(true);
     } else {
       // 닉네임 양식 맞춰주라는 이야기
       set닉네임오류("닉네임 형식이 잘못됐습니다.");
@@ -276,7 +296,6 @@ const InfoPage = () => {
                     borderRadius: "10px",
                   }}
                   onClick={중복체크버튼}
-                 
                 >
                   중복체크
                 </Button>

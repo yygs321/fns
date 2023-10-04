@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Modal,
@@ -8,6 +8,8 @@ import {
   TextField,
   Grid,
 } from "@mui/material";
+import { useSelector } from "react-redux";
+import axiosInstance from "../Common/Component/AxiosInstance";
 
 export const 목표체중 = "80";
 export const 기간 = "50";
@@ -15,7 +17,27 @@ export const 현재체중 = "88";
 export const 시작체중 = "92";
 
 export default function WeightDrawer(props) {
-  const [수정모달열기, set수정모달열기] = useState(false);
+  const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
+  const accessToken = useSelector((state) => {
+    return state.auth.accessToken;
+  });
+
+  const now = new Date();
+  // const options = {
+  //   year: "2-digit",
+  //   month: "numeric",
+  //   day: "numeric",
+  //   weekday: "short",
+  // };
+  // const today = now.toLocaleDateString("ko-KR", options).split(" ");
+
+  const year = now.getFullYear();
+  const month = (now.getMonth() + 1).toString().padStart(2, "0"); // 월은 0부터 시작하므로 1을 더하고 두 자리로 포맷팅합니다.
+  const day = now.getDate().toString().padStart(2, "0"); // 일자를 두 자리로 포맷팅합니다.
+
+  const formattedToday = `${year}-${month}-${day}`;
+
+  const [입력모달열기, set입력모달열기] = useState(false);
   const [목표모달열기, set목표모달열기] = useState(false);
   const [체중, set체중] = useState("");
   const [입력체중, set입력체중] = useState("");
@@ -28,20 +50,82 @@ export default function WeightDrawer(props) {
 
   // 기간 주 단위로 입력받고, 남은 기간은 몇 주 몇 일 단위로 보여줘야 할 듯.
 
-  const 체중입력함수 = (e) => {
-    if (e.target.value >= 0 && e.target.value <= 1000) {
-      set입력체중((data) => e.target.value);
+  // eslint-disable-next-line no-unused-vars
+  const 체중데이터받기 = async () => {
+    try {
+      const res = await axiosInstance({
+        method: "get",
+        url: `${SERVER_API_URL}/members/weight?date=${formattedToday}`,
+        headers: {
+          "X-FNS-ACCESSTOKEN": accessToken,
+        },
+      });
+
+      console.log(res.data);
+
+      set체중(res.data[0].weight);
+    } catch (err) {
+      console.log(err);
     }
   };
 
-  const 체중수정모달 = () => {
-    set수정모달열기((data) => !data);
+  const 체중등록 = async () => {
+    try {
+      const res = await axiosInstance({
+        method: "post",
+        url: `${SERVER_API_URL}/members/weight`,
+        headers: {
+          "X-FNS-ACCESSTOKEN": accessToken,
+        },
+        data: {
+          weight: 입력체중,
+        },
+      });
+
+      console.log(res.data);
+
+      set체중(입력체중);
+      set입력체중("");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  const 체중수정하기 = () => {
-    set체중(입력체중);
-    set입력체중("");
-    set수정모달열기((data) => !data);
+  const 기준영양소등록 = async () => {
+    try {
+      const baseResponse = await axiosInstance({
+        method: "post",
+        url: `${SERVER_API_URL}/base`,
+        headers: {
+          "X-FNS-ACCESSTOKEN": accessToken,
+        },
+      });
+      console.log(baseResponse.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    // 체중데이터받기();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const 체중입력함수 = (e) => {
+    const 입력값 = e.target.value;
+    if (입력값 >= 0 && 입력값 <= 1000) {
+      set입력체중(입력값);
+    }
+  };
+
+  const 체중입력모달 = () => {
+    set입력모달열기((data) => !data);
+  };
+
+  const 체중입력하기 = () => {
+    체중등록();
+    기준영양소등록();
+    set입력모달열기((data) => !data);
   };
 
   const 목표설정모달 = () => {
@@ -62,14 +146,16 @@ export default function WeightDrawer(props) {
   };
 
   const 목표체중입력함수 = (e) => {
-    if (e.target.value >= 0 && e.target.value <= 1000) {
-      set입력목표체중((data) => e.target.value);
+    const 입력값 = e.target.value;
+    if (입력값 >= 0 && 입력값 <= 1000) {
+      set입력목표체중(입력값);
     }
   };
 
   const 목표기간입력함수 = (e) => {
-    if (e.target.value >= 0) {
-      set입력기간((data) => e.target.value);
+    const 입력값 = e.target.value;
+    if (입력값 >= 0) {
+      set입력기간(입력값);
     }
   };
 
@@ -197,7 +283,7 @@ export default function WeightDrawer(props) {
                         alignItems={"center"}
                       >
                         <Typography sx={{ marginTop: "1vh" }} fontSize="1.5rem">
-                          {체중}kg
+                          {체중} kg
                         </Typography>
                         {/* 시작 체중은 나중에 바꿔야됨 */}
                       </Grid>
@@ -230,7 +316,7 @@ export default function WeightDrawer(props) {
                         alignItems={"center"}
                       >
                         <Typography sx={{ marginTop: "1vh" }} fontSize="1.5rem">
-                          {체중}kg
+                          {체중} kg
                         </Typography>
                       </Grid>
                     </Grid>
@@ -258,7 +344,7 @@ export default function WeightDrawer(props) {
                         alignItems={"center"}
                       >
                         <Typography sx={{ marginTop: "1vh" }} fontSize="1.5rem">
-                          {목표체중}kg
+                          {목표체중} kg
                         </Typography>
                       </Grid>
                     </Grid>
@@ -277,7 +363,7 @@ export default function WeightDrawer(props) {
                         marginTop: "2vh",
                       }}
                     >
-                      남은 기간 : {기간}일
+                      남은 기간 : {기간} 일
                     </div>
                   </Grid>
                 </Grid>
@@ -286,10 +372,11 @@ export default function WeightDrawer(props) {
           </Grid>
 
           <Button
+            fullWidth
             color="primary"
             variant="contained"
-            className="수정버튼"
-            onClick={체중수정모달}
+            className="입력버튼"
+            onClick={체중입력모달}
             sx={{
               color: "white",
               fontSize: "1.4rem",
@@ -297,10 +384,11 @@ export default function WeightDrawer(props) {
               marginY: "2vh",
             }}
           >
-            체중 수정
+            체중 입력
           </Button>
 
           <Button
+            fullWidth
             color="primary"
             variant="contained"
             className="목표버튼"
@@ -317,8 +405,8 @@ export default function WeightDrawer(props) {
           </Button>
 
           <Modal
-            open={수정모달열기}
-            onClose={체중수정모달}
+            open={입력모달열기}
+            onClose={체중입력모달}
             aria-labelledby="weight-modal"
             sx={{ zIndex: 1000 }}
           >
@@ -388,7 +476,7 @@ export default function WeightDrawer(props) {
                     <Button
                       fullWidth
                       variant="contained"
-                      onClick={체중수정하기}
+                      onClick={체중입력하기}
                       disabled={입력체중 === ""}
                       sx={{
                         color: "white",
@@ -409,7 +497,7 @@ export default function WeightDrawer(props) {
                     <Button
                       fullWidth
                       variant="contained"
-                      onClick={체중수정모달}
+                      onClick={체중입력모달}
                       sx={{
                         color: "white",
                         fontSize: "1.1rem",

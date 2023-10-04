@@ -8,7 +8,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { resetDiet, deleteFromDiet } from "../../Redux/actions/actions";
-import axios from "axios";
+import axiosInstance from "../Common/Component/AxiosInstance";
 
 import FoodCount from "./FoodCount";
 
@@ -63,40 +63,45 @@ const DietInputPage = () => {
 
   const handleSaveDietList = async () => {
     try {
-      console.log(axios, "야호");
-      console.log(SERVER_API_URL, "야호");
-      console.log(accessToken, "야호");
-
       // 백으로 add, delete, fix 보내는 로직을 async 먼저 써서 그거 완료된 뒤에 reset하고 navigate 되도록
+      if (deletedDiet.length > 0) {
+        const delete_res = await axiosInstance({
+          method: "delete",
+          url: `${SERVER_API_URL}/intake`,
+          headers: {
+            "X-FNS-ACCESSTOKEN": accessToken,
+          },
+          data: deletedDiet,
+        });
 
-      // const delete_res = await axios({
-      //   method: "post",
-      //   url: `${SERVER_API_URL}/intake`,
-      //   headers: {
-      //     Authorization: accessToken,
-      //   },
-      //   data: deletedDiet,
-      // });
+        console.log(delete_res);
+      }
 
-      // const add_res = await axios({
-      //   method: "post",
-      //   url: `${SERVER_API_URL}/intake`,
-      //   headers: {
-      //     Authorization: accessToken,
-      //   },
-      //   data: addedDiet,
-      // });
+      if (addedDiet.length > 0) {
+        const add_res = await axiosInstance({
+          method: "post",
+          url: `${SERVER_API_URL}/intake`,
+          headers: {
+            "X-FNS-ACCESSTOKEN": accessToken,
+          },
+          data: addedDiet,
+        });
 
-      // const fix_res = await axios({
-      //   method: "post",
-      //   url: `${SERVER_API_URL}/intake`,
-      //   headers: {
-      //     Authorization: accessToken,
-      //   },
-      //   data: fixedDiet,
-      // });
+        console.log(add_res);
+      }
 
-      // console.log(res.data);
+      if (fixedDiet.length > 0) {
+        const fix_res = await axiosInstance({
+          method: "patch",
+          url: `${SERVER_API_URL}/intake`,
+          headers: {
+            "X-FNS-ACCESSTOKEN": accessToken,
+          },
+          data: fixedDiet,
+        });
+
+        console.log(fix_res);
+      }
 
       dispatch(resetDiet());
       navigate("/diet");
@@ -215,7 +220,7 @@ const DietInputPage = () => {
       >
         {nowDietList.map((one, index) => (
           <Grid
-            key={`${one.foodName}-detail-${index}`}
+            key={`${one.name}-detail-${index}`}
             container
             item
             xs={11}
@@ -249,7 +254,7 @@ const DietInputPage = () => {
                   overflow="hidden"
                   textOverflow="ellipsis"
                 >
-                  {one.foodName}
+                  {one.name}
                 </Typography>
               </Grid>
               <Grid

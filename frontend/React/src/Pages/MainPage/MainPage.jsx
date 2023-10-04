@@ -19,17 +19,17 @@ import "../Common/CSS/ContentBox.css";
 
 import FloatingInputButton from "../Common/Component/FloatingInputButton";
 import { useSelector } from "react-redux";
+import axiosInstance from "../Common/Component/AxiosInstance";
 import RecommendCarousel from "./RecommendCarousel";
-import axios from "axios";
 
 const MainPage = () => {
-  const [kcalories, setKcalories] = useState(0); // 칼로리
+  const [kcalories, setKcalories] = useState(2000); // 칼로리
   const [baseKcalories, setBaseKcalories] = useState(2600); // 칼로리
   const [carbohydrate, setCarbohydrate] = useState(90); // 탄수화물
   const [baseCarbohydrate, setBaseCarbohydrate] = useState(130); // 탄수화물
-  const [protein, setProtein] = useState(45); // 단백질
+  const [protein, setProtein] = useState(40); // 단백질
   const [baseProtein, setBaseProtein] = useState(60); // 단백질
-  const [fat, setFat] = useState(40); // 지방
+  const [fat, setFat] = useState(35); // 지방
   const [baseFat, setBaseFat] = useState(50); // 지방
 
   const [isOverKcal, setIsOverKcal] = useState(false); // 칼로리 초과
@@ -64,19 +64,19 @@ const MainPage = () => {
   // eslint-disable-next-line no-unused-vars
   const getNeut = async () => {
     try {
-      const res = await axios({
+      const res = await axiosInstance({
         method: "get",
-        url: `${SERVER_API_URL}/api/base`,
+        url: `${SERVER_API_URL}/base/current`,
         headers: {
-          Authorization: `${accessToken}`,
+          "X-FNS-ACCESSTOKEN": accessToken,
         },
       });
 
-      const res2 = axios({
+      const res2 = axiosInstance({
         method: "get",
-        url: `${SERVER_API_URL}/intake/total/${formattedToday}`,
+        url: `${SERVER_API_URL}/intake/simple/${formattedToday}`,
         headers: {
-          Authorization: accessToken,
+          "X-FNS-ACCESSTOKEN": accessToken,
         },
       });
       console.log(res);
@@ -99,27 +99,32 @@ const MainPage = () => {
   };
 
   // 영양소 문제 해결되면 이 쪽 수정
-
-  const nowKcal = 2000;
+  const org_kcal = 2000;
 
   useEffect(() => {
     // getNeut();
 
     let targetValue = 0;
 
-    if (nowKcal > baseKcalories) {
+    if (kcalories > baseKcalories) {
       setIsOverKcal(true);
-      setOverKcal(nowKcal - baseKcalories);
+      setOverKcal(kcalories - baseKcalories);
       targetValue = 100;
     } else {
-      targetValue = (nowKcal / baseKcalories) * 100;
+      targetValue = (kcalories / baseKcalories) * 100;
     } // ProgressBar가 도달해야 할 값
     let currentValue = 0;
     const animationDuration = 500; // 몇 초 동안 애니메이션 실행
 
     const interval = setInterval(() => {
       if (currentValue < targetValue) {
-        currentValue += 1;
+        if (targetValue - currentValue > 100) {
+          currentValue += 100;
+        } else if (targetValue - currentValue > 10) {
+          currentValue += 10;
+        } else {
+          currentValue += 1;
+        }
         setKcalories(Math.round((currentValue / 100) * baseKcalories)); // kcalories 값을 업데이트
       } else {
         clearInterval(interval); // 목표 값에 도달하면 애니메이션 중지
@@ -292,7 +297,7 @@ const MainPage = () => {
                       color={
                         isOverKcal
                           ? "warning.main"
-                          : nowKcal / baseKcalories >= 0.75
+                          : kcalories / baseKcalories >= 0.75
                           ? "primary.main"
                           : "#506CFF"
                       }
@@ -301,7 +306,7 @@ const MainPage = () => {
                     >
                       {isOverKcal
                         ? "칼로리 초과!"
-                        : nowKcal / baseKcalories >= 0.75
+                        : kcalories / baseKcalories >= 0.75
                         ? "적정 수준이예요!"
                         : "더 먹어야해요!"}
                     </Typography>
@@ -328,8 +333,8 @@ const MainPage = () => {
                         fontWeight={"bold"}
                         sx={{ position: "absolute", top: "36%" }}
                       >
-                        {kcalories > nowKcal || kcalories >= baseKcalories
-                          ? `${nowKcal}`
+                        {kcalories > org_kcal || kcalories >= baseKcalories
+                          ? `${org_kcal}`
                           : `${kcalories}`}
                       </Typography>
                     </Grid>
@@ -497,14 +502,14 @@ const MainPage = () => {
               x2={
                 isOverKcal
                   ? "50%"
-                  : nowKcal / baseKcalories >= 0.5
+                  : kcalories / baseKcalories >= 0.5
                   ? "0%"
                   : "10%"
               }
               y2={
                 isOverKcal
                   ? "25%"
-                  : nowKcal / baseKcalories >= 0.5
+                  : kcalories / baseKcalories >= 0.5
                   ? "0%"
                   : "50%"
               }
@@ -514,7 +519,7 @@ const MainPage = () => {
                 stopColor={
                   isOverKcal
                     ? "#ffd8d0"
-                    : nowKcal / baseKcalories >= 0.5
+                    : kcalories / baseKcalories >= 0.5
                     ? "#55ffd7"
                     : "#87d0f8"
                 }
@@ -524,7 +529,7 @@ const MainPage = () => {
                 stopColor={
                   isOverKcal
                     ? "#e05750"
-                    : nowKcal / baseKcalories >= 0.5
+                    : kcalories / baseKcalories >= 0.5
                     ? "#14caa0"
                     : "#4d66e2"
                 }

@@ -5,11 +5,11 @@ import { Grid, Typography } from "@mui/material";
 import NavigateBeforeRoundedIcon from "@mui/icons-material/NavigateBeforeRounded";
 import NavigateNextRoundedIcon from "@mui/icons-material/NavigateNextRounded";
 import DietAccordion from "./DietAccordion";
-import axios from "axios";
+import axiosInstance from "../Common/Component/AxiosInstance";
 import { useSelector } from "react-redux";
 
 const DietPage = () => {
-  // const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
+  const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
   const accessToken = useSelector((state) => {
     return state.auth.accessToken;
   });
@@ -30,10 +30,10 @@ const DietPage = () => {
   const year = now.getFullYear();
   const month = (now.getMonth() + 1).toString().padStart(2, "0"); // 월은 0부터 시작하므로 1을 더하고 두 자리로 포맷팅합니다.
   const day = now.getDate().toString().padStart(2, "0"); // 일자를 두 자리로 포맷팅합니다.
-  // const beforeDay = now.getDate().toString().padStart(2, "0");
+  const beforeDay = before.getDate().toString().padStart(2, "0");
 
   const formattedToday = `${year}-${month}-${day}`;
-  // const formattedYesterday = `${year}-${month}-${beforeDay}`;
+  const formattedYesterday = `${year}-${month}-${beforeDay}`;
 
   const [isToday, setIsToday] = useState(true);
 
@@ -42,19 +42,20 @@ const DietPage = () => {
 
   // 500 에러로 일단 주석
 
-  const [mealData, setMealData] = useState([]);
-
   // eslint-disable-next-line no-unused-vars
   const getIntakeData = async () => {
+    console.log(formattedToday);
+    console.log(formattedYesterday);
+
     try {
-      const res = axios({
+      const res = axiosInstance({
         method: "get",
-        // 식단 목록 api가 없음....... 이거 다른 api 주소
-        // url: `${SERVER_API_URL}/intake/total/${
-        //   isToday ? formattedToday : formattedYesterday
-        // }`,
+
+        url: `${SERVER_API_URL}/intake/total/${
+          isToday ? formattedToday : formattedYesterday
+        }`,
         headers: {
-          Authorization: accessToken,
+          "X-FNS-ACCESSTOKEN": accessToken,
         },
       });
       console.log(res);
@@ -78,7 +79,7 @@ const DietPage = () => {
       // food: [],
       food: [
         {
-          foodName: "우유",
+          name: "우유",
           kcal: 100,
           carbs: 20,
           protein: 20,
@@ -87,7 +88,7 @@ const DietPage = () => {
           foodId: 1,
         },
         {
-          foodName: "씨리얼",
+          name: "씨리얼",
           kcal: 100,
           carbs: 20,
           protein: 20,
@@ -103,7 +104,7 @@ const DietPage = () => {
       // food: [],
       food: [
         {
-          foodName: "제육볶음",
+          name: "제육볶음",
           kcal: 155,
           carbs: 20,
           protein: 20,
@@ -112,7 +113,7 @@ const DietPage = () => {
           foodId: 3,
         },
         {
-          foodName: "배추김치",
+          name: "배추김치",
           kcal: 100,
           carbs: 20,
           protein: 20,
@@ -121,7 +122,7 @@ const DietPage = () => {
           foodId: 4,
         },
         {
-          foodName: "쌀밥",
+          name: "쌀밥",
           kcal: 100,
           carbs: 20,
           protein: 20,
@@ -146,7 +147,7 @@ const DietPage = () => {
       // food: [],
       food: [
         {
-          foodName: "참치맛 크래커",
+          name: "참치맛 크래커",
           kcal: 5,
           carbs: 20,
           protein: 20,
@@ -155,7 +156,7 @@ const DietPage = () => {
           foodId: 6,
         },
         {
-          foodName: "참치맛 감자칩",
+          name: "참치맛 감자칩",
           kcal: 10,
           carbs: 20,
           protein: 20,
@@ -164,7 +165,7 @@ const DietPage = () => {
           foodId: 7,
         },
         {
-          foodName: "참치맛 껌",
+          name: "참치맛 껌",
           kcal: 15,
           carbs: 20,
           protein: 20,
@@ -173,7 +174,7 @@ const DietPage = () => {
           foodId: 15,
         },
         {
-          foodName: "참치맛 젤리",
+          name: "참치맛 젤리",
           kcal: 20,
           carbs: 20,
           protein: 20,
@@ -182,7 +183,7 @@ const DietPage = () => {
           foodId: 8,
         },
         {
-          foodName: "참치맛 아이스크림",
+          name: "참치맛 아이스크림",
           kcal: 5,
           carbs: 20,
           protein: 20,
@@ -193,6 +194,29 @@ const DietPage = () => {
       ],
     },
   ];
+
+  const [mealData, setMealData] = useState([]);
+  // const [morningData, setMorningData] = useState(
+  //   meals.filter((meal) => meal.intakeTime === "MORNING")[0].food
+  // );
+  // const [lunchData, setLunchData] = useState(
+  //   meals.filter((meal) => meal.intakeTime === "LUNCH")[0].food
+  // );
+  // const [dinnerData, setDinnerData] = useState(
+  //   meals.filter((meal) => meal.intakeTime === "DINNER")[0].food
+  // );
+  // const [etcData, setEtcData] = useState(
+  //   meals.filter((meal) => meal.intakeTime === "ETC")[0].food
+  // );
+  const morningData = meals.filter((meal) => meal.intakeTime === "MORNING")[0]
+    .food;
+
+  const lunchData = meals.filter((meal) => meal.intakeTime === "LUNCH")[0].food;
+
+  const dinnerData = meals.filter((meal) => meal.intakeTime === "DINNER")[0]
+    .food;
+
+  const etcData = meals.filter((meal) => meal.intakeTime === "ETC")[0].food;
 
   const totalMealsKcal = meals.reduce((total, meal) => {
     const mealTotalKcal = meal.food
@@ -316,15 +340,31 @@ const DietPage = () => {
             </Typography>
           </Grid>
         </Grid>
-        {meals.map((meal) => (
-          <DietAccordion
-            key={`diet-${meal.name}`}
-            name={meal.name}
-            food={meal.food}
-            today={formattedToday}
-            intakeTime={meal.intakeTime}
-          />
-        ))}
+
+        <DietAccordion
+          name={"아침"}
+          food={morningData}
+          today={formattedToday}
+          intakeTime={"MORNING"}
+        />
+        <DietAccordion
+          name={"점심"}
+          food={lunchData}
+          today={formattedToday}
+          intakeTime={"LUNCH"}
+        />
+        <DietAccordion
+          name={"저녁"}
+          food={dinnerData}
+          today={formattedToday}
+          intakeTime={"DINNER"}
+        />
+        <DietAccordion
+          name={"간식"}
+          food={etcData}
+          today={formattedToday}
+          intakeTime={"ETC"}
+        />
       </Grid>
     </div>
   );
