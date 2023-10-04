@@ -14,14 +14,14 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 
 const MyPage = () => {
-  const [uploadedImage, setUploadedImage] = useState(null);
+  // const [uploadedImage, setUploadedImage] = useState(null);
   const [openNestedList, setOpenNestedList] = useState(false); // Nested List의 상태를 관리하는 state
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [profile, setProfile] = useState({
-    image: uploadedImage || defaultProfileImg,
+    image: defaultProfileImg,
     nickname: "",
     age: 0,
     gender: "",
