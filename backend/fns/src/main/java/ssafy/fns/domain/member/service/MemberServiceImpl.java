@@ -174,7 +174,7 @@ public class MemberServiceImpl implements MemberService {
         metadata.setContentLength(file.getSize());
         try {
             amazonS3Client.putObject(bucket, fileName,file.getInputStream(),metadata);
-
+            findMember.updateProfileImageURL(fileUrl);
         } catch (IOException e) {
             e.printStackTrace();
             throw new GlobalRuntimeException("파일 저장 실패",HttpStatus.INTERNAL_SERVER_ERROR);
