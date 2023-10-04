@@ -6,7 +6,8 @@ import ssafy.fns.domain.exercise.entity.Exercise;
 
 public interface ExerciseRepository extends JpaRepository<Exercise, Long> {
 
-    Exercise findByExerciseDateAndMember_IdAndSports_Id(LocalDate exerciseDate, Long memberId,
+    Exercise findTop1ByExerciseDateAndMember_IdAndSports_IdOrderByIdDesc(LocalDate exerciseDate,
+            Long memberId,
             Long sportsId);
 
     Exercise findFirstByExerciseDateAndMember_Id(LocalDate exerciseDate, Long memberId);

@@ -41,14 +41,14 @@ public class Exercise extends BaseEntity {
     @DateTimeFormat(fallbackPatterns = "yyyy-MM-dd")
     private LocalDate exerciseDate;
 
-    private Long exerciseTime;
+    private Double exerciseTime;
 
     @Convert(converter = IntegerArrayConverter.class)
     private List<Integer> sportsBookmarkList = new ArrayList<>();
 
 
     @Builder
-    public Exercise(Sports sports, Member member, LocalDate exerciseDate, Long exerciseTime,
+    public Exercise(Sports sports, Member member, LocalDate exerciseDate, Double exerciseTime,
             List<Integer> sportsBookmarkList) {
         this.sports = sports;
         this.member = member;
