@@ -33,4 +33,5 @@ public class TargetWeightController {
     public ResponseEntity<?> selectTargetWeight(@AuthenticationPrincipal Member member) {
         return JsonResponse.ok("감량 목표 조회 완료!", weightService.selectTargetWeight(member));
     }
+
 }
