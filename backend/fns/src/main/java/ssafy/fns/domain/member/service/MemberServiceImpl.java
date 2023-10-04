@@ -166,7 +166,7 @@ public class MemberServiceImpl implements MemberService {
 
         String fileName = file.getOriginalFilename();
 
-        String fileUrl = S3Config.getFilePath(bucket, findMember.getId());
+        String fileUrl;
 
         ObjectMetadata metadata = new ObjectMetadata();
 
@@ -174,6 +174,7 @@ public class MemberServiceImpl implements MemberService {
         metadata.setContentLength(file.getSize());
         try {
             amazonS3Client.putObject(bucket, fileName,file.getInputStream(),metadata);
+            fileUrl = amazonS3Client.getUrl(bucket, fileName).toString();
             findMember.updateProfileImageURL(fileUrl);
         } catch (IOException e) {
             e.printStackTrace();
