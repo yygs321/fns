@@ -131,7 +131,7 @@ const MainPage = () => {
 
       if (nowData.kcal > baseData.kcal) {
         setIsOverKcal(true);
-        setOverKcal(orgKcal - baseKcalories);
+        setOverKcal(nowData.kcal - baseData.kcal);
       }
 
       setIsLoading(false);
