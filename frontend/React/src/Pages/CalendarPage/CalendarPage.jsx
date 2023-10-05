@@ -146,28 +146,44 @@ const CalendarPage = () => {
   }, []);
 
   
-  const data = {
-    "2023-08-15": 45,
-    "2023-08-20": 50,
-    "2023-08-23": 60,
-    "2023-08-30": 96,
-    "2023-09-15": 20,
-    "2023-09-16": 50,
-    "2023-09-17": 70,
-    "2023-09-18": 100,
-    "2023-10-01": 15,
-    "2023-10-03": 35,
-    "2023-10-05": 50,
-   
-  };
+  const [calendarData, setCalendarData] = useState({});
 
-  const getBackgroundColorByValue = (value) => {
-    if (value === undefined) return "transparent"; // 데이터가 없는 경우 투명색
-    if (value <= 20) return "#ebedf0"; // 깃허브 잔디의 가장 연한 색
-    if (value <= 50) return "#c6e48b"; // 조금 더 진한 색
-    if (value <= 70) return "#7bc96f"; // 더 진한 색
-    return "#239a3b"; // 가장 진한 색
-  };
+  useEffect(() => {
+    const months = ['2023-08', '2023-09', '2023-10'];
+    Promise.all(
+      months.map((month) =>
+        axiosInstance.get(`${SERVER_API_URL}/members/calendar`, {
+          params: { date: month },
+          headers: {
+            "X-FNS-ACCESSTOKEN": accessToken,
+          },
+        })
+      )
+    ).then((responses) => {
+      let newCalendarData = {};
+      responses.forEach((response, index) => {
+        if (response.data.success) {
+          console.log("#1", response.data);
+          const month = months[index];
+          newCalendarData = {
+            ...newCalendarData,
+            ...response.data.data.recordedDates.reduce((obj, date) => {
+              if (date.startsWith(month)) {
+                obj[date] = Math.floor(Math.random() * 99) + 1;
+              }
+              return obj;
+            }, {}),
+          };
+        }
+      });
+      setCalendarData(newCalendarData);
+      
+      console.log("Fetched Calendar Data:", newCalendarData);
+    }).catch(error => {
+      console.error("Data fetching error:", error);
+    });
+}, []);
+
 
   
   const holiday = [
@@ -191,13 +207,19 @@ const CalendarPage = () => {
     "2023-12-25",
   ];
 
-
+  const getBackgroundColorByValue = (value) => {
+    if (value === undefined) return "transparent"; 
+    if (value <= 20) return "#ebedf0"; 
+    if (value <= 50) return "#c6e48b"; 
+    if (value <= 70) return "#7bc96f"; 
+    return "#239a3b"; 
+  };
 
   const CustomDay = (props) => {
     const { day, outsideCurrentMonth, ...other } = props;
    
     const formattedDate = day.format("YYYY-MM-DD");
-    const value = data[formattedDate];
+    const value = calendarData[formattedDate];
     const backgroundColor = getBackgroundColorByValue(value);
 
    
