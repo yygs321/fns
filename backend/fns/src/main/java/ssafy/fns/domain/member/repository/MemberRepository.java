@@ -22,10 +22,10 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
             value = "SELECT DISTINCT DATE_FORMAT(combined.date, '%Y-%m-%d') AS combinedDate\n"
                     + "FROM (\n"
                     + "    (SELECT i.date AS date FROM intake AS i\n"
-                    + "    WHERE i.member_id = 4)\n"
+                    + "    WHERE i.member_id = :memberId)\n"
                     + "    UNION\n"
                     + "    (SELECT e.exercise_date AS date FROM exercise AS e\n"
-                    + "    WHERE e.member_id = 4)\n"
+                    + "    WHERE e.member_id = :memberId)\n"
                     + ") AS combined\n"
                     + "WHERE DATE_FORMAT(combined.date, '%Y-%m') LIKE CONCAT('2023-10', '%')")
     List<String> findIntakeAndExerciseCreatedAtByMember_IdAndDate(Long memberId,
