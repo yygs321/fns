@@ -80,6 +80,7 @@ export function WeightChart() {
           console.log("Response Data_체중리스트 : ", targetData.targetWeightResponseDto.weightList.weight);
           console.log("Response Data_남은날짜 : ", targetData.targetWeightResponseDto.remainingDays);
           console.log("Response Data_진행도 : ", targetData.targetWeightResponseDto.progressRatio);
+          console.log('#1')
         }
       } catch (error) {
         console.error("Error while searching:", error);
