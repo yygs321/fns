@@ -517,9 +517,30 @@ const MainPage = () => {
                   <hr style={{ width: "80vw", maxWidth: "650px" }} />
                   <Grid item container xs={12} justifyContent={"center"}>
                     {!isAccordionSelected ? (
-                      <Typography sx={{ color: "text.secondary" }}>
-                        여기다 메뉴 요약
-                      </Typography>
+                      <Grid
+                        item
+                        container
+                        xs={11}
+                        justifyContent={"flex-start"}
+                      >
+                        {recommendedFood.map((f, index) => (
+                          <React.Fragment key={`${f.name}-${index}-selected`}>
+                            <Typography
+                              sx={{ color: "text.secondary" }}
+                              whiteSpace="nowrap"
+                              overflow="hidden"
+                              textOverflow="ellipsis"
+                            >
+                              {f.name}
+                            </Typography>
+                            {index !== recommendedFood.length - 1 && (
+                              <Typography sx={{ color: "text.secondary" }}>
+                                {","}&nbsp;
+                              </Typography>
+                            )}
+                          </React.Fragment>
+                        ))}
+                      </Grid>
                     ) : (
                       <RecommendCarousel recommendedFood={recommendedFood} />
                     )}

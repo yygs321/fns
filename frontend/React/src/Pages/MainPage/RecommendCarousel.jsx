@@ -50,7 +50,76 @@ const RecommendCarousel = (props) => {
                   alignItems={"center"}
                   spacing={1}
                 >
-                  <Typography>{food.name}</Typography>
+                  <Grid
+                    container
+                    item
+                    justifyContent={"center"}
+                    alignItems={"center"}
+                  >
+                    <Typography
+                      whiteSpace="nowrap"
+                      overflow="hidden"
+                      textOverflow="ellipsis"
+                    >
+                      {food.name}
+                    </Typography>
+                  </Grid>
+                  <Grid
+                    container
+                    item
+                    justifyContent={"center"}
+                    alignItems={"center"}
+                  >
+                    <Typography
+                      whiteSpace="nowrap"
+                      overflow="hidden"
+                      textOverflow="ellipsis"
+                    >
+                      {food.kcal}
+                    </Typography>
+                  </Grid>
+                  <Grid
+                    container
+                    item
+                    justifyContent={"center"}
+                    alignItems={"center"}
+                  >
+                    <Typography
+                      whiteSpace="nowrap"
+                      overflow="hidden"
+                      textOverflow="ellipsis"
+                    >
+                      {food.carbs}
+                    </Typography>
+                  </Grid>
+                  <Grid
+                    container
+                    item
+                    justifyContent={"center"}
+                    alignItems={"center"}
+                  >
+                    <Typography
+                      whiteSpace="nowrap"
+                      overflow="hidden"
+                      textOverflow="ellipsis"
+                    >
+                      {food.protein}
+                    </Typography>
+                  </Grid>
+                  <Grid
+                    container
+                    item
+                    justifyContent={"center"}
+                    alignItems={"center"}
+                  >
+                    <Typography
+                      whiteSpace="nowrap"
+                      overflow="hidden"
+                      textOverflow="ellipsis"
+                    >
+                      {food.accuracy.toFixed(0)}
+                    </Typography>
+                  </Grid>
                 </Grid>
               </div>
             ))}
