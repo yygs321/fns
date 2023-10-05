@@ -14,12 +14,12 @@ import lombok.NoArgsConstructor;
 public class WeightResponseDto {
 
     private Double weight;
-    private LocalDateTime createdAt;
+    private String createdAt;
 
     public static WeightResponseDto from(Double weight, LocalDateTime createdAt) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String parsedCreatedAt = createdAt.format(formatter);
-        
+
         return WeightResponseDto.builder()
                 .weight(weight)
                 .createdAt(parsedCreatedAt)
