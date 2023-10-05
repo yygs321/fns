@@ -1,5 +1,4 @@
 import { React, useState, useEffect } from "react";
-import { useSelector } from "react-redux";
 import "chart.js/auto";
 import { Line } from "react-chartjs-2";
 import { Typography, Divider, Grid, LinearProgress, Box } from "@mui/material";
@@ -46,9 +45,7 @@ export function WeightChart() {
   const [기간, set기간] = useState("");
   const [percentage, setPercentage] = useState("");
 
-  const accessToken = useSelector((state) => {
-    return state.auth.accessToken;
-  });
+  const accessToken = sessionStorage.getItem("accessToken");
   const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
 
   useEffect(() => {
@@ -65,22 +62,40 @@ export function WeightChart() {
         if (response.data.success) {
           console.log("Response Data_1 : ", response.data.success);
           console.log("Response Data_2 : ", response.data.message);
-          
+
           set현재체중(() => targetData.targetWeightResponseDto.currentWeight);
           set목표체중(() => targetData.targetWeightResponseDto.targetWeight);
           if (targetData.weightList) {
             setUserData(() => targetData.weightList);
           }
-          
+
           set기간(() => targetData.targetWeightResponseDto.remainingDays);
           setPercentage(() => targetData.targetWeightResponseDto.progressRatio);
-          console.log("Response Data_현재체중 : ", targetData.targetWeightResponseDto.currentWeight);
-          console.log("Response Data_목표체중 : ", targetData.targetWeightResponseDto.targetWeight);
-          console.log("Response Data_체중리스트_시간 : ", targetData.weightList.targetWeightResponseDto.createdAt);
-          console.log("Response Data_체중리스트 : ", targetData.targetWeightResponseDto.weightList.weight);
-          console.log("Response Data_남은날짜 : ", targetData.targetWeightResponseDto.remainingDays);
-          console.log("Response Data_진행도 : ", targetData.targetWeightResponseDto.progressRatio);
-          console.log('#1')
+          console.log(
+            "Response Data_현재체중 : ",
+            targetData.targetWeightResponseDto.currentWeight
+          );
+          console.log(
+            "Response Data_목표체중 : ",
+            targetData.targetWeightResponseDto.targetWeight
+          );
+          console.log(
+            "Response Data_체중리스트_시간 : ",
+            targetData.weightList.targetWeightResponseDto.createdAt
+          );
+          console.log(
+            "Response Data_체중리스트 : ",
+            targetData.targetWeightResponseDto.weightList.weight
+          );
+          console.log(
+            "Response Data_남은날짜 : ",
+            targetData.targetWeightResponseDto.remainingDays
+          );
+          console.log(
+            "Response Data_진행도 : ",
+            targetData.targetWeightResponseDto.progressRatio
+          );
+          console.log("#1");
         }
       } catch (error) {
         console.error("Error while searching:", error);

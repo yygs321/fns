@@ -3,8 +3,7 @@ import { Typography, TextField, Grid, Chip, Divider, Box } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import FilteredSearchResults from "./FilteredSearchResults";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import axios from "axios";
-import { useSelector } from "react-redux";
+import axiosInstance from "../Common/Component/AxiosInstance";
 
 const SearchFoodPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -21,23 +20,23 @@ const SearchFoodPage = () => {
     fat: "지방",
   };
 
-  const accessToken = useSelector((state) => state.auth.accessToken);
+  const accessToken = sessionStorage.getItem("accessToken");
   const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
 
   const handleSearch = async () => {
     try {
       console.log("Search Term:", searchTerm);
-      const response = await axios.get(`${SERVER_API_URL}/foods`, {
+      const response = await axiosInstance.get(`${SERVER_API_URL}/foods`, {
         params: { name: searchTerm },
         headers: {
-          'X-FNS-ACCESSTOKEN': accessToken,
+          "X-FNS-ACCESSTOKEN": accessToken,
         },
       });
-      
+
       if (response.data.success) {
-        console.log("Response Data:", response.data); 
-        console.log("Response Data:", response.data.data); 
-        console.log("Response Data:", response.data.data.name); 
+        console.log("Response Data:", response.data);
+        console.log("Response Data:", response.data.data);
+        console.log("Response Data:", response.data.data.name);
         setSearchResults(response.data.data);
       } else {
         console.error("Failed to fetch search results:", response.data.message);

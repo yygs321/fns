@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Grid, Typography, TextField, Button, Avatar } from "@mui/material";
 
@@ -9,14 +9,10 @@ import { useNavigate } from "react-router-dom";
 
 // import Cat from "../../assets/Image/cat.jpg";
 import axiosInstance from "../Common/Component/AxiosInstance";
-import { useSelector } from "react-redux";
 
 const UserSearch = () => {
   const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
-  const accessToken = useSelector((state) => {
-    return state.auth.accessToken;
-  });
-
+  const accessToken = sessionStorage.getItem("accessToken");
   const [searchTerm, setSearchTerm] = useState("");
   const [addedFollow, setAddedFollow] = useState([]);
   const [searchResult, setSearchResult] = useState([]);
@@ -34,6 +30,31 @@ const UserSearch = () => {
   const goBackPage = () => {
     navigate(-1);
   };
+
+  const getFollowee = async () => {
+    try {
+      const res = await axiosInstance({
+        method: "get",
+        url: `${SERVER_API_URL}/follow`,
+        headers: {
+          "X-FNS-ACCESSTOKEN": accessToken,
+        },
+      });
+
+      console.log(res);
+
+      const result = res.data.data;
+
+      setAddedFollow(result);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getFollowee();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleSearchFollow = async () => {
     // 여기다 검색 api
@@ -65,12 +86,49 @@ const UserSearch = () => {
     }
   };
 
-  const handleAddFollow = (one) => {
-    setAddedFollow((prev) => [...prev, one.username]);
+  const handleAddFollow = async (one) => {
+    // 여기다 검색 api
+    try {
+      const res = await axiosInstance({
+        method: "post",
+        url: `${SERVER_API_URL}/follow/${one.id}`,
+        headers: {
+          "X-FNS-ACCESSTOKEN": accessToken,
+        },
+      });
+
+      console.log(res);
+
+      const newFollow = { ...one, memberId: one.id };
+
+      setAddedFollow([...addedFollow, newFollow]);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  const handleCancleFollow = (one) => {
-    setAddedFollow((prev) => prev.filter((follow) => follow !== one.username));
+  console.log(addedFollow);
+
+  const handleCancleFollow = async (one) => {
+    try {
+      const res = await axiosInstance({
+        method: "delete",
+        url: `${SERVER_API_URL}/follow/${one.id}`,
+        headers: {
+          "X-FNS-ACCESSTOKEN": accessToken,
+        },
+      });
+
+      console.log(res);
+
+      const updatedFollow = addedFollow.filter(
+        (follow) => follow.memberId !== one.id
+      );
+
+      setAddedFollow(updatedFollow);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleSaveButton = () => {
@@ -194,7 +252,7 @@ const UserSearch = () => {
         item
         xs={12}
         justifyContent={"center"}
-        alignItems={"center"}
+        alignItems={"flex-start"}
         sx={{ overflow: "scroll", height: "65vh" }}
       >
         {searchResult.map((one, index) => (
@@ -289,7 +347,7 @@ const UserSearch = () => {
               justifyContent={"center"}
               alignItems={"center"}
             >
-              {!addedFollow.includes(one.username) ? (
+              {!addedFollow.some((followee) => followee.memberId === one.id) ? (
                 <Button
                   variant="contained"
                   sx={{

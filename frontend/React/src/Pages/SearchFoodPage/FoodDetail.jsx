@@ -1,24 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Typography } from "@mui/material";
-import axios from "axios";
-import { useSelector } from "react-redux";
+import axiosInstance from "../Common/Component/AxiosInstance";
 
 function FoodDetail() {
   const { name } = useParams();
   const [foodItem, setFoodItem] = useState(null);
 
-  const accessToken = useSelector((state) => state.auth.accessToken);
+  const accessToken = sessionStorage.getItem("accessToken");
   const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
 
   useEffect(() => {
     const fetchFoodDetail = async () => {
       try {
-        const response = await axios.get(`${SERVER_API_URL}/foods`, {
+        const response = await axiosInstance.get(`${SERVER_API_URL}/foods`, {
           params: { name },
           headers: {
-            'X-FNS-ACCESSTOKEN': accessToken,
-          }
+            "X-FNS-ACCESSTOKEN": accessToken,
+          },
         });
 
         if (response.data.success) {
