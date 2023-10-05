@@ -4,11 +4,11 @@ import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { useNavigate } from 'react-router-dom';
 import ReplayIcon from '@mui/icons-material/Replay';
 import axios from 'axios';
-import { useSelector } from "react-redux";
+
 
 const MyCustomPage = () => {
 
-    const accessToken = useSelector((state) => state.auth.accessToken);
+    const accessToken = sessionStorage.getItem("accessToken");
     const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
     
     const [kcal, setKcal] = useState(null);
