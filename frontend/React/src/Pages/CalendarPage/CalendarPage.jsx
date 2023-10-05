@@ -50,37 +50,33 @@ const sportsData = [
 const met= [0, 2, 3.5, 5, 6, 7, 8, 4, 5.5, 4.5, 6.5, 5, 5.5];
 
 dayjs.locale("ko");
+const accessToken = sessionStorage.getItem("accessToken");
+const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
 
 const CalendarPage = () => {
-
   const [운동북마크, set운동북마크] = useState([]);
   const [운동시간, set운동시간] = useState([]);
   const [몸무게, set몸무게] = useState("");
-
-  //axios 운동기록 데이터 입력 받기
-
-  const accessToken = sessionStorage.getItem("accessToken");
-  const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
+ const [calendarData, setCalendarData] = useState({});
+  //axios 데이터 입력 받기
 
   useEffect(() => {
+    const requestData = {
+      exerciseDate: "2021-10-04"
+    };
 
-  axios.get(`${SERVER_API_URL}/exercise`, {
-    exerciseDate: "2021-10-04",
-      headers: {
-        "X-FNS-ACCESSTOKEN": accessToken,
-      },
-  })
+  axios.post('서버의_엔드포인트_URL', requestData)
     .then(response => {
       // 서버 응답 데이터를 상태에 저장
-      set몸무게(response.data.data.weight);
-      set운동북마크(response.data.data.sportsBookmarkList);
-      set운동시간(response.data.data.exerciseTimeList);
+      set몸무게(response.data.weight);
+      set운동북마크(response.data.sportsBookmarkList);
+      set운동시간(response.data.exerciseTimeList);
       console.log(response);
     })
     .catch(error => {
       console.error('요청 실패:', error);
     });
-  },[accessToken, SERVER_API_URL]);
+  },[]);
 
   const 운동한것들 = 운동북마크.reduce((acc, mark, index) => {
     if (mark === 1 && sportsData[index] && 운동시간[index] !== 0) { // 운동을 한 경우와 유효한 인덱스인 경우만 처리
@@ -99,6 +95,33 @@ const CalendarPage = () => {
 
   const [날짜, set날짜] = useState(dayjs());
   const 오늘 = dayjs();
+
+  useEffect(() => {
+    // 현재 선택된 날짜의 "YYYY-MM" 포맷으로 변경
+    const formattedDate = 날짜.format("YYYY-MM");
+
+    axios.get(`${SERVER_API_URL}/members/calendar`, {
+      params: { date: formattedDate },
+      headers: {
+        "X-FNS-ACCESSTOKEN": accessToken,
+      },
+  })
+    .then(response => {
+        if (response.data.success) {
+            const newCalendarData = {};
+
+            response.data.data.recordedDates.forEach(date => {
+                // 각 날짜에 대해 1~99 사이의 랜덤 점수 할당
+                newCalendarData[date] = Math.floor(Math.random() * 99) + 1;
+            });
+
+            setCalendarData(newCalendarData);
+        }
+    })
+    .catch(error => {
+        console.error('요청 실패:', error);
+    });
+}, [날짜]);
 
   // 공휴일 데이터는 그냥 임시로 2023년 데이터 직접 입력, 제대로 한다면 공공데이터 API로 연동
   const holiday = [
@@ -122,22 +145,6 @@ const CalendarPage = () => {
     "2023-12-25",
   ];
 
-  // 더미 데이터
-  const data = {
-    "2023-08-15": 45,
-    "2023-08-20": 50,
-    "2023-08-23": 60,
-    "2023-08-30": 96,
-    "2023-09-15": 20,
-    "2023-09-16": 50,
-    "2023-09-17": 70,
-    "2023-09-18": 100,
-    "2023-10-01": 15,
-    "2023-10-03": 35,
-    "2023-10-12": 50,
-    "2023-10-14": 85,
-    // ... 추가적인 날짜와 데이터
-  };
 
   const getBackgroundColorByValue = (value) => {
     if (value === undefined) return "transparent"; // 데이터가 없는 경우 투명색
@@ -151,7 +158,7 @@ const CalendarPage = () => {
     const { day, outsideCurrentMonth, ...other } = props;
     // const formattedDate = day.locale("ko").format("YYYY-MM-DD (ddd)");
     const formattedDate = day.format("YYYY-MM-DD");
-    const value = data[formattedDate];
+    const value = calendarData[formattedDate];
     const backgroundColor = getBackgroundColorByValue(value);
 
     // 현재 날짜와 선택된 날짜를 비교하여 선택 여부 파악
