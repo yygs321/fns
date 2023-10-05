@@ -189,6 +189,7 @@ const CalendarPage = () => {
       let newCalendarData = {};
       responses.forEach((response, index) => {
         if (response.data.success) {
+          console.log("#1", response.data);
           const month = months[index];
           newCalendarData = {
             ...newCalendarData,
@@ -202,7 +203,7 @@ const CalendarPage = () => {
         }
       });
       setCalendarData(newCalendarData);
-      console.log("#1", response.data);
+      
       console.log("Fetched Calendar Data:", newCalendarData);
     }).catch(error => {
       console.error("Data fetching error:", error);
