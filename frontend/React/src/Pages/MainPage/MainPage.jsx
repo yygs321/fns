@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import BarGraph from "./BarGraph";
 import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
-import NavigateBeforeRoundedIcon from "@mui/icons-material/NavigateBeforeRounded";
+// import NavigateBeforeRoundedIcon from "@mui/icons-material/NavigateBeforeRounded";
 import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
 
 import "../Common/CSS/BackgroundColor.css";
@@ -209,9 +209,9 @@ const MainPage = () => {
               justifyContent={"center"}
               alignItems={"center"}
             >
-              <NavigateBeforeRoundedIcon
+              {/* <NavigateBeforeRoundedIcon
                 sx={{ color: "white", fontSize: "2rem" }}
-              />
+              /> */}
               <Typography
                 variant="caption"
                 component="div"
@@ -495,6 +495,7 @@ const MainPage = () => {
                 height: "100%",
                 width: "100%",
                 boxShadow: "2px 2px 4px #a5a5a5",
+                marginBottom: "5vh",
               }}
             >
               <AccordionSummary
@@ -527,9 +528,9 @@ const MainPage = () => {
                           <React.Fragment key={`${f.name}-${index}-selected`}>
                             <Typography
                               sx={{ color: "text.secondary" }}
-                              whiteSpace="nowrap"
-                              overflow="hidden"
-                              textOverflow="ellipsis"
+                              // whiteSpace="nowrap"
+                              // overflow="hidden"
+                              // textOverflow="ellipsis"
                             >
                               {f.name}
                             </Typography>

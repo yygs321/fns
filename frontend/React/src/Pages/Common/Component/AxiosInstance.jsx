@@ -31,6 +31,11 @@ axiosInstance.interceptors.response.use(
         console.log("야호");
         await RefreshToken();
         // RefreshToken이 성공하면 다시 원래 요청을 재시도할 수 있습니다.
+
+        // 액세스 토큰을 새로운거로 교환해서 재요청
+        const newAccessToken = sessionStorage.getItem("accessToken");
+        error.config.headers["X-FNS-ACCESSTOKEN"] = newAccessToken;
+
         return axiosInstance(error.config);
       } catch (refreshError) {
         // RefreshToken이 실패하면 에러 처리

@@ -50,7 +50,6 @@ const sportsData = [
 const met = [0, 2, 3.5, 5, 6, 7, 8, 4, 5.5, 4.5, 6.5, 5, 5.5];
 
 dayjs.locale("ko");
-
 const accessToken = sessionStorage.getItem("accessToken");
 const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
 
@@ -63,7 +62,7 @@ const CalendarPage = () => {
   const [권장량, set권장량] = useState([]);
   const [영양데이터, set영양데이터] = useState([]);
   const 오늘 = dayjs();
-
+  const [calendarData, setCalendarData] = useState({});
   //axios 운동기록 데이터 입력 받기
   useEffect(() => {
     
@@ -154,6 +153,33 @@ const CalendarPage = () => {
 
 
 
+  useEffect(() => {
+    // 현재 선택된 날짜의 "YYYY-MM" 포맷으로 변경
+    const formattedDate = 날짜.format("YYYY-MM");
+
+    axios.get(`${SERVER_API_URL}/members/calendar`, {
+      params: { date: formattedDate },
+      headers: {
+        "X-FNS-ACCESSTOKEN": accessToken,
+      },
+  })
+    .then(response => {
+        if (response.data.success) {
+            const newCalendarData = {};
+
+            response.data.data.recordedDates.forEach(date => {
+                // 각 날짜에 대해 1~99 사이의 랜덤 점수 할당
+                newCalendarData[date] = Math.floor(Math.random() * 99) + 1;
+            });
+
+            setCalendarData(newCalendarData);
+        }
+    })
+    .catch(error => {
+        console.error('요청 실패:', error);
+    });
+}, [날짜]);
+
   // 공휴일 데이터는 그냥 임시로 2023년 데이터 직접 입력, 제대로 한다면 공공데이터 API로 연동
   const holiday = [
     "2023-01-01",
@@ -176,22 +202,6 @@ const CalendarPage = () => {
     "2023-12-25",
   ];
 
-  // 더미 데이터
-  const data = {
-    "2023-08-15": 45,
-    "2023-08-20": 50,
-    "2023-08-23": 60,
-    "2023-08-30": 96,
-    "2023-09-15": 20,
-    "2023-09-16": 50,
-    "2023-09-17": 70,
-    "2023-09-18": 100,
-    "2023-10-01": 15,
-    "2023-10-03": 35,
-    "2023-10-12": 50,
-    "2023-10-14": 85,
-    // ... 추가적인 날짜와 데이터
-  };
 
   const getBackgroundColorByValue = (value) => {
     if (value === undefined) return "transparent"; // 데이터가 없는 경우 투명색
@@ -205,7 +215,7 @@ const CalendarPage = () => {
     const { day, outsideCurrentMonth, ...other } = props;
     // const formattedDate = day.locale("ko").format("YYYY-MM-DD (ddd)");
     const formattedDate = day.format("YYYY-MM-DD");
-    const value = data[formattedDate];
+    const value = calendarData[formattedDate];
     const backgroundColor = getBackgroundColorByValue(value);
 
     // 현재 날짜와 선택된 날짜를 비교하여 선택 여부 파악

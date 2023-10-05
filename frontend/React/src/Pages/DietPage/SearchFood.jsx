@@ -89,6 +89,7 @@ const SearchFood = () => {
         rate: 1,
         date: state.today,
         intakeTime: state.intakeTime,
+        foodName: one.name,
       })
     );
   };
