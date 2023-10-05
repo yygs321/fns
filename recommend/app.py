@@ -40,10 +40,10 @@ async def load_food_data_to_redis():
     db = engineconn().sessionmaker()
     foods = db.query(Food).all()
 
-    keys = client.keys('food:*')
+    keys = redis_db.keys('food:*')
 
     for key in keys:
-        client.delete(key)
+        redis_db.delete(key)
 
     for food in foods:
         data_dict = {
