@@ -60,10 +60,6 @@ public class BaseServiceImpl implements BaseService {
         BaseNutrient baseNutrient = baseRepository.findFirstByMemberIdOrderByCreatedAtDesc(
                 findMember.getId());
 
-        if (baseNutrient == null) {
-            return BaseResponseDto.from(null);
-        }
-
         return BaseResponseDto.from(baseNutrient);
     }
 
