@@ -11,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import ssafy.fns.domain.exercise.controller.dto.SaveExerciseRequestDto;
 import ssafy.fns.domain.exercise.controller.dto.SaveSportsBookmarkRequestDto;
-import ssafy.fns.domain.exercise.controller.dto.SelectExerciseRequestDto;
 import ssafy.fns.domain.exercise.entity.Exercise;
 import ssafy.fns.domain.exercise.entity.Sports;
 import ssafy.fns.domain.exercise.repository.ExerciseRepository;
@@ -56,12 +55,12 @@ public class ExerciseServiceImpl implements ExerciseService {
 
     @Override
     @Transactional
-    public ExerciseResponseDto selectExercise(Member member, SelectExerciseRequestDto requestDto) {
+    public ExerciseResponseDto selectExercise(Member member, String exerciseDate) {
 
         Member findMember = memberRepository.findByEmail(member.getEmail());
 
         Exercise exercise = exerciseRepository
-                .findFirstByExerciseDateAndMember_Id(requestDto.getExerciseDate(),
+                .findFirstByExerciseDateAndMember_Id(exerciseDate,
                         findMember.getId());
 
         List<Double> exerciseTimeList = Arrays.asList(new Double[13]);
@@ -73,7 +72,7 @@ public class ExerciseServiceImpl implements ExerciseService {
         }
 
         List<Integer> sportsBookmarkList = exercise.getSportsBookmarkList();
-        getExerciseTime(member, requestDto, exerciseTimeList);
+        getExerciseTime(member, exerciseDate, exerciseTimeList);
 
         ExerciseResponseDto responseDto =
                 ExerciseResponseDto.from(findMember, sportsBookmarkList, exerciseTimeList);
@@ -94,12 +93,12 @@ public class ExerciseServiceImpl implements ExerciseService {
         findMember.updateSportsBookmarkList(mySportsBookmarkList);
     }
 
-    private void getExerciseTime(Member member, SelectExerciseRequestDto requestDto,
+    private void getExerciseTime(Member member, String exerciseDate,
             List<Double> exerciseTimeList) {
         for (int idx = 0; idx < 13; idx++) {
 
             Exercise exercise = exerciseRepository.findTop1ByExerciseDateAndMember_IdAndSports_IdOrderByIdDesc(
-                    requestDto.getExerciseDate(), member.getId(), sportsIdList.get(idx));
+                    exerciseDate, member.getId(), sportsIdList.get(idx));
 
             if (exercise != null) {
                 exerciseTimeList.set(idx, exercise.getExerciseTime());
