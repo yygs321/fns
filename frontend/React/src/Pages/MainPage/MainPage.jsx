@@ -110,15 +110,15 @@ const MainPage = () => {
       setCarouselData({
         kcal:
           baseData.kcal - beforeData.kcal > 0
-            ? baseData.kcal - beforeData.kcal
+            ? (baseData.kcal - beforeData.kcal).toFixed(0)
             : 0,
         carbs:
           baseData.carbs - beforeData.carbs > 0
-            ? baseData.carbs - beforeData.carbs
+            ? (baseData.carbs - beforeData.carbs).toFixed(0)
             : 0,
         protein:
           baseData.protein - beforeData.protein > 0
-            ? baseData.protein - beforeData.protein
+            ? (baseData.protein - beforeData.protein).toFixed(0)
             : 0,
       });
 
