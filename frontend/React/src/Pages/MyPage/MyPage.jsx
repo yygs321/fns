@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {List, ListItemText, ListItemIcon, Divider, Typography } from "@mui/material";
+import {List, ListItemText, ListItemIcon, Divider, Typography, Avatar } from "@mui/material";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import "./MyPage.css";
@@ -154,10 +154,11 @@ if (isLoading) {
             alignItems: "center",
           }}
         >
-          <img
-            src={profile.image}
+          <Avatar
             alt="User's Profile"
+            src={profile.image || undefined}
             className="profile-avatar"
+            sx={{ width: "5rem", height: "5rem" }}
           />
 
           <label
