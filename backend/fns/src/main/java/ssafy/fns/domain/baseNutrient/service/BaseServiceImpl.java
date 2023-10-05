@@ -87,7 +87,7 @@ public class BaseServiceImpl implements BaseService {
                 findMember.getId(), baseNutrientDate);
 
         if (baseNutrientList == null || baseNutrientList.isEmpty()) {
-            BaseResponseDto.from(null);
+            return BaseResponseDto.from(null);
         }
 
         return BaseResponseDto.from(baseNutrientList.get(0));
