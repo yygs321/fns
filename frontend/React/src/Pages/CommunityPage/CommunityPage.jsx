@@ -34,7 +34,6 @@ const CommunityPage = () => {
 
   const [followees, setFollowees] = useState([]); 
 
-  console.log(followees);
 
   const getMyData = async () => {
     try {
@@ -71,11 +70,6 @@ const CommunityPage = () => {
           },
         }),
       ]);
-
-      console.log(res);
-      console.log(res2);
-      console.log(res3);
-      console.log(res4);
 
       const result = res4.data.data;
 

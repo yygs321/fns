@@ -94,8 +94,6 @@ const MainPage = () => {
           },
         }),
       ]);
-      console.log(res);
-      console.log(res2);
 
       const baseData = res.data.data;
       const nowData = res2.data.data;
@@ -113,8 +111,6 @@ const MainPage = () => {
           protein: baseData.protein - beforeData.protein,
         },
       });
-
-      console.log(res4);
 
       setRecommendedFood(res4.data.recommended_foods);
 
