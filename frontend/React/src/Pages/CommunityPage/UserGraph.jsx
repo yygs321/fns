@@ -318,7 +318,7 @@ const UserGraph = (props) => {
                       color="text.secondary"
                       fontSize={"0.8rem"}
                     >
-                      {(meal.kcal * meal.volume).toFixed(0)}
+                      {meal.kcal.toFixed(0)}
                     </Typography>
                   </Grid>
                 </Grid>
@@ -438,7 +438,7 @@ const UserGraph = (props) => {
                       color="text.secondary"
                       fontSize={"0.8rem"}
                     >
-                      {(meal.kcal * meal.volume).toFixed(0)}
+                      {meal.kcal.toFixed(0)}
                     </Typography>
                   </Grid>
                 </Grid>
@@ -558,7 +558,7 @@ const UserGraph = (props) => {
                       color="text.secondary"
                       fontSize={"0.8rem"}
                     >
-                      {(meal.kcal * meal.volume).toFixed(0)}
+                      {meal.kcal.toFixed(0)}
                     </Typography>
                   </Grid>
                 </Grid>
@@ -678,7 +678,7 @@ const UserGraph = (props) => {
                       color="text.secondary"
                       fontSize={"0.8rem"}
                     >
-                      {(meal.kcal * meal.volume).toFixed(0)}
+                      {meal.kcal.toFixed(0)}
                     </Typography>
                   </Grid>
                 </Grid>
