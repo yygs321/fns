@@ -4,14 +4,11 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import axiosInstance from "../Common/Component/AxiosInstance";
-import { useSelector } from "react-redux";
 
 const RecommendCarousel = (props) => {
   // const { nutrient } = props;
 
-  const accessToken = useSelector((state) => {
-    return state.auth.accessToken;
-  });
+  const accessToken = sessionStorage.getItem("accessToken");
 
   // eslint-disable-next-line no-unused-vars
   const [recommendedFood, setRecommendedFood] = useState([
@@ -44,7 +41,7 @@ const RecommendCarousel = (props) => {
   };
 
   useEffect(() => {
-    // getRecommendFood();
+    getRecommendFood();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

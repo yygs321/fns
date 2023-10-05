@@ -8,15 +8,12 @@ import CommunityBarGraph from "./CommunityBarGraph";
 import UsersTabs from "./UsersTabs";
 import axiosInstance from "../Common/Component/AxiosInstance";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 // import default_profile from "../../assets/Image/Profile/deafult_profile.jpg";
 import Loading from "../Common/Component/Loading";
 
 const CommunityPage = () => {
   const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
-  const accessToken = useSelector((state) => {
-    return state.auth.accessToken;
-  });
+  const accessToken = sessionStorage.getItem("accessToken");
 
   const now = new Date();
 
@@ -38,6 +35,10 @@ const CommunityPage = () => {
   const [baseFat, setBaseFat] = useState(999); // 지방
   const [myProfile, setMyProfile] = useState(null); // 내 정보
   const [isLoading, setIsLoading] = useState(false); // 로딩
+
+  const [followees, setFollowees] = useState([]); // 팔로우
+
+  console.log(followees);
 
   const getMyData = async () => {
     try {
@@ -64,9 +65,23 @@ const CommunityPage = () => {
           "X-FNS-ACCESSTOKEN": accessToken,
         },
       });
+
+      const res4 = await axiosInstance({
+        method: "get",
+        url: `${SERVER_API_URL}/follow`,
+        headers: {
+          "X-FNS-ACCESSTOKEN": accessToken,
+        },
+      });
+
       console.log(res);
       console.log(res2);
       console.log(res3);
+      console.log(res4);
+
+      const result = res4.data.data;
+
+      setFollowees(result);
 
       const baseData = res.data.data;
       const nowData = res2.data.data;
@@ -253,7 +268,7 @@ const CommunityPage = () => {
               height: "60vh",
             }}
           >
-            <UsersTabs />
+            <UsersTabs followees={followees} />
           </Grid>
         </Grid>
       </div>

@@ -16,7 +16,6 @@ const BarGraph = (props) => {
           {name}
         </Typography>
         <Typography variant="body2" color="text.secondary" fontSize={"0.7rem"}>
-          {" "}
           {Number.isInteger(nutrient)
             ? `${nutrient} / ${maxNutrient}`
             : `${nutrient.toFixed(1)} / ${maxNutrient}`}

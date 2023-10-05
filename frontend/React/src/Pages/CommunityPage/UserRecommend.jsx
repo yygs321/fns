@@ -45,7 +45,7 @@ const UserRecommend = (props) => {
         >
           <Avatar
             alt="MyName"
-            src={user.profileImg}
+            // src={user.profileImg}
             sx={{ width: "5rem", height: "5rem" }}
           />
         </Grid>

@@ -11,7 +11,6 @@ const MyCustomPage = () => {
     const accessToken = useSelector((state) => state.auth.accessToken);
     const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
     
-   
     const [kcal, setKcal] = useState(null);
     const [carbs, setCarbs] = useState(null);
     const [protein, setProtein] = useState(null);
@@ -136,26 +135,46 @@ const MyCustomPage = () => {
         navigate("/mypage");
     };
     // 리셋 함수
-    const resetValues = () => {
-        setKcal(initialValues.kcal || 0);
-        setCarbs(initialValues.carbs || 0);
-        setProtein(initialValues.protein || 0);
-        setFat(initialValues.fat || 0);
-        setPollination(initialValues.pollination || 0);
-        setSugar(initialValues.sugar || 0);
-        setDietaryFiber(initialValues.dietaryFiber || 0);
-        setCalcium(initialValues.calcium || 0);
-        setPotassium(initialValues.potassium || 0);
-        setIron(initialValues.iron || 0);
-        setPhosphorus(initialValues.phosphorus || 0);
-        setSodium(initialValues.sodium || 0);
-        setVitaminA(initialValues.vitaminA || 0);
-        setVitaminC(initialValues.vitaminC || 0);
-        setVitaminD(initialValues.vitaminD || 0);
-        setCholesterol(initialValues.cholesterol || 0);
-        setAcid(initialValues.acid || 0);
-        setTransFat(initialValues.transFat || 0);
+    const resetValues = async () => {
+        try {
+            const baseResponse = await axios.post(`${SERVER_API_URL}/base`, {}, {
+                headers: {
+                    "X-FNS-ACCESSTOKEN": accessToken,
+                },
+            });
+    
+            if (baseResponse.data.success) {
+                const data = baseResponse.data.data;
+    
+                setKcal(data.kcal);
+                setCarbs(data.carbs);
+                setProtein(data.protein);
+                setFat(data.fat);
+                setPollination(data.pollination); 
+                setSugar(data.sugar);
+                setDietaryFiber(data.dietaryFiber);
+                setCalcium(data.calcium);
+                setPotassium(data.potassium);
+                setIron(data.iron);
+                setPhosphorus(data.phosphorus);
+                setSodium(data.sodium);
+                setVitaminA(data.vitaminA); 
+                setVitaminC(data.vitaminC); 
+                setVitaminD(data.vitaminD); 
+                setCholesterol(data.cholesterol);
+                setAcid(data.acid);
+                setTransFat(data.transFat);
+            } else {
+                console.error("Failed to fetch base data:", baseResponse.data.message);
+                // If the data isn't directly updated, refresh the page
+                window.location.reload();
+            }
+        } catch (error) {
+            console.error("Error while fetching base data on reset:", error);
+            window.location.reload();
+        }
     };
+    
     
 
     return (

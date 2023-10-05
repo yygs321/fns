@@ -14,8 +14,6 @@ import {
 } from "@mui/material";
 import { VisibilityOff, Visibility } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { userLogin } from "../../Redux/actions/actions";
 import axios from "axios";
 
 import kakaoButton from "../../assets/Image/Login/kakao_login_asset.svg";
@@ -25,6 +23,8 @@ import FNS_logo from "../../assets/Image/Logo/FNS_512.png";
 import "./CSS/LoginPage.css";
 import "../Common/CSS/BackgroundColor.css";
 import { RefreshToken } from "../Common/Component/RefreshToken";
+import { useDispatch } from "react-redux";
+import { userLogin } from "../../Redux/actions/actions";
 
 const LoginPage = () => {
   const REST_API_KEY = `${process.env.REACT_APP_KAKAO_REST_API_KEY}`;
@@ -32,8 +32,8 @@ const LoginPage = () => {
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
   const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [유저아이디, set유저아이디] = useState("");
   const [유저패스워드, set유저패스워드] = useState("");
@@ -74,12 +74,11 @@ const LoginPage = () => {
       console.log(res.data.message);
       const tokenData = res.data.data.tokenDto;
 
-      dispatch(
-        userLogin({
-          accessToken: tokenData.accessToken,
-          refreshToken: tokenData.refreshToken,
-        })
-      );
+      sessionStorage.setItem("accessToken", tokenData.accessToken);
+      sessionStorage.setItem("refreshToken", tokenData.refreshToken);
+      sessionStorage.setItem("expirationTime", tokenData.expirationTime);
+
+      dispatch(userLogin());
 
       if (tokenData.expirationTime < 500000) {
         await RefreshToken();
