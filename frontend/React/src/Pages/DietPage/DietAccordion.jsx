@@ -18,7 +18,7 @@ const DietAccordion = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const totalKcal = food.reduce((total, f) => total + f.kcal * f.rate, 0);
+  const totalKcal = food.reduce((total, f) => total + f.kcal, 0);
   const handleAccordion = () => {
     setIsAccordionSelected(!isAccordionSelected);
   };
@@ -116,7 +116,7 @@ const DietAccordion = (props) => {
                     overflow="hidden"
                     textOverflow="ellipsis"
                   >
-                    {(f.kcal * f.rate).toFixed(0) || 0} kcal
+                    {f.kcal.toFixed(0) || 0} kcal
                   </Typography>
                 </Grid>
               ))

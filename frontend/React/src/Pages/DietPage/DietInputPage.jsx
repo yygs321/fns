@@ -438,7 +438,7 @@ const DietInputPage = () => {
                     component="div"
                     fontSize={"0.8rem"}
                   >
-                    1인분 기준
+                    {`${one.rate}인분 기준`}
                   </Typography>
                 </Grid>
               </Grid>
@@ -551,10 +551,7 @@ const DietInputPage = () => {
               textOverflow="ellipsis"
             >
               {nowDietList
-                .reduce(
-                  (totalKcal, food) => totalKcal + food.kcal * food.rate,
-                  0
-                )
+                .reduce((totalKcal, food) => totalKcal + food.kcal, 0)
                 .toFixed(0)}{" "}
               kcal
             </Typography>
@@ -586,10 +583,7 @@ const DietInputPage = () => {
               textOverflow="ellipsis"
             >
               {nowDietList
-                .reduce(
-                  (totalCarbs, food) => totalCarbs + food.carbs * food.rate,
-                  0
-                )
+                .reduce((totalCarbs, food) => totalCarbs + food.carbs, 0)
                 .toFixed(0)}{" "}
               mg
             </Typography>
@@ -621,11 +615,7 @@ const DietInputPage = () => {
               textOverflow="ellipsis"
             >
               {nowDietList
-                .reduce(
-                  (totalProtein, food) =>
-                    totalProtein + food.protein * food.rate,
-                  0
-                )
+                .reduce((totalProtein, food) => totalProtein + food.protein, 0)
                 .toFixed(0)}{" "}
               mg
             </Typography>
@@ -657,7 +647,7 @@ const DietInputPage = () => {
               textOverflow="ellipsis"
             >
               {nowDietList
-                .reduce((totalFat, food) => totalFat + food.fat * food.rate, 0)
+                .reduce((totalFat, food) => totalFat + food.fat, 0)
                 .toFixed(0)}{" "}
               mg
             </Typography>
