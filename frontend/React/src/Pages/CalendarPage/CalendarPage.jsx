@@ -76,14 +76,14 @@ const CalendarPage = () => {
         const [res1, res2, res3] = await Promise.all([
           axios.get(`${SERVER_API_URL}/exercise`, {
             params: {
-              exerciseDate: formattedDay,
+              date: formattedDay,
             },
             headers: {
               "X-FNS-ACCESSTOKEN": accessToken,
             },
           }),
           // 특정일자 기준 조회 -> 영양데이터.권장량
-          axios.get(`${SERVER_API_URL}/base/`, {
+          axios.get(`${SERVER_API_URL}/base`, {
             params: {
               date: formattedDay,
             },
