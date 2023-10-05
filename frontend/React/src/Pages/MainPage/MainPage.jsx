@@ -68,21 +68,23 @@ const MainPage = () => {
   // eslint-disable-next-line no-unused-vars
   const getNeut = async () => {
     try {
-      const res = await axiosInstance({
-        method: "get",
-        url: `${SERVER_API_URL}/base/current`,
-        headers: {
-          "X-FNS-ACCESSTOKEN": accessToken,
-        },
-      });
+      const [res, res2] = await Promise.all([
+        axiosInstance({
+          method: "get",
+          url: `${SERVER_API_URL}/base/current`,
+          headers: {
+            "X-FNS-ACCESSTOKEN": accessToken,
+          },
+        }),
 
-      const res2 = await axiosInstance({
-        method: "get",
-        url: `${SERVER_API_URL}/intake/simple/${formattedToday}`,
-        headers: {
-          "X-FNS-ACCESSTOKEN": accessToken,
-        },
-      });
+        axiosInstance({
+          method: "get",
+          url: `${SERVER_API_URL}/intake/simple/${formattedToday}`,
+          headers: {
+            "X-FNS-ACCESSTOKEN": accessToken,
+          },
+        }),
+      ]);
       console.log(res);
       console.log(res2);
 
