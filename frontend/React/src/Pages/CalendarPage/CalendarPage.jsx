@@ -47,58 +47,112 @@ const sportsData = [
   { name: "골프", kcal: 500, icon: <SportsGolfIcon fontSize="large" /> },
 ];
 // 임시 데이터
-const met= [0, 2, 3.5, 5, 6, 7, 8, 4, 5.5, 4.5, 6.5, 5, 5.5];
+const met = [0, 2, 3.5, 5, 6, 7, 8, 4, 5.5, 4.5, 6.5, 5, 5.5];
 
 dayjs.locale("ko");
 
-const CalendarPage = () => {
+const accessToken = sessionStorage.getItem("accessToken");
+const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
 
+const CalendarPage = () => {
   const [운동북마크, set운동북마크] = useState([]);
   const [운동시간, set운동시간] = useState([]);
   const [몸무게, set몸무게] = useState("");
+  const [날짜, set날짜] = useState(dayjs());
+  const [섭취량, set섭취량] = useState([]);
+  const [권장량, set권장량] = useState([]);
+  const [영양데이터, set영양데이터] = useState([]);
+  const 오늘 = dayjs();
 
   //axios 운동기록 데이터 입력 받기
-
-  const accessToken = sessionStorage.getItem("accessToken");
-  const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
-
   useEffect(() => {
+    
+      const getAPI = async () => {
+        try {
+        const [res1, res2, res3] = await Promise.all([
+          axios.get(`${SERVER_API_URL}/exercise`, {
+            params : {
+              exerciseDate: 날짜,
+            },
+            headers: {
+              "X-FNS-ACCESSTOKEN": accessToken,
+            },
+          }),
+          // 특정일자 기준 조회 -> 영양데이터.권장량
+          axios.get(`${SERVER_API_URL}/base/`, {
+            params: {
+              date : 날짜,
+            },
+            headers: {
+              "X-FNS-ACCESSTOKEN": accessToken,
+            },
+          }),
+          // 일별 총 섭취 칼로리,탄,단,지 조회 -> 영양데이터.섭취량
+          axios.get(`${SERVER_API_URL}/intake/simple/${날짜}`, {
+            headers: {
+              "X-FNS-ACCESSTOKEN": accessToken,
+            },
+          }),
+        ]);
+        if (res1.data.success && res2.data.success && res3.data.success) {
+          // 서버 응답 데이터를 상태에 저장
+          set몸무게(res1.data.data.weight);
+          set운동북마크(res1.data.data.sportsBookmarkList);
+          set운동시간(res1.data.data.exerciseTimeList);
+          set권장량(res2.data.data);
+          set섭취량(res3.data.data);
 
-  axios.get(`${SERVER_API_URL}/exercise`, {
-    exerciseDate: "2021-10-04",
-      headers: {
-        "X-FNS-ACCESSTOKEN": accessToken,
-      },
-  })
-    .then(response => {
-      // 서버 응답 데이터를 상태에 저장
-      set몸무게(response.data.data.weight);
-      set운동북마크(response.data.data.sportsBookmarkList);
-      set운동시간(response.data.data.exerciseTimeList);
-      console.log(response);
-    })
-    .catch(error => {
-      console.error('요청 실패:', error);
-    });
-  },[accessToken, SERVER_API_URL]);
+          console.log(res1);
+          console.log(res2);
+          console.log(res3);
+        }
+    } catch (error) {
+      console.error("요청 실패:", error);
+    }
+  }
+    getAPI();
+  }, [날짜]);
+
+  set영양데이터({
+    칼로리 : {
+      섭취량: 섭취량.kcal,
+      권장량: 권장량.kcal,
+    },
+    탄수화물 : {
+      섭취량: 섭취량.carbs,
+      권장량: 권장량.carbs,
+    },
+    단백질 : {
+      항목: "단백질",
+      섭취량: 섭취량.protein,
+      권장량: 권장량.protein,
+    },
+    지방 : {
+      항목: "지방",
+      섭취량: 섭취량.fat,
+      권장량: 권장량.fat,
+    },
+});
+
+  console.log(영양데이터);
 
   const 운동한것들 = 운동북마크.reduce((acc, mark, index) => {
-    if (mark === 1 && sportsData[index] && 운동시간[index] !== 0) { // 운동을 한 경우와 유효한 인덱스인 경우만 처리
+    if (mark === 1 && sportsData[index] && 운동시간[index] !== 0) {
+      // 운동을 한 경우와 유효한 인덱스인 경우만 처리
       const 운동 = sportsData[index];
       const 운동한것 = {
         name: 운동.name,
         time: 운동시간[index],
-        kcal: 운동시간[index] * ((3.5 * met * 몸무게 * 60) / 1000 * 5),
+        kcal: 운동시간[index] * (((3.5 * met * 몸무게 * 60) / 1000) * 5),
       };
       acc.push(운동한것);
     }
     return acc;
   }, []);
-  
+
   console.log(운동한것들);
 
-  const [날짜, set날짜] = useState(dayjs());
-  const 오늘 = dayjs();
+
 
   // 공휴일 데이터는 그냥 임시로 2023년 데이터 직접 입력, 제대로 한다면 공공데이터 API로 연동
   const holiday = [
@@ -208,24 +262,24 @@ const CalendarPage = () => {
     );
   };
 
-  const 영양데이터 = {
-    칼로리: {
-      섭취량: 1500,
-      권장량: 2000,
-    },
-    탄수화물: {
-      섭취량: 200,
-      권장량: 300,
-    },
-    단백질: {
-      섭취량: 50,
-      권장량: 80,
-    },
-    지방: {
-      섭취량: 60,
-      권장량: 90,
-    },
-  };
+  // const 영양데이터 = {
+  //   칼로리: {
+  //     섭취량: 1500,
+  //     권장량: 2000,
+  //   },
+  //   탄수화물: {
+  //     섭취량: 200,
+  //     권장량: 300,
+  //   },
+  //   단백질: {
+  //     섭취량: 50,
+  //     권장량: 80,
+  //   },
+  //   지방: {
+  //     섭취량: 60,
+  //     권장량: 90,
+  //   },
+  // };
 
   const [scrollDownInfo, setScrollDownInfo] = useState(false);
 
@@ -510,12 +564,12 @@ const CalendarPage = () => {
           </div>
           {/* box4 */}
 
-          <WeightChart/>
+          <WeightChart />
         </Grid>
       </Grid>
       <FloatingInputButton />
     </div>
   );
-  };
+};
 
 export default CalendarPage;
