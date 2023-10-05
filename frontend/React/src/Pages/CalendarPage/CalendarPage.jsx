@@ -67,10 +67,10 @@ const CalendarPage = () => {
   useEffect(() => {
     const getAPI = async () => {
       try {
-        const now = new Date();
-        const year = now.getFullYear();
-        const month = (now.getMonth() + 1).toString().padStart(2, "0"); // 월은 0부터 시작하므로 1을 더하고 두 자리로 포맷팅합니다.
-        const day = now.getDate().toString().padStart(2, "0"); // 일자를 두 자리로 포맷팅합니다.
+        const nowday = new Date(날짜);
+        const year = nowday.getFullYear();
+        const month = (nowday.getMonth() + 1).toString().padStart(2, "0"); // 월은 0부터 시작하므로 1을 더하고 두 자리로 포맷팅합니다.
+        const day = nowday.getDate().toString().padStart(2, "0"); // 일자를 두 자리로 포맷팅합니다.
         const formattedDay = `${year}-${month}-${day}`;
 
         const [res1, res2, res3] = await Promise.all([
