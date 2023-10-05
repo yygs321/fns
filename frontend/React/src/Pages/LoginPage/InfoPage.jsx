@@ -16,6 +16,8 @@ import ManRoundedIcon from "@mui/icons-material/ManRounded";
 import WomanRoundedIcon from "@mui/icons-material/WomanRounded";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../Common/Component/AxiosInstance";
+import { userLogin } from "../../Redux/actions/actions";
+import { useDispatch } from "react-redux";
 
 function 닉네임확인함수(nickname) {
   const regex = /^[a-zA-Z0-9가-힣]{2,16}$/;
@@ -25,6 +27,7 @@ function 닉네임확인함수(nickname) {
 // 나중에 저장 버튼에서 모두 다 입력했는지 체크해야됨
 
 const InfoPage = () => {
+  const dispatch = useDispatch();
   const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
   const accessToken = sessionStorage.getItem("accessToken");
   const [닉네임, set닉네임] = useState("");
@@ -119,6 +122,8 @@ const InfoPage = () => {
                       },
                     });
                     console.log(baseResponse.data);
+
+                    dispatch(userLogin());
 
                     navigate("/main");
                     window.location.reload();

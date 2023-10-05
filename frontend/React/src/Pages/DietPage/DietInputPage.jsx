@@ -80,44 +80,52 @@ const DietInputPage = () => {
       console.log(saveAddedDiet);
       console.log(saveFixedDiet);
 
+      const requests = [];
+
+      // 삭제된 음식이 있다면 삭제 요청을 배열에 추가합니다.
       if (saveDeletedDiet.length > 0) {
-        const delete_res = await axiosInstance({
-          method: "delete",
-          url: `${SERVER_API_URL}/intake`,
-          headers: {
-            "X-FNS-ACCESSTOKEN": accessToken,
-          },
-          data: saveDeletedDiet,
-        });
-
-        console.log(delete_res);
+        requests.push(
+          axiosInstance({
+            method: "delete",
+            url: `${SERVER_API_URL}/intake`,
+            headers: {
+              "X-FNS-ACCESSTOKEN": accessToken,
+            },
+            data: saveDeletedDiet,
+          })
+        );
       }
 
+      // 추가된 음식이 있다면 POST 요청을 배열에 추가합니다.
       if (saveAddedDiet.length > 0) {
-        const add_res = await axiosInstance({
-          method: "post",
-          url: `${SERVER_API_URL}/intake`,
-          headers: {
-            "X-FNS-ACCESSTOKEN": accessToken,
-          },
-          data: saveAddedDiet,
-        });
-
-        console.log(add_res);
+        requests.push(
+          axiosInstance({
+            method: "post",
+            url: `${SERVER_API_URL}/intake`,
+            headers: {
+              "X-FNS-ACCESSTOKEN": accessToken,
+            },
+            data: saveAddedDiet,
+          })
+        );
       }
 
+      // 수정된 음식이 있다면 PATCH 요청을 배열에 추가합니다.
       if (saveFixedDiet.length > 0) {
-        const fix_res = await axiosInstance({
-          method: "patch",
-          url: `${SERVER_API_URL}/intake`,
-          headers: {
-            "X-FNS-ACCESSTOKEN": accessToken,
-          },
-          data: saveFixedDiet,
-        });
-
-        console.log(fix_res);
+        requests.push(
+          axiosInstance({
+            method: "patch",
+            url: `${SERVER_API_URL}/intake`,
+            headers: {
+              "X-FNS-ACCESSTOKEN": accessToken,
+            },
+            data: saveFixedDiet,
+          })
+        );
       }
+
+      // 모든 Axios 요청을 동시에 실행하고 응답을 기다립니다.
+      await Promise.all(requests);
 
       dispatch(resetDiet());
       navigate("/diet");

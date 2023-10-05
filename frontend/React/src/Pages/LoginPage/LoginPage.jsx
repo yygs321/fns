@@ -71,14 +71,11 @@ const LoginPage = () => {
       console.log("로그인 버튼");
       console.log(res.data);
 
-      console.log(res.data.message);
       const tokenData = res.data.data.tokenDto;
 
       sessionStorage.setItem("accessToken", tokenData.accessToken);
       sessionStorage.setItem("refreshToken", tokenData.refreshToken);
       sessionStorage.setItem("expirationTime", tokenData.expirationTime);
-
-      dispatch(userLogin());
 
       if (tokenData.expirationTime < 500000) {
         await RefreshToken();
@@ -86,10 +83,11 @@ const LoginPage = () => {
 
       console.log(res.data.data.hasProfile);
 
-      if (!res.data.data.hasProfile) {
+      if (res.data.data.hasProfile === false) {
         // 프로필이 없다면 정보입력 페이지로 이동.
         navigate(`/info`);
       } else {
+        dispatch(userLogin());
         navigate(`/main`);
       }
     } catch (err) {

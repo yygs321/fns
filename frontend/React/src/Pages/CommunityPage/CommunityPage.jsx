@@ -42,37 +42,39 @@ const CommunityPage = () => {
 
   const getMyData = async () => {
     try {
-      const res = await axiosInstance({
-        method: "get",
-        url: `${SERVER_API_URL}/base/current`,
-        headers: {
-          "X-FNS-ACCESSTOKEN": accessToken,
-        },
-      });
+      const [res, res2, res3, res4] = await Promise.all([
+        axiosInstance({
+          method: "get",
+          url: `${SERVER_API_URL}/base/current`,
+          headers: {
+            "X-FNS-ACCESSTOKEN": accessToken,
+          },
+        }),
 
-      const res2 = await axiosInstance({
-        method: "get",
-        url: `${SERVER_API_URL}/intake/simple/${formattedToday}`,
-        headers: {
-          "X-FNS-ACCESSTOKEN": accessToken,
-        },
-      });
+        axiosInstance({
+          method: "get",
+          url: `${SERVER_API_URL}/intake/simple/${formattedToday}`,
+          headers: {
+            "X-FNS-ACCESSTOKEN": accessToken,
+          },
+        }),
 
-      const res3 = await axiosInstance({
-        method: "get",
-        url: `${SERVER_API_URL}/members`,
-        headers: {
-          "X-FNS-ACCESSTOKEN": accessToken,
-        },
-      });
+        axiosInstance({
+          method: "get",
+          url: `${SERVER_API_URL}/members`,
+          headers: {
+            "X-FNS-ACCESSTOKEN": accessToken,
+          },
+        }),
 
-      const res4 = await axiosInstance({
-        method: "get",
-        url: `${SERVER_API_URL}/follow`,
-        headers: {
-          "X-FNS-ACCESSTOKEN": accessToken,
-        },
-      });
+        axiosInstance({
+          method: "get",
+          url: `${SERVER_API_URL}/follow`,
+          headers: {
+            "X-FNS-ACCESSTOKEN": accessToken,
+          },
+        }),
+      ]);
 
       console.log(res);
       console.log(res2);
