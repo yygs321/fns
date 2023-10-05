@@ -3,7 +3,6 @@ import {List, ListItemText, ListItemIcon, Divider, Typography, Avatar } from "@m
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import "./MyPage.css";
-import defaultProfileImg from "../../assets/Image/Profile/deafult_profile.jpg";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Collapse from "@mui/material/Collapse";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -22,7 +21,7 @@ const MyPage = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const [profile, setProfile] = useState({
-    image: defaultProfileImg,
+    image: null,
     nickname: "",
     age: 0,
     gender: "",
@@ -104,8 +103,8 @@ const MyPage = () => {
   };
 
   useEffect(() => {
+    setIsLoading(true);
     const fetchProfile = async () => {
-      setIsLoading(true);
         try {
             const response = await axios.get(`${SERVER_API_URL}/members`, {
                 headers: {
@@ -116,7 +115,7 @@ const MyPage = () => {
             if (response.data.success) {
                 const { nickname, age, height, weight, gender, fileUrl } = response.data.data;
                 
-                let userImage = fileUrl ? fileUrl : defaultProfileImg;
+      
                 setProfile(prevProfile => ({
                     ...prevProfile,
                     nickname,
@@ -124,7 +123,7 @@ const MyPage = () => {
                     height,
                     weight,
                     gender: gender === "FEMALE" ? "여" : "남",  // gender 값에 따라 한글로 변환
-                    image: userImage
+                    image: fileUrl || null
                 }));
             } else {
                 console.error("Failed to fetch profile:", response.data.message);
@@ -156,9 +155,9 @@ if (isLoading) {
         >
           <Avatar
             alt="User's Profile"
-            src={profile.image || undefined}
+            src={profile.image}
             className="profile-avatar"
-            sx={{ width: "5rem", height: "5rem" }}
+            sx={{ width: "20rem", height: "20rem" }}
           />
 
           <label
