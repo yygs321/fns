@@ -47,8 +47,8 @@ public class FollowServiceImpl implements FollowService {
             for(Optional<Intake> optionalIntake : intakeList){
                 intakes.add(IntakeSelectOneResponseDto.from(optionalIntake.get()));
                 kcal += optionalIntake.get().getFood().getKcal();
-                carbs += optionalIntake.get().getFood().getKcal();
-                protein += optionalIntake.get().getFood().getKcal();
+                carbs += optionalIntake.get().getFood().getCarbs();
+                protein += optionalIntake.get().getFood().getProtein();
                 fat += optionalIntake.get().getFood().getFat();
             }
 
