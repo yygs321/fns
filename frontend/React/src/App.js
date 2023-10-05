@@ -22,7 +22,7 @@ import { useSelector } from "react-redux";
 import KakaoCallback from "./Pages/LoginPage/KakaoCallbackPage";
 import NotFound from "./Pages/Common/Component/NotFound";
 import LoginCheck from "./Pages/Common/Component/LoginCheck";
-// import LoggedinCheck from "./Pages/Common/Component/LoggedinCheck";
+import LoggedinCheck from "./Pages/Common/Component/LoggedinCheck";
 import ChangePassword from "./Pages/MyPage/ChangePassword";
 
 function App() {
@@ -69,13 +69,13 @@ function App() {
           style={{ minHeight: isLogin ? "92vh" : "100vh" }}
         >
           <Routes>
-            {/* <Route element={<LoggedinCheck />}> */}
-            <Route path="/" element={<LoginPage />} />
-            <Route path="/oauth/kakao/callback" element={<KakaoCallback />} />
-            <Route path="/signup" element={<Signup />} />
-            {/* </Route> */}
+            <Route element={<LoggedinCheck />}>
+              <Route path="/" element={<LoginPage />} />
+              <Route path="/oauth/kakao/callback" element={<KakaoCallback />} />
+              <Route path="/signup" element={<Signup />} />
+            </Route>
+            <Route path="/info" element={<Info />} />
             <Route element={<LoginCheck />}>
-              <Route path="/info" element={<Info />} />
               <Route path="/main" element={<MainPage />} />
               <Route path="/diet" element={<DietPage />} />
               <Route path="/diet/input" element={<DietInputPage />} />

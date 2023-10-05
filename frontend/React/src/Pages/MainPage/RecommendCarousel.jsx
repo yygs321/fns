@@ -6,7 +6,7 @@ import "slick-carousel/slick/slick-theme.css";
 import axiosInstance from "../Common/Component/AxiosInstance";
 
 const RecommendCarousel = (props) => {
-  // const { nutrient } = props;
+  const { data } = props;
 
   const accessToken = sessionStorage.getItem("accessToken");
 
@@ -21,17 +21,16 @@ const RecommendCarousel = (props) => {
   // eslint-disable-next-line no-unused-vars
   const getRecommendFood = async () => {
     try {
-      const res = axiosInstance({
+      const res = await axiosInstance({
         method: "post",
         url: `https://j9a403.p.ssafy.io/fastapi/recommend`,
         headers: {
           "X-FNS-ACCESSTOKEN": accessToken,
         },
-        // data: nutrient,
         data: {
-          calorie: 200,
-          carbohydrate: 15.5,
-          protein: 24.0,
+          calorie: data.kcal,
+          carbohydrate: data.carbs,
+          protein: data.protein,
         },
       });
       console.log(res);

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { Grid, Typography } from "@mui/material";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
@@ -45,30 +46,51 @@ const sportsData = [
   { name: "배구", kcal: 500, icon: <SportsVolleyballIcon fontSize="large" /> },
   { name: "골프", kcal: 500, icon: <SportsGolfIcon fontSize="large" /> },
 ];
-
-const 운동한것들 = [
-  {
-    name: "사이클",
-    time: "1",
-    kcal: "500",
-  },
-  {
-    name: "요가",
-    time: "1",
-    kcal: "500",
-  },
-  {
-    name: "배구",
-    time: "2",
-    kcal: "500",
-  },
-];
+// 임시 데이터
+const met= [0, 2, 3.5, 5, 6, 7, 8, 4, 5.5, 4.5, 6.5, 5, 5.5];
 
 dayjs.locale("ko");
 
 const CalendarPage = () => {
 
+  const [운동북마크, set운동북마크] = useState([]);
+  const [운동시간, set운동시간] = useState([]);
+  const [몸무게, set몸무게] = useState("");
+
+  //axios 데이터 입력 받기
+
+  useEffect(() => {
+    const requestData = {
+      exerciseDate: "2021-10-04"
+    };
+
+  axios.post('서버의_엔드포인트_URL', requestData)
+    .then(response => {
+      // 서버 응답 데이터를 상태에 저장
+      set몸무게(response.data.weight);
+      set운동북마크(response.data.sportsBookmarkList);
+      set운동시간(response.data.exerciseTimeList);
+      console.log(response);
+    })
+    .catch(error => {
+      console.error('요청 실패:', error);
+    });
+  },[]);
+
+  const 운동한것들 = 운동북마크.reduce((acc, mark, index) => {
+    if (mark === 1 && sportsData[index] && 운동시간[index] !== 0) { // 운동을 한 경우와 유효한 인덱스인 경우만 처리
+      const 운동 = sportsData[index];
+      const 운동한것 = {
+        name: 운동.name,
+        time: 운동시간[index],
+        kcal: 운동시간[index] * ((3.5 * met * 몸무게 * 60) / 1000 * 5),
+      };
+      acc.push(운동한것);
+    }
+    return acc;
+  }, []);
   
+  console.log(운동한것들);
 
   const [날짜, set날짜] = useState(dayjs());
   const 오늘 = dayjs();
@@ -435,6 +457,17 @@ const CalendarPage = () => {
                 (item) => item.name === 운동.name
               );
 
+              /*
+              {const 운동정보 = 운동북마크.reduce((acc, cur) => {
+              // 운동 이름으로 해당 운동을 찾습니다.
+                if(cur === 0) return acc;
+                if(운동시간[cur] === 0) return acc;
+                acc.push(sportsData[cur]);
+                return acc;
+          },[]);
+            }
+              */
+
               return (
                 <div id="운동위치설정" key={`${운동}-${index}`}>
                   <Grid
@@ -478,6 +511,6 @@ const CalendarPage = () => {
       <FloatingInputButton />
     </div>
   );
-};
+  };
 
 export default CalendarPage;

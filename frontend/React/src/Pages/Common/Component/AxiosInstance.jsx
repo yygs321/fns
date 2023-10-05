@@ -1,6 +1,5 @@
 import axios from "axios";
 import { RefreshToken } from "./RefreshToken"; // RefreshToken 함수를 가져옵니다.
-import { useDispatch } from "react-redux";
 
 const axiosInstance = axios.create();
 
@@ -27,10 +26,10 @@ axiosInstance.interceptors.response.use(
     console.log(error.response);
     console.log(error.response.status);
     if (error.response && error.response.status === 401) {
-      const dispatch = useDispatch();
       // 401 에러가 발생하면 RefreshToken을 실행합니다.
       try {
-        await RefreshToken(dispatch);
+        console.log("야호");
+        await RefreshToken();
         // RefreshToken이 성공하면 다시 원래 요청을 재시도할 수 있습니다.
         return axiosInstance(error.config);
       } catch (refreshError) {

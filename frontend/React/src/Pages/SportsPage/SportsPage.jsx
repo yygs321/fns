@@ -32,7 +32,7 @@ const exerciseResponseDto = {
 const sportNames = [null, "조깅", "사이클", "등산", "수영", "줄넘기", "계단 오르기", "요가", "축구", "야구", 
 "테니스", "배구", "골프"];
 const sportIcons = [null, <DirectionsRunIcon fontSize="large" />, <DirectionsBikeIcon fontSize="large" />, 
-<HikingIcon fontSize="large" />, <HikingIcon fontSize="large" />, <PoolIcon fontSize="large" />,
+<HikingIcon fontSize="large" />, <PoolIcon fontSize="large" />,
  <AccessibilityNewIcon fontSize="large" />, <StairsIcon fontSize="large" />, <SelfImprovementIcon fontSize="large" />,
  <SportsSoccerIcon fontSize="large" />, <SportsBaseballIcon fontSize="large" />, <SportsTennisIcon fontSize="large" />,
  <SportsVolleyballIcon fontSize="large" />, <SportsGolfIcon fontSize="large" />

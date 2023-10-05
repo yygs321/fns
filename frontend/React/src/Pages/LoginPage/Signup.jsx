@@ -11,14 +11,11 @@ import {
 import "./CSS/Signup.scss";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { userLogin } from "../../Redux/actions/actions";
-import { useDispatch } from "react-redux";
 
 import axios from "axios";
 
 const Signup = () => {
   const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
-  const dispatch = useDispatch();
 
   // const [유효한닉네임, set유효한닉네임] = useState(false);
   const [이메일, set이메일] = useState("");
@@ -144,7 +141,6 @@ const Signup = () => {
                   tokenData.expirationTime
                 );
 
-                dispatch(userLogin());
                 navigate("/info");
               } else {
                 set가입실패(res.data.message);
