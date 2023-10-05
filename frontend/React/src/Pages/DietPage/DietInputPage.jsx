@@ -244,7 +244,7 @@ const DietInputPage = () => {
       >
         {nowDietList.map((one, index) => (
           <Grid
-            key={`${one.name}-detail-${index}`}
+            key={`${one.foodName}-detail-${index}`}
             container
             item
             xs={11}
@@ -278,7 +278,7 @@ const DietInputPage = () => {
                   overflow="hidden"
                   textOverflow="ellipsis"
                 >
-                  {one.name}
+                  {one.foodName}
                 </Typography>
               </Grid>
               <Grid
