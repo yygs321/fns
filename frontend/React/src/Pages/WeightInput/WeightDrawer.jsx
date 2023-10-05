@@ -37,7 +37,7 @@ export default function WeightDrawer(props) {
   const [목표모달열기, set목표모달열기] = useState(false);
   const [체중, set체중] = useState("");
   const [입력체중, set입력체중] = useState("");
-
+  const [시작체중, set시작체중] = useState("");
   const [목표체중, set목표체중] = useState("");
   const [입력목표체중, set입력목표체중] = useState("");
   const [다이어트모드, set다이어트모드] = useState(false);
@@ -64,9 +64,11 @@ export default function WeightDrawer(props) {
         set다이어트모드(true);
       }
 
-      set체중(
-        res.data.data.weightList ? res.data.data.weightList[0].weight : ""
-      );
+      // set체중(
+      //   res.data.data.weightList ? res.data.data.weightList[0].weight : ""
+      // );
+      set시작체중(targetData.initialWeight || "");
+      set체중(targetData.currentWeight || "");
       set목표체중(targetData.targetWeight || "");
       set기간(targetData.remainingDays || "");
       set입력목표체중(targetData.targetWeight || "");
@@ -312,7 +314,7 @@ export default function WeightDrawer(props) {
                         alignItems={"center"}
                       >
                         <Typography sx={{ marginTop: "1vh" }} fontSize="1.5rem">
-                          {체중} kg
+                          {시작체중} kg
                         </Typography>
                         {/* 시작 체중은 나중에 바꿔야됨 */}
                       </Grid>

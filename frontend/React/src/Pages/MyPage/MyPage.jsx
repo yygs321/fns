@@ -157,7 +157,7 @@ if (isLoading) {
             alt="User's Profile"
             src={profile.image}
             className="profile-avatar"
-            sx={{ width: "20rem", height: "20rem" }}
+            sx={{ width: "10rem", height: "10rem" }}
           />
 
           <label
