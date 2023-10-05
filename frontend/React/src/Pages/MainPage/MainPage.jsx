@@ -33,16 +33,11 @@ const MainPage = () => {
   const [fat, setFat] = useState(0); // 지방
   const [baseFat, setBaseFat] = useState(999); // 지방
 
-  const [carouselData, setCarouselData] = useState({
-    kcal: 0,
-    carbs: 0,
-    protein: 0,
-  });
-
   const [isOverKcal, setIsOverKcal] = useState(false); // 칼로리 초과
   const [overKcal, setOverKcal] = useState(0);
 
   const [isAccordionSelected, setIsAccordionSelected] = useState(false); // 메뉴 추천
+  const [recommendedFood, setRecommendedFood] = useState([]);
 
   const [isTooltipOpen, setIsTooltipOpen] = useState(false); // 칼로리 초과 시 툴팁 오픈
 
@@ -107,11 +102,22 @@ const MainPage = () => {
       const nowData = res2.data.data;
       const beforeData = res3.data.data;
 
-      setCarouselData({
-        kcal: (baseData.kcal - beforeData.kcal).toFixed(0),
-        carbs: baseData.carbs - beforeData.carbs,
-        protein: baseData.protein - beforeData.protein,
+      const res4 = await axiosInstance({
+        method: "post",
+        url: `https://j9a403.p.ssafy.io/fastapi/recommend`,
+        headers: {
+          "X-FNS-ACCESSTOKEN": accessToken,
+        },
+        data: {
+          calorie: (baseData.kcal - beforeData.kcal).toFixed(0),
+          carbohydrate: baseData.carbs - beforeData.carbs,
+          protein: baseData.protein - beforeData.protein,
+        },
       });
+
+      console.log(res4);
+
+      setRecommendedFood(res4.data.recommend_foods);
 
       setBaseKcalories(baseData.kcal);
       setBaseCarbohydrate(baseData.carbs);
@@ -125,7 +131,7 @@ const MainPage = () => {
 
       if (nowData.kcal > baseData.kcal) {
         setIsOverKcal(true);
-        setOverKcal(orgKcal - baseKcalories);
+        setOverKcal(nowData.kcal - baseData.kcal);
       }
 
       setIsLoading(false);
@@ -516,7 +522,7 @@ const MainPage = () => {
                         여기다 메뉴 요약
                       </Typography>
                     ) : (
-                      <RecommendCarousel data={carouselData} />
+                      <RecommendCarousel recommendedFood={recommendedFood} />
                     )}
                   </Grid>
                 </Grid>
