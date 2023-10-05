@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import ssafy.fns.domain.baseNutrient.controller.dto.ModifyBaseRequestDto;
 import ssafy.fns.domain.member.entity.Member;
 import ssafy.fns.domain.nutrient.entity.Nutrient;
 import ssafy.fns.global.entity.BaseEntity;
@@ -91,47 +92,52 @@ public class BaseNutrient extends BaseEntity {
         this.transFat = transFat;
     }
 
-    public void clear(Member member, Nutrient nutrient) {
-        this.member = member;
-        this.kcal = nutrient.getKcal();
-        this.carbs = nutrient.getCarbs();
-        this.protein = nutrient.getProtein();
-        this.fat = nutrient.getFat();
-        this.pollination = nutrient.getPollination();
-        this.sugar = nutrient.getSugar();
-        this.dietaryFiber = nutrient.getDietaryFiber();
-        this.calcium = nutrient.getCalcium();
-        this.potassium = nutrient.getPotassium();
-        this.iron = nutrient.getIron();
-        this.phosphorus = nutrient.getPhosphorus();
-        this.sodium = nutrient.getSodium();
-        this.vitaminA = nutrient.getVitaminA();
-        this.vitaminC = nutrient.getVitaminC();
-        this.vitaminD = nutrient.getVitaminD();
-        this.cholesterol = nutrient.getCholesterol();
-        this.acid = nutrient.getAcid();
-        this.transFat = nutrient.getTransFat();
+    public static BaseNutrient from(Member member, Nutrient nutrient) {
+        return BaseNutrient.builder()
+                .member(member)
+                .kcal(nutrient.getKcal())
+                .carbs(nutrient.getCarbs())
+                .protein(nutrient.getProtein())
+                .fat(nutrient.getFat())
+                .pollination(nutrient.getPollination())
+                .sugar(nutrient.getSugar())
+                .dietaryFiber(nutrient.getDietaryFiber())
+                .calcium(nutrient.getCalcium())
+                .potassium(nutrient.getPotassium())
+                .iron(nutrient.getIron())
+                .phosphorus(nutrient.getPhosphorus())
+                .sodium(nutrient.getSodium())
+                .vitaminA(nutrient.getVitaminA())
+                .vitaminC(nutrient.getVitaminC())
+                .vitaminD(nutrient.getVitaminD())
+                .cholesterol(nutrient.getCholesterol())
+                .acid(nutrient.getAcid())
+                .transFat(nutrient.getTransFat())
+                .build();
     }
 
-    public void diet(Double rate) {
-        this.kcal = multi(this.kcal, rate);
-        this.carbs = multi(this.carbs, rate);
-        this.protein = multi(this.protein, rate);
-        this.fat = multi(this.fat, rate);
-        this.pollination = multi(this.pollination, rate);
-        this.sugar = multi(this.sugar, rate);
-        this.dietaryFiber = multi(this.dietaryFiber, rate);
-        this.calcium = multi(this.calcium, rate);
-        this.potassium = multi(this.potassium, rate);
-        this.iron = multi(this.iron, rate);
-        this.phosphorus = multi(this.phosphorus, rate);
-        this.sodium = multi(this.sodium, rate);
-        this.vitaminA = multi(this.vitaminA, rate);
-        this.vitaminC = multi(this.vitaminC, rate);
-        this.vitaminD = multi(this.vitaminD, rate);
-        this.cholesterol = multi(this.cholesterol, rate);
-        this.acid = multi(this.acid, rate);
-        this.transFat = multi(this.transFat, rate);
+    public static BaseNutrient from(Member member, ModifyBaseRequestDto requestDto) {
+        return BaseNutrient.builder()
+                .member(member)
+                .kcal(requestDto.getKcal())
+                .carbs(requestDto.getCarbs())
+                .protein(requestDto.getProtein())
+                .fat(requestDto.getFat())
+                .pollination(requestDto.getPollination())
+                .sugar(requestDto.getSugar())
+                .dietaryFiber(requestDto.getDietaryFiber())
+                .calcium(requestDto.getCalcium())
+                .potassium(requestDto.getPotassium())
+                .iron(requestDto.getIron())
+                .phosphorus(requestDto.getPhosphorus())
+                .sodium(requestDto.getSodium())
+                .vitaminA(requestDto.getVitaminA())
+                .vitaminC(requestDto.getVitaminC())
+                .vitaminD(requestDto.getVitaminD())
+                .cholesterol(requestDto.getCholesterol())
+                .acid(requestDto.getAcid())
+                .transFat(requestDto.getTransFat())
+                .build();
     }
 
     public Double multi(Double nutrition, Double rate) {

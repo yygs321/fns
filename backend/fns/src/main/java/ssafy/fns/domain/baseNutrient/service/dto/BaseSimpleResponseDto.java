@@ -24,6 +24,9 @@ public class BaseSimpleResponseDto {
 
 
     public static BaseSimpleResponseDto from(BaseNutrient baseNutrient) {
+        if (baseNutrient == null) {
+            return null;
+        }
         return BaseSimpleResponseDto.builder()
                 .id(baseNutrient.getId())
                 .kcal(baseNutrient.getKcal())
