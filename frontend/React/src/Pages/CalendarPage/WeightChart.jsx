@@ -64,25 +64,28 @@ export function WeightChart() {
         console.log("성공여부 : ", response.data.success);
         if (response.data.success) {
           console.log("Response Data_1 : ", response.data.success);
-          console.log("Response Data_1 : ", response.data.message);
+          console.log("Response Data_2 : ", response.data.message);
           
-          console.log("체크_1");
           set현재체중(() => targetData.targetWeightResponseDto.currentWeight);
           set목표체중(() => targetData.targetWeightResponseDto.targetWeight);
           if (targetData.weightList) {
             setUserData(() => targetData.weightList);
           }
-          console.log("체크_2");
+          
           set기간(() => targetData.remainingDays);
           setPercentage(() => targetData.progressRatio);
+          console.log("Response Data_현재체중 : ", targetData.currentWeight);
+          console.log("Response Data_목표체중 : ", targetData.targetWeight);
+          console.log("Response Data_체중리스트_시간 : ", targetData.weightList.createdAt);
+          console.log("Response Data_체중리스트 : ", targetData.weightList.weight);
+          console.log("Response Data_남은날짜 : ", targetData.remainingDays);
+          console.log("Response Data_진행도 : ", targetData.progressRatio);
         }
       } catch (error) {
         console.error("Error while searching:", error);
       }
     };
-    console.log("체크_3");
     체중감량그래프API();
-    console.log("체크_4");
   }, [accessToken, SERVER_API_URL]);
 
   const data = {
@@ -96,7 +99,6 @@ export function WeightChart() {
       },
     ],
   };
-
   // const changeDayBefore = () => {
   //   const 어제 = 날짜.subtract(1, "day");
   //   if (!어제.isSame("1999-12-31", "day")) {

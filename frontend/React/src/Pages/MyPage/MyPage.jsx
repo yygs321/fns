@@ -169,6 +169,7 @@ const MyPage = () => {
             alt="User's Profile"
             src={profile.image}
             className="profile-avatar"
+            sx={{ width: "20rem", height: "20rem" }}
           />
 
           <label
