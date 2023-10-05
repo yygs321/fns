@@ -86,7 +86,7 @@ public class BaseServiceImpl implements BaseService {
         List<BaseNutrient> baseNutrientList = baseRepository.findAllByMemberIdAndCreatedAtOrderByCreatedAtDesc(
                 findMember.getId(), baseNutrientDate);
 
-        if (baseNutrientList == null) {
+        if (baseNutrientList == null || baseNutrientList.isEmpty()) {
             BaseResponseDto.from(null);
         }
 
