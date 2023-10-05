@@ -108,9 +108,18 @@ const MainPage = () => {
       const beforeData = res3.data.data;
 
       setCarouselData({
-        kcal: baseData.kcal - beforeData.kcal,
-        carbs: baseData.carbs - beforeData.carbs,
-        protein: baseData.protein - beforeData.protein,
+        kcal:
+          baseData.kcal - beforeData.kcal > 0
+            ? baseData.kcal - beforeData.kcal
+            : 0,
+        carbs:
+          baseData.carbs - beforeData.carbs > 0
+            ? baseData.carbs - beforeData.carbs
+            : 0,
+        protein:
+          baseData.protein - beforeData.protein > 0
+            ? baseData.protein - beforeData.protein
+            : 0,
       });
 
       setBaseKcalories(baseData.kcal);
