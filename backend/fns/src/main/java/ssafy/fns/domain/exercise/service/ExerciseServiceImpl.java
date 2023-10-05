@@ -63,14 +63,16 @@ public class ExerciseServiceImpl implements ExerciseService {
         Exercise exercise = exerciseRepository
                 .findFirstByExerciseDateAndMember_Id(requestDto.getExerciseDate(),
                         findMember.getId());
-        if (exercise == null) {
-            return ExerciseResponseDto.from(findMember, null, null);
-        }
-
-        List<Integer> sportsBookmarkList = exercise.getSportsBookmarkList();
 
         List<Double> exerciseTimeList = Arrays.asList(new Double[13]);
         Collections.fill(exerciseTimeList, 0.0);
+
+        if (exercise == null) {
+            return ExerciseResponseDto.from(findMember, findMember.getSportsBookmarkList(),
+                    exerciseTimeList);
+        }
+
+        List<Integer> sportsBookmarkList = exercise.getSportsBookmarkList();
         getExerciseTime(member, requestDto, exerciseTimeList);
 
         ExerciseResponseDto responseDto =
