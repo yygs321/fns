@@ -1,6 +1,7 @@
 package ssafy.fns.domain.member.service.dto;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,9 +17,12 @@ public class WeightResponseDto {
     private LocalDateTime createdAt;
 
     public static WeightResponseDto from(Double weight, LocalDateTime createdAt) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDateTime parsedCreatedAt = LocalDateTime.parse(createdAt.toString(), formatter);
+
         return WeightResponseDto.builder()
                 .weight(weight)
-                .createdAt(createdAt)
+                .createdAt(parsedCreatedAt)
                 .build();
     }
 }
