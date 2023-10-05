@@ -24,7 +24,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
                     + "    (SELECT i.date AS date FROM intake AS i\n"
                     + "    WHERE i.member_id = 4)\n"
                     + "    UNION\n"
-                    + "    (SELECT e.exerciseDate AS date FROM exercise AS e\n"
+                    + "    (SELECT e.exercise_date AS date FROM exercise AS e\n"
                     + "    WHERE e.member_id = 4)\n"
                     + ") AS combined\n"
                     + "WHERE DATE_FORMAT(combined.date, '%Y-%m') LIKE CONCAT('2023-10', '%')")
