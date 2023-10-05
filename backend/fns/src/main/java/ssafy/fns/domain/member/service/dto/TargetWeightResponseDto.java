@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import ssafy.fns.domain.member.entity.Member;
 import ssafy.fns.domain.member.entity.TargetWeight;
@@ -14,6 +15,7 @@ import ssafy.fns.domain.member.entity.TargetWeight;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Slf4j
 public class TargetWeightResponseDto {
 
     private Double initialWeight;
@@ -29,6 +31,7 @@ public class TargetWeightResponseDto {
         Double targetWeight = null; // 초기값으로 null 설정
         Double progressRatio = null; // 초기값으로 null 설정
         Long remainingDays = null; // 초기값으로 null 설정
+        Long duration = null;
 
         TargetWeight targetWeightEntity = member.getTargetWeight();
         if (targetWeightEntity != null) {
@@ -36,13 +39,14 @@ public class TargetWeightResponseDto {
             initialWeight = targetWeightEntity.getInitialWeight();
             progressRatio = getProgressRatio(currentWeight, targetWeight, initialWeight);
             remainingDays = getRemaingingDays(member);
+            duration = targetWeightEntity.getDietDuration();
         }
 
         return TargetWeightResponseDto.builder()
                 .initialWeight(initialWeight)
                 .currentWeight(currentWeight)
                 .targetWeight(targetWeight)
-                .duration(targetWeightEntity != null ? targetWeightEntity.getDietDuration() : null)
+                .duration(duration)
                 .remainingDays(remainingDays)
                 .progressRatio(progressRatio)
                 .build();
@@ -51,13 +55,14 @@ public class TargetWeightResponseDto {
     @NotNull
     private static Double getProgressRatio(Double currentWeight, Double targetWeight,
             Double initialWeight) {
-        Double progressRatio = 0.0;
-
-        if (currentWeight != targetWeight) {
-            progressRatio =
-                    ((initialWeight - currentWeight) / (initialWeight - targetWeight)) * 100;
+        if (initialWeight == targetWeight) {
+            return 100.0;
+        } else if (initialWeight > currentWeight) {
+            log.info(String.valueOf(initialWeight), currentWeight);
+            return 100.0 * (initialWeight - currentWeight) / (initialWeight - targetWeight);
+        } else {
+            return 0.0;
         }
-        return progressRatio;
     }
 
     @NotNull
