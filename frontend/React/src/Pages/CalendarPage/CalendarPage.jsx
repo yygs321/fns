@@ -72,9 +72,9 @@ const CalendarPage = () => {
   })
     .then(response => {
       // 서버 응답 데이터를 상태에 저장
-      set몸무게(response.data.weight);
-      set운동북마크(response.data.sportsBookmarkList);
-      set운동시간(response.data.exerciseTimeList);
+      set몸무게(response.data.data.weight);
+      set운동북마크(response.data.data.sportsBookmarkList);
+      set운동시간(response.data.data.exerciseTimeList);
       console.log(response);
     })
     .catch(error => {
