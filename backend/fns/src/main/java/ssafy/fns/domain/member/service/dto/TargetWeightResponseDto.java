@@ -16,6 +16,7 @@ import ssafy.fns.domain.member.entity.TargetWeight;
 @Builder
 public class TargetWeightResponseDto {
 
+    private Double initialWeight;
     private Double currentWeight;
     private Double targetWeight;
     private Long duration;
@@ -24,6 +25,7 @@ public class TargetWeightResponseDto {
 
     public static TargetWeightResponseDto from(Member member) {
         Double currentWeight = member.getCurrentWeight();
+        Double initialWeight = null;
         Double targetWeight = null; // 초기값으로 null 설정
         Double progressRatio = null; // 초기값으로 null 설정
         Long remainingDays = null; // 초기값으로 null 설정
@@ -31,12 +33,13 @@ public class TargetWeightResponseDto {
         TargetWeight targetWeightEntity = member.getTargetWeight();
         if (targetWeightEntity != null) {
             targetWeight = targetWeightEntity.getTargetWeight();
-            Double initialWeight = targetWeightEntity.getInitialWeight();
+            initialWeight = targetWeightEntity.getInitialWeight();
             progressRatio = getProgressRatio(currentWeight, targetWeight, initialWeight);
             remainingDays = getRemaingingDays(member);
         }
 
         return TargetWeightResponseDto.builder()
+                .initialWeight(initialWeight)
                 .currentWeight(currentWeight)
                 .targetWeight(targetWeight)
                 .duration(targetWeightEntity != null ? targetWeightEntity.getDietDuration() : null)

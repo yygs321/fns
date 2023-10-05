@@ -63,6 +63,7 @@ public class ExerciseServiceImpl implements ExerciseService {
         Exercise exercise = exerciseRepository
                 .findFirstByExerciseDateAndMember_Id(requestDto.getExerciseDate(),
                         findMember.getId());
+
         List<Double> exerciseTimeList = Arrays.asList(new Double[13]);
         Collections.fill(exerciseTimeList, 0.0);
 
