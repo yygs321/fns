@@ -40,12 +40,18 @@ async def load_food_data_to_redis():
     db = engineconn().sessionmaker()
     foods = db.query(Food).all()
 
+    keys = client.keys('food:*')
+
+    for key in keys:
+        client.delete(key)
+
     for food in foods:
         data_dict = {
             "food_id": food.food_id,
             "kcal": float(food.kcal),
             "carbs": float(food.carbs),
-            "protein": float(food.protein)
+            "protein": float(food.protein),
+            "name": food.name
         }
         redis_db.set("food:" + str(food.food_id), json.dumps(data_dict))
 
@@ -73,14 +79,23 @@ async def test(offset: Offset):
         kcal = food["kcal"]
         carbs = food["carbs"]
         protein = food["protein"]
+        name = food["name"]
+
         weight = recommend_food(user_diffs[0] - kcal, user_diffs[1] - carbs, user_diffs[2] - protein)
-        weights.append((weight, food_id))
+        accuracy = calculate_accuracy(weight, 1)
+        weights.append({
+            "accuracy": accuracy,
+            "name": name,
+            "kcal": kcal,
+            "carbs": carbs,
+            "protein": protein
+        })
 
-    weights.sort()
+    weights.sort(key=lambda x: x["accuracy"], reverse=True)
 
-    print(weights)
+    top_foods = weights[:5]
 
-    return {"추천 음식의 가중치, 추천 음식의 아이디 5개": weights[:5]}
+    return {"recommended_foods": top_foods}
 
 
 def recommend_food(calorie_diff, carb_diff, protein_diff, w_i=[1, 1, 1], λ=1):
@@ -98,3 +113,8 @@ def recommend_food(calorie_diff, carb_diff, protein_diff, w_i=[1, 1, 1], λ=1):
     W = sum([w * diff for w, diff in zip(w_i, diffs)]) + λ * balance_penalty
 
     return W
+
+
+# 가중치 W를 기반으로 음식의 일치율 측정
+def calculate_accuracy(w, alpha=1):
+    return 100 * math.exp(-alpha * w)
