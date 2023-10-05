@@ -3,6 +3,7 @@ package ssafy.fns.domain.member.service;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import java.io.IOException;
+import java.util.List;
 import java.util.regex.Pattern;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import ssafy.fns.domain.auth.entity.MailHistory;
 import ssafy.fns.domain.auth.repository.MailHistoryRepository;
 import ssafy.fns.domain.auth.repository.RefreshTokenRepository;
 import ssafy.fns.domain.auth.service.dto.TokenDto;
+import ssafy.fns.domain.food.repository.IntakeRepository;
 import ssafy.fns.domain.member.controller.dto.EmailDuplicationRequestDto;
 import ssafy.fns.domain.member.controller.dto.MemberProfileRequestDto;
 import ssafy.fns.domain.member.controller.dto.SignUpRequestDto;
@@ -26,9 +28,9 @@ import ssafy.fns.domain.member.entity.Provider;
 import ssafy.fns.domain.member.entity.Weight;
 import ssafy.fns.domain.member.repository.MemberRepository;
 import ssafy.fns.domain.member.repository.WeightRepository;
+import ssafy.fns.domain.member.service.dto.CalendarResponseDto;
 import ssafy.fns.domain.member.service.dto.MemberResponseDto;
 import ssafy.fns.global.config.RedisUtil;
-import ssafy.fns.global.config.S3Config;
 import ssafy.fns.global.exception.GlobalRuntimeException;
 
 @Service
@@ -49,6 +51,7 @@ public class MemberServiceImpl implements MemberService {
     private final WeightRepository weightRepository;
 
     private final AmazonS3Client amazonS3Client;
+    private final IntakeRepository intakeRepository;
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
@@ -158,8 +161,8 @@ public class MemberServiceImpl implements MemberService {
     @Override
     @Transactional
     public void uploadProfileImage(Member member, MultipartFile file) {
-        if(member == null){
-            throw new GlobalRuntimeException("인증 실패",HttpStatus.UNAUTHORIZED);
+        if (member == null) {
+            throw new GlobalRuntimeException("인증 실패", HttpStatus.UNAUTHORIZED);
         }
 
         Member findMember = getMemberById(member.getId());
@@ -173,14 +176,23 @@ public class MemberServiceImpl implements MemberService {
         metadata.setContentType(file.getContentType());
         metadata.setContentLength(file.getSize());
         try {
-            amazonS3Client.putObject(bucket, fileName,file.getInputStream(),metadata);
+            amazonS3Client.putObject(bucket, fileName, file.getInputStream(), metadata);
             fileUrl = amazonS3Client.getUrl(bucket, fileName).toString();
             findMember.updateProfileImageURL(fileUrl);
         } catch (IOException e) {
             e.printStackTrace();
-            throw new GlobalRuntimeException("파일 저장 실패",HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new GlobalRuntimeException("파일 저장 실패", HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
+    }
+
+    @Override
+    public CalendarResponseDto selectCalendarData(Member member, String calendarDate) {
+        Member findMember = memberRepository.findByEmail(member.getEmail());
+        List<String> monthlyRecords = memberRepository.findIntakeAndExerciseCreatedAtByMember_IdAndDate(
+                findMember.getId(), calendarDate);
+
+        return CalendarResponseDto.from(findMember, monthlyRecords);
     }
 
 
