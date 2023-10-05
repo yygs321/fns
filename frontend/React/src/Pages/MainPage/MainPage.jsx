@@ -18,7 +18,6 @@ import "../Common/CSS/BackgroundColor.css";
 import "../Common/CSS/ContentBox.css";
 
 import FloatingInputButton from "../Common/Component/FloatingInputButton";
-import { useSelector } from "react-redux";
 import axiosInstance from "../Common/Component/AxiosInstance";
 import RecommendCarousel from "./RecommendCarousel";
 import Loading from "../Common/Component/Loading";
@@ -44,9 +43,7 @@ const MainPage = () => {
   const [isLoading, setIsLoading] = useState(false); // 로딩
 
   const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
-  const accessToken = useSelector((state) => {
-    return state.auth.accessToken;
-  });
+  const accessToken = sessionStorage.getItem("accessToken");
 
   const now = new Date();
   const options = {

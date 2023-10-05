@@ -8,9 +8,8 @@ import { Grid, Typography } from "@mui/material";
 
 const KakaoCallback = () => {
   const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
-
-  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const params = new URL(window.location.href).searchParams;
@@ -31,13 +30,11 @@ const KakaoCallback = () => {
 
       const tokenData = res.data.data.tokenDto;
 
-      dispatch(
-        userLogin({
-          accessToken: tokenData.accessToken,
-          refreshToken: tokenData.refreshToken,
-          expirationTime: tokenData.expirationTime,
-        })
-      );
+      sessionStorage.setItem("accessToken", tokenData.accessToken);
+      sessionStorage.setItem("refreshToken", tokenData.refreshToken);
+      sessionStorage.setItem("expirationTime", tokenData.expirationTime);
+
+      dispatch(userLogin());
 
       if (tokenData.expirationTime < 200000) {
         await RefreshToken();

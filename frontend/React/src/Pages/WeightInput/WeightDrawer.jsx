@@ -8,14 +8,11 @@ import {
   TextField,
   Grid,
 } from "@mui/material";
-import { useSelector } from "react-redux";
 import axiosInstance from "../Common/Component/AxiosInstance";
 
 export default function WeightDrawer(props) {
   const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
-  const accessToken = useSelector((state) => {
-    return state.auth.accessToken;
-  });
+  const accessToken = sessionStorage.getItem("accessToken");
   const { drawerOpen, setDrawerOpen } = props;
   const now = new Date();
   // const options = {

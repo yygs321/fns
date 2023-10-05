@@ -16,8 +16,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { userLogout } from "../../Redux/actions/actions";
-import axios from "axios";
-import { useSelector } from "react-redux";
+import axiosInstance from "../Common/Component/AxiosInstance";
 import Loading from "../Common/Component/Loading";
 
 const MyPage = () => {
@@ -37,9 +36,9 @@ const MyPage = () => {
   });
 
   const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
-  const accessToken = useSelector((state) => state.auth.accessToken);
-  const refreshToken = useSelector((state) => state.auth.refreshToken);
-  const expirationTime = useSelector((state) => state.auth.expirationTime);
+  const accessToken = sessionStorage.getItem("accessToken");
+  const refreshToken = sessionStorage.getItem("refreshToken");
+  const expirationTime = sessionStorage.getItem("expirationTime");
 
   // const handleImageUpload = (event) => {
   //   const file = event.target.files[0];
@@ -55,7 +54,7 @@ const MyPage = () => {
     formData.append("profileImage", file);
 
     try {
-      const response = await axios.post(
+      const response = await axiosInstance.post(
         `${SERVER_API_URL}/members/image`,
         formData,
         {
@@ -85,12 +84,15 @@ const MyPage = () => {
 
   const handleLogout = () => {
     dispatch(userLogout());
+    sessionStorage.removeItem("accessToken");
+    sessionStorage.removeItem("refreshToken");
+    sessionStorage.removeItem("expirationTime");
     navigate("/");
   };
 
   const handleMemberWithdrawal = async () => {
     try {
-      const response = await axios.delete(`${SERVER_API_URL}/members`, {
+      const response = await axiosInstance.delete(`${SERVER_API_URL}/members`, {
         headers: {
           "X-FNS-ACCESSTOKEN": accessToken,
         },
@@ -103,6 +105,9 @@ const MyPage = () => {
 
       if (response.data.success) {
         alert("회원 탈퇴가 성공적으로 완료되었습니다.");
+        sessionStorage.removeItem("accessToken");
+        sessionStorage.removeItem("refreshToken");
+        sessionStorage.removeItem("expirationTime");
         dispatch(userLogout()); // 로그아웃 처리
         navigate("/");
       } else {
@@ -118,7 +123,7 @@ const MyPage = () => {
     setIsLoading(true);
     const fetchProfile = async () => {
       try {
-        const response = await axios.get(`${SERVER_API_URL}/members`, {
+        const response = await axiosInstance.get(`${SERVER_API_URL}/members`, {
           headers: {
             "X-FNS-ACCESSTOKEN": accessToken,
           },

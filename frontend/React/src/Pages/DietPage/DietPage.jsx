@@ -6,14 +6,11 @@ import NavigateBeforeRoundedIcon from "@mui/icons-material/NavigateBeforeRounded
 import NavigateNextRoundedIcon from "@mui/icons-material/NavigateNextRounded";
 import DietAccordion from "./DietAccordion";
 import axiosInstance from "../Common/Component/AxiosInstance";
-import { useSelector } from "react-redux";
 import Loading from "../Common/Component/Loading";
 
 const DietPage = () => {
   const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
-  const accessToken = useSelector((state) => {
-    return state.auth.accessToken;
-  });
+  const accessToken = sessionStorage.getItem("accessToken");
 
   const now = new Date();
   const before = new Date(now);

@@ -9,14 +9,10 @@ import { useNavigate } from "react-router-dom";
 
 // import Cat from "../../assets/Image/cat.jpg";
 import axiosInstance from "../Common/Component/AxiosInstance";
-import { useSelector } from "react-redux";
 
 const UserSearch = () => {
   const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
-  const accessToken = useSelector((state) => {
-    return state.auth.accessToken;
-  });
-
+  const accessToken = sessionStorage.getItem("accessToken");
   const [searchTerm, setSearchTerm] = useState("");
   const [addedFollow, setAddedFollow] = useState([]);
   const [searchResult, setSearchResult] = useState([]);

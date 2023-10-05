@@ -8,15 +8,12 @@ import CommunityBarGraph from "./CommunityBarGraph";
 import UsersTabs from "./UsersTabs";
 import axiosInstance from "../Common/Component/AxiosInstance";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 // import default_profile from "../../assets/Image/Profile/deafult_profile.jpg";
 import Loading from "../Common/Component/Loading";
 
 const CommunityPage = () => {
   const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
-  const accessToken = useSelector((state) => {
-    return state.auth.accessToken;
-  });
+  const accessToken = sessionStorage.getItem("accessToken");
 
   const now = new Date();
 
