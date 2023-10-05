@@ -66,7 +66,7 @@ public class WeightServiceImpl implements WeightService {
         List<Long> weightIdList = new ArrayList<>();
 
         if (targetWeight != null) {
-            weightIdList = weightRepository.findAllWeightIdByTargetWeightCreatAtAndMemberId(
+            weightIdList = weightRepository.findAllWeightIdByTargetWeightCreatAtAndMemberIdOrderByCreatedAt(
                     findMember.getId(), targetWeight.getCreatedAt());
         }
 
