@@ -495,6 +495,7 @@ const MainPage = () => {
                 height: "100%",
                 width: "100%",
                 boxShadow: "2px 2px 4px #a5a5a5",
+                marginBottom: "5vh",
               }}
             >
               <AccordionSummary
