@@ -51,7 +51,7 @@ const MyPage = () => {
     if (!file) return;
 
     const formData = new FormData();
-    formData.append("profileImage", file);
+    formData.append("file", file);
 
     try {
       const response = await axiosInstance.post(
@@ -174,7 +174,7 @@ const MyPage = () => {
             alt="User's Profile"
             src={profile.image}
             className="profile-avatar"
-            sx={{ width: "20rem", height: "20rem" }}
+            sx={{ width: "10rem", height: "10rem" }}
           />
 
           <label
