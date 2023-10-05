@@ -81,11 +81,11 @@ export function WeightChart() {
           );
           console.log(
             "Response Data_체중리스트_시간 : ",
-            targetData.weightList.targetWeightResponseDto.createdAt
+            targetData.weightList.createdAt
           );
           console.log(
             "Response Data_체중리스트 : ",
-            targetData.targetWeightResponseDto.weightList.weight
+            targetData.weightList.weight
           );
           console.log(
             "Response Data_남은날짜 : ",

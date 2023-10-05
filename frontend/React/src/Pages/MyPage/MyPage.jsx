@@ -54,7 +54,7 @@ const MyPage = () => {
     formData.append("file", file);
 
     try {
-      const response = await axiosInstance.post(
+      await axiosInstance.post(
         `${SERVER_API_URL}/members/image`,
         formData,
         {
@@ -65,20 +65,11 @@ const MyPage = () => {
         }
       );
 
-      if (response.data.success) {
-        const uploadedImageUrl = response.data.data.fileUrl;
-        setProfile((prevProfile) => ({
-          ...prevProfile,
-          image: uploadedImageUrl,
-        }));
-        alert("이미지가 성공적으로 업로드되었습니다.");
-      } else {
-        console.error("Failed to upload image:", response.data.message);
-        alert("이미지 업로드 중 오류가 발생했습니다. 다시 시도해 주세요.");
-      }
+      alert("이미지가 성공적으로 업로드되었습니다.");
+        // 페이지 새로고침
+        window.location.reload();
     } catch (error) {
-      console.error("Error while uploading image:", error);
-      alert("이미지 업로드 중 오류가 발생했습니다. 다시 시도해 주세요.");
+        console.error("Error while uploading image:", error)
     }
   };
 
