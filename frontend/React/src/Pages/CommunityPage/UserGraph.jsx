@@ -494,7 +494,7 @@ const UserGraph = (props) => {
                     item
                     container
                     xs={7}
-                    justifyContent={"center"}
+                    justifyContent={"flex-start"}
                     alignItems={"center"}
                   >
                     <Typography
@@ -609,7 +609,7 @@ const UserGraph = (props) => {
                     item
                     container
                     xs={7}
-                    justifyContent={"center"}
+                    justifyContent={"flex-start"}
                     alignItems={"center"}
                   >
                     <Typography
