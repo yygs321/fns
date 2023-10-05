@@ -17,10 +17,13 @@ const RecommendCarousel = (props) => {
     autoplaySpeed: 3000,
   };
 
+  const bodyWidth = document.body.offsetWidth;
+
   return (
     <Grid
+      item
       container
-      sx={{ maxWidth: "767px", height: "100%", zIndex: 999 }}
+      sx={{ maxWidth: bodyWidth, height: "100%", zIndex: 999 }}
       justifyContent={"center"}
       alignItems={"center"}
     >
@@ -34,7 +37,6 @@ const RecommendCarousel = (props) => {
       >
         <div
           style={{
-            position: "relative",
             width: "100%",
             height: "100%",
           }}
