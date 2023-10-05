@@ -58,11 +58,10 @@ const CalendarPage = () => {
   const [운동시간, set운동시간] = useState([]);
   const [몸무게, set몸무게] = useState("");
   const [날짜, set날짜] = useState(dayjs());
-  const [섭취량, set섭취량] = useState([]);
-  const [권장량, set권장량] = useState([]);
+  // const [섭취량, set섭취량] = useState([]);
+  // const [권장량, set권장량] = useState([]);
   const [영양데이터, set영양데이터] = useState([]);
   const 오늘 = dayjs();
-  // eslint-disable-next-line no-unused-vars
   const [calendarData, setCalendarData] = useState({});
   //axios 운동기록 데이터 입력 받기
   useEffect(() => {
@@ -98,8 +97,29 @@ const CalendarPage = () => {
           set몸무게(res1.data.data.weight);
           set운동북마크(res1.data.data.sportsBookmarkList);
           set운동시간(res1.data.data.exerciseTimeList);
-          set권장량(res2.data.data);
-          set섭취량(res3.data.data);
+          // set권장량(res2.data.data);
+          // set섭취량(res3.data.data);
+
+          set영양데이터({
+            칼로리: {
+              섭취량: res3.data.data.kcal,
+              권장량: res2.data.data.kcal,
+            },
+            탄수화물: {
+              섭취량: res3.data.data.carbs,
+              권장량: res2.data.data.carbs,
+            },
+            단백질: {
+              항목: "단백질",
+              섭취량: res3.data.data.protein,
+              권장량: res2.data.data.protein,
+            },
+            지방: {
+              항목: "지방",
+              섭취량: res3.data.data.fat,
+              권장량: res2.data.data.fat,
+            },
+          });
 
           console.log(res1);
           console.log(res2);
@@ -111,27 +131,6 @@ const CalendarPage = () => {
     };
     getAPI();
   }, [날짜]);
-
-  set영양데이터({
-    칼로리: {
-      섭취량: 섭취량.kcal,
-      권장량: 권장량.kcal,
-    },
-    탄수화물: {
-      섭취량: 섭취량.carbs,
-      권장량: 권장량.carbs,
-    },
-    단백질: {
-      항목: "단백질",
-      섭취량: 섭취량.protein,
-      권장량: 권장량.protein,
-    },
-    지방: {
-      항목: "지방",
-      섭취량: 섭취량.fat,
-      권장량: 권장량.fat,
-    },
-  });
 
   console.log(영양데이터);
 
@@ -153,27 +152,30 @@ const CalendarPage = () => {
 
   useEffect(() => {
     // 현재 선택된 날짜의 "YYYY-MM" 포맷으로 변경
-    // const formattedDate = 날짜.format("YYYY-MM");
-    // axios
-    //   .get(`${SERVER_API_URL}/members/calendar`, {
-    //     params: { date: formattedDate },
-    //     headers: {
-    //       "X-FNS-ACCESSTOKEN": accessToken,
-    //     },
-    //   })
-    //   .then((response) => {
-    //     if (response.data.success) {
-    //       const newCalendarData = {};
-    //       response.data.data.recordedDates.forEach((date) => {
-    //         // 각 날짜에 대해 1~99 사이의 랜덤 점수 할당
-    //         newCalendarData[date] = Math.floor(Math.random() * 99) + 1;
-    //       });
-    //       setCalendarData(newCalendarData);
-    //     }
-    //   })
-    //   .catch((error) => {
-    //     console.error("요청 실패:", error);
-    //   });
+    const formattedDate = 날짜.format("YYYY-MM");
+
+    axios
+      .get(`${SERVER_API_URL}/members/calendar`, {
+        params: { date: formattedDate },
+        headers: {
+          "X-FNS-ACCESSTOKEN": accessToken,
+        },
+      })
+      .then((response) => {
+        if (response.data.success) {
+          const newCalendarData = {};
+
+          response.data.data.recordedDates.forEach((date) => {
+            // 각 날짜에 대해 1~99 사이의 랜덤 점수 할당
+            newCalendarData[date] = Math.floor(Math.random() * 99) + 1;
+          });
+
+          setCalendarData(newCalendarData);
+        }
+      })
+      .catch((error) => {
+        console.error("요청 실패:", error);
+      });
   }, [날짜]);
 
   // 공휴일 데이터는 그냥 임시로 2023년 데이터 직접 입력, 제대로 한다면 공공데이터 API로 연동
