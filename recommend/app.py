@@ -21,6 +21,7 @@ class Offset(BaseModel):
     calorie: int
     carbohydrate: float
     protein: float
+    alpha: float
 
 
 metadata = MetaData()
@@ -82,7 +83,7 @@ async def test(offset: Offset):
         name = food["name"]
 
         weight = recommend_food(user_diffs[0] - kcal, user_diffs[1] - carbs, user_diffs[2] - protein)
-        accuracy = calculate_accuracy(weight, 1)
+        accuracy = calculate_accuracy(weight, offset.alpha)
         weights.append({
             "accuracy": accuracy,
             "name": name,
@@ -116,5 +117,5 @@ def recommend_food(calorie_diff, carb_diff, protein_diff, w_i=[1, 1, 1], λ=1):
 
 
 # 가중치 W를 기반으로 음식의 일치율 측정
-def calculate_accuracy(w, alpha=1):
+def calculate_accuracy(w, alpha):
     return 100 * math.exp(-alpha * w)
