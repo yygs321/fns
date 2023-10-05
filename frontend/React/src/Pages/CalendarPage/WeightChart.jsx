@@ -72,7 +72,7 @@ export function WeightChart() {
             setUserData(() => targetData.weightList);
           }
           
-          set기간(() => targetData.remainingDays);
+          set기간(() => targetData.targetWeightResponseDto.remainingDays);
           setPercentage(() => targetData.targetWeightResponseDto.progressRatio);
           console.log("Response Data_현재체중 : ", targetData.targetWeightResponseDto.currentWeight);
           console.log("Response Data_목표체중 : ", targetData.targetWeightResponseDto.targetWeight);
