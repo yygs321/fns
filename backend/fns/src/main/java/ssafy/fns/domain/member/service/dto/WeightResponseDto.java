@@ -19,7 +19,7 @@ public class WeightResponseDto {
     public static WeightResponseDto from(Double weight, LocalDateTime createdAt) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String parsedCreatedAt = createdAt.format(formatter);
-        
+
         return WeightResponseDto.builder()
                 .weight(weight)
                 .createdAt(parsedCreatedAt)
