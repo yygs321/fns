@@ -137,46 +137,19 @@ const MyCustomPage = () => {
     // 리셋 함수
     const resetValues = async () => {
         try {
-            const baseResponse = await axios.post(`${SERVER_API_URL}/base`, {}, {
+            await axios.post(`${SERVER_API_URL}/base`, {}, {
                 headers: {
                     "X-FNS-ACCESSTOKEN": accessToken,
                 },
             });
     
-            if (baseResponse.data.success) {
-                const data = baseResponse.data.data;
-    
-                setKcal(data.kcal);
-                setCarbs(data.carbs);
-                setProtein(data.protein);
-                setFat(data.fat);
-                setPollination(data.pollination); 
-                setSugar(data.sugar);
-                setDietaryFiber(data.dietaryFiber);
-                setCalcium(data.calcium);
-                setPotassium(data.potassium);
-                setIron(data.iron);
-                setPhosphorus(data.phosphorus);
-                setSodium(data.sodium);
-                setVitaminA(data.vitaminA); 
-                setVitaminC(data.vitaminC); 
-                setVitaminD(data.vitaminD); 
-                setCholesterol(data.cholesterol);
-                setAcid(data.acid);
-                setTransFat(data.transFat);
-            } else {
-                console.error("Failed to fetch base data:", baseResponse.data.message);
-                // If the data isn't directly updated, refresh the page
-                window.location.reload();
-            }
+            window.location.reload();
         } catch (error) {
-            console.error("Error while fetching base data on reset:", error);
+            console.error("Error while sending reset request:", error);
             window.location.reload();
         }
     };
     
-    
-
     return (
         <div className="gray-pages" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '92vh' }}>
             <div className="white-content-box" style={{ width: '80%', padding: '20px', backgroundColor: 'white', borderRadius: '10px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>
