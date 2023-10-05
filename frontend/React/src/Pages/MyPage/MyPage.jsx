@@ -5,11 +5,11 @@ import {
   ListItemIcon,
   Divider,
   Typography,
+  Avatar,
 } from "@mui/material";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import "./MyPage.css";
-import defaultProfileImg from "../../assets/Image/Profile/deafult_profile.jpg";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Collapse from "@mui/material/Collapse";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -18,6 +18,7 @@ import { useDispatch } from "react-redux";
 import { userLogout } from "../../Redux/actions/actions";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import Loading from "../Common/Component/Loading";
 
 const MyPage = () => {
   // const [uploadedImage, setUploadedImage] = useState(null);
@@ -25,9 +26,9 @@ const MyPage = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const [isLoading, setIsLoading] = useState(true);
   const [profile, setProfile] = useState({
-    image: defaultProfileImg,
+    image: null,
     nickname: "",
     age: 0,
     gender: "",
@@ -114,6 +115,7 @@ const MyPage = () => {
   };
 
   useEffect(() => {
+    setIsLoading(true);
     const fetchProfile = async () => {
       try {
         const response = await axios.get(`${SERVER_API_URL}/members`, {
@@ -126,7 +128,6 @@ const MyPage = () => {
           const { nickname, age, height, weight, gender, fileUrl } =
             response.data.data;
 
-          let userImage = fileUrl ? fileUrl : defaultProfileImg;
           setProfile((prevProfile) => ({
             ...prevProfile,
             nickname,
@@ -134,7 +135,7 @@ const MyPage = () => {
             height,
             weight,
             gender: gender === "FEMALE" ? "여" : "남", // gender 값에 따라 한글로 변환
-            image: userImage,
+            image: fileUrl || null,
           }));
         } else {
           console.error("Failed to fetch profile:", response.data.message);
@@ -142,11 +143,16 @@ const MyPage = () => {
       } catch (error) {
         console.error("Error while fetching profile:", error);
       }
+      setIsLoading(false);
     };
 
     fetchProfile();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div className="mypage-container">
@@ -159,9 +165,9 @@ const MyPage = () => {
             alignItems: "center",
           }}
         >
-          <img
-            src={profile.image}
+          <Avatar
             alt="User's Profile"
+            src={profile.image}
             className="profile-avatar"
           />
 
