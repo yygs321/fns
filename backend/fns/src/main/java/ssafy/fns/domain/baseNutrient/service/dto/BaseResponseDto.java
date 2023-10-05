@@ -51,6 +51,10 @@ public class BaseResponseDto {
     private Double transFat;
 
     public static BaseResponseDto from(BaseNutrient baseNutrient) {
+        if (baseNutrient == null) {
+            return null;
+        }
+
         return BaseResponseDto.builder()
                 .id(baseNutrient.getId())
                 .kcal(baseNutrient.getKcal())
