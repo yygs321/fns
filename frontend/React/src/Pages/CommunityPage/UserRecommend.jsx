@@ -1,12 +1,9 @@
 import React, { useState } from "react";
-
 import { Typography, Grid, Avatar, Button } from "@mui/material";
 
 const UserRecommend = (props) => {
   const { user } = props;
-
   const [addedFollow, setAddedFollow] = useState([]);
-
   const handleAddFollow = (user) => {
     setAddedFollow((prev) => [...prev, user.username]);
   };
@@ -45,7 +42,6 @@ const UserRecommend = (props) => {
         >
           <Avatar
             alt="MyName"
-            // src={user.profileImg}
             sx={{ width: "5rem", height: "5rem" }}
           />
         </Grid>

@@ -20,8 +20,8 @@ import axiosInstance from "../Common/Component/AxiosInstance";
 import Loading from "../Common/Component/Loading";
 
 const MyPage = () => {
-  // const [uploadedImage, setUploadedImage] = useState(null);
-  const [openNestedList, setOpenNestedList] = useState(false); // Nested List의 상태를 관리하는 state
+ 
+  const [openNestedList, setOpenNestedList] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -40,12 +40,7 @@ const MyPage = () => {
   const refreshToken = sessionStorage.getItem("refreshToken");
   const expirationTime = sessionStorage.getItem("expirationTime");
 
-  // const handleImageUpload = (event) => {
-  //   const file = event.target.files[0];
-  //   if (file) {
-  //     setUploadedImage(URL.createObjectURL(file));
-  //   }
-  // };
+
   const handleImageUpload = async (event) => {
     const file = event.target.files[0];
     if (!file) return;
@@ -66,7 +61,7 @@ const MyPage = () => {
       );
 
       alert("이미지가 성공적으로 업로드되었습니다.");
-        // 페이지 새로고침
+        
         window.location.reload();
     } catch (error) {
         console.error("Error while uploading image:", error)
@@ -99,7 +94,7 @@ const MyPage = () => {
         sessionStorage.removeItem("accessToken");
         sessionStorage.removeItem("refreshToken");
         sessionStorage.removeItem("expirationTime");
-        dispatch(userLogout()); // 로그아웃 처리
+        dispatch(userLogout()); 
         navigate("/");
       } else {
         alert("회원 탈퇴 중 오류가 발생했습니다. 다시 시도해 주세요.");
@@ -130,7 +125,7 @@ const MyPage = () => {
             age,
             height,
             weight,
-            gender: gender === "FEMALE" ? "여" : "남", // gender 값에 따라 한글로 변환
+            gender: gender === "FEMALE" ? "여" : "남", 
             image: fileUrl || null,
           }));
         } else {

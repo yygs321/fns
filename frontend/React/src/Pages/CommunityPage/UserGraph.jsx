@@ -15,8 +15,6 @@ import {
 import CommunityBarGraph from "./CommunityBarGraph";
 import axiosInstance from "../Common/Component/AxiosInstance";
 
-// 아침, 점심, 저녁, 간식이 같은 형식으로 반복하니까 API 연결하면서 중복 코드 줄이기?
-
 const UserGraph = (props) => {
   const { user, index, selectedUser, setSelectedUser } = props;
 
@@ -45,7 +43,7 @@ const UserGraph = (props) => {
   };
 
   const handleCancelFollowAxios = async () => {
-    // 여기다 팔로우 삭제 api
+
     try {
       const res = await axiosInstance({
         method: "delete",
@@ -106,7 +104,7 @@ const UserGraph = (props) => {
           aria-controls="panel1bh-content"
           id="panel1bh-header"
           sx={{
-            alignItems: "center", // 가운데 정렬
+            alignItems: "center", 
             paddingBottom: "0.5rem",
             px: "0px",
           }}
@@ -127,8 +125,6 @@ const UserGraph = (props) => {
             >
               <Avatar
                 alt="MyName"
-                // 프로필 이미지 없으면 그냥 회색 이미지로 들어감
-                // src={user.profileImg}
                 sx={{ width: "5rem", height: "5rem" }}
               />
             </Grid>

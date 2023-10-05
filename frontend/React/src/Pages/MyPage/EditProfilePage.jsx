@@ -18,16 +18,16 @@ const EditProfilePage = () => {
   const [height, setHeight] = useState("");
   const [weight, setWeight] = useState("");
   const [age, setAge] = useState("");
-  const [openModal, setOpenModal] = useState(false); // 모달 상태 관리
+  const [openModal, setOpenModal] = useState(false); 
   const [프로필공개여부, set프로필공개여부] = useState(true);
   const navigate = useNavigate();
   const timeoutRef = useRef(null);
   const [닉네임확인, set닉네임확인] = useState(false);
-  // const [닉네임오류, set닉네임오류] = useState(undefined);
+ 
   const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
   const accessToken = sessionStorage.getItem("accessToken");
   const handleModalClose = () => {
-    clearTimeout(timeoutRef.current); // setTimeout 취소
+    clearTimeout(timeoutRef.current); 
     navigate("/mypage");
   };
 
@@ -56,7 +56,7 @@ const EditProfilePage = () => {
       });
 
       if (res.data.success) {
-        // 만약 프로필 저장 성공하면 base등록
+       
         const baseResponse = await axiosInstance({
           method: "post",
           url: `${SERVER_API_URL}/base`,
@@ -66,14 +66,14 @@ const EditProfilePage = () => {
           data: {},
         });
 
-        // base 등록 성공시 콘솔로그
+       
         if (baseResponse.data.success) {
           console.log("base 등록 성공!");
         } else {
           console.warn("base 등록 실패");
         }
 
-        setOpenModal(true); // 다 등록되면 모달 띄우기
+        setOpenModal(true);
         timeoutRef.current = setTimeout(() => {
           navigate("/mypage");
         }, 1000);
@@ -81,7 +81,7 @@ const EditProfilePage = () => {
       }
     } catch (err) {
       console.log(err);
-      // Handle errors here
+   
     }
   };
 
@@ -99,10 +99,10 @@ const EditProfilePage = () => {
       });
       if (중복체크결과.data.success) {
         set닉네임확인(true);
-        // set닉네임오류(undefined);
+        
       } else {
         set닉네임확인(false);
-        // set닉네임오류(중복체크결과.data.message);
+       
       }
     } catch (err) {
       console.log(err);

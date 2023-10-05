@@ -3,8 +3,6 @@ import "chart.js/auto";
 import { Line } from "react-chartjs-2";
 import { Typography, Divider, Grid, LinearProgress, Box } from "@mui/material";
 import axios from "axios";
-// import NavigateBeforeRoundedIcon from "@mui/icons-material/NavigateBeforeRounded";
-// import NavigateNextRoundedIcon from "@mui/icons-material/NavigateNextRounded";
 
 export const options = {
   maintainAspectRatio: false,
@@ -90,19 +88,6 @@ export function WeightChart() {
       },
     ],
   };
-  // const changeDayBefore = () => {
-  //   const 어제 = 날짜.subtract(1, "day");
-  //   if (!어제.isSame("1999-12-31", "day")) {
-  //     set날짜(어제);
-  //   }
-  // };
-  // const changeDayAfter = () => {
-  //   const 내일 = 날짜.add(1, "day");
-  //   if (내일 <= 오늘) {
-  //     set날짜(내일);
-  //   }
-  // };
-
   return (
     <div
       className="white-content-box"
@@ -251,8 +236,7 @@ export function WeightChart() {
             backgroundColor: "#e7e7e7",
             "& .MuiLinearProgress-bar": {
               background: "linear-gradient(to right, #14caa0, #55ffd7)",
-              // 그라데이션 색상 설정
-              borderRadius: "20px", // 바의 radius 설정
+              borderRadius: "20px", 
             },
           }}
         />

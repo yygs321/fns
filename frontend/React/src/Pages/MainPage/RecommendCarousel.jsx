@@ -28,7 +28,7 @@ const RecommendCarousel = (props) => {
       justifyContent={"center"}
       alignItems={"center"}
     >
-      {/* 세로 중앙 정렬 하려면 아래 div */}
+     
       <Grid
         container
         item
@@ -64,9 +64,7 @@ const RecommendCarousel = (props) => {
                     textAlign={"center"}
                   >
                     <Typography
-                      // whiteSpace="nowrap"
-                      // overflow="hidden"
-                      // textOverflow="ellipsis"
+                
                       fontSize={"1.4rem"}
                     >
                       {food.name}

@@ -15,17 +15,10 @@ export default function WeightDrawer(props) {
   const accessToken = sessionStorage.getItem("accessToken");
   const { drawerOpen, setDrawerOpen } = props;
   const now = new Date();
-  // const options = {
-  //   year: "2-digit",
-  //   month: "numeric",
-  //   day: "numeric",
-  //   weekday: "short",
-  // };
-  // const today = now.toLocaleDateString("ko-KR", options).split(" ");
 
   const year = now.getFullYear();
-  const month = (now.getMonth() + 1).toString().padStart(2, "0"); // 월은 0부터 시작하므로 1을 더하고 두 자리로 포맷팅합니다.
-  const day = now.getDate().toString().padStart(2, "0"); // 일자를 두 자리로 포맷팅합니다.
+  const month = (now.getMonth() + 1).toString().padStart(2, "0");  
+  const day = now.getDate().toString().padStart(2, "0"); 
 
   // eslint-disable-next-line no-unused-vars
   const formattedToday = `${year}-${month}-${day}`;
@@ -41,7 +34,6 @@ export default function WeightDrawer(props) {
   const [기간, set기간] = useState("");
   const [입력기간, set입력기간] = useState("");
 
-  // 기간 주 단위로 입력받고, 남은 기간은 몇 주 몇 일 단위로 보여줘야 할 듯.
 
   // eslint-disable-next-line no-unused-vars
   const 체중데이터받기 = async () => {
@@ -61,9 +53,7 @@ export default function WeightDrawer(props) {
         set다이어트모드(true);
       }
 
-      // set체중(
-      //   res.data.data.weightList ? res.data.data.weightList[0].weight : ""
-      // );
+    
       set시작체중(targetData.initialWeight || "");
       set체중(targetData.currentWeight || "");
       set목표체중(targetData.targetWeight || "");
@@ -130,10 +120,9 @@ export default function WeightDrawer(props) {
 
   const 체중입력하기 = async () => {
     try {
-      // 체중등록()과 기준영양소등록() 함수를 병렬로 실행
+     
       await Promise.all([체중등록(), 기준영양소등록()]);
 
-      // 두 작업이 모두 완료된 후에 다른 로직을 실행
       체중데이터받기();
       set입력모달열기((data) => !data);
     } catch (err) {
@@ -209,7 +198,6 @@ export default function WeightDrawer(props) {
         container
         justifyContent={"center"}
         alignItems={"center"}
-        // sx={{ height: "100%" }}
       >
         <Grid
           container
@@ -319,7 +307,7 @@ export default function WeightDrawer(props) {
                         <Typography sx={{ marginTop: "1vh" }} fontSize="1.5rem">
                           {시작체중} kg
                         </Typography>
-                        {/* 시작 체중은 나중에 바꿔야됨 */}
+                      
                       </Grid>
                     </Grid>
                     <Grid
@@ -427,7 +415,7 @@ export default function WeightDrawer(props) {
             variant="contained"
             className="목표버튼"
             onClick={목표설정모달}
-            // disabled={체중 === "" ? true : false}
+         
             sx={{
               color: "white",
               fontSize: "1.4rem",
@@ -450,7 +438,7 @@ export default function WeightDrawer(props) {
                 width: "80%",
                 maxWidth: "700px",
                 bgcolor: "background.paper",
-                // border: "2px solid #000",
+             
                 boxShadow: 24,
                 p: 2,
                 top: "50%",
@@ -545,7 +533,7 @@ export default function WeightDrawer(props) {
               </Grid>
             </Box>
           </Modal>
-          {/* 경계선 */}
+      
           <Modal
             open={목표모달열기}
             onClose={목표설정모달닫기}
@@ -557,7 +545,6 @@ export default function WeightDrawer(props) {
                 width: "80%",
                 maxWidth: "700px",
                 bgcolor: "background.paper",
-                // border: "2px solid #000",
                 boxShadow: 24,
                 p: 2,
                 top: "50%",

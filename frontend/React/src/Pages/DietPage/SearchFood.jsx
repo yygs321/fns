@@ -17,8 +17,6 @@ const SearchFood = () => {
 
   const [searchTerm, setSearchTerm] = useState("");
 
-  console.log(searchTerm);
-
   const nowDietList = useSelector((state) => {
     return state.diet.nowDiet;
   });
@@ -30,22 +28,7 @@ const SearchFood = () => {
   const state = location.state;
 
   const [searchResult, setSearchResult] = useState([
-    // { name: "치킨버거", kcal: 10, carb: 20, prot: 20, prov: 20 },
-    // { name: "새우버거", kcal: 11, carb: 20, prot: 20, prov: 20 },
-    // { name: "야옹이", kcal: 15, carb: 20, prot: 20, prov: 20 },
-    // { name: "버거킹", kcal: 5, carb: 20, prot: 20, prov: 20 },
-    // { name: "치킨", kcal: 10, carb: 20, prot: 20, prov: 20 },
-    // { name: "새우", kcal: 11, carb: 20, prot: 20, prov: 20 },
-    // { name: "야옹", kcal: 15, carb: 20, prot: 20, prov: 20 },
-    // { name: "버거", kcal: 5, carb: 20, prot: 20, prov: 20 },
-    // { name: "치거", kcal: 10, carb: 20, prot: 20, prov: 20 },
-    // { name: "새거", kcal: 11, carb: 20, prot: 20, prov: 20 },
-    // { name: "야이", kcal: 15, carb: 20, prot: 20, prov: 20 },
-    // { name: "버킹", kcal: 5, carb: 20, prot: 20, prov: 20 },
-    // { name: "킨거", kcal: 10, carb: 20, prot: 20, prov: 20 },
-    // { name: "우버", kcal: 11, carb: 20, prot: 20, prov: 20 },
-    // { name: "이", kcal: 15, carb: 20, prot: 20, prov: 20 },
-    // { name: "거", kcal: 5, carb: 20, prot: 20, prov: 20 },
+   
   ]);
 
   const goBackPage = () => {
@@ -53,7 +36,7 @@ const SearchFood = () => {
   };
 
   const handleSearchFood = async () => {
-    // 여기다 검색 api
+  
     try {
       const res = await axiosInstance({
         method: "get",
@@ -66,7 +49,6 @@ const SearchFood = () => {
         },
       });
 
-      console.log(res.data);
 
       if (res.data.success) {
         setSearchResult(res.data.data);
@@ -98,7 +80,7 @@ const SearchFood = () => {
     dispatch(deleteFromDiet(one));
   };
 
-  // 검색창 포커스되면 배경색 변하게 하기
+ 
   const [isFocused, setIsFocused] = useState(false);
 
   const handleFocus = () => {
@@ -254,7 +236,6 @@ const SearchFood = () => {
                 variant="caption"
                 component="div"
                 fontSize={"1.1rem"}
-                // fontWeight={"bold"}
               >
                 {one.kcal} kcal
               </Typography>

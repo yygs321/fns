@@ -1,68 +1,12 @@
 import React, { useState } from "react";
-
 import PropTypes from "prop-types";
 import { Tabs, Tab, Box } from "@mui/material";
-
 import UserGraph from "./UserGraph";
 import UserRecommend from "./UserRecommend";
 import default_profile from "../../assets/Image/Profile/deafult_profile.jpg";
 
-// import Cat from "../../assets/Image/cat.jpg";
-
 const UsersTabs = (props) => {
   const { followees } = props;
-
-  // const [recommendedUsers, setRecommendedUsers] = useState([]);
-  // const followees = [
-  //   {
-  //     username: "댕냥이",
-  //     profileImg: default_profile,
-  //     maxKcal: 2200,
-  //     nowKcal: 2200,
-  //     maxcarb: 200,
-  //     nowcarb: 200,
-  //     maxprot: 200,
-  //     nowprot: 200,
-  //     maxprov: 200,
-  //     nowprov: 200,
-  //   },
-  //   {
-  //     username: "콩냥이",
-  //     profileImg: default_profile,
-  //     maxKcal: 2000,
-  //     nowKcal: 2500,
-  //     maxcarb: 200,
-  //     nowcarb: 250,
-  //     maxprot: 200,
-  //     nowprot: 250,
-  //     maxprov: 200,
-  //     nowprov: 250,
-  //   },
-  //   {
-  //     username: "활냥이",
-  //     profileImg: default_profile,
-  //     maxKcal: 5000,
-  //     nowKcal: 2000,
-  //     maxcarb: 500,
-  //     nowcarb: 200,
-  //     maxprot: 500,
-  //     nowprot: 200,
-  //     maxprov: 500,
-  //     nowprov: 200,
-  //   },
-  //   {
-  //     username: "물냥이",
-  //     profileImg: default_profile,
-  //     maxKcal: 2000,
-  //     nowKcal: 1800,
-  //     maxcarb: 200,
-  //     nowcarb: 180,
-  //     maxprot: 200,
-  //     nowprot: 180,
-  //     maxprov: 200,
-  //     nowprov: 180,
-  //   },
-  // ];
 
   const recommendedUsers = [
     { username: "짭냥이", profileImg: default_profile, old: 10, BMI: 30 },

@@ -1,5 +1,4 @@
 import React, {
-  // memo, useEffect,
   useState,
 } from "react";
 
@@ -60,8 +59,8 @@ const DietAccordion = (props) => {
           aria-controls="panel1bh-content"
           id="panel1bh-header"
           sx={{
-            flexDirection: "column", // 아이콘을 아래로 이동하기 위해 컨테이너 방향을 column으로 변경
-            alignItems: "center", // 가운데 정렬
+            flexDirection: "column", 
+            alignItems: "center",
             paddingBottom: "0.5rem",
           }}
         >

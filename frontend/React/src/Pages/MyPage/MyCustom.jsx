@@ -78,15 +78,15 @@ const MyCustomPage = () => {
         fetchBaseData();
     }, [accessToken, SERVER_API_URL]); 
 
-    const [openModal, setOpenModal] = useState(false); // 모달 상태 관리
+    const [openModal, setOpenModal] = useState(false); 
     const navigate = useNavigate();
     const timeoutRef = useRef(null);
 
-    const [tooltipOpen, setTooltipOpen] = useState(false); // 툴팁의 상태를 관리
+    const [tooltipOpen, setTooltipOpen] = useState(false); 
 
     const handleSave = async () => {
         try {
-            // 슬라이더에서 조절한 값을 포함한 데이터 생성
+           
             const requestData = {
                 acid: acid,
                 calcium: calcium,
@@ -108,7 +108,7 @@ const MyCustomPage = () => {
                 vitaminD: vitaminD,
             };
     
-            // 서버에 저장 요청
+           
             const response = await axios.post(`${SERVER_API_URL}/base/update`, requestData, {
                 headers: {
                     'X-FNS-ACCESSTOKEN': accessToken,
@@ -134,7 +134,7 @@ const MyCustomPage = () => {
         clearTimeout(timeoutRef.current);
         navigate("/mypage");
     };
-    // 리셋 함수
+   
     const resetValues = async () => {
         try {
             await axios.post(`${SERVER_API_URL}/base`, {}, {
@@ -161,7 +161,6 @@ const MyCustomPage = () => {
                 </IconButton>
             </Tooltip>
 
-            {/* 리셋버튼 */}
             <IconButton size="small" style={{marginLeft: '10px'}} onClick={resetValues}>  
                 <ReplayIcon />
             </IconButton>

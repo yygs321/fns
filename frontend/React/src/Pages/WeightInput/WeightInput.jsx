@@ -197,7 +197,7 @@ const WeightInput = () => {
             </div>
           </Box>
         </Modal>
-        {/* 경계선 */}
+      
         <Modal
           open={목표모달열기}
           onClose={목표설정모달}

@@ -13,9 +13,9 @@ const BarGraph = (props) => {
       targetValue = 100;
     } else {
       targetValue = (nutrient / maxNutrient) * 100;
-    } // ProgressBar가 도달해야 할 값
+    } 
     let currentValue = 0;
-    const animationDuration = 500; // 몇 초 동안 애니메이션 실행
+    const animationDuration = 500; 
 
     const interval = setInterval(() => {
       if (currentValue < targetValue) {
@@ -26,12 +26,12 @@ const BarGraph = (props) => {
         }
         setNewValue(Math.round((currentValue / 100) * maxNutrient));
       } else {
-        clearInterval(interval); // 목표 값에 도달하면 애니메이션 중지
+        clearInterval(interval); 
       }
-    }, animationDuration / 100); // 애니메이션 속도 계산
+    }, animationDuration / 100);
 
     return () => {
-      clearInterval(interval); // 컴포넌트가 언마운트될 때 인터벌 정리
+      clearInterval(interval); 
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -70,8 +70,8 @@ const BarGraph = (props) => {
                   ? "linear-gradient(to right,#e05750, #ffd8d0)"
                   : nutrient / maxNutrient >= 0.5
                   ? "linear-gradient(to right, #14caa0, #55ffd7)"
-                  : "linear-gradient(to right, #4d66e2, #87d0f8)", // 그라데이션 색상 설정
-              borderRadius: "20px", // 바의 radius 설정
+                  : "linear-gradient(to right, #4d66e2, #87d0f8)",
+              borderRadius: "20px", 
             },
           }}
           value={

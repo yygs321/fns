@@ -40,7 +40,7 @@ export default function FloatingInputButton() {
       <Box
         sx={{
           bottom: "10vh",
-          right: isSmallScreen ? "0" : "10vw", // 일단 제한 크기보다 큰 곳에선 화면 밖으로 빼기
+          right: isSmallScreen ? "0" : "10vw", 
           height: "20vh",
           width: "10vw",
           transform: "translateZ(0px)",
@@ -58,7 +58,6 @@ export default function FloatingInputButton() {
           }}
           icon={
             <CreateRoundedIcon
-            //  sx={{ color: "white" }}
             />
           }
           onClick={handleDialButton}
@@ -88,7 +87,7 @@ export default function FloatingInputButton() {
                 "&:hover": {
                   backgroundColor: theme.palette.primary.dark,
                 },
-                // color: "white"
+      
               }}
             />
           ))}

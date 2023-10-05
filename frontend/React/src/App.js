@@ -11,7 +11,6 @@ import Info from "./Pages/LoginPage/InfoPage";
 import DietPage from "./Pages/DietPage/DietPage";
 import DietInputPage from "./Pages/DietPage/DietInputPage";
 import SearchFoodPage from "./Pages/SearchFoodPage/SearchFoodPage";
-// import WeightInput from "./Pages/WeightInput/WeightInput";
 import SearchFood from "./Pages/DietPage/SearchFood";
 import FoodDetail from "./Pages/SearchFoodPage/FoodDetail";
 import SportsPage from "./Pages/SportsPage/SportsPage";
@@ -31,11 +30,10 @@ function App() {
       document.body.style.height = window.innerHeight + "px";
     };
 
-    // 페이지 로드시와 화면 크기 변경시 높이를 설정
     window.addEventListener("load", setBodyHeight);
     window.addEventListener("resize", setBodyHeight);
 
-    // 컴포넌트 언마운트시 이벤트 리스너 제거
+   
     return () => {
       window.removeEventListener("load", setBodyHeight);
       window.removeEventListener("resize", setBodyHeight);
@@ -46,15 +44,13 @@ function App() {
     return state.auth.isLogin;
   });
 
-  // 추후에 로그인 기능 활성화되면 수정, 로그인 체크해서 로그인 안 돼있으면 로그인 페이지로 보내야됨.
-  // 또 로그인이 안 돼있으면 FooterBar가 보이지 않도록 처리해야됨.
+  
 
   return (
     <div
       className="service-display"
       style={{
         width: "100%",
-        // height: "100%",
         minHeight: isLogin ? "92vh" : "100vh",
         maxWidth: "767px",
         margin: "0 auto",

@@ -50,11 +50,10 @@ const SearchFoodPage = () => {
   const activeFilters = Object.keys(filters).filter((key) => filters[key]);
 
   const handleBackClick = () => {
-    // 검색창만 초기화
     setSearchTerm("");
   };
 
-  // 검색창 포커스되면 배경색 변하게 하기
+
   const [isFocused, setIsFocused] = useState(false);
 
   const handleFocus = () => {
@@ -146,7 +145,6 @@ const SearchFoodPage = () => {
                 <SearchIcon
                   color="text.secondary"
                   onClick={handleSearch}
-                  // onClick={handleSearchFollow}
                 />
               ),
               sx: {
@@ -166,7 +164,6 @@ const SearchFoodPage = () => {
             maxRows={1}
             onChange={(e) => setSearchTerm(e.target.value)}
             value={searchTerm}
-            // onKeyUp={handlePressEnter}
             onFocus={handleFocus}
             onBlur={handleBlur}
           />
@@ -181,7 +178,7 @@ const SearchFoodPage = () => {
             style={{
               overflowX: "scroll",
               width: "100%",
-              whiteSpace: "nowrap", // 텍스트가 한 줄로 유지되도록 설정
+              whiteSpace: "nowrap", 
               height: "5vh",
               marginBottom: "1vh",
             }}
@@ -227,7 +224,6 @@ const SearchFoodPage = () => {
             style={{ height: "66vh", overflowY: "scroll" }}
           >
             <FilteredSearchResults data={searchResults} filters={filters} />
-            {/* <FilteredSearchResults data={searchResults} /> */}
           </div>
         </div>
       ) : (

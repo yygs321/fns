@@ -5,7 +5,7 @@ import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
 import DirectionsBikeIcon from "@mui/icons-material/DirectionsBike";
 import HikingIcon from "@mui/icons-material/Hiking";
 import PoolIcon from "@mui/icons-material/Pool";
-import AccessibilityNewIcon from "@mui/icons-material/AccessibilityNew"; //줄넘기 이 아이콘으로 대체
+import AccessibilityNewIcon from "@mui/icons-material/AccessibilityNew"; 
 import StairsIcon from "@mui/icons-material/Stairs";
 import SelfImprovementIcon from "@mui/icons-material/SelfImprovement";
 import SportsSoccerIcon from "@mui/icons-material/SportsSoccer";
@@ -16,10 +16,9 @@ import SportsGolfIcon from "@mui/icons-material/SportsGolf";
 import NavigateBeforeRoundedIcon from "@mui/icons-material/NavigateBeforeRounded";
 import NavigateNextRoundedIcon from "@mui/icons-material/NavigateNextRounded";
 
-// 페이지 들어올 때 서버에 요청해서 저장된 내용 불러옴
 const handleSaveData = () => {
-  // 여기에 나중에 API 연결 코드를 작성하면 됩니다.
-  console.log("데이터가 저장되었습니다."); // 임시 메시지
+  
+  console.log("데이터가 저장되었습니다.");
 };
 
 const exerciseResponseDto = {
@@ -39,7 +38,7 @@ const sportIcons = [null, <DirectionsRunIcon fontSize="large" />, <DirectionsBik
 ];
 
 export const sportsData = exerciseResponseDto.sportsMetValue.map((met, index) => {
-  if (index === 0) return null; // 0번 인덱스는 사용하지 않습니다.
+  if (index === 0) return null; 
 
   const kcalPerHour = (3.5 * met * exerciseResponseDto.weight * 60) / 1000 * 5;
   return {
@@ -117,12 +116,12 @@ const SportItem = ({
 const SportsPage = () => {
   const [times, setTimes] = useState({});
   const [isEditMode, setEditMode] = useState(false);
-  // 체크된 스포츠 편집. 즐겨찾기
+ 
   const [checkedSports, setCheckedSports] = useState(
     sportsData.reduce((acc, sport, index) => {
       return {
         ...acc,
-        [sport.name]: exerciseResponseDto.sportsBookmarkList[index + 1] === 1,  // 1이면 true, 0이면 false
+        [sport.name]: exerciseResponseDto.sportsBookmarkList[index + 1] === 1,
       };
     }, {})
   );
@@ -282,7 +281,7 @@ const SportsPage = () => {
         </Grid>
       </Grid>
 
-      {/* Box 1 */}
+
       <div
         style={{
           width: "90%",
@@ -411,7 +410,7 @@ const SportsPage = () => {
         </Grid>
       </div>
 
-      {/* Box 2 */}
+
       <div
         style={{
           width: "100%",

@@ -10,11 +10,11 @@ import {
 const FoodButtonGroup = (props) => {
   const { one, index } = props;
 
-  const [alignment, setAlignment] = useState("100%"); // 이거 하나로 두니까 다같이 바뀌므로 이거 수정해야됨
+  const [alignment, setAlignment] = useState("100%"); 
 
   const handleChange = (event, newAlignment) => {
     if (newAlignment === null) {
-      // 선택 해제를 막기 위해 현재 값으로 유지
+    
       newAlignment = alignment;
     }
     setAlignment(newAlignment);

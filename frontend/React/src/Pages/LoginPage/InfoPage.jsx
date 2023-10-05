@@ -24,8 +24,6 @@ function 닉네임확인함수(nickname) {
   return regex.test(nickname);
 }
 
-// 나중에 저장 버튼에서 모두 다 입력했는지 체크해야됨
-
 const InfoPage = () => {
   const dispatch = useDispatch();
   const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
@@ -80,17 +78,17 @@ const InfoPage = () => {
   const navigate = useNavigate();
 
   const 저장버튼 = async () => {
-    // 닉네임 입력 안 했음
+    
     if (닉네임) {
-      // 닉네임 확인 안 했음
+      
       if (닉네임확인) {
-        // 나이 입력 안 했음
+       
         if (나이) {
-          // 키 입력 안 했음
+          
           if (키) {
-            // 체중 입력 안 했음
+           
             if (체중) {
-              // 성별 안 고름
+              
               if (성별) {
                 try {
                   const res = await axiosInstance({
@@ -113,7 +111,7 @@ const InfoPage = () => {
                   console.log(res.data);
 
                   if (res.data.success) {
-                    // base 등록
+                   
                     const baseResponse = await axiosInstance({
                       method: "post",
                       url: `${SERVER_API_URL}/base`,
@@ -189,7 +187,7 @@ const InfoPage = () => {
         set프로필모달("이미 등록된 닉네임입니다.");
       }
     } else {
-      // 닉네임 양식 맞춰주라는 이야기
+      
       set닉네임오류("닉네임 형식이 잘못됐습니다.");
       set프로필모달("잘못된 닉네임입니다.");
     }
@@ -254,7 +252,7 @@ const InfoPage = () => {
                 color="primary"
                 type="text"
                 value={닉네임}
-                // label="닉네임"
+              
 
                 className="닉네임입력"
                 onChange={닉네임입력}
@@ -339,7 +337,6 @@ const InfoPage = () => {
                 variant="outlined"
                 color="primary"
                 type="number"
-                // label="나이"
                 value={나이}
                 className="나이입력"
                 onChange={나이입력}
@@ -383,7 +380,6 @@ const InfoPage = () => {
                 color="primary"
                 type="number"
                 value={키}
-                // label="키"
 
                 className="키입력"
                 onChange={키입력}
@@ -428,7 +424,6 @@ const InfoPage = () => {
                 color="primary"
                 type="number"
                 value={체중}
-                // label="체중"
 
                 className="체중입력"
                 onChange={체중입력}
@@ -446,7 +441,6 @@ const InfoPage = () => {
         <Grid
           container
           sx={{ mt: 2 }}
-          //  sx={{ ml: 3, mr: 2 }}
           className="성별박스"
           justifyContent={"center"}
           alignItems={"center"}
@@ -576,7 +570,6 @@ const InfoPage = () => {
             width: "80%",
             maxWidth: "700px",
             bgcolor: "background.paper",
-            // border: "2px solid #000",
             boxShadow: 24,
             p: 2,
             top: "50%",

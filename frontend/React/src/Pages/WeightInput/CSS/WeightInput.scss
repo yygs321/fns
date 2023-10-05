@@ -6,11 +6,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* box-shadow: 0 4px 4px rgba(0, 23, 80, 0.01), 0 1px 6px rgba(0, 23, 80, 0.015),
-    0 8px 8px rgba(0, 23, 80, 0.012), 0 16px 16px rgba(0, 23, 80, 0.012),
-    8px 32px 32px rgba(0, 23, 80, 0.018), 8px 64px 64px rgba(0, 23, 80, 0.018); */
-  -ms-overflow-style: none; /* 인터넷 익스플로러 */
-  scrollbar-width: none; /* 파이어폭스 */
+  -ms-overflow-style: none; 
+  scrollbar-width: none;
 }
 
 .체중박스 {
@@ -22,21 +19,20 @@
   box-shadow: 2px 2px 4px #a5a5a5;
   width: 80%;
   height: 80vh;
-  // margin-top: 6vh;
-  // height : 45vh;
+
 }
 .일자 {
-  // margin-top : 10vh;
+ 
   font-size: 2rem;
 }
 .체중 {
-  // margin-top : 15vh;
+
   font-size: 2rem;
   margin-bottom: 2vh;
 }
 
 .체중없음 {
-  // margin-top : 15vh;
+
   font-size: 1.4rem;
 }
 

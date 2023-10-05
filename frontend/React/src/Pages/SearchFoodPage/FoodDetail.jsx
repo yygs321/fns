@@ -21,7 +21,7 @@ function FoodDetail() {
         });
 
         if (response.data.success) {
-          setFoodItem(response.data.data[0]); // 첫 번째 항목을 선택합니다.
+          setFoodItem(response.data.data[0]); 
         } else {
           console.error("Failed to fetch food detail:", response.data.message);
         }

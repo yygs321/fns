@@ -41,7 +41,7 @@ const KakaoCallback = () => {
       }
 
       if (!res.data.data.hasProfile) {
-        // 프로필이 없다면 정보입력 페이지로 이동.
+     
         navigate(`/info`);
       } else {
         navigate(`/main`);

@@ -53,10 +53,6 @@ const LoginPage = () => {
 
   const 구글버튼활성화 = () => {};
 
-  // LoginPage.js 파일
-
-  // ...
-
   const 버튼활성화 = async () => {
     try {
       const res = await axios({
@@ -68,8 +64,6 @@ const LoginPage = () => {
         },
       });
 
-      console.log("로그인 버튼");
-      console.log(res.data);
 
       const tokenData = res.data.data.tokenDto;
 
@@ -81,10 +75,9 @@ const LoginPage = () => {
         await RefreshToken();
       }
 
-      console.log(res.data.data.hasProfile);
 
       if (res.data.data.hasProfile === false) {
-        // 프로필이 없다면 정보입력 페이지로 이동.
+      
         navigate(`/info`);
       } else {
         dispatch(userLogin());
@@ -94,14 +87,6 @@ const LoginPage = () => {
       console.log(err);
       set로그인실패(true);
     }
-
-    // dispatch(userLogin({ accessToken: "", refreshToken: "" }));
-    // navigate("/main");
-    // console.log(axios && "야호");
-    // console.log(RefreshToken && "야호");
-    // console.log(SERVER_API_URL && "야호");
-    // console.log(set로그인실패 && "야호");
-    // 임시 코드
   };
 
   return (

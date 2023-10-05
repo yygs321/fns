@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from "react";
-
 import { styled } from "@mui/system";
 import { Grid, TextField, IconButton } from "@mui/material";
-
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
-
 import { NumericFormat } from "react-number-format";
-
 import { useDispatch } from "react-redux";
 import { fixedFromDiet } from "../../Redux/actions/actions";
 
@@ -55,7 +51,7 @@ const FoodCount = (props) => {
     variant: "outlined",
     sx: {
       "& .MuiOutlinedInput-notchedOutline": {
-        borderRadius: "10px", // 외곽선
+        borderRadius: "10px", 
       },
       "& .MuiOutlinedInput-input": {
         textAlign: "center",
@@ -90,7 +86,7 @@ const FoodCount = (props) => {
         alignItems={"center"}
       >
         <NumericFormat
-          customInput={StyledInput} // customInput을 StyledInput으로 설정
+          customInput={StyledInput} 
           {...materialUITextFieldProps}
           value={value}
           onValueChange={handleValueChange}

@@ -34,8 +34,8 @@ const BarGraph = (props) => {
                   ? "linear-gradient(to right,#e05750, #ffd8d0)"
                   : nutrient / maxNutrient >= 0.5
                   ? "linear-gradient(to right, #14caa0, #55ffd7)"
-                  : "linear-gradient(to right, #4d66e2, #87d0f8)", // 그라데이션 색상 설정
-              borderRadius: "20px", // 바의 radius 설정
+                  : "linear-gradient(to right, #4d66e2, #87d0f8)", 
+              borderRadius: "20px", 
             },
           }}
           value={

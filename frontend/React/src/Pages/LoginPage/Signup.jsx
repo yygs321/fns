@@ -17,7 +17,6 @@ import axios from "axios";
 const Signup = () => {
   const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
 
-  // const [유효한닉네임, set유효한닉네임] = useState(false);
   const [이메일, set이메일] = useState("");
   const [이메일전송, set이메일전송] = useState(false);
   const [이메일모달버튼, set이메일모달버튼] = useState(false);
@@ -39,7 +38,7 @@ const Signup = () => {
       console.log("이메일 전송");
       console.log(res);
 
-      // 만약 response로 뭔가 하려면 await 앞에 const res = 같은거로 변수 선언 시켜놓고 res.data같은거 쓰면 됨.
+ 
 
       set이메일전송(true);
       set이메일모달버튼(true);
@@ -50,7 +49,7 @@ const Signup = () => {
   };
 
   const 이메일인증확인버튼 = async () => {
-    // 이메일 인증번호 check하고 맞으면 disabled가 켜지게 해야함
+    
     try {
       const res = await axios({
         method: "post",
@@ -93,13 +92,13 @@ const Signup = () => {
   const [가입실패창, set가입실패창] = useState(false);
 
   const 가입버튼 = async () => {
-    // 이메일 전송 안 했음
+   
     if (이메일전송) {
-      // 이메일 인증 확인
+     
       if (이메일인증) {
-        // 비밀번호 양식 확인
+       
         if (비번양식확인) {
-          // 비밀번호 재입력과 일치여부 확인
+         
           if (일치여부확인) {
             console.log(이메일);
             console.log(비밀번호);
@@ -119,7 +118,7 @@ const Signup = () => {
               console.log("가입 버튼");
               console.log(res);
               if (res.data.success) {
-                // info로 보내려면 미리 로그인 토큰들을 갖고 있어야하니까, 회원가입 시키면 로그인도 시켜야함
+
 
                 const res2 = await axios({
                   method: "post",
@@ -167,8 +166,6 @@ const Signup = () => {
       set가입실패("");
     }, 2000);
 
-    // navigate("/info");
-    // 임시
   };
 
   function 비번체크(password) {
@@ -483,7 +480,6 @@ const Signup = () => {
             width: "80%",
             maxWidth: "700px",
             bgcolor: "background.paper",
-            // border: "2px solid #000",
             boxShadow: 24,
             p: 2,
             top: "50%",

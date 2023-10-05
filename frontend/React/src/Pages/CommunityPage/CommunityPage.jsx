@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from "react";
-
 import { Avatar, Grid, Typography, TextField } from "@mui/material";
-
 import SearchIcon from "@mui/icons-material/Search";
-
 import CommunityBarGraph from "./CommunityBarGraph";
 import UsersTabs from "./UsersTabs";
 import axiosInstance from "../Common/Component/AxiosInstance";
 import { useNavigate } from "react-router-dom";
-// import default_profile from "../../assets/Image/Profile/deafult_profile.jpg";
 import Loading from "../Common/Component/Loading";
 
 const CommunityPage = () => {
@@ -18,25 +14,25 @@ const CommunityPage = () => {
   const now = new Date();
 
   const year = now.getFullYear();
-  const month = (now.getMonth() + 1).toString().padStart(2, "0"); // 월은 0부터 시작하므로 1을 더하고 두 자리로 포맷팅합니다.
-  const day = now.getDate().toString().padStart(2, "0"); // 일자를 두 자리로 포맷팅합니다.
+  const month = (now.getMonth() + 1).toString().padStart(2, "0"); 
+  const day = now.getDate().toString().padStart(2, "0"); 
 
   const formattedToday = `${year}-${month}-${day}`;
 
   const navigate = useNavigate();
 
-  const [kcalories, setKcalories] = useState(0); // 칼로리
-  const [baseKcalories, setBaseKcalories] = useState(9999); // 칼로리
-  const [carbohydrate, setCarbohydrate] = useState(0); // 탄수화물
-  const [baseCarbohydrate, setBaseCarbohydrate] = useState(999); // 탄수화물
-  const [protein, setProtein] = useState(0); // 단백질
-  const [baseProtein, setBaseProtein] = useState(999); // 단백질
-  const [fat, setFat] = useState(0); // 지방
-  const [baseFat, setBaseFat] = useState(999); // 지방
-  const [myProfile, setMyProfile] = useState(null); // 내 정보
-  const [isLoading, setIsLoading] = useState(false); // 로딩
+  const [kcalories, setKcalories] = useState(0); 
+  const [baseKcalories, setBaseKcalories] = useState(9999); 
+  const [carbohydrate, setCarbohydrate] = useState(0); 
+  const [baseCarbohydrate, setBaseCarbohydrate] = useState(999); 
+  const [protein, setProtein] = useState(0); 
+  const [baseProtein, setBaseProtein] = useState(999); 
+  const [fat, setFat] = useState(0); 
+  const [baseFat, setBaseFat] = useState(999); 
+  const [myProfile, setMyProfile] = useState(null); 
+  const [isLoading, setIsLoading] = useState(false); 
 
-  const [followees, setFollowees] = useState([]); // 팔로우
+  const [followees, setFollowees] = useState([]); 
 
   console.log(followees);
 
@@ -152,7 +148,6 @@ const CommunityPage = () => {
               >
                 <Avatar
                   alt="MyName"
-                  // src={default_profile}
                   sx={{ width: "5rem", height: "5rem" }}
                 />
               </Grid>
@@ -173,7 +168,7 @@ const CommunityPage = () => {
                   overflow="hidden"
                   textOverflow="ellipsis"
                 >
-                  {/* {myProfile.nickname} */}
+      
                   {myProfile ? myProfile.nickname : "닉네임이 없습니다."}
                 </Typography>
               </Grid>

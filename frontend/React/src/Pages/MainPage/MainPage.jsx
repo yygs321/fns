@@ -11,7 +11,6 @@ import {
 } from "@mui/material";
 import BarGraph from "./BarGraph";
 import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
-// import NavigateBeforeRoundedIcon from "@mui/icons-material/NavigateBeforeRounded";
 import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
 
 import "../Common/CSS/BackgroundColor.css";
@@ -23,25 +22,25 @@ import RecommendCarousel from "./RecommendCarousel";
 import Loading from "../Common/Component/Loading";
 
 const MainPage = () => {
-  const [kcalories, setKcalories] = useState(0); // 칼로리
-  const [orgKcal, setOrgKcal] = useState(0); // 칼로리
-  const [baseKcalories, setBaseKcalories] = useState(9999); // 칼로리
-  const [carbohydrate, setCarbohydrate] = useState(0); // 탄수화물
-  const [baseCarbohydrate, setBaseCarbohydrate] = useState(999); // 탄수화물
-  const [protein, setProtein] = useState(0); // 단백질
-  const [baseProtein, setBaseProtein] = useState(999); // 단백질
-  const [fat, setFat] = useState(0); // 지방
-  const [baseFat, setBaseFat] = useState(999); // 지방
+  const [kcalories, setKcalories] = useState(0); 
+  const [orgKcal, setOrgKcal] = useState(0); 
+  const [baseKcalories, setBaseKcalories] = useState(9999);
+  const [carbohydrate, setCarbohydrate] = useState(0);
+  const [baseCarbohydrate, setBaseCarbohydrate] = useState(999); 
+  const [protein, setProtein] = useState(0);
+  const [baseProtein, setBaseProtein] = useState(999); 
+  const [fat, setFat] = useState(0); 
+  const [baseFat, setBaseFat] = useState(999); 
 
-  const [isOverKcal, setIsOverKcal] = useState(false); // 칼로리 초과
+  const [isOverKcal, setIsOverKcal] = useState(false); 
   const [overKcal, setOverKcal] = useState(0);
 
-  const [isAccordionSelected, setIsAccordionSelected] = useState(false); // 메뉴 추천
+  const [isAccordionSelected, setIsAccordionSelected] = useState(false); 
   const [recommendedFood, setRecommendedFood] = useState([]);
 
-  const [isTooltipOpen, setIsTooltipOpen] = useState(false); // 칼로리 초과 시 툴팁 오픈
+  const [isTooltipOpen, setIsTooltipOpen] = useState(false); 
 
-  const [isLoading, setIsLoading] = useState(false); // 로딩
+  const [isLoading, setIsLoading] = useState(false);
 
   const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
   const accessToken = sessionStorage.getItem("accessToken");
@@ -58,14 +57,14 @@ const MainPage = () => {
   const today = now.toLocaleDateString("ko-KR", options).split(" ");
 
   const year = now.getFullYear();
-  const month = (now.getMonth() + 1).toString().padStart(2, "0"); // 월은 0부터 시작하므로 1을 더하고 두 자리로 포맷팅합니다.
-  const day = now.getDate().toString().padStart(2, "0"); // 일자를 두 자리로 포맷팅합니다.
+  const month = (now.getMonth() + 1).toString().padStart(2, "0");
+  const day = now.getDate().toString().padStart(2, "0");
   const beforeDay = before.getDate().toString().padStart(2, "0");
 
   const formattedToday = `${year}-${month}-${day}`;
   const formattedYesterday = `${year}-${month}-${beforeDay}`;
 
-  // 영양소 받아온 후, 출력용 요청
+  
 
   // eslint-disable-next-line no-unused-vars
   const getNeut = async () => {
@@ -140,10 +139,6 @@ const MainPage = () => {
     }
   };
 
-  // 영양소 문제 해결되면 이 쪽 수정
-  // const org_kcal = 2000;
-
-  console.log(recommendedFood);
 
   useEffect(() => {
     setIsLoading(true);
@@ -156,9 +151,9 @@ const MainPage = () => {
       targetValue = 100;
     } else {
       targetValue = (orgKcal / baseKcalories) * 100;
-    } // ProgressBar가 도달해야 할 값
+    } 
     let currentValue = 0;
-    const animationDuration = 500; // 몇 초 동안 애니메이션 실행
+    const animationDuration = 500; 
 
     const interval = setInterval(() => {
       if (currentValue < targetValue) {
@@ -169,14 +164,14 @@ const MainPage = () => {
         } else {
           currentValue += 1;
         }
-        setKcalories(Math.round((currentValue / 100) * baseKcalories)); // kcalories 값을 업데이트
+        setKcalories(Math.round((currentValue / 100) * baseKcalories));
       } else {
-        clearInterval(interval); // 목표 값에 도달하면 애니메이션 중지
+        clearInterval(interval); 
       }
-    }, animationDuration / (targetValue - currentValue)); // 애니메이션 속도 계산
+    }, animationDuration / (targetValue - currentValue)); 
 
     return () => {
-      clearInterval(interval); // 컴포넌트가 언마운트될 때 인터벌 정리
+      clearInterval(interval); 
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -209,9 +204,7 @@ const MainPage = () => {
               justifyContent={"center"}
               alignItems={"center"}
             >
-              {/* <NavigateBeforeRoundedIcon
-                sx={{ color: "white", fontSize: "2rem" }}
-              /> */}
+             
               <Typography
                 variant="caption"
                 component="div"
@@ -253,7 +246,6 @@ const MainPage = () => {
                 />
                 <CircularProgress
                   variant="determinate"
-                  // color={isOverKcal ? "warning" : "primary"}
                   sx={{
                     position: "absolute",
                     zIndex: "10",
@@ -272,8 +264,8 @@ const MainPage = () => {
                   <Box
                     sx={{
                       position: "absolute",
-                      top: "0", // 원하는 위치로 조절
-                      right: "0", // 원하는 위치로 조절
+                      top: "0", 
+                      right: "0", 
                       zIndex: "20",
                     }}
                   >
@@ -282,7 +274,7 @@ const MainPage = () => {
                         <Grid
                           container
                           justifyContent={"center"}
-                          // alignItems={"center"}
+                
                         >
                           <Typography
                             color="warning.main"
@@ -407,7 +399,7 @@ const MainPage = () => {
                           component="div"
                           color="text.secondary"
                           fontSize={"3rem"}
-                          // fontWeight={"bold"}
+                         
                         >
                           /
                         </Typography>
@@ -507,8 +499,8 @@ const MainPage = () => {
                 aria-controls="panel1bh-content"
                 id="panel1bh-header"
                 sx={{
-                  flexDirection: "column", // 아이콘을 아래로 이동하기 위해 컨테이너 방향을 column으로 변경
-                  alignItems: "center", // 가운데 정렬
+                  flexDirection: "column", 
+                  alignItems: "center", 
                 }}
               >
                 <Grid container>
@@ -528,9 +520,7 @@ const MainPage = () => {
                           <React.Fragment key={`${f.name}-${index}-selected`}>
                             <Typography
                               sx={{ color: "text.secondary" }}
-                              // whiteSpace="nowrap"
-                              // overflow="hidden"
-                              // textOverflow="ellipsis"
+                    
                             >
                               {f.name}
                             </Typography>
@@ -548,11 +538,6 @@ const MainPage = () => {
                   </Grid>
                 </Grid>
               </AccordionSummary>
-              {/* <AccordionDetails>
-              <Grid item container justifyContent={"center"}>
-                <Typography>참치 캔</Typography>
-              </Grid>
-            </AccordionDetails> */}
             </Accordion>
           </Grid>
         </Grid>

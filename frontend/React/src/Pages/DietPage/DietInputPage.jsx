@@ -1,24 +1,16 @@
-import React, { memo } from "react"; // { useState }
-
+import React, { memo } from "react"; 
 import { Grid, Typography, TextField, Button } from "@mui/material";
-
 import NavigateBeforeRoundedIcon from "@mui/icons-material/NavigateBeforeRounded";
 import SearchIcon from "@mui/icons-material/Search";
-
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { resetDiet, deleteFromDiet } from "../../Redux/actions/actions";
 import axiosInstance from "../Common/Component/AxiosInstance";
-
 import FoodCount from "./FoodCount";
 
 const DietInputPage = () => {
   const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
   const accessToken = sessionStorage.getItem("accessToken");
-
-  // 여기 추후에 리덕스쪽에서 데이터 관리할 것임
-  // 식단 데이터 받아온거 저장해놓고, 새로 추가하는 음식 데이터도 쌓다가 저장 누르면 api로 보내버리는 식.
-
   const location = useLocation();
   const state = location.state;
 
@@ -57,10 +49,6 @@ const DietInputPage = () => {
 
   const handleSaveDietList = async () => {
     try {
-      // 백으로 add, delete, fix 보내는 로직을 async 먼저 써서 그거 완료된 뒤에 reset하고 navigate 되도록
-      console.log(deletedDiet);
-      console.log(addedDiet);
-      console.log(fixedDiet);
 
       const saveDeletedDiet = deletedDiet.map((food) => ({
         intakeId: food.intakeId,
@@ -75,14 +63,9 @@ const DietInputPage = () => {
         intakeId: food.intakeId,
         rate: food.rate,
       }));
-
-      console.log(saveDeletedDiet);
-      console.log(saveAddedDiet);
-      console.log(saveFixedDiet);
-
+     
       const requests = [];
 
-      // 삭제된 음식이 있다면 삭제 요청을 배열에 추가합니다.
       if (saveDeletedDiet.length > 0) {
         requests.push(
           axiosInstance({
@@ -96,7 +79,6 @@ const DietInputPage = () => {
         );
       }
 
-      // 추가된 음식이 있다면 POST 요청을 배열에 추가합니다.
       if (saveAddedDiet.length > 0) {
         requests.push(
           axiosInstance({
@@ -110,7 +92,6 @@ const DietInputPage = () => {
         );
       }
 
-      // 수정된 음식이 있다면 PATCH 요청을 배열에 추가합니다.
       if (saveFixedDiet.length > 0) {
         requests.push(
           axiosInstance({
@@ -124,7 +105,6 @@ const DietInputPage = () => {
         );
       }
 
-      // 모든 Axios 요청을 동시에 실행하고 응답을 기다립니다.
       await Promise.all(requests);
 
       dispatch(resetDiet());

@@ -1,7 +1,5 @@
 import React, { memo, useEffect, useState } from "react";
-
 import { Grid, Typography } from "@mui/material";
-
 import NavigateBeforeRoundedIcon from "@mui/icons-material/NavigateBeforeRounded";
 import NavigateNextRoundedIcon from "@mui/icons-material/NavigateNextRounded";
 import DietAccordion from "./DietAccordion";
@@ -26,8 +24,8 @@ const DietPage = () => {
   const yesterday = before.toLocaleDateString("ko-KR", options).split(" ");
 
   const year = now.getFullYear();
-  const month = (now.getMonth() + 1).toString().padStart(2, "0"); // 월은 0부터 시작하므로 1을 더하고 두 자리로 포맷팅합니다.
-  const day = now.getDate().toString().padStart(2, "0"); // 일자를 두 자리로 포맷팅합니다.
+  const month = (now.getMonth() + 1).toString().padStart(2, "0"); 
+  const day = now.getDate().toString().padStart(2, "0"); 
   const beforeDay = before.getDate().toString().padStart(2, "0");
 
   const formattedToday = `${year}-${month}-${day}`;
@@ -41,12 +39,7 @@ const DietPage = () => {
   const [dinnerData, setDinnerData] = useState([]);
   const [ETCData, setETCData] = useState([]);
 
-  const [isLoading, setIsLoading] = useState(false); // 로딩
-
-  // 임시로 일자 바꾸기랑 더미데이터..
-  // 나중에 일자 바뀌면 떠있는 식단 데이터도 바뀌어야함.
-
-  // 500 에러로 일단 주석
+  const [isLoading, setIsLoading] = useState(false); 
 
   // eslint-disable-next-line no-unused-vars
   const getIntakeData = async () => {
@@ -106,128 +99,6 @@ const DietPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // const meals = [
-  //   {
-  //     name: "아침",
-  //     intakeTime: "MORNING",
-  //     // food: [],
-  //     food: [
-  //       {
-  //         name: "우유",
-  //         kcal: 100,
-  //         carbs: 20,
-  //         protein: 20,
-  //         fat: 20,
-  //         rate: 1,
-  //         foodId: 1,
-  //       },
-  //       {
-  //         name: "씨리얼",
-  //         kcal: 100,
-  //         carbs: 20,
-  //         protein: 20,
-  //         fat: 20,
-  //         rate: 2,
-  //         foodId: 2,
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     name: "점심",
-  //     intakeTime: "LUNCH",
-  //     // food: [],
-  //     food: [
-  //       {
-  //         name: "제육볶음",
-  //         kcal: 155,
-  //         carbs: 20,
-  //         protein: 20,
-  //         fat: 20,
-  //         rate: 4,
-  //         foodId: 3,
-  //       },
-  //       {
-  //         name: "배추김치",
-  //         kcal: 100,
-  //         carbs: 20,
-  //         protein: 20,
-  //         fat: 20,
-  //         rate: 2,
-  //         foodId: 4,
-  //       },
-  //       {
-  //         name: "쌀밥",
-  //         kcal: 100,
-  //         carbs: 20,
-  //         protein: 20,
-  //         fat: 20,
-  //         rate: 5,
-  //         foodId: 5,
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     name: "저녁",
-  //     intakeTime: "DINNER",
-  //     food: [],
-  //     // food: [
-  //     //   { name: "참치", kcal: 111 },
-  //     //   { name: "마요네즈", kcal: 100 },
-  //     // ],
-  //   },
-  //   {
-  //     name: "간식",
-  //     intakeTime: "ETC",
-  //     // food: [],
-  //     food: [
-  //       {
-  //         name: "참치맛 크래커",
-  //         kcal: 5,
-  //         carbs: 20,
-  //         protein: 20,
-  //         fat: 20,
-  //         rate: 1,
-  //         foodId: 6,
-  //       },
-  //       {
-  //         name: "참치맛 감자칩",
-  //         kcal: 10,
-  //         carbs: 20,
-  //         protein: 20,
-  //         fat: 20,
-  //         rate: 3,
-  //         foodId: 7,
-  //       },
-  //       {
-  //         name: "참치맛 껌",
-  //         kcal: 15,
-  //         carbs: 20,
-  //         protein: 20,
-  //         fat: 20,
-  //         rate: 5,
-  //         foodId: 15,
-  //       },
-  //       {
-  //         name: "참치맛 젤리",
-  //         kcal: 20,
-  //         carbs: 20,
-  //         protein: 20,
-  //         fat: 20,
-  //         rate: 7,
-  //         foodId: 8,
-  //       },
-  //       {
-  //         name: "참치맛 아이스크림",
-  //         kcal: 5,
-  //         carbs: 20,
-  //         protein: 20,
-  //         fat: 20,
-  //         rate: 9,
-  //         foodId: 89,
-  //       },
-  //     ],
-  //   },
-  // ];
 
   const changeDay = () => {
     setIsToday(!isToday);
