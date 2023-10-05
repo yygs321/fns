@@ -59,12 +59,17 @@ const CalendarPage = () => {
 
   //axios 데이터 입력 받기
 
-  useEffect(() => {
-    const requestData = {
-      exerciseDate: "2021-10-04"
-    };
+  const accessToken = sessionStorage.getItem("accessToken");
+  const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
 
-  axios.post('서버의_엔드포인트_URL', requestData)
+  useEffect(() => {
+
+  axios.post(`${SERVER_API_URL}/weight/history`, {
+    exerciseDate: "2021-10-04",
+      headers: {
+        "X-FNS-ACCESSTOKEN": accessToken,
+      },
+  })
     .then(response => {
       // 서버 응답 데이터를 상태에 저장
       set몸무게(response.data.weight);
@@ -75,7 +80,7 @@ const CalendarPage = () => {
     .catch(error => {
       console.error('요청 실패:', error);
     });
-  },[]);
+  },[accessToken, SERVER_API_URL]);
 
   const 운동한것들 = 운동북마크.reduce((acc, mark, index) => {
     if (mark === 1 && sportsData[index] && 운동시간[index] !== 0) { // 운동을 한 경우와 유효한 인덱스인 경우만 처리
