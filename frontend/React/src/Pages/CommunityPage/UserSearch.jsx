@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from "react";
+
 import { Grid, Typography, TextField, Button, Avatar } from "@mui/material";
+
 import NavigateBeforeRoundedIcon from "@mui/icons-material/NavigateBeforeRounded";
 import SearchIcon from "@mui/icons-material/Search";
+
 import { useNavigate } from "react-router-dom";
+
+// import Cat from "../../assets/Image/cat.jpg";
 import axiosInstance from "../Common/Component/AxiosInstance";
 
 const UserSearch = () => {
@@ -12,8 +17,16 @@ const UserSearch = () => {
   const [addedFollow, setAddedFollow] = useState([]);
   const [searchResult, setSearchResult] = useState([]);
 
+  console.log(searchTerm);
 
   const navigate = useNavigate();
+
+  // const searchResult = [
+  //   { username: "짭냥이", profileImg: Cat, old: 10, BMI: 30 },
+  //   { username: "콘냥이", profileImg: Cat, old: 9, BMI: 25 },
+  //   { username: "얍냥이", profileImg: Cat, old: 8, BMI: 20 },
+  //   { username: "쩝냥이", profileImg: Cat, old: 7, BMI: 15 },
+  // ];
   const goBackPage = () => {
     navigate(-1);
   };
@@ -28,7 +41,7 @@ const UserSearch = () => {
         },
       });
 
-     
+      console.log(res);
 
       const result = res.data.data;
 
@@ -44,7 +57,7 @@ const UserSearch = () => {
   }, []);
 
   const handleSearchFollow = async () => {
-    
+    // 여기다 검색 api
     try {
       const res = await axiosInstance({
         method: "get",
@@ -56,6 +69,8 @@ const UserSearch = () => {
           nickname: searchTerm,
         },
       });
+
+      console.log(res);
 
       const result = res.data.data;
 
@@ -72,6 +87,7 @@ const UserSearch = () => {
   };
 
   const handleAddFollow = async (one) => {
+    // 여기다 검색 api
     try {
       const res = await axiosInstance({
         method: "post",
@@ -81,6 +97,7 @@ const UserSearch = () => {
         },
       });
 
+      console.log(res);
 
       const newFollow = { ...one, memberId: one.id };
 
@@ -90,6 +107,7 @@ const UserSearch = () => {
     }
   };
 
+  console.log(addedFollow);
 
   const handleCancleFollow = async (one) => {
     try {
@@ -101,6 +119,7 @@ const UserSearch = () => {
         },
       });
 
+      console.log(res);
 
       const updatedFollow = addedFollow.filter(
         (follow) => follow.memberId !== one.id
@@ -113,9 +132,11 @@ const UserSearch = () => {
   };
 
   const handleSaveButton = () => {
+    // 리덕스같은데에다 저장
     navigate(-1);
   };
 
+  // 검색창 포커스되면 배경색 변하게 하기
   const [isFocused, setIsFocused] = useState(false);
 
   const handleFocus = () => {
@@ -263,6 +284,7 @@ const UserSearch = () => {
               >
                 <Avatar
                   alt="MyName"
+                  // src={one.profileImg}
                   sx={{ width: "5rem", height: "5rem" }}
                 />
               </Grid>
