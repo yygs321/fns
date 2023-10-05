@@ -29,6 +29,7 @@ axiosInstance.interceptors.response.use(
         
         const newAccessToken = sessionStorage.getItem("accessToken");
         error.config.headers["X-FNS-ACCESSTOKEN"] = newAccessToken;
+        console.log("재발급 완료했습니다!!");
 
         return axiosInstance(error.config);
       } catch (refreshError) {

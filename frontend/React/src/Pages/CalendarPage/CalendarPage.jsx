@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axiosInstance from "../Common/Component/AxiosInstance";
 import { Grid, Typography } from "@mui/material";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
@@ -67,23 +67,23 @@ const CalendarPage = () => {
   useEffect(() => {
     const getAPI = async () => {
       try {
-        const now = new Date();
-        const year = now.getFullYear();
-        const month = (now.getMonth() + 1).toString().padStart(2, "0"); // 월은 0부터 시작하므로 1을 더하고 두 자리로 포맷팅합니다.
-        const day = now.getDate().toString().padStart(2, "0"); // 일자를 두 자리로 포맷팅합니다.
+        const nowday = new Date(날짜);
+        const year = nowday.getFullYear();
+        const month = (nowday.getMonth() + 1).toString().padStart(2, "0"); // 월은 0부터 시작하므로 1을 더하고 두 자리로 포맷팅합니다.
+        const day = nowday.getDate().toString().padStart(2, "0"); // 일자를 두 자리로 포맷팅합니다.
         const formattedDay = `${year}-${month}-${day}`;
 
         const [res1, res2, res3] = await Promise.all([
-          axios.get(`${SERVER_API_URL}/exercise`, {
+          axiosInstance.get(`${SERVER_API_URL}/exercise`, {
             params: {
-              exerciseDate: formattedDay,
+              date: formattedDay,
             },
             headers: {
               "X-FNS-ACCESSTOKEN": accessToken,
             },
           }),
           // 특정일자 기준 조회 -> 영양데이터.권장량
-          axios.get(`${SERVER_API_URL}/base/`, {
+          axiosInstance.get(`${SERVER_API_URL}/base`, {
             params: {
               date: formattedDay,
             },
@@ -92,7 +92,7 @@ const CalendarPage = () => {
             },
           }),
           // 일별 총 섭취 칼로리,탄,단,지 조회 -> 영양데이터.섭취량
-          axios.get(`${SERVER_API_URL}/intake/simple/${formattedDay}`, {
+          axiosInstance.get(`${SERVER_API_URL}/intake/simple/${formattedDay}`, {
             headers: {
               "X-FNS-ACCESSTOKEN": accessToken,
             },
@@ -160,7 +160,7 @@ const CalendarPage = () => {
     // 현재 선택된 날짜의 "YYYY-MM" 포맷으로 변경
     const formattedDate = 날짜.format("YYYY-MM");
 
-    axios
+    axiosInstance
       .get(`${SERVER_API_URL}/members/calendar`, {
         params: { date: formattedDate },
         headers: {
