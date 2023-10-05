@@ -6,8 +6,6 @@ import NavigateBeforeRoundedIcon from "@mui/icons-material/NavigateBeforeRounded
 import SearchIcon from "@mui/icons-material/Search";
 
 import { useNavigate } from "react-router-dom";
-
-// import Cat from "../../assets/Image/cat.jpg";
 import axiosInstance from "../Common/Component/AxiosInstance";
 
 const UserSearch = () => {
@@ -21,12 +19,6 @@ const UserSearch = () => {
 
   const navigate = useNavigate();
 
-  // const searchResult = [
-  //   { username: "짭냥이", profileImg: Cat, old: 10, BMI: 30 },
-  //   { username: "콘냥이", profileImg: Cat, old: 9, BMI: 25 },
-  //   { username: "얍냥이", profileImg: Cat, old: 8, BMI: 20 },
-  //   { username: "쩝냥이", profileImg: Cat, old: 7, BMI: 15 },
-  // ];
   const goBackPage = () => {
     navigate(-1);
   };
@@ -132,11 +124,9 @@ const UserSearch = () => {
   };
 
   const handleSaveButton = () => {
-    // 리덕스같은데에다 저장
     navigate(-1);
   };
 
-  // 검색창 포커스되면 배경색 변하게 하기
   const [isFocused, setIsFocused] = useState(false);
 
   const handleFocus = () => {
