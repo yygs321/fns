@@ -117,7 +117,7 @@ const MainPage = () => {
 
       console.log(res4);
 
-      setRecommendedFood(res4.data.recommend_foods);
+      setRecommendedFood(res4.data.recommended_foods);
 
       setBaseKcalories(baseData.kcal);
       setBaseCarbohydrate(baseData.carbs);
@@ -143,8 +143,7 @@ const MainPage = () => {
   // 영양소 문제 해결되면 이 쪽 수정
   // const org_kcal = 2000;
 
-  console.log(carbohydrate);
-  console.log(baseCarbohydrate);
+  console.log(recommendedFood);
 
   useEffect(() => {
     setIsLoading(true);
