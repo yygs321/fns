@@ -38,8 +38,6 @@ const Signup = () => {
       console.log("이메일 전송");
       console.log(res);
 
- 
-
       set이메일전송(true);
       set이메일모달버튼(true);
       setTimeout(() => set이메일모달버튼(false), 2000);
@@ -49,7 +47,6 @@ const Signup = () => {
   };
 
   const 이메일인증확인버튼 = async () => {
-    
     try {
       const res = await axios({
         method: "post",
@@ -92,13 +89,9 @@ const Signup = () => {
   const [가입실패창, set가입실패창] = useState(false);
 
   const 가입버튼 = async () => {
-   
     if (이메일전송) {
-     
       if (이메일인증) {
-       
         if (비번양식확인) {
-         
           if (일치여부확인) {
             console.log(이메일);
             console.log(비밀번호);
@@ -118,8 +111,6 @@ const Signup = () => {
               console.log("가입 버튼");
               console.log(res);
               if (res.data.success) {
-
-
                 const res2 = await axios({
                   method: "post",
                   url: `${SERVER_API_URL}/auth/sign-in`,
@@ -165,7 +156,6 @@ const Signup = () => {
       set가입실패창(false);
       set가입실패("");
     }, 2000);
-
   };
 
   function 비번체크(password) {
@@ -412,7 +402,6 @@ const Signup = () => {
             width: "80%",
             maxWidth: "700px",
             bgcolor: "background.paper",
-            // border: "2px solid #000",
             boxShadow: 24,
             p: 2,
             top: "50%",
@@ -447,7 +436,6 @@ const Signup = () => {
             width: "80%",
             maxWidth: "700px",
             bgcolor: "background.paper",
-            // border: "2px solid #000",
             boxShadow: 24,
             p: 2,
             top: "50%",

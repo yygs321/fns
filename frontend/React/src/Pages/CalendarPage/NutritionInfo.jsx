@@ -2,9 +2,7 @@ import React from "react";
 import { Typography, Grid } from "@mui/material";
 import BarGraph2 from "./BarGraph2";
 
-
 const NutritionInfo = ({ 날짜, 영양데이터, scrollDownInfo }) => {
-
   return (
     <div
       className="white-content-box"
@@ -31,7 +29,6 @@ const NutritionInfo = ({ 날짜, 영양데이터, scrollDownInfo }) => {
           justifyContent={"center"}
           alignItems={"center"}
         >
-          
           <Typography textAlign="center" sx={{ fontSize: "1rem" }}>
             {날짜.format("M월 D일 (ddd)")}
           </Typography>
@@ -46,10 +43,9 @@ const NutritionInfo = ({ 날짜, 영양데이터, scrollDownInfo }) => {
           <Typography textAlign="center" sx={{ fontSize: "1.4rem" }}>
             오늘의 영양소
           </Typography>
-          
         </Grid>
       </Grid>
-     
+
       {Object.entries(영양데이터).map(([key, value], index) => (
         <BarGraph2
           key={index}

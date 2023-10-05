@@ -19,7 +19,7 @@ import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
 import DirectionsBikeIcon from "@mui/icons-material/DirectionsBike";
 import HikingIcon from "@mui/icons-material/Hiking";
 import PoolIcon from "@mui/icons-material/Pool";
-import AccessibilityNewIcon from "@mui/icons-material/AccessibilityNew"; 
+import AccessibilityNewIcon from "@mui/icons-material/AccessibilityNew";
 import StairsIcon from "@mui/icons-material/Stairs";
 import SelfImprovementIcon from "@mui/icons-material/SelfImprovement";
 import SportsSoccerIcon from "@mui/icons-material/SportsSoccer";
@@ -58,17 +58,17 @@ const CalendarPage = () => {
   const [운동시간, set운동시간] = useState([]);
   const [몸무게, set몸무게] = useState("");
   const [날짜, set날짜] = useState(dayjs());
- 
+
   const [영양데이터, set영양데이터] = useState([]);
   const 오늘 = dayjs();
-  
+
   useEffect(() => {
     const getAPI = async () => {
       try {
         const nowday = new Date(날짜);
         const year = nowday.getFullYear();
-        const month = (nowday.getMonth() + 1).toString().padStart(2, "0"); 
-        const day = nowday.getDate().toString().padStart(2, "0"); 
+        const month = (nowday.getMonth() + 1).toString().padStart(2, "0");
+        const day = nowday.getDate().toString().padStart(2, "0");
         const formattedDay = `${year}-${month}-${day}`;
 
         const [res1, res2, res3] = await Promise.all([
@@ -80,7 +80,7 @@ const CalendarPage = () => {
               "X-FNS-ACCESSTOKEN": accessToken,
             },
           }),
-         
+
           axiosInstance.get(`${SERVER_API_URL}/base`, {
             params: {
               date: formattedDay,
@@ -89,40 +89,38 @@ const CalendarPage = () => {
               "X-FNS-ACCESSTOKEN": accessToken,
             },
           }),
-         
+
           axiosInstance.get(`${SERVER_API_URL}/intake/simple/${formattedDay}`, {
             headers: {
               "X-FNS-ACCESSTOKEN": accessToken,
             },
           }),
         ]);
-        if (res1.data.success && res2.data.success && res3.data.success) {
-          set몸무게(res1.data.data.weight);
-          set운동북마크(res1.data.data.sportsBookmarkList);
-          set운동시간(res1.data.data.exerciseTimeList);
-     
-          set영양데이터({
-            칼로리: {
-              섭취량: res3.data.data.kcal,
-              권장량: res2.data.data.kcal,
-            },
-            탄수화물: {
-              섭취량: res3.data.data.carbs,
-              권장량: res2.data.data.carbs,
-            },
-            단백질: {
-              항목: "단백질",
-              섭취량: res3.data.data.protein,
-              권장량: res2.data.data.protein,
-            },
-            지방: {
-              항목: "지방",
-              섭취량: res3.data.data.fat,
-              권장량: res2.data.data.fat,
-            },
-          });
 
-        }
+        set몸무게(res1.data.data.weight);
+        set운동북마크(res1.data.data.sportsBookmarkList);
+        set운동시간(res1.data.data.exerciseTimeList);
+
+        set영양데이터({
+          칼로리: {
+            섭취량: res3.data.data.kcal,
+            권장량: res2.data.data.kcal,
+          },
+          탄수화물: {
+            섭취량: res3.data.data.carbs,
+            권장량: res2.data.data.carbs,
+          },
+          단백질: {
+            항목: "단백질",
+            섭취량: res3.data.data.protein,
+            권장량: res2.data.data.protein,
+          },
+          지방: {
+            항목: "지방",
+            섭취량: res3.data.data.fat,
+            권장량: res2.data.data.fat,
+          },
+        });
       } catch (error) {
         console.error("요청 실패:", error);
       }
@@ -130,10 +128,8 @@ const CalendarPage = () => {
     getAPI();
   }, [날짜]);
 
-
   const 운동한것들 = 운동북마크.reduce((acc, mark, index) => {
     if (mark === 1 && sportsData[index] && 운동시간[index] !== 0) {
-      
       const 운동 = sportsData[index];
       const 운동한것 = {
         name: 운동.name,
@@ -145,11 +141,10 @@ const CalendarPage = () => {
     return acc;
   }, []);
 
-  
   const [calendarData, setCalendarData] = useState({});
 
   useEffect(() => {
-    const months = ['2023-08', '2023-09', '2023-10'];
+    const months = ["2023-08", "2023-09", "2023-10"];
     Promise.all(
       months.map((month) =>
         axiosInstance.get(`${SERVER_API_URL}/members/calendar`, {
@@ -159,33 +154,33 @@ const CalendarPage = () => {
           },
         })
       )
-    ).then((responses) => {
-      let newCalendarData = {};
-      responses.forEach((response, index) => {
-        if (response.data.success) {
-          console.log("#1", response.data);
-          const month = months[index];
-          newCalendarData = {
-            ...newCalendarData,
-            ...response.data.data.recordedDates.reduce((obj, date) => {
-              if (date.startsWith(month)) {
-                obj[date] = Math.floor(Math.random() * 99) + 1;
-              }
-              return obj;
-            }, {}),
-          };
-        }
+    )
+      .then((responses) => {
+        let newCalendarData = {};
+        responses.forEach((response, index) => {
+          if (response.data.success) {
+            console.log("#1", response.data);
+            const month = months[index];
+            newCalendarData = {
+              ...newCalendarData,
+              ...response.data.data.recordedDates.reduce((obj, date) => {
+                if (date.startsWith(month)) {
+                  obj[date] = Math.floor(Math.random() * 99) + 1;
+                }
+                return obj;
+              }, {}),
+            };
+          }
+        });
+        setCalendarData(newCalendarData);
+
+        console.log("Fetched Calendar Data:", newCalendarData);
+      })
+      .catch((error) => {
+        console.error("Data fetching error:", error);
       });
-      setCalendarData(newCalendarData);
-      
-      console.log("Fetched Calendar Data:", newCalendarData);
-    }).catch(error => {
-      console.error("Data fetching error:", error);
-    });
-}, []);
+  }, []);
 
-
-  
   const holiday = [
     "2023-01-01",
     "2023-01-21",
@@ -208,27 +203,26 @@ const CalendarPage = () => {
   ];
 
   const getBackgroundColorByValue = (value) => {
-    if (value === undefined) return "transparent"; 
-    if (value <= 20) return "#ebedf0"; 
-    if (value <= 50) return "#c6e48b"; 
-    if (value <= 70) return "#7bc96f"; 
-    return "#239a3b"; 
+    if (value === undefined) return "transparent";
+    if (value <= 20) return "#ebedf0";
+    if (value <= 50) return "#c6e48b";
+    if (value <= 70) return "#7bc96f";
+    return "#239a3b";
   };
 
   const CustomDay = (props) => {
     const { day, outsideCurrentMonth, ...other } = props;
-   
+
     const formattedDate = day.format("YYYY-MM-DD");
     const value = calendarData[formattedDate];
     const backgroundColor = getBackgroundColorByValue(value);
 
-   
     const isSelected = day.isSame(날짜, "day");
     const isholiday = holiday.includes(formattedDate);
 
     const dayStyle = {
       backgroundColor: backgroundColor,
-    
+
       border: day.isSame(오늘, "day")
         ? "2px solid blue"
         : isSelected
@@ -243,7 +237,6 @@ const CalendarPage = () => {
           : day.day() === 0 || isholiday
           ? "red"
           : "black",
-    
     };
 
     return (
@@ -269,13 +262,10 @@ const CalendarPage = () => {
           }}
           today={true}
           outsideCurrentMonth={outsideCurrentMonth}
-        
         />
       </Grid>
     );
   };
-
- 
 
   const [scrollDownInfo, setScrollDownInfo] = useState(false);
 
@@ -283,18 +273,15 @@ const CalendarPage = () => {
     const scrollTop = e.target.scrollTop;
 
     if (scrollTop === 0 && scrollDownInfo) {
-      
       setScrollDownInfo(false);
     } else if (scrollTop > 0 && !scrollDownInfo) {
-    
       setScrollDownInfo(true);
     }
   };
 
-  const [캘린더고정Height, set캘린더고정Height] = useState(0); 
+  const [캘린더고정Height, set캘린더고정Height] = useState(0);
 
   useEffect(() => {
-   
     const 캘린더고정 = document.querySelector(".캘린더-고정");
     if (캘린더고정) {
       const height = 캘린더고정.clientHeight;
@@ -316,11 +303,7 @@ const CalendarPage = () => {
   };
 
   return (
-    <div
-      className="gray-pages"
-      
-    >
-    
+    <div className="gray-pages">
       <div className="캘린더-고정">
         <div className="캘린더배경">
           <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ko">
@@ -354,7 +337,7 @@ const CalendarPage = () => {
                   ".MuiPickersCalendarHeader-label": {
                     fontSize: "1.2rem",
                     whiteSpace: "nowrap",
-                    
+
                     textOverflow: "ellipsis",
                     fontWeight: "bold",
                   },
@@ -379,8 +362,8 @@ const CalendarPage = () => {
                 monthsPerRow={4}
                 yearsPerRow={4}
                 disableFuture={true}
-                minDate={dayjs("2000-01-01")} 
-                maxDate={dayjs()} 
+                minDate={dayjs("2000-01-01")}
+                maxDate={dayjs()}
                 showDaysOutsideCurrentMonth={true}
                 fixedWeekNumber={6}
               />
@@ -438,7 +421,6 @@ const CalendarPage = () => {
         </div>
       </div>
 
-
       <Grid
         container
         justifyContent={"center"}
@@ -465,7 +447,6 @@ const CalendarPage = () => {
             scrollDownInfo={scrollDownInfo}
           />
 
-     
           <div className="운동배경">
             <Grid
               container
@@ -501,11 +482,9 @@ const CalendarPage = () => {
               </Grid>
             </Grid>
             {운동한것들.map((운동, index) => {
-              
               const 운동정보 = sportsData.find(
                 (item) => item.name === 운동.name
               );
-
 
               return (
                 <div id="운동위치설정" key={`${운동}-${index}`}>
@@ -542,7 +521,6 @@ const CalendarPage = () => {
               );
             })}
           </div>
-         
 
           <WeightChart />
         </Grid>

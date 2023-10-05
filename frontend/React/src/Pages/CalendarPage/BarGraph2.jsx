@@ -2,7 +2,8 @@ import React from "react";
 import { Box, Typography, LinearProgress, Grid } from "@mui/material";
 
 const BarGraph = ({ nutrient, name, maxNutrient }) => {
-  const percentage = (nutrient / maxNutrient) * 100;
+  const percentage =
+    nutrient > maxNutrient ? 100 : (nutrient / maxNutrient) * 100;
 
   return (
     <Box
@@ -55,14 +56,16 @@ const BarGraph = ({ nutrient, name, maxNutrient }) => {
                       ? "linear-gradient(to right,#e05750, #ffd8d0)"
                       : nutrient / maxNutrient >= 0.5
                       ? "linear-gradient(to right, #14caa0, #55ffd7)"
-                      : "linear-gradient(to right, #4d66e2, #87d0f8)", 
-                  borderRadius: "20px", 
+                      : "linear-gradient(to right, #4d66e2, #87d0f8)",
+                  borderRadius: "20px",
                 },
               }}
             />
 
             <Grid container justifyContent={"center"} alignItems={"center"}>
-              <Typography variant="body2">{`${nutrient} / ${maxNutrient}`}</Typography>
+              <Typography variant="body2">{`${nutrient.toFixed(
+                0
+              )} / ${maxNutrient}`}</Typography>
             </Grid>
           </Box>
         </Grid>

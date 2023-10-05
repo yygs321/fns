@@ -24,8 +24,8 @@ const DietPage = () => {
   const yesterday = before.toLocaleDateString("ko-KR", options).split(" ");
 
   const year = now.getFullYear();
-  const month = (now.getMonth() + 1).toString().padStart(2, "0"); 
-  const day = now.getDate().toString().padStart(2, "0"); 
+  const month = (now.getMonth() + 1).toString().padStart(2, "0");
+  const day = now.getDate().toString().padStart(2, "0");
   const beforeDay = before.getDate().toString().padStart(2, "0");
 
   const formattedToday = `${year}-${month}-${day}`;
@@ -64,7 +64,7 @@ const DietPage = () => {
       console.log(meals);
 
       const totalKcal = meals.reduce((total, meal) => {
-        return total + meal.kcal * meal.rate;
+        return total + meal.kcal;
       }, 0);
 
       const morningMeals = meals.filter(
