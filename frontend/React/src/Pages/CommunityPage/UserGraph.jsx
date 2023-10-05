@@ -123,10 +123,7 @@ const UserGraph = (props) => {
               justifyContent={"center"}
               alignItems={"center"}
             >
-              <Avatar
-                alt="MyName"
-                sx={{ width: "5rem", height: "5rem" }}
-              />
+              <Avatar alt="MyName" sx={{ width: "5rem", height: "5rem" }} />
             </Grid>
             <Grid
               container
@@ -215,16 +212,18 @@ const UserGraph = (props) => {
                 <Grid
                   item
                   container
-                  xs={2}
+                  xs={12}
                   justifyContent={"center"}
                   alignItems={"center"}
                 >
-                  <Typography>아침</Typography>
+                  <Typography fontSize={"1.3rem"} fontWeight={"bold"}>
+                    아침
+                  </Typography>
                 </Grid>
                 <Grid
                   item
                   container
-                  xs={5}
+                  xs={7}
                   justifyContent={"center"}
                   alignItems={"center"}
                 >
@@ -262,15 +261,8 @@ const UserGraph = (props) => {
                   <Grid
                     item
                     container
-                    xs={2}
-                    justifyContent={"center"}
-                    alignItems={"center"}
-                  ></Grid>
-                  <Grid
-                    item
-                    container
-                    xs={5}
-                    justifyContent={"center"}
+                    xs={7}
+                    justifyContent={"flex-start"}
                     alignItems={"center"}
                   >
                     <Typography
@@ -335,16 +327,18 @@ const UserGraph = (props) => {
                 <Grid
                   item
                   container
-                  xs={2}
+                  xs={12}
                   justifyContent={"center"}
                   alignItems={"center"}
                 >
-                  <Typography>점심</Typography>
+                  <Typography fontSize={"1.3rem"} fontWeight={"bold"}>
+                    점심
+                  </Typography>
                 </Grid>
                 <Grid
                   item
                   container
-                  xs={5}
+                  xs={7}
                   justifyContent={"center"}
                   alignItems={"center"}
                 >
@@ -382,15 +376,8 @@ const UserGraph = (props) => {
                   <Grid
                     item
                     container
-                    xs={2}
-                    justifyContent={"center"}
-                    alignItems={"center"}
-                  ></Grid>
-                  <Grid
-                    item
-                    container
-                    xs={5}
-                    justifyContent={"center"}
+                    xs={7}
+                    justifyContent={"flex-start"}
                     alignItems={"center"}
                   >
                     <Typography
@@ -455,16 +442,18 @@ const UserGraph = (props) => {
                 <Grid
                   item
                   container
-                  xs={2}
+                  xs={12}
                   justifyContent={"center"}
                   alignItems={"center"}
                 >
-                  <Typography>저녁</Typography>
+                  <Typography fontSize={"1.3rem"} fontWeight={"bold"}>
+                    저녁
+                  </Typography>
                 </Grid>
                 <Grid
                   item
                   container
-                  xs={5}
+                  xs={7}
                   justifyContent={"center"}
                   alignItems={"center"}
                 >
@@ -502,15 +491,8 @@ const UserGraph = (props) => {
                   <Grid
                     item
                     container
-                    xs={2}
-                    justifyContent={"center"}
-                    alignItems={"center"}
-                  ></Grid>
-                  <Grid
-                    item
-                    container
-                    xs={5}
-                    justifyContent={"center"}
+                    xs={7}
+                    justifyContent={"flex-start"}
                     alignItems={"center"}
                   >
                     <Typography
@@ -575,16 +557,18 @@ const UserGraph = (props) => {
                 <Grid
                   item
                   container
-                  xs={2}
+                  xs={12}
                   justifyContent={"center"}
                   alignItems={"center"}
                 >
-                  <Typography>간식</Typography>
+                  <Typography fontSize={"1.3rem"} fontWeight={"bold"}>
+                    간식
+                  </Typography>
                 </Grid>
                 <Grid
                   item
                   container
-                  xs={5}
+                  xs={7}
                   justifyContent={"center"}
                   alignItems={"center"}
                 >
@@ -622,15 +606,8 @@ const UserGraph = (props) => {
                   <Grid
                     item
                     container
-                    xs={2}
-                    justifyContent={"center"}
-                    alignItems={"center"}
-                  ></Grid>
-                  <Grid
-                    item
-                    container
-                    xs={5}
-                    justifyContent={"center"}
+                    xs={7}
+                    justifyContent={"flex-start"}
                     alignItems={"center"}
                   >
                     <Typography
@@ -718,7 +695,6 @@ const UserGraph = (props) => {
             width: "80%",
             maxWidth: "700px",
             bgcolor: "background.paper",
-            // border: "2px solid #000",
             boxShadow: 24,
             p: 2,
             top: "50%",

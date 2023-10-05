@@ -39,9 +39,8 @@ const DietPage = () => {
   const [dinnerData, setDinnerData] = useState([]);
   const [ETCData, setETCData] = useState([]);
 
-  const [isLoading, setIsLoading] = useState(false); 
+  const [isLoading, setIsLoading] = useState(false); // 로딩
 
-  // eslint-disable-next-line no-unused-vars
   const getIntakeData = async () => {
     console.log(formattedToday);
     console.log(formattedYesterday);
@@ -98,7 +97,6 @@ const DietPage = () => {
     getIntakeData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
 
   const changeDay = () => {
     setIsToday(!isToday);

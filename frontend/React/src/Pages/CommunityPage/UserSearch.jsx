@@ -113,10 +113,8 @@ const UserSearch = () => {
   };
 
   const handleSaveButton = () => {
-
     navigate(-1);
   };
-
 
   const [isFocused, setIsFocused] = useState(false);
 
