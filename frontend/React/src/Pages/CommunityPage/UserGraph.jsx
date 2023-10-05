@@ -40,7 +40,7 @@ const UserGraph = (props) => {
     // 여기다 팔로우 삭제 api
     try {
       const res = await axiosInstance({
-        method: "post",
+        method: "delete",
         url: `${SERVER_API_URL}/follow/${user.memberId}`,
         headers: {
           "X-FNS-ACCESSTOKEN": accessToken,
@@ -48,6 +48,8 @@ const UserGraph = (props) => {
       });
 
       console.log(res);
+
+      window.location.reload();
     } catch (err) {
       console.log(err);
     }
@@ -66,7 +68,12 @@ const UserGraph = (props) => {
   const handleCancelFollow = (e) => {
     e.stopPropagation();
     handleCancelFollowAxios();
+    setCancelFollowModal(false);
   };
+
+  // const mornigMeals = user.intake.filter((meal) => (
+  //   meal.
+  // ))
 
   return (
     <Grid
@@ -259,6 +266,14 @@ const UserGraph = (props) => {
                   alignItems={"center"}
                 >
                   <Typography>음식</Typography>
+                  <Grid
+                    item
+                    container
+                    justifyContent={"center"}
+                    alignItems={"center"}
+                  >
+                    {}
+                  </Grid>
                 </Grid>
                 <Grid
                   item

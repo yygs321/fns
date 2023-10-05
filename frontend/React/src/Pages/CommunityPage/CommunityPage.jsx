@@ -39,6 +39,10 @@ const CommunityPage = () => {
   const [myProfile, setMyProfile] = useState(null); // 내 정보
   const [isLoading, setIsLoading] = useState(false); // 로딩
 
+  const [followees, setFollowees] = useState([]); // 팔로우
+
+  console.log(followees);
+
   const getMyData = async () => {
     try {
       const res = await axiosInstance({
@@ -64,9 +68,23 @@ const CommunityPage = () => {
           "X-FNS-ACCESSTOKEN": accessToken,
         },
       });
+
+      const res4 = await axiosInstance({
+        method: "get",
+        url: `${SERVER_API_URL}/follow`,
+        headers: {
+          "X-FNS-ACCESSTOKEN": accessToken,
+        },
+      });
+
       console.log(res);
       console.log(res2);
       console.log(res3);
+      console.log(res4);
+
+      const result = res4.data.data;
+
+      setFollowees(result);
 
       const baseData = res.data.data;
       const nowData = res2.data.data;
@@ -253,7 +271,7 @@ const CommunityPage = () => {
               height: "60vh",
             }}
           >
-            <UsersTabs />
+            <UsersTabs followees={followees} />
           </Grid>
         </Grid>
       </div>

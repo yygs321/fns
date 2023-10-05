@@ -99,6 +99,11 @@ const MainPage = () => {
       setProtein(nowData.protein);
       setFat(nowData.fat);
 
+      if (nowData.kcal > baseData.kcal) {
+        setIsOverKcal(true);
+        setOverKcal(orgKcal - baseKcalories);
+      }
+
       setIsLoading(false);
     } catch (err) {
       console.log(err);
@@ -108,6 +113,9 @@ const MainPage = () => {
   // 영양소 문제 해결되면 이 쪽 수정
   // const org_kcal = 2000;
 
+  console.log(carbohydrate);
+  console.log(baseCarbohydrate);
+
   useEffect(() => {
     setIsLoading(true);
 
@@ -115,12 +123,10 @@ const MainPage = () => {
 
     let targetValue = 0;
 
-    if (kcalories > baseKcalories) {
-      setIsOverKcal(true);
-      setOverKcal(kcalories - baseKcalories);
+    if (isOverKcal) {
       targetValue = 100;
     } else {
-      targetValue = (kcalories / baseKcalories) * 100;
+      targetValue = (orgKcal / baseKcalories) * 100;
     } // ProgressBar가 도달해야 할 값
     let currentValue = 0;
     const animationDuration = 500; // 몇 초 동안 애니메이션 실행
@@ -224,7 +230,11 @@ const MainPage = () => {
                     zIndex: "10",
                     "svg circle": { stroke: "url(#my_gradient)" },
                   }}
-                  value={Math.round((kcalories / baseKcalories) * 100)}
+                  value={
+                    isOverKcal
+                      ? 100
+                      : Math.round((kcalories / baseKcalories) * 100)
+                  }
                   size={"17rem"}
                   thickness={5}
                 />
@@ -350,10 +360,10 @@ const MainPage = () => {
                           sx={{ position: "absolute", top: "36%" }}
                         >
                           {kcalories > orgKcal || kcalories >= baseKcalories
-                            ? `${orgKcal}`
+                            ? `${orgKcal.toFixed(0)}`
                             : Number.isInteger(kcalories)
                             ? `${kcalories}`
-                            : `${kcalories.toFixed(1)}`}
+                            : `${kcalories.toFixed(0)}`}
                         </Typography>
                       </Grid>
                       <Grid
@@ -424,7 +434,6 @@ const MainPage = () => {
                 <BarGraph
                   maxNutrient={baseCarbohydrate}
                   nutrient={carbohydrate}
-                  setnutrient={setCarbohydrate}
                   name={"탄수화물"}
                 />
               </Grid>
@@ -432,17 +441,11 @@ const MainPage = () => {
                 <BarGraph
                   maxNutrient={baseProtein}
                   nutrient={protein}
-                  setnutrient={setProtein}
                   name={"단백질"}
                 />
               </Grid>
               <Grid item container xs={4} justifyContent={"center"}>
-                <BarGraph
-                  maxNutrient={baseFat}
-                  nutrient={fat}
-                  setnutrient={setFat}
-                  name={"지방"}
-                />
+                <BarGraph maxNutrient={baseFat} nutrient={fat} name={"지방"} />
               </Grid>
             </Grid>
           </Grid>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import PropTypes from "prop-types";
 import { Tabs, Tab, Box } from "@mui/material";
@@ -6,17 +6,12 @@ import { Tabs, Tab, Box } from "@mui/material";
 import UserGraph from "./UserGraph";
 import UserRecommend from "./UserRecommend";
 import default_profile from "../../assets/Image/Profile/deafult_profile.jpg";
-import axiosInstance from "../Common/Component/AxiosInstance";
-import { useSelector } from "react-redux";
+
 // import Cat from "../../assets/Image/cat.jpg";
 
-const UsersTabs = () => {
-  const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
-  const accessToken = useSelector((state) => {
-    return state.auth.accessToken;
-  });
+const UsersTabs = (props) => {
+  const { followees } = props;
 
-  const [followees, setFollowees] = useState([]);
   // const [recommendedUsers, setRecommendedUsers] = useState([]);
   // const followees = [
   //   {
@@ -68,31 +63,6 @@ const UsersTabs = () => {
   //     nowprov: 180,
   //   },
   // ];
-
-  const getFollowee = async () => {
-    try {
-      const res = await axiosInstance({
-        method: "get",
-        url: `${SERVER_API_URL}/follow`,
-        headers: {
-          "X-FNS-ACCESSTOKEN": accessToken,
-        },
-      });
-
-      console.log(res);
-
-      const result = res.data.data;
-
-      setFollowees(result);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  useEffect(() => {
-    getFollowee();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const recommendedUsers = [
     { username: "짭냥이", profileImg: default_profile, old: 10, BMI: 30 },

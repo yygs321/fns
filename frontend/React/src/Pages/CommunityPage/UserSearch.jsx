@@ -103,11 +103,15 @@ const UserSearch = () => {
 
       console.log(res);
 
-      getFollowee();
+      const newFollow = { ...one, memberId: one.id };
+
+      setAddedFollow([...addedFollow, newFollow]);
     } catch (err) {
       console.log(err);
     }
   };
+
+  console.log(addedFollow);
 
   const handleCancleFollow = async (one) => {
     try {
@@ -121,7 +125,11 @@ const UserSearch = () => {
 
       console.log(res);
 
-      getFollowee();
+      const updatedFollow = addedFollow.filter(
+        (follow) => follow.memberId !== one.id
+      );
+
+      setAddedFollow(updatedFollow);
     } catch (err) {
       console.log(err);
     }
@@ -343,9 +351,7 @@ const UserSearch = () => {
               justifyContent={"center"}
               alignItems={"center"}
             >
-              {!addedFollow.includes(
-                (followee) => followee.memberId === one.id
-              ) ? (
+              {!addedFollow.some((followee) => followee.memberId === one.id) ? (
                 <Button
                   variant="contained"
                   sx={{

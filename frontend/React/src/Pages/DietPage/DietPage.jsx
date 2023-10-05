@@ -81,7 +81,7 @@ const DietPage = () => {
       const morningMeals = meals.filter(
         (meal) => meal.intakeTime === "MORNING"
       );
-      const lunchMeals = meals.filter((meal) => meal.intakeTime === "Lunch");
+      const lunchMeals = meals.filter((meal) => meal.intakeTime === "LUNCH");
       const dinnerMeals = meals.filter((meal) => meal.intakeTime === "DINNER");
       const ETCMeals = meals.filter((meal) => meal.intakeTime === "ETC");
 
@@ -344,7 +344,7 @@ const DietPage = () => {
                 fontWeight={"bold"}
                 sx={{ textShadow: "2px 2px 20px #8b8b8b" }}
               >
-                {totalMealsKcal} kcal
+                {totalMealsKcal.toFixed(0)} kcal
               </Typography>
             </Grid>
           </Grid>
