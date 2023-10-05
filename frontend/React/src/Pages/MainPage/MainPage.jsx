@@ -527,9 +527,9 @@ const MainPage = () => {
                           <React.Fragment key={`${f.name}-${index}-selected`}>
                             <Typography
                               sx={{ color: "text.secondary" }}
-                              whiteSpace="nowrap"
-                              overflow="hidden"
-                              textOverflow="ellipsis"
+                              // whiteSpace="nowrap"
+                              // overflow="hidden"
+                              // textOverflow="ellipsis"
                             >
                               {f.name}
                             </Typography>

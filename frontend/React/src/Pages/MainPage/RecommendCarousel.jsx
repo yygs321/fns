@@ -53,13 +53,15 @@ const RecommendCarousel = (props) => {
                   <Grid
                     container
                     item
+                    xs={11}
                     justifyContent={"center"}
                     alignItems={"center"}
                   >
                     <Typography
-                      whiteSpace="nowrap"
-                      overflow="hidden"
-                      textOverflow="ellipsis"
+                      // whiteSpace="nowrap"
+                      // overflow="hidden"
+                      // textOverflow="ellipsis"
+                      fontSize={"1.2rem"}
                     >
                       {food.name}
                     </Typography>
@@ -70,13 +72,30 @@ const RecommendCarousel = (props) => {
                     justifyContent={"center"}
                     alignItems={"center"}
                   >
-                    <Typography
-                      whiteSpace="nowrap"
-                      overflow="hidden"
-                      textOverflow="ellipsis"
+                    <Grid
+                      container
+                      xs={4}
+                      item
+                      justifyContent={"flex-start"}
+                      alignItems={"center"}
                     >
-                      {food.kcal}
-                    </Typography>
+                      칼로리
+                    </Grid>
+                    <Grid
+                      container
+                      item
+                      xs={4}
+                      justifyContent={"flex-end"}
+                      alignItems={"center"}
+                    >
+                      <Typography
+                        whiteSpace="nowrap"
+                        overflow="hidden"
+                        textOverflow="ellipsis"
+                      >
+                        {food.kcal} kcal
+                      </Typography>
+                    </Grid>
                   </Grid>
                   <Grid
                     container
@@ -84,13 +103,30 @@ const RecommendCarousel = (props) => {
                     justifyContent={"center"}
                     alignItems={"center"}
                   >
-                    <Typography
-                      whiteSpace="nowrap"
-                      overflow="hidden"
-                      textOverflow="ellipsis"
+                    <Grid
+                      container
+                      xs={4}
+                      item
+                      justifyContent={"flex-start"}
+                      alignItems={"center"}
                     >
-                      {food.carbs}
-                    </Typography>
+                      탄수화물
+                    </Grid>
+                    <Grid
+                      container
+                      xs={4}
+                      item
+                      justifyContent={"flex-end"}
+                      alignItems={"center"}
+                    >
+                      <Typography
+                        whiteSpace="nowrap"
+                        overflow="hidden"
+                        textOverflow="ellipsis"
+                      >
+                        {food.carbs} mg
+                      </Typography>
+                    </Grid>
                   </Grid>
                   <Grid
                     container
@@ -98,13 +134,30 @@ const RecommendCarousel = (props) => {
                     justifyContent={"center"}
                     alignItems={"center"}
                   >
-                    <Typography
-                      whiteSpace="nowrap"
-                      overflow="hidden"
-                      textOverflow="ellipsis"
+                    <Grid
+                      container
+                      xs={4}
+                      item
+                      justifyContent={"flex-start"}
+                      alignItems={"center"}
                     >
-                      {food.protein}
-                    </Typography>
+                      단백질
+                    </Grid>
+                    <Grid
+                      container
+                      item
+                      xs={4}
+                      justifyContent={"flex-end"}
+                      alignItems={"center"}
+                    >
+                      <Typography
+                        whiteSpace="nowrap"
+                        overflow="hidden"
+                        textOverflow="ellipsis"
+                      >
+                        {food.protein} mg
+                      </Typography>
+                    </Grid>
                   </Grid>
                   <Grid
                     container
@@ -112,13 +165,30 @@ const RecommendCarousel = (props) => {
                     justifyContent={"center"}
                     alignItems={"center"}
                   >
-                    <Typography
-                      whiteSpace="nowrap"
-                      overflow="hidden"
-                      textOverflow="ellipsis"
+                    <Grid
+                      container
+                      xs={4}
+                      item
+                      justifyContent={"flex-start"}
+                      alignItems={"center"}
                     >
-                      {food.accuracy.toFixed(0)}
-                    </Typography>
+                      달성율
+                    </Grid>
+                    <Grid
+                      container
+                      item
+                      xs={4}
+                      justifyContent={"flex-end"}
+                      alignItems={"center"}
+                    >
+                      <Typography
+                        whiteSpace="nowrap"
+                        overflow="hidden"
+                        textOverflow="ellipsis"
+                      >
+                        {food.accuracy.toFixed(2)} %
+                      </Typography>
+                    </Grid>
                   </Grid>
                 </Grid>
               </div>
