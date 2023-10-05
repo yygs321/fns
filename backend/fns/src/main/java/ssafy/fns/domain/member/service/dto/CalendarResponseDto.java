@@ -1,4 +1,5 @@
-package ssafy.fns.domain.member.controller.dto;
+package ssafy.fns.domain.member.service.dto;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class EmailDuplicationRequestDto {
-
-    private String nickname;
+public class CalendarResponseDto {
+    
 }
