@@ -21,8 +21,6 @@ class Offset(BaseModel):
     calorie: int
     carbohydrate: float
     protein: float
-    alpha: float
-
 
 metadata = MetaData()
 Food = Table("food", metadata, autoload_with=engineconn().engine)
@@ -83,7 +81,7 @@ async def test(offset: Offset):
         name = food["name"]
 
         weight = recommend_food(user_diffs[0] - kcal, user_diffs[1] - carbs, user_diffs[2] - protein)
-        accuracy = calculate_accuracy(weight, offset.alpha)
+        accuracy = calculate_accuracy(weight, 0.03)
         weights.append({
             "accuracy": accuracy,
             "name": name,
