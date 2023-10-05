@@ -1,9 +1,7 @@
 package ssafy.fns.domain.member.controller;
 
-import com.amazonaws.services.s3.AmazonS3Client;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -34,7 +32,6 @@ import ssafy.fns.global.response.JsonResponse;
 public class MemberController {
 
     private final MemberService memberService;
-
 
 
     @PostMapping(value = "/sign-up")
@@ -96,8 +93,16 @@ public class MemberController {
     }
 
     @PostMapping("/image")
-    public ResponseEntity<?> uploadProfileImage(@AuthenticationPrincipal Member member, @RequestParam("file")MultipartFile file){
-        memberService.uploadProfileImage(member,file);
+    public ResponseEntity<?> uploadProfileImage(@AuthenticationPrincipal Member member,
+            @RequestParam("file") MultipartFile file) {
+        memberService.uploadProfileImage(member, file);
         return JsonResponse.ok("프로필 이미지 업로드 완료.");
+    }
+
+    @GetMapping("/calendar")
+    public ResponseEntity<?> selectCalendarData(@AuthenticationPrincipal Member member,
+            @RequestParam("date") String calendarDate) {
+        return JsonResponse.ok("월별 캘린더 데이터 조회 완료!",
+                memberService.selectCalendarData(member, calendarDate));
     }
 }

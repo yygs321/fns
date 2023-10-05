@@ -8,6 +8,7 @@ import ssafy.fns.domain.member.controller.dto.SignUpRequestDto;
 import ssafy.fns.domain.member.controller.dto.UpdatePasswordRequestDto;
 import ssafy.fns.domain.member.controller.dto.UpdateProfileRequestDto;
 import ssafy.fns.domain.member.entity.Member;
+import ssafy.fns.domain.member.service.dto.CalendarResponseDto;
 import ssafy.fns.domain.member.service.dto.MemberResponseDto;
 
 public interface MemberService {
@@ -32,4 +33,6 @@ public interface MemberService {
 
 
     void uploadProfileImage(Member member, MultipartFile file);
+
+    CalendarResponseDto selectCalendarData(Member member, String calendarDate);
 }
