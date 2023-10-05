@@ -6,9 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import ssafy.fns.domain.food.entity.Intake;
+import ssafy.fns.domain.baseNutrient.service.dto.BaseSimpleResponseDto;
 import ssafy.fns.domain.food.service.dto.IntakeSelectOneResponseDto;
-import ssafy.fns.domain.member.entity.Member;
 
 @Getter
 @NoArgsConstructor
@@ -28,10 +27,12 @@ public class FollowResponseDto {
 
     private List<IntakeSelectOneResponseDto> intake;
 
+    private BaseSimpleResponseDto baseNutrient;
+
     @Builder
     public FollowResponseDto(Long memberId, String nickName, Double kcal, Double carbs,
             Double protein,
-            Double fat, List<IntakeSelectOneResponseDto> intake) {
+            Double fat, List<IntakeSelectOneResponseDto> intake, BaseSimpleResponseDto baseSimpleResponseDto) {
         this.memberId = memberId;
         this.nickName = nickName;
         this.kcal = kcal;
@@ -39,5 +40,6 @@ public class FollowResponseDto {
         this.protein = protein;
         this.fat = fat;
         this.intake = intake;
+        this.baseNutrient = baseSimpleResponseDto;
     }
 }

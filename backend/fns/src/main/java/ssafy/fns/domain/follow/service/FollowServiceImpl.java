@@ -9,6 +9,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import ssafy.fns.domain.baseNutrient.entity.BaseNutrient;
+import ssafy.fns.domain.baseNutrient.repository.BaseRepository;
+import ssafy.fns.domain.baseNutrient.service.dto.BaseResponseDto;
+import ssafy.fns.domain.baseNutrient.service.dto.BaseSimpleResponseDto;
 import ssafy.fns.domain.follow.entity.Follow;
 import ssafy.fns.domain.follow.repository.FollowRepository;
 import ssafy.fns.domain.follow.service.dto.FollowCheckResponseDto;
@@ -28,6 +32,7 @@ public class FollowServiceImpl implements FollowService {
     private final FollowRepository followRepository;
     private final MemberRepository memberRepository;
     private final IntakeRepository intakeRepository;
+    private final BaseRepository baseRepository;
     @Override
     public List<FollowResponseDto> followList(Long fromMemberId) {
         List<Follow> followList = followRepository.findAllByFromMemberId(fromMemberId);
@@ -37,7 +42,7 @@ public class FollowServiceImpl implements FollowService {
             LocalDate date = LocalDate.now();
             String today = String.valueOf(date);
             List<Optional<Intake>> intakeList = intakeRepository.findAllByDateAndMemberId(today, m.getId());
-
+            BaseNutrient baseNutrient = m.getCurrentBase();
             Double kcal = (double) 0L;
             Double carbs = (double) 0L;
             Double protein = (double) 0L;
@@ -60,6 +65,7 @@ public class FollowServiceImpl implements FollowService {
                             .protein(protein)
                             .fat(fat)
                             .intake(intakes)
+                            .baseNutrient(BaseSimpleResponseDto.from(baseNutrient))
                             .build()
             );
         }
