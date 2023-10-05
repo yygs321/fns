@@ -159,7 +159,7 @@ export default function WeightDrawer(props) {
           duration: 입력기간,
         },
       });
-
+ 
       console.log(res.data);
 
       set입력목표체중("");
