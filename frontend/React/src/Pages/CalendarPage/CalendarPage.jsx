@@ -67,10 +67,16 @@ const CalendarPage = () => {
   useEffect(() => {
     const getAPI = async () => {
       try {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = (now.getMonth() + 1).toString().padStart(2, "0"); // 월은 0부터 시작하므로 1을 더하고 두 자리로 포맷팅합니다.
+        const day = now.getDate().toString().padStart(2, "0"); // 일자를 두 자리로 포맷팅합니다.
+        const formattedDay = `${year}-${month}-${day}`;
+
         const [res1, res2, res3] = await Promise.all([
           axios.get(`${SERVER_API_URL}/exercise`, {
             params: {
-              exerciseDate: 날짜,
+              exerciseDate: formattedDay,
             },
             headers: {
               "X-FNS-ACCESSTOKEN": accessToken,
@@ -79,14 +85,14 @@ const CalendarPage = () => {
           // 특정일자 기준 조회 -> 영양데이터.권장량
           axios.get(`${SERVER_API_URL}/base/`, {
             params: {
-              date: 날짜,
+              date: formattedDay,
             },
             headers: {
               "X-FNS-ACCESSTOKEN": accessToken,
             },
           }),
           // 일별 총 섭취 칼로리,탄,단,지 조회 -> 영양데이터.섭취량
-          axios.get(`${SERVER_API_URL}/intake/simple/${날짜}`, {
+          axios.get(`${SERVER_API_URL}/intake/simple/${formattedDay}`, {
             headers: {
               "X-FNS-ACCESSTOKEN": accessToken,
             },
