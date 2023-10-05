@@ -33,6 +33,13 @@ const MainPage = () => {
   const [fat, setFat] = useState(0); // 지방
   const [baseFat, setBaseFat] = useState(999); // 지방
 
+  const [carouselData, setCarouselData] = useState({
+    kcal: 0,
+    carbs: 0,
+    protein: 0,
+    fat: 0,
+  });
+
   const [isOverKcal, setIsOverKcal] = useState(false); // 칼로리 초과
   const [overKcal, setOverKcal] = useState(0);
 
@@ -44,8 +51,10 @@ const MainPage = () => {
 
   const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
   const accessToken = sessionStorage.getItem("accessToken");
-
   const now = new Date();
+  const before = new Date(now);
+  before.setDate(before.getDate() - 1);
+
   const options = {
     year: "2-digit",
     month: "numeric",
@@ -57,34 +66,54 @@ const MainPage = () => {
   const year = now.getFullYear();
   const month = (now.getMonth() + 1).toString().padStart(2, "0"); // 월은 0부터 시작하므로 1을 더하고 두 자리로 포맷팅합니다.
   const day = now.getDate().toString().padStart(2, "0"); // 일자를 두 자리로 포맷팅합니다.
+  const beforeDay = before.getDate().toString().padStart(2, "0");
 
   const formattedToday = `${year}-${month}-${day}`;
+  const formattedYesterday = `${year}-${month}-${beforeDay}`;
 
   // 영양소 받아온 후, 출력용 요청
 
   // eslint-disable-next-line no-unused-vars
   const getNeut = async () => {
     try {
-      const res = await axiosInstance({
-        method: "get",
-        url: `${SERVER_API_URL}/base/current`,
-        headers: {
-          "X-FNS-ACCESSTOKEN": accessToken,
-        },
-      });
+      const [res, res2, res3] = await Promise.all([
+        axiosInstance({
+          method: "get",
+          url: `${SERVER_API_URL}/base/current`,
+          headers: {
+            "X-FNS-ACCESSTOKEN": accessToken,
+          },
+        }),
 
-      const res2 = await axiosInstance({
-        method: "get",
-        url: `${SERVER_API_URL}/intake/simple/${formattedToday}`,
-        headers: {
-          "X-FNS-ACCESSTOKEN": accessToken,
-        },
-      });
+        axiosInstance({
+          method: "get",
+          url: `${SERVER_API_URL}/intake/simple/${formattedToday}`,
+          headers: {
+            "X-FNS-ACCESSTOKEN": accessToken,
+          },
+        }),
+
+        axiosInstance({
+          method: "get",
+          url: `${SERVER_API_URL}/intake/simple/${formattedYesterday}`,
+          headers: {
+            "X-FNS-ACCESSTOKEN": accessToken,
+          },
+        }),
+      ]);
       console.log(res);
       console.log(res2);
 
       const baseData = res.data.data;
       const nowData = res2.data.data;
+      const beforeData = res3.data.data;
+
+      setCarouselData({
+        kcal: baseData.kcal - beforeData.kcal,
+        carbs: baseData.carbs - beforeData.carbs,
+        protein: baseData.protein - beforeData.protein,
+        fat: baseData.fat - beforeData.fat,
+      });
 
       setBaseKcalories(baseData.kcal);
       setBaseCarbohydrate(baseData.carbs);
@@ -489,7 +518,7 @@ const MainPage = () => {
                         여기다 메뉴 요약
                       </Typography>
                     ) : (
-                      <RecommendCarousel />
+                      <RecommendCarousel data={carouselData} />
                     )}
                   </Grid>
                 </Grid>

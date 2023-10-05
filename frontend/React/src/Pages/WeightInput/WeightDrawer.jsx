@@ -128,11 +128,17 @@ export default function WeightDrawer(props) {
     set입력모달열기((data) => !data);
   };
 
-  const 체중입력하기 = () => {
-    체중등록();
-    기준영양소등록();
-    체중데이터받기();
-    set입력모달열기((data) => !data);
+  const 체중입력하기 = async () => {
+    try {
+      // 체중등록()과 기준영양소등록() 함수를 병렬로 실행
+      await Promise.all([체중등록(), 기준영양소등록()]);
+
+      // 두 작업이 모두 완료된 후에 다른 로직을 실행
+      체중데이터받기();
+      set입력모달열기((data) => !data);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const 목표설정모달 = () => {
@@ -156,7 +162,7 @@ export default function WeightDrawer(props) {
           duration: 입력기간,
         },
       });
- 
+
       console.log(res.data);
 
       set입력목표체중("");
