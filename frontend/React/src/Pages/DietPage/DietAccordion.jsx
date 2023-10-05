@@ -23,10 +23,25 @@ const DietAccordion = (props) => {
     setIsAccordionSelected(!isAccordionSelected);
   };
 
+  const rateFood = food.map((f) => {
+    const { kcal, carbs, protein, fat, rate, ...rest } = f;
+
+    const newItem = {
+      ...rest,
+      kcal: kcal / rate,
+      carbs: carbs / rate,
+      protein: protein / rate,
+      fat: fat / rate,
+      rate: rate,
+    };
+
+    return newItem;
+  });
+
   const handleAddButton = async (event) => {
     event.stopPropagation();
-    await dispatch(resetDiet());
-    await dispatch(nowDiet(food));
+    dispatch(resetDiet());
+    dispatch(nowDiet(rateFood));
     navigate("/diet/input", {
       state: { name: name, today: today, intakeTime: intakeTime },
     });
