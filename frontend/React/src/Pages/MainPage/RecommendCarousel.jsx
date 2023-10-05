@@ -15,6 +15,7 @@ const RecommendCarousel = (props) => {
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 3000,
+    arrows: false,
   };
 
   const bodyWidth = document.body.offsetWidth;
@@ -59,12 +60,14 @@ const RecommendCarousel = (props) => {
                     xs={11}
                     justifyContent={"center"}
                     alignItems={"center"}
+                    sx={{ py: "2vh" }}
+                    textAlign={"center"}
                   >
                     <Typography
                       // whiteSpace="nowrap"
                       // overflow="hidden"
                       // textOverflow="ellipsis"
-                      fontSize={"1.2rem"}
+                      fontSize={"1.4rem"}
                     >
                       {food.name}
                     </Typography>
@@ -175,7 +178,7 @@ const RecommendCarousel = (props) => {
                       justifyContent={"flex-start"}
                       alignItems={"center"}
                     >
-                      달성율
+                      적합도
                     </Grid>
                     <Grid
                       container

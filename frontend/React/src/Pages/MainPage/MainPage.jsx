@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import BarGraph from "./BarGraph";
 import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
-import NavigateBeforeRoundedIcon from "@mui/icons-material/NavigateBeforeRounded";
+// import NavigateBeforeRoundedIcon from "@mui/icons-material/NavigateBeforeRounded";
 import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
 
 import "../Common/CSS/BackgroundColor.css";
@@ -209,9 +209,9 @@ const MainPage = () => {
               justifyContent={"center"}
               alignItems={"center"}
             >
-              <NavigateBeforeRoundedIcon
+              {/* <NavigateBeforeRoundedIcon
                 sx={{ color: "white", fontSize: "2rem" }}
-              />
+              /> */}
               <Typography
                 variant="caption"
                 component="div"
