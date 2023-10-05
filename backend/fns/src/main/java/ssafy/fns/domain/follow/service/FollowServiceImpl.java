@@ -51,10 +51,15 @@ public class FollowServiceImpl implements FollowService {
 
             for(Optional<Intake> optionalIntake : intakeList){
                 intakes.add(IntakeSelectOneResponseDto.from(optionalIntake.get()));
-                kcal += optionalIntake.get().getFood().getKcal();
-                carbs += optionalIntake.get().getFood().getCarbs();
-                protein += optionalIntake.get().getFood().getProtein();
-                fat += optionalIntake.get().getFood().getFat();
+                Double tmpKcal = optionalIntake.get().getFood().getKcal();
+                Double tmpCarbs = optionalIntake.get().getFood().getCarbs();
+                Double tmpProtein = optionalIntake.get().getFood().getProtein();
+                Double tempFat = optionalIntake.get().getFood().getFat();
+                Double rate = optionalIntake.get().getRate();
+                kcal += multi(tmpKcal, rate);
+                carbs += multi(tmpCarbs, rate);
+                protein += multi(tmpProtein, rate);
+                fat += multi(tempFat, rate);
             }
 
             responseDtoList.add(FollowResponseDto.builder()
@@ -71,6 +76,11 @@ public class FollowServiceImpl implements FollowService {
         }
 
         return responseDtoList;
+    }
+
+    public Double multi(Double nutrition, Double rate) {
+        Double temp = nutrition * rate;
+        return (double) Math.round(temp * 10) / 10.0;
     }
 
     @Override
