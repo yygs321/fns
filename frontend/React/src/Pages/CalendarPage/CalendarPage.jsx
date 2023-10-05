@@ -64,7 +64,7 @@ const CalendarPage = () => {
 
   useEffect(() => {
 
-  axios.post(`${SERVER_API_URL}/weight/history`, {
+  axios.post(`${SERVER_API_URL}/exercise`, {
     exerciseDate: "2021-10-04",
       headers: {
         "X-FNS-ACCESSTOKEN": accessToken,
