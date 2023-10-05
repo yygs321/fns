@@ -57,7 +57,7 @@ const CalendarPage = () => {
   const [운동시간, set운동시간] = useState([]);
   const [몸무게, set몸무게] = useState("");
 
-  //axios 데이터 입력 받기
+  //axios 운동기록 데이터 입력 받기
 
   const accessToken = sessionStorage.getItem("accessToken");
   const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;

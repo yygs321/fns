@@ -60,8 +60,7 @@ export function WeightChart() {
         const targetData = response.data.data;
         console.log("성공여부 : ", response.data.success);
         if (response.data.success) {
-          console.log("Response Data_1 : ", response.data.success);
-          console.log("Response Data_2 : ", response.data.message);
+          console.log(response)
 
           set현재체중(() => targetData.targetWeightResponseDto.currentWeight);
           set목표체중(() => targetData.targetWeightResponseDto.targetWeight);
@@ -71,31 +70,7 @@ export function WeightChart() {
 
           set기간(() => targetData.targetWeightResponseDto.remainingDays);
           setPercentage(() => targetData.targetWeightResponseDto.progressRatio);
-          console.log(
-            "Response Data_현재체중 : ",
-            targetData.targetWeightResponseDto.currentWeight
-          );
-          console.log(
-            "Response Data_목표체중 : ",
-            targetData.targetWeightResponseDto.targetWeight
-          );
-          console.log(
-            "Response Data_체중리스트_시간 : ",
-            targetData.weightList.createdAt
-          );
-          console.log(
-            "Response Data_체중리스트 : ",
-            targetData.weightList.weight
-          );
-          console.log(
-            "Response Data_남은날짜 : ",
-            targetData.targetWeightResponseDto.remainingDays
-          );
-          console.log(
-            "Response Data_진행도 : ",
-            targetData.targetWeightResponseDto.progressRatio
-          );
-          console.log("#1");
+          
         }
       } catch (error) {
         console.error("Error while searching:", error);
