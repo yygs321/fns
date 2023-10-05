@@ -13,19 +13,53 @@ import {
 } from "@mui/material";
 
 import CommunityBarGraph from "./CommunityBarGraph";
+import axiosInstance from "../Common/Component/AxiosInstance";
 
 // 아침, 점심, 저녁, 간식이 같은 형식으로 반복하니까 API 연결하면서 중복 코드 줄이기?
 
 const UserGraph = (props) => {
   const { user, index, selectedUser, setSelectedUser } = props;
 
+  const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
+  const accessToken = sessionStorage.getItem("accessToken");
   const [cancelFollowModal, setCancelFollowModal] = useState(false);
+
+  const meals = user.intake;
+
+  const morningMeals = meals.filter((meal) => meal.intakeTime === "MORNING");
+  const lunchMeals = meals.filter((meal) => meal.intakeTime === "LUNCH");
+  const dinnerMeals = meals.filter((meal) => meal.intakeTime === "DINNER");
+  const ETCMeals = meals.filter((meal) => meal.intakeTime === "ETC");
+
+  console.log(morningMeals);
+  console.log(lunchMeals);
+  console.log(dinnerMeals);
+  console.log(ETCMeals);
 
   const handleUserChange = (e, newUserIndex) => {
     if (selectedUser !== newUserIndex) {
       setSelectedUser(newUserIndex);
     } else {
       setSelectedUser(null);
+    }
+  };
+
+  const handleCancelFollowAxios = async () => {
+    // 여기다 팔로우 삭제 api
+    try {
+      const res = await axiosInstance({
+        method: "delete",
+        url: `${SERVER_API_URL}/follow/${user.memberId}`,
+        headers: {
+          "X-FNS-ACCESSTOKEN": accessToken,
+        },
+      });
+
+      console.log(res);
+
+      window.location.reload();
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -41,6 +75,8 @@ const UserGraph = (props) => {
 
   const handleCancelFollow = (e) => {
     e.stopPropagation();
+    handleCancelFollowAxios();
+    setCancelFollowModal(false);
   };
 
   return (
@@ -113,7 +149,7 @@ const UserGraph = (props) => {
                 overflow="hidden"
                 textOverflow="ellipsis"
               >
-                {user.username}
+                {user.nickName}
               </Typography>
             </Grid>
           </Grid>
@@ -127,29 +163,29 @@ const UserGraph = (props) => {
           >
             <Grid item container xs={3} justifyContent={"center"}>
               <CommunityBarGraph
-                nutrient={user.nowKcal}
-                maxNutrient={user.maxKcal}
+                nutrient={user.kcal}
+                maxNutrient={user.baseNutrient.kcal}
                 name={"칼로리"}
               />
             </Grid>
             <Grid item container xs={3} justifyContent={"center"}>
               <CommunityBarGraph
-                nutrient={user.nowcarb}
-                maxNutrient={user.maxcarb}
+                nutrient={user.carbs}
+                maxNutrient={user.baseNutrient.carbs}
                 name={"탄수화물"}
               />
             </Grid>
             <Grid item container xs={3} justifyContent={"center"}>
               <CommunityBarGraph
-                nutrient={user.nowprot}
-                maxNutrient={user.maxprot}
+                nutrient={user.protein}
+                maxNutrient={user.baseNutrient.protein}
                 name={"단백질"}
               />
             </Grid>
             <Grid item container xs={3} justifyContent={"center"}>
               <CommunityBarGraph
-                nutrient={user.nowprov}
-                maxNutrient={user.maxprov}
+                nutrient={user.fat}
+                maxNutrient={user.baseNutrient.fat}
                 name={"지방"}
               />
             </Grid>
@@ -162,7 +198,11 @@ const UserGraph = (props) => {
               container
               justifyContent={"center"}
               alignItems={"center"}
-              sx={{ backgroundColor: "#e7e7e7", borderRadius: "10px" }}
+              sx={{
+                backgroundColor: "#e7e7e7",
+                borderRadius: "10px",
+                py: "1vh",
+              }}
             >
               <Grid
                 item
@@ -170,52 +210,11 @@ const UserGraph = (props) => {
                 xs={11}
                 justifyContent={"center"}
                 alignItems={"center"}
-                sx={{ py: "1vh", borderBottom: "1px solid #a7a7a7" }}
-              >
-                <Grid
-                  item
-                  container
-                  xs={2}
-                  justifyContent={"center"}
-                  alignItems={"center"}
-                >
-                  <Typography>시간</Typography>
-                </Grid>
-                <Grid
-                  item
-                  container
-                  xs={5}
-                  justifyContent={"center"}
-                  alignItems={"center"}
-                >
-                  <Typography>음식</Typography>
-                </Grid>
-                <Grid
-                  item
-                  container
-                  xs={2}
-                  justifyContent={"center"}
-                  alignItems={"center"}
-                >
-                  <Typography>분량</Typography>
-                </Grid>
-                <Grid
-                  item
-                  container
-                  xs={3}
-                  justifyContent={"center"}
-                  alignItems={"center"}
-                >
-                  <Typography>kcal</Typography>
-                </Grid>
-              </Grid>
-              <Grid
-                item
-                container
-                xs={11}
-                justifyContent={"center"}
-                alignItems={"center"}
-                sx={{ py: "1vh", borderBottom: "1px solid #a7a7a7" }}
+                sx={{
+                  py: "1vh",
+                  mt: "0.5vh",
+                  borderBottom: "0.5px solid #c1c1c1",
+                }}
               >
                 <Grid
                   item
@@ -254,13 +253,88 @@ const UserGraph = (props) => {
                   <Typography>kcal</Typography>
                 </Grid>
               </Grid>
+              {morningMeals.map((meal, idx) => (
+                <Grid
+                  key={`${meal.foodName}-${idx}-morning`}
+                  item
+                  container
+                  xs={11}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                  sx={{ py: "0.5vh" }}
+                >
+                  <Grid
+                    item
+                    container
+                    xs={2}
+                    justifyContent={"center"}
+                    alignItems={"center"}
+                  ></Grid>
+                  <Grid
+                    item
+                    container
+                    xs={5}
+                    justifyContent={"center"}
+                    alignItems={"center"}
+                  >
+                    <Typography
+                      whiteSpace="nowrap"
+                      overflow="hidden"
+                      textOverflow="ellipsis"
+                      color="text.secondary"
+                      fontSize={"0.8rem"}
+                    >
+                      {meal.foodName}
+                    </Typography>
+                  </Grid>
+                  <Grid
+                    item
+                    container
+                    xs={2}
+                    justifyContent={"center"}
+                    alignItems={"center"}
+                  >
+                    <Typography
+                      whiteSpace="nowrap"
+                      overflow="hidden"
+                      textOverflow="ellipsis"
+                      color="text.secondary"
+                      fontSize={"0.8rem"}
+                    >
+                      {meal.volume}
+                    </Typography>
+                  </Grid>
+                  <Grid
+                    item
+                    container
+                    xs={3}
+                    justifyContent={"center"}
+                    alignItems={"center"}
+                  >
+                    <Typography
+                      whiteSpace="nowrap"
+                      overflow="hidden"
+                      textOverflow="ellipsis"
+                      color="text.secondary"
+                      fontSize={"0.8rem"}
+                    >
+                      {(meal.kcal * meal.volume).toFixed(0)}
+                    </Typography>
+                  </Grid>
+                </Grid>
+              ))}
               <Grid
                 item
                 container
                 xs={11}
                 justifyContent={"center"}
                 alignItems={"center"}
-                sx={{ py: "1vh", borderBottom: "1px solid #a7a7a7" }}
+                sx={{
+                  py: "1vh",
+                  mt: "0.5vh",
+                  borderTop: "0.5px solid #c1c1c1",
+                  borderBottom: "0.5px solid #c1c1c1",
+                }}
               >
                 <Grid
                   item
@@ -299,13 +373,88 @@ const UserGraph = (props) => {
                   <Typography>kcal</Typography>
                 </Grid>
               </Grid>
+              {lunchMeals.map((meal, idx) => (
+                <Grid
+                  key={`${meal.foodName}-${idx}-lunch`}
+                  item
+                  container
+                  xs={11}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                  sx={{ py: "0.5vh" }}
+                >
+                  <Grid
+                    item
+                    container
+                    xs={2}
+                    justifyContent={"center"}
+                    alignItems={"center"}
+                  ></Grid>
+                  <Grid
+                    item
+                    container
+                    xs={5}
+                    justifyContent={"center"}
+                    alignItems={"center"}
+                  >
+                    <Typography
+                      whiteSpace="nowrap"
+                      overflow="hidden"
+                      textOverflow="ellipsis"
+                      color="text.secondary"
+                      fontSize={"0.8rem"}
+                    >
+                      {meal.foodName}
+                    </Typography>
+                  </Grid>
+                  <Grid
+                    item
+                    container
+                    xs={2}
+                    justifyContent={"center"}
+                    alignItems={"center"}
+                  >
+                    <Typography
+                      whiteSpace="nowrap"
+                      overflow="hidden"
+                      textOverflow="ellipsis"
+                      color="text.secondary"
+                      fontSize={"0.8rem"}
+                    >
+                      {meal.volume}
+                    </Typography>
+                  </Grid>
+                  <Grid
+                    item
+                    container
+                    xs={3}
+                    justifyContent={"center"}
+                    alignItems={"center"}
+                  >
+                    <Typography
+                      whiteSpace="nowrap"
+                      overflow="hidden"
+                      textOverflow="ellipsis"
+                      color="text.secondary"
+                      fontSize={"0.8rem"}
+                    >
+                      {(meal.kcal * meal.volume).toFixed(0)}
+                    </Typography>
+                  </Grid>
+                </Grid>
+              ))}
               <Grid
                 item
                 container
                 xs={11}
                 justifyContent={"center"}
                 alignItems={"center"}
-                sx={{ py: "1vh", borderBottom: "1px solid #a7a7a7" }}
+                sx={{
+                  py: "1vh",
+                  mt: "0.5vh",
+                  borderTop: "0.5px solid #c1c1c1",
+                  borderBottom: "0.5px solid #c1c1c1",
+                }}
               >
                 <Grid
                   item
@@ -344,13 +493,88 @@ const UserGraph = (props) => {
                   <Typography>kcal</Typography>
                 </Grid>
               </Grid>
+              {dinnerMeals.map((meal, idx) => (
+                <Grid
+                  key={`${meal.foodName}-${idx}-dinner`}
+                  item
+                  container
+                  xs={11}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                  sx={{ py: "0.5vh" }}
+                >
+                  <Grid
+                    item
+                    container
+                    xs={2}
+                    justifyContent={"center"}
+                    alignItems={"center"}
+                  ></Grid>
+                  <Grid
+                    item
+                    container
+                    xs={5}
+                    justifyContent={"center"}
+                    alignItems={"center"}
+                  >
+                    <Typography
+                      whiteSpace="nowrap"
+                      overflow="hidden"
+                      textOverflow="ellipsis"
+                      color="text.secondary"
+                      fontSize={"0.8rem"}
+                    >
+                      {meal.foodName}
+                    </Typography>
+                  </Grid>
+                  <Grid
+                    item
+                    container
+                    xs={2}
+                    justifyContent={"center"}
+                    alignItems={"center"}
+                  >
+                    <Typography
+                      whiteSpace="nowrap"
+                      overflow="hidden"
+                      textOverflow="ellipsis"
+                      color="text.secondary"
+                      fontSize={"0.8rem"}
+                    >
+                      {meal.volume}
+                    </Typography>
+                  </Grid>
+                  <Grid
+                    item
+                    container
+                    xs={3}
+                    justifyContent={"center"}
+                    alignItems={"center"}
+                  >
+                    <Typography
+                      whiteSpace="nowrap"
+                      overflow="hidden"
+                      textOverflow="ellipsis"
+                      color="text.secondary"
+                      fontSize={"0.8rem"}
+                    >
+                      {(meal.kcal * meal.volume).toFixed(0)}
+                    </Typography>
+                  </Grid>
+                </Grid>
+              ))}
               <Grid
                 item
                 container
                 xs={11}
                 justifyContent={"center"}
                 alignItems={"center"}
-                sx={{ py: "1vh" }}
+                sx={{
+                  py: "1vh",
+                  mt: "0.5vh",
+                  borderTop: "0.5px solid #c1c1c1",
+                  borderBottom: "0.5px solid #c1c1c1",
+                }}
               >
                 <Grid
                   item
@@ -389,6 +613,76 @@ const UserGraph = (props) => {
                   <Typography>kcal</Typography>
                 </Grid>
               </Grid>
+              {ETCMeals.map((meal, idx) => (
+                <Grid
+                  key={`${meal.foodName}-${idx}-etc`}
+                  item
+                  container
+                  xs={11}
+                  justifyContent={"center"}
+                  alignItems={"center"}
+                  sx={{ py: "0.5vh" }}
+                >
+                  <Grid
+                    item
+                    container
+                    xs={2}
+                    justifyContent={"center"}
+                    alignItems={"center"}
+                  ></Grid>
+                  <Grid
+                    item
+                    container
+                    xs={5}
+                    justifyContent={"center"}
+                    alignItems={"center"}
+                  >
+                    <Typography
+                      whiteSpace="nowrap"
+                      overflow="hidden"
+                      textOverflow="ellipsis"
+                      color="text.secondary"
+                      fontSize={"0.8rem"}
+                    >
+                      {meal.foodName}
+                    </Typography>
+                  </Grid>
+                  <Grid
+                    item
+                    container
+                    xs={2}
+                    justifyContent={"center"}
+                    alignItems={"center"}
+                  >
+                    <Typography
+                      whiteSpace="nowrap"
+                      overflow="hidden"
+                      textOverflow="ellipsis"
+                      color="text.secondary"
+                      fontSize={"0.8rem"}
+                    >
+                      {meal.volume}
+                    </Typography>
+                  </Grid>
+                  <Grid
+                    item
+                    container
+                    xs={3}
+                    justifyContent={"center"}
+                    alignItems={"center"}
+                  >
+                    <Typography
+                      whiteSpace="nowrap"
+                      overflow="hidden"
+                      textOverflow="ellipsis"
+                      color="text.secondary"
+                      fontSize={"0.8rem"}
+                    >
+                      {(meal.kcal * meal.volume).toFixed(0)}
+                    </Typography>
+                  </Grid>
+                </Grid>
+              ))}
             </Grid>
             <Grid
               item

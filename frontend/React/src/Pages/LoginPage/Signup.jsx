@@ -11,8 +11,9 @@ import {
 import "./CSS/Signup.scss";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { userLogin } from "../../Redux/actions/actions";
+import { useDispatch } from "react-redux";
+
 import axios from "axios";
 
 const Signup = () => {
@@ -135,12 +136,15 @@ const Signup = () => {
                 console.log(res2);
                 console.log(res2.data.message);
                 const tokenData = res2.data.data.tokenDto;
-                dispatch(
-                  userLogin({
-                    accessToken: tokenData.accessToken,
-                    refreshToken: tokenData.refreshToken,
-                  })
+
+                sessionStorage.setItem("accessToken", tokenData.accessToken);
+                sessionStorage.setItem("refreshToken", tokenData.refreshToken);
+                sessionStorage.setItem(
+                  "expirationTime",
+                  tokenData.expirationTime
                 );
+
+                dispatch(userLogin());
                 navigate("/info");
               } else {
                 set가입실패(res.data.message);

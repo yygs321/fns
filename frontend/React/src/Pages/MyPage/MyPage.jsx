@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import {List, ListItemText, ListItemIcon, Divider, Typography, Avatar } from "@mui/material";
+import {
+  List,
+  ListItemText,
+  ListItemIcon,
+  Divider,
+  Typography,
+  Avatar,
+} from "@mui/material";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import "./MyPage.css";
@@ -9,8 +16,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { userLogout } from "../../Redux/actions/actions";
-import axios from "axios";
-import { useSelector } from "react-redux";
+import axiosInstance from "../Common/Component/AxiosInstance";
 import Loading from "../Common/Component/Loading";
 
 const MyPage = () => {
@@ -27,14 +33,13 @@ const MyPage = () => {
     gender: "",
     height: 0,
     weight: 0,
-});
-
+  });
 
   const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
-  const accessToken = useSelector((state) => state.auth.accessToken);
-  const refreshToken = useSelector((state) => state.auth.refreshToken);
-  const expirationTime = useSelector((state) => state.auth.expirationTime);
-  
+  const accessToken = sessionStorage.getItem("accessToken");
+  const refreshToken = sessionStorage.getItem("refreshToken");
+  const expirationTime = sessionStorage.getItem("expirationTime");
+
   // const handleImageUpload = (event) => {
   //   const file = event.target.files[0];
   //   if (file) {
@@ -44,21 +49,28 @@ const MyPage = () => {
   const handleImageUpload = async (event) => {
     const file = event.target.files[0];
     if (!file) return;
-  
+
     const formData = new FormData();
-    formData.append('file', file);
-  
+    formData.append("file", file);
+
     try {
-      const response = await axios.post(`${SERVER_API_URL}/members/image`, formData, {
-        headers: {
-          'X-FNS-ACCESSTOKEN': accessToken,
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-  
+      const response = await axiosInstance.post(
+        `${SERVER_API_URL}/members/image`,
+        formData,
+        {
+          headers: {
+            "X-FNS-ACCESSTOKEN": accessToken,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
       if (response.data.success) {
         const uploadedImageUrl = response.data.data.fileUrl;
-        setProfile(prevProfile => ({ ...prevProfile, image: uploadedImageUrl }));
+        setProfile((prevProfile) => ({
+          ...prevProfile,
+          image: uploadedImageUrl,
+        }));
         alert("이미지가 성공적으로 업로드되었습니다.");
       } else {
         console.error("Failed to upload image:", response.data.message);
@@ -69,18 +81,20 @@ const MyPage = () => {
       alert("이미지 업로드 중 오류가 발생했습니다. 다시 시도해 주세요.");
     }
   };
-  
 
   const handleLogout = () => {
     dispatch(userLogout());
+    sessionStorage.removeItem("accessToken");
+    sessionStorage.removeItem("refreshToken");
+    sessionStorage.removeItem("expirationTime");
     navigate("/");
   };
 
   const handleMemberWithdrawal = async () => {
     try {
-      const response = await axios.delete(`${SERVER_API_URL}/members`, {
+      const response = await axiosInstance.delete(`${SERVER_API_URL}/members`, {
         headers: {
-          'X-FNS-ACCESSTOKEN': accessToken,
+          "X-FNS-ACCESSTOKEN": accessToken,
         },
         data: {
           accessToken: accessToken,
@@ -91,8 +105,11 @@ const MyPage = () => {
 
       if (response.data.success) {
         alert("회원 탈퇴가 성공적으로 완료되었습니다.");
-        dispatch(userLogout());  // 로그아웃 처리
-        navigate("/");         
+        sessionStorage.removeItem("accessToken");
+        sessionStorage.removeItem("refreshToken");
+        sessionStorage.removeItem("expirationTime");
+        dispatch(userLogout()); // 로그아웃 처리
+        navigate("/");
       } else {
         alert("회원 탈퇴 중 오류가 발생했습니다. 다시 시도해 주세요.");
       }
@@ -105,42 +122,42 @@ const MyPage = () => {
   useEffect(() => {
     setIsLoading(true);
     const fetchProfile = async () => {
-        try {
-            const response = await axios.get(`${SERVER_API_URL}/members`, {
-                headers: {
-                    'X-FNS-ACCESSTOKEN': accessToken,  
-                },
-            });
-           
-            if (response.data.success) {
-                const { nickname, age, height, weight, gender, fileUrl } = response.data.data;
-                
-      
-                setProfile(prevProfile => ({
-                    ...prevProfile,
-                    nickname,
-                    age,
-                    height,
-                    weight,
-                    gender: gender === "FEMALE" ? "여" : "남",  // gender 값에 따라 한글로 변환
-                    image: fileUrl || null
-                }));
-            } else {
-                console.error("Failed to fetch profile:", response.data.message);
-            }
-        } catch (error) {
-            console.error("Error while fetching profile:", error);
+      try {
+        const response = await axiosInstance.get(`${SERVER_API_URL}/members`, {
+          headers: {
+            "X-FNS-ACCESSTOKEN": accessToken,
+          },
+        });
+
+        if (response.data.success) {
+          const { nickname, age, height, weight, gender, fileUrl } =
+            response.data.data;
+
+          setProfile((prevProfile) => ({
+            ...prevProfile,
+            nickname,
+            age,
+            height,
+            weight,
+            gender: gender === "FEMALE" ? "여" : "남", // gender 값에 따라 한글로 변환
+            image: fileUrl || null,
+          }));
+        } else {
+          console.error("Failed to fetch profile:", response.data.message);
         }
-        setIsLoading(false);
+      } catch (error) {
+        console.error("Error while fetching profile:", error);
+      }
+      setIsLoading(false);
     };
 
     fetchProfile();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-}, []);
+  }, []);
 
-if (isLoading) {
-  return <Loading />; 
-}
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div className="mypage-container">
@@ -231,14 +248,18 @@ if (isLoading) {
             </ListItemButton>
             <Divider />
             <ListItemButton
-            component={Link}
-            to="/mypage/changepassword" 
-            style={{ paddingLeft: 32 }}  >
-            <ListItemText primary="비밀번호 변경" />
-            <ChevronRightIcon style={{ color: "#00E1AB" }} />
-        </ListItemButton>
-        <Divider />
-            <ListItemButton onClick={handleMemberWithdrawal} style={{ paddingLeft: 32 }}>
+              component={Link}
+              to="/mypage/changepassword"
+              style={{ paddingLeft: 32 }}
+            >
+              <ListItemText primary="비밀번호 변경" />
+              <ChevronRightIcon style={{ color: "#00E1AB" }} />
+            </ListItemButton>
+            <Divider />
+            <ListItemButton
+              onClick={handleMemberWithdrawal}
+              style={{ paddingLeft: 32 }}
+            >
               <ListItemText primary="회원탈퇴" />
               <ChevronRightIcon style={{ color: "#00E1AB" }} />
             </ListItemButton>

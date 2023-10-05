@@ -13,9 +13,7 @@ import axiosInstance from "../Common/Component/AxiosInstance";
 
 const SearchFood = () => {
   const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
-  const accessToken = useSelector((state) => {
-    return state.auth.accessToken;
-  });
+  const accessToken = sessionStorage.getItem("accessToken");
 
   const [searchTerm, setSearchTerm] = useState("");
 

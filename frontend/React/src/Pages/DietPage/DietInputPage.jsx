@@ -14,9 +14,7 @@ import FoodCount from "./FoodCount";
 
 const DietInputPage = () => {
   const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
-  const accessToken = useSelector((state) => {
-    return state.auth.accessToken;
-  });
+  const accessToken = sessionStorage.getItem("accessToken");
 
   // 여기 추후에 리덕스쪽에서 데이터 관리할 것임
   // 식단 데이터 받아온거 저장해놓고, 새로 추가하는 음식 데이터도 쌓다가 저장 누르면 api로 보내버리는 식.
@@ -314,7 +312,7 @@ const DietInputPage = () => {
                     overflow="hidden"
                     textOverflow="ellipsis"
                   >
-                    {one.kcal} kcal
+                    {one.kcal.toFixed(0)} kcal
                   </Typography>
                 </Grid>
                 <Grid
@@ -350,7 +348,7 @@ const DietInputPage = () => {
                     overflow="hidden"
                     textOverflow="ellipsis"
                   >
-                    {one.carbs} mg
+                    {one.carbs.toFixed(0)} mg
                   </Typography>
                 </Grid>
                 <Grid
@@ -383,7 +381,7 @@ const DietInputPage = () => {
                     overflow="hidden"
                     textOverflow="ellipsis"
                   >
-                    {one.protein} mg
+                    {one.protein.toFixed(0)} mg
                   </Typography>
                 </Grid>
                 <Grid
@@ -416,7 +414,7 @@ const DietInputPage = () => {
                     overflow="hidden"
                     textOverflow="ellipsis"
                   >
-                    {one.fat} mg
+                    {one.fat.toFixed(0)} mg
                   </Typography>
                 </Grid>
                 <Grid
@@ -544,10 +542,12 @@ const DietInputPage = () => {
               overflow="hidden"
               textOverflow="ellipsis"
             >
-              {nowDietList.reduce(
-                (totalKcal, food) => totalKcal + food.kcal * food.rate,
-                0
-              )}{" "}
+              {nowDietList
+                .reduce(
+                  (totalKcal, food) => totalKcal + food.kcal * food.rate,
+                  0
+                )
+                .toFixed(0)}{" "}
               kcal
             </Typography>
           </Grid>
@@ -577,10 +577,12 @@ const DietInputPage = () => {
               overflow="hidden"
               textOverflow="ellipsis"
             >
-              {nowDietList.reduce(
-                (totalCarbs, food) => totalCarbs + food.carbs * food.rate,
-                0
-              )}{" "}
+              {nowDietList
+                .reduce(
+                  (totalCarbs, food) => totalCarbs + food.carbs * food.rate,
+                  0
+                )
+                .toFixed(0)}{" "}
               mg
             </Typography>
           </Grid>
@@ -610,10 +612,13 @@ const DietInputPage = () => {
               overflow="hidden"
               textOverflow="ellipsis"
             >
-              {nowDietList.reduce(
-                (totalProtein, food) => totalProtein + food.protein * food.rate,
-                0
-              )}{" "}
+              {nowDietList
+                .reduce(
+                  (totalProtein, food) =>
+                    totalProtein + food.protein * food.rate,
+                  0
+                )
+                .toFixed(0)}{" "}
               mg
             </Typography>
           </Grid>
@@ -643,10 +648,9 @@ const DietInputPage = () => {
               overflow="hidden"
               textOverflow="ellipsis"
             >
-              {nowDietList.reduce(
-                (totalFat, food) => totalFat + food.fat * food.rate,
-                0
-              )}{" "}
+              {nowDietList
+                .reduce((totalFat, food) => totalFat + food.fat * food.rate, 0)
+                .toFixed(0)}{" "}
               mg
             </Typography>
           </Grid>

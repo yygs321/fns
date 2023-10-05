@@ -1,8 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Typography, LinearProgress } from "@mui/material";
 
 const BarGraph = (props) => {
-  const { maxNutrient, nutrient, setnutrient, name } = props;
+  const { maxNutrient, nutrient, name } = props;
+
+  const [newValue, setNewValue] = useState(0);
 
   useEffect(() => {
     let targetValue = 0;
@@ -22,7 +24,7 @@ const BarGraph = (props) => {
         } else {
           currentValue += 1;
         }
-        setnutrient(Math.round((currentValue / 100) * maxNutrient)); // kcalories 값을 업데이트
+        setNewValue(Math.round((currentValue / 100) * maxNutrient));
       } else {
         clearInterval(interval); // 목표 값에 도달하면 애니메이션 중지
       }
@@ -73,9 +75,9 @@ const BarGraph = (props) => {
             },
           }}
           value={
-            (nutrient / maxNutrient) * 100 > 100
+            (newValue / maxNutrient) * 100 > 100
               ? 100
-              : (nutrient / maxNutrient) * 100
+              : (newValue / maxNutrient) * 100
           }
           {...nutrient}
         />

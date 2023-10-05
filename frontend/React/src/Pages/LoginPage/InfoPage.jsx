@@ -15,7 +15,6 @@ import "./CSS/InfoPage.scss";
 import ManRoundedIcon from "@mui/icons-material/ManRounded";
 import WomanRoundedIcon from "@mui/icons-material/WomanRounded";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 import axiosInstance from "../Common/Component/AxiosInstance";
 
 function 닉네임확인함수(nickname) {
@@ -27,10 +26,7 @@ function 닉네임확인함수(nickname) {
 
 const InfoPage = () => {
   const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
-  const accessToken = useSelector((state) => {
-    return state.auth.accessToken;
-  });
-
+  const accessToken = sessionStorage.getItem("accessToken");
   const [닉네임, set닉네임] = useState("");
   const [닉네임확인, set닉네임확인] = useState(false);
   const [닉네임오류, set닉네임오류] = useState(undefined);

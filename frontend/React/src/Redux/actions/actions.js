@@ -28,9 +28,10 @@ export const fixedFromDiet = (food) => ({
 
 // 로그인 데이터 관련 액션
 
-export const userLogin = (token) => ({
+// (token)
+export const userLogin = () => ({
   type: actionTypes.USER_LOGIN,
-  payload: token,
+  // payload: token,
 });
 
 export const userLogout = () => ({
