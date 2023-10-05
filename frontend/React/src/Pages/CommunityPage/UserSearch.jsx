@@ -12,7 +12,6 @@ const UserSearch = () => {
   const [addedFollow, setAddedFollow] = useState([]);
   const [searchResult, setSearchResult] = useState([]);
 
-
   const navigate = useNavigate();
   const goBackPage = () => {
     navigate(-1);
@@ -28,8 +27,6 @@ const UserSearch = () => {
         },
       });
 
-     
-
       const result = res.data.data;
 
       setAddedFollow(result);
@@ -44,7 +41,6 @@ const UserSearch = () => {
   }, []);
 
   const handleSearchFollow = async () => {
-    
     try {
       const res = await axiosInstance({
         method: "get",
@@ -73,14 +69,13 @@ const UserSearch = () => {
 
   const handleAddFollow = async (one) => {
     try {
-      const res = await axiosInstance({
+      await axiosInstance({
         method: "post",
         url: `${SERVER_API_URL}/follow/${one.id}`,
         headers: {
           "X-FNS-ACCESSTOKEN": accessToken,
         },
       });
-
 
       const newFollow = { ...one, memberId: one.id };
 
@@ -90,17 +85,15 @@ const UserSearch = () => {
     }
   };
 
-
   const handleCancleFollow = async (one) => {
     try {
-      const res = await axiosInstance({
+      await axiosInstance({
         method: "delete",
         url: `${SERVER_API_URL}/follow/${one.id}`,
         headers: {
           "X-FNS-ACCESSTOKEN": accessToken,
         },
       });
-
 
       const updatedFollow = addedFollow.filter(
         (follow) => follow.memberId !== one.id
@@ -261,10 +254,7 @@ const UserSearch = () => {
                 justifyContent={"center"}
                 alignItems={"center"}
               >
-                <Avatar
-                  alt="MyName"
-                  sx={{ width: "5rem", height: "5rem" }}
-                />
+                <Avatar alt="MyName" sx={{ width: "5rem", height: "5rem" }} />
               </Grid>
               <Grid
                 container
