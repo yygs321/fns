@@ -64,25 +64,26 @@ export function WeightChart() {
         console.log("성공여부 : ", response.data.success);
         if (response.data.success) {
           console.log("Response Data_1 : ", response.data.success);
-          console.log("Response Data_1 : ", response.data.message);
+          console.log("Response Data_2 : ", response.data.message);
           
-          console.log("체크_1");
           set현재체중(() => targetData.targetWeightResponseDto.currentWeight);
           set목표체중(() => targetData.targetWeightResponseDto.targetWeight);
           if (targetData.weightList) {
             setUserData(() => targetData.weightList);
           }
-          console.log("체크_2");
           set기간(() => targetData.remainingDays);
           setPercentage(() => targetData.progressRatio);
+          console.log("Response Data_체중 : ", targetData.currentWeight);
+          console.log("Response Data_체중 : ", targetData.targetWeight);
+          console.log("Response Data_체중 : ", targetData.weightList);
+          console.log("Response Data_체중 : ", targetData.remainingDays);
+          console.log("Response Data_체중 : ", targetData.progressRatio);
         }
       } catch (error) {
         console.error("Error while searching:", error);
       }
     };
-    console.log("체크_3");
     체중감량그래프API();
-    console.log("체크_4");
   }, [accessToken, SERVER_API_URL]);
 
   const data = {
