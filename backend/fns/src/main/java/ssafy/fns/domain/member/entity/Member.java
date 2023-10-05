@@ -136,4 +136,8 @@ public class Member extends BaseEntity {
         this.profileImageURL = profileImageURL;
     }
 
+    public BaseNutrient getCurrentBase() {
+        return this.getBaseNutrientList()
+                .get(this.getBaseNutrientList().size() - 1);
+    }
 }
