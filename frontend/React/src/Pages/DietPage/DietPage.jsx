@@ -1,9 +1,11 @@
 import React, { memo, useEffect, useState } from "react";
+
 import { Grid, Typography } from "@mui/material";
 import NavigateBeforeRoundedIcon from "@mui/icons-material/NavigateBeforeRounded";
 import NavigateNextRoundedIcon from "@mui/icons-material/NavigateNextRounded";
-import DietAccordion from "./DietAccordion";
+
 import axiosInstance from "../Common/Component/AxiosInstance";
+import DietAccordion from "./DietAccordion";
 import Loading from "../Common/Component/Loading";
 
 const DietPage = () => {

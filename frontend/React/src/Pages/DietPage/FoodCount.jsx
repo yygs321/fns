@@ -1,11 +1,12 @@
 import React, { useState } from "react";
+import { NumericFormat } from "react-number-format";
+import { useDispatch } from "react-redux";
+import { fixedFromDiet } from "../../Redux/actions/actions";
+
 import { styled } from "@mui/system";
 import { Grid, TextField, IconButton } from "@mui/material";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
-import { NumericFormat } from "react-number-format";
-import { useDispatch } from "react-redux";
-import { fixedFromDiet } from "../../Redux/actions/actions";
 
 const FoodCount = (props) => {
   const { one } = props;

@@ -1,5 +1,7 @@
 import React from "react";
+
 import { Typography, Grid } from "@mui/material";
+
 import BarGraph2 from "./BarGraph2";
 
 const NutritionInfo = ({ 날짜, 영양데이터, scrollDownInfo }) => {

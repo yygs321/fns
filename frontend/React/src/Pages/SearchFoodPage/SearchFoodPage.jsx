@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+
 import { Typography, TextField, Grid, Chip, Divider, Box } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import FilteredSearchResults from "./FilteredSearchResults";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+
 import axiosInstance from "../Common/Component/AxiosInstance";
 
 const SearchFoodPage = () => {

@@ -1,10 +1,12 @@
 import React, { memo } from "react";
-import { Grid, Typography, TextField, Button } from "@mui/material";
-import NavigateBeforeRoundedIcon from "@mui/icons-material/NavigateBeforeRounded";
-import SearchIcon from "@mui/icons-material/Search";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { resetDiet, deleteFromDiet } from "../../Redux/actions/actions";
+
+import { Grid, Typography, TextField, Button } from "@mui/material";
+import NavigateBeforeRoundedIcon from "@mui/icons-material/NavigateBeforeRounded";
+import SearchIcon from "@mui/icons-material/Search";
+
 import axiosInstance from "../Common/Component/AxiosInstance";
 import FoodCount from "./FoodCount";
 

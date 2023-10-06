@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+
 import { Box, Typography, LinearProgress } from "@mui/material";
 
 const BarGraph = (props) => {
@@ -13,9 +14,9 @@ const BarGraph = (props) => {
       targetValue = 100;
     } else {
       targetValue = (nutrient / maxNutrient) * 100;
-    } 
+    }
     let currentValue = 0;
-    const animationDuration = 500; 
+    const animationDuration = 500;
 
     const interval = setInterval(() => {
       if (currentValue < targetValue) {
@@ -26,12 +27,12 @@ const BarGraph = (props) => {
         }
         setNewValue(Math.round((currentValue / 100) * maxNutrient));
       } else {
-        clearInterval(interval); 
+        clearInterval(interval);
       }
     }, animationDuration / 100);
 
     return () => {
-      clearInterval(interval); 
+      clearInterval(interval);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -71,7 +72,7 @@ const BarGraph = (props) => {
                   : nutrient / maxNutrient >= 0.5
                   ? "linear-gradient(to right, #14caa0, #55ffd7)"
                   : "linear-gradient(to right, #4d66e2, #87d0f8)",
-              borderRadius: "20px", 
+              borderRadius: "20px",
             },
           }}
           value={

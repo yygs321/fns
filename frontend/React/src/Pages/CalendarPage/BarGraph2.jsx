@@ -1,4 +1,5 @@
 import React from "react";
+
 import { Box, Typography, LinearProgress, Grid } from "@mui/material";
 
 const BarGraph = ({ nutrient, name, maxNutrient }) => {

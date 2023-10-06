@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+
 import {
   List,
   ListItemText,
@@ -9,18 +12,16 @@ import {
 } from "@mui/material";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
-import "./MyPage.css";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Collapse from "@mui/material/Collapse";
 import ListItemButton from "@mui/material/ListItemButton";
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+
 import { userLogout } from "../../Redux/actions/actions";
 import axiosInstance from "../Common/Component/AxiosInstance";
 import Loading from "../Common/Component/Loading";
+import "./MyPage.css";
 
 const MyPage = () => {
- 
   const [openNestedList, setOpenNestedList] = useState(false);
 
   const dispatch = useDispatch();
@@ -40,7 +41,6 @@ const MyPage = () => {
   const refreshToken = sessionStorage.getItem("refreshToken");
   const expirationTime = sessionStorage.getItem("expirationTime");
 
-
   const handleImageUpload = async (event) => {
     const file = event.target.files[0];
     if (!file) return;
@@ -49,22 +49,18 @@ const MyPage = () => {
     formData.append("file", file);
 
     try {
-      await axiosInstance.post(
-        `${SERVER_API_URL}/members/image`,
-        formData,
-        {
-          headers: {
-            "X-FNS-ACCESSTOKEN": accessToken,
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      await axiosInstance.post(`${SERVER_API_URL}/members/image`, formData, {
+        headers: {
+          "X-FNS-ACCESSTOKEN": accessToken,
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
       alert("이미지가 성공적으로 업로드되었습니다.");
-        
-        window.location.reload();
+
+      window.location.reload();
     } catch (error) {
-        console.error("Error while uploading image:", error)
+      console.error("Error while uploading image:", error);
     }
   };
 
@@ -94,7 +90,7 @@ const MyPage = () => {
         sessionStorage.removeItem("accessToken");
         sessionStorage.removeItem("refreshToken");
         sessionStorage.removeItem("expirationTime");
-        dispatch(userLogout()); 
+        dispatch(userLogout());
         navigate("/");
       } else {
         alert("회원 탈퇴 중 오류가 발생했습니다. 다시 시도해 주세요.");
@@ -125,7 +121,7 @@ const MyPage = () => {
             age,
             height,
             weight,
-            gender: gender === "FEMALE" ? "여" : "남", 
+            gender: gender === "FEMALE" ? "여" : "남",
             image: fileUrl || null,
           }));
         } else {

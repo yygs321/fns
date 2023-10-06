@@ -12,8 +12,8 @@ import {
   Box,
 } from "@mui/material";
 
-import CommunityBarGraph from "./CommunityBarGraph";
 import axiosInstance from "../Common/Component/AxiosInstance";
+import CommunityBarGraph from "./CommunityBarGraph";
 
 const UserGraph = (props) => {
   const { user, index, selectedUser, setSelectedUser } = props;

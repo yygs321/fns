@@ -1,14 +1,12 @@
 import React, { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { addToDiet, deleteFromDiet } from "../../Redux/actions/actions";
 
 import { Grid, Typography, TextField, Button } from "@mui/material";
-
 import NavigateBeforeRoundedIcon from "@mui/icons-material/NavigateBeforeRounded";
 import SearchIcon from "@mui/icons-material/Search";
 
-import { useLocation, useNavigate } from "react-router-dom";
-
-import { useDispatch, useSelector } from "react-redux";
-import { addToDiet, deleteFromDiet } from "../../Redux/actions/actions";
 import axiosInstance from "../Common/Component/AxiosInstance";
 
 const SearchFood = () => {
@@ -27,16 +25,13 @@ const SearchFood = () => {
 
   const state = location.state;
 
-  const [searchResult, setSearchResult] = useState([
-   
-  ]);
+  const [searchResult, setSearchResult] = useState([]);
 
   const goBackPage = () => {
     navigate(-1);
   };
 
   const handleSearchFood = async () => {
-  
     try {
       const res = await axiosInstance({
         method: "get",
@@ -48,7 +43,6 @@ const SearchFood = () => {
           "X-FNS-ACCESSTOKEN": accessToken,
         },
       });
-
 
       if (res.data.success) {
         setSearchResult(res.data.data);
@@ -80,7 +74,6 @@ const SearchFood = () => {
     dispatch(deleteFromDiet(one));
   };
 
- 
   const [isFocused, setIsFocused] = useState(false);
 
   const handleFocus = () => {
@@ -232,11 +225,7 @@ const SearchFood = () => {
               justifyContent={"center"}
               alignItems={"center"}
             >
-              <Typography
-                variant="caption"
-                component="div"
-                fontSize={"1.1rem"}
-              >
+              <Typography variant="caption" component="div" fontSize={"1.1rem"}>
                 {one.kcal} kcal
               </Typography>
             </Grid>

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+
 import { Typography } from "@mui/material";
+
 import axiosInstance from "../Common/Component/AxiosInstance";
 
 function FoodDetail() {
@@ -21,7 +23,7 @@ function FoodDetail() {
         });
 
         if (response.data.success) {
-          setFoodItem(response.data.data[0]); 
+          setFoodItem(response.data.data[0]);
         } else {
           console.error("Failed to fetch food detail:", response.data.message);
         }

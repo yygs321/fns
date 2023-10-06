@@ -1,14 +1,11 @@
-import React, {
-  useState,
-} from "react";
-
-import { Grid, Typography, Accordion, AccordionSummary } from "@mui/material";
-
-import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
-import AddCircleOutlineRoundedIcon from "@mui/icons-material/AddCircleOutlineRounded";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { nowDiet, resetDiet } from "../../Redux/actions/actions";
+
+import { Grid, Typography, Accordion, AccordionSummary } from "@mui/material";
+import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
+import AddCircleOutlineRoundedIcon from "@mui/icons-material/AddCircleOutlineRounded";
 
 const DietAccordion = (props) => {
   const { name, food, today, intakeTime } = props;
@@ -74,7 +71,7 @@ const DietAccordion = (props) => {
           aria-controls="panel1bh-content"
           id="panel1bh-header"
           sx={{
-            flexDirection: "column", 
+            flexDirection: "column",
             alignItems: "center",
             paddingBottom: "0.5rem",
           }}

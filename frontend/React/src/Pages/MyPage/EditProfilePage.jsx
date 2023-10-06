@@ -1,4 +1,6 @@
 import React, { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+
 import {
   Button,
   TextField,
@@ -10,7 +12,7 @@ import {
   FormControlLabel,
   Radio,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+
 import axiosInstance from "../Common/Component/AxiosInstance";
 
 const EditProfilePage = () => {
@@ -18,16 +20,16 @@ const EditProfilePage = () => {
   const [height, setHeight] = useState("");
   const [weight, setWeight] = useState("");
   const [age, setAge] = useState("");
-  const [openModal, setOpenModal] = useState(false); 
+  const [openModal, setOpenModal] = useState(false);
   const [프로필공개여부, set프로필공개여부] = useState(true);
   const navigate = useNavigate();
   const timeoutRef = useRef(null);
   const [닉네임확인, set닉네임확인] = useState(false);
- 
+
   const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
   const accessToken = sessionStorage.getItem("accessToken");
   const handleModalClose = () => {
-    clearTimeout(timeoutRef.current); 
+    clearTimeout(timeoutRef.current);
     navigate("/mypage");
   };
 
@@ -56,7 +58,6 @@ const EditProfilePage = () => {
       });
 
       if (res.data.success) {
-       
         const baseResponse = await axiosInstance({
           method: "post",
           url: `${SERVER_API_URL}/base`,
@@ -66,7 +67,6 @@ const EditProfilePage = () => {
           data: {},
         });
 
-       
         if (baseResponse.data.success) {
           console.log("base 등록 성공!");
         } else {
@@ -81,7 +81,6 @@ const EditProfilePage = () => {
       }
     } catch (err) {
       console.log(err);
-   
     }
   };
 
@@ -99,10 +98,8 @@ const EditProfilePage = () => {
       });
       if (중복체크결과.data.success) {
         set닉네임확인(true);
-        
       } else {
         set닉네임확인(false);
-       
       }
     } catch (err) {
       console.log(err);

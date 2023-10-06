@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
-import { Button, TextField, Typography, Modal, Box, Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+
+import { Button, TextField, Typography, Modal, Box, Grid } from "@mui/material";
 
 const ChangePassword = () => {
   const [currentPassword, setCurrentPassword] = useState("");

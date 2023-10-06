@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+
 import { Tabs, Tab, Box } from "@mui/material";
+
 import UserGraph from "./UserGraph";
 import UserRecommend from "./UserRecommend";
 import default_profile from "../../assets/Image/Profile/deafult_profile.jpg";

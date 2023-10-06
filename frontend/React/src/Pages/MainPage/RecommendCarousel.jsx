@@ -1,6 +1,8 @@
-import { Grid, Typography } from "@mui/material";
 import React from "react";
 import Slider from "react-slick";
+
+import { Grid, Typography } from "@mui/material";
+
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -28,7 +30,6 @@ const RecommendCarousel = (props) => {
       justifyContent={"center"}
       alignItems={"center"}
     >
-     
       <Grid
         container
         item
@@ -63,12 +64,7 @@ const RecommendCarousel = (props) => {
                     sx={{ py: "2vh" }}
                     textAlign={"center"}
                   >
-                    <Typography
-                
-                      fontSize={"1.4rem"}
-                    >
-                      {food.name}
-                    </Typography>
+                    <Typography fontSize={"1.4rem"}>{food.name}</Typography>
                   </Grid>
                   <Grid
                     container

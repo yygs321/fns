@@ -1,10 +1,12 @@
 import { useEffect } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { userLogin } from "../../Redux/actions/actions";
-import { RefreshToken } from "../Common/Component/RefreshToken";
+
 import { Grid, Typography } from "@mui/material";
+
+import axios from "axios";
+import { RefreshToken } from "../Common/Component/RefreshToken";
 
 const KakaoCallback = () => {
   const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
@@ -41,7 +43,6 @@ const KakaoCallback = () => {
       }
 
       if (!res.data.data.hasProfile) {
-     
         navigate(`/info`);
       } else {
         navigate(`/main`);

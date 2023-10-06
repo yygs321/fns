@@ -1,4 +1,6 @@
 import * as React from "react";
+import { useNavigate } from "react-router-dom";
+
 import Box from "@mui/material/Box";
 import SpeedDial from "@mui/material/SpeedDial";
 import CreateRoundedIcon from "@mui/icons-material/CreateRounded";
@@ -7,7 +9,6 @@ import FlatwareRoundedIcon from "@mui/icons-material/FlatwareRounded";
 import FitnessCenterRoundedIcon from "@mui/icons-material/FitnessCenterRounded";
 import MonitorWeightRoundedIcon from "@mui/icons-material/MonitorWeightRounded";
 import { useMediaQuery, useTheme } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 
 import WeightDrawer from "../../WeightInput/WeightDrawer";
 
@@ -40,7 +41,7 @@ export default function FloatingInputButton() {
       <Box
         sx={{
           bottom: "10vh",
-          right: isSmallScreen ? "0" : "10vw", 
+          right: isSmallScreen ? "0" : "10vw",
           height: "20vh",
           width: "10vw",
           transform: "translateZ(0px)",
@@ -56,10 +57,7 @@ export default function FloatingInputButton() {
             bottom: "16px",
             right: "16px",
           }}
-          icon={
-            <CreateRoundedIcon
-            />
-          }
+          icon={<CreateRoundedIcon />}
           onClick={handleDialButton}
           open={dialOpen}
         >
@@ -87,7 +85,6 @@ export default function FloatingInputButton() {
                 "&:hover": {
                   backgroundColor: theme.palette.primary.dark,
                 },
-      
               }}
             />
           ))}

@@ -1,4 +1,8 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { userLogin } from "../../Redux/actions/actions";
+
 import {
   Grid,
   Container,
@@ -11,13 +15,11 @@ import {
   Modal,
   Box,
 } from "@mui/material";
-import "./CSS/InfoPage.scss";
 import ManRoundedIcon from "@mui/icons-material/ManRounded";
 import WomanRoundedIcon from "@mui/icons-material/WomanRounded";
-import { useNavigate } from "react-router-dom";
+
 import axiosInstance from "../Common/Component/AxiosInstance";
-import { userLogin } from "../../Redux/actions/actions";
-import { useDispatch } from "react-redux";
+import "./CSS/InfoPage.scss";
 
 function 닉네임확인함수(nickname) {
   const regex = /^[a-zA-Z0-9가-힣]{2,16}$/;

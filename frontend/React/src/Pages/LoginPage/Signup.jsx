@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import {
   Grid,
   Container,
@@ -8,11 +10,9 @@ import {
   Typography,
   Modal,
 } from "@mui/material";
-import "./CSS/Signup.scss";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
+import "./CSS/Signup.scss";
 
 const Signup = () => {
   const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;

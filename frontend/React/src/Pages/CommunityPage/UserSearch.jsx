@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { Grid, Typography, TextField, Button, Avatar } from "@mui/material";
 import NavigateBeforeRoundedIcon from "@mui/icons-material/NavigateBeforeRounded";
 import SearchIcon from "@mui/icons-material/Search";
-import { useNavigate } from "react-router-dom";
+
 import axiosInstance from "../Common/Component/AxiosInstance";
 
 const UserSearch = () => {

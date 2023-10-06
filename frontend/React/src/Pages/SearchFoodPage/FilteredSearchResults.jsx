@@ -1,9 +1,9 @@
 import React from "react";
-import { Typography, Divider } from "@mui/material";
 import { Link } from "react-router-dom";
 
-function FilteredSearchResults({ data, filters }) {
+import { Typography, Divider } from "@mui/material";
 
+function FilteredSearchResults({ data, filters }) {
   const filteredItems = data.filter((item) => {
     if (filters.kcal && item.kcal > Number(filters.kcal)) return false;
     if (filters.carbs && item.carbs > Number(filters.carbs)) return false;
@@ -16,7 +16,6 @@ function FilteredSearchResults({ data, filters }) {
     <>
       {filteredItems.map((item, index) => (
         <div key={item.name}>
-      
           <Link
             style={{ color: "inherit", textDecoration: "none" }}
             to={`/search/food/${item.name}`}

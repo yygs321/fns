@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from "react";
-import axiosInstance from "../Common/Component/AxiosInstance";
-import { Grid, Typography } from "@mui/material";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
+
+import { Grid, Typography } from "@mui/material";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import {
   LocalizationProvider,
   DateCalendar,
   PickersDay,
 } from "@mui/x-date-pickers";
-import NutritionInfo from "./NutritionInfo";
-import { WeightChart } from "./WeightChart";
 import FloatingInputButton from "../Common/Component/FloatingInputButton";
 import "./calendarcss.scss";
 import NavigateBeforeRoundedIcon from "@mui/icons-material/NavigateBeforeRounded";
@@ -27,6 +25,10 @@ import SportsBaseballIcon from "@mui/icons-material/SportsBaseball";
 import SportsTennisIcon from "@mui/icons-material/SportsTennis";
 import SportsVolleyballIcon from "@mui/icons-material/SportsVolleyball";
 import SportsGolfIcon from "@mui/icons-material/SportsGolf";
+
+import axiosInstance from "../Common/Component/AxiosInstance";
+import NutritionInfo from "./NutritionInfo";
+import { WeightChart } from "./WeightChart";
 
 const sportsData = [
   { name: "조깅", kcal: 500, icon: <DirectionsRunIcon fontSize="large" /> },

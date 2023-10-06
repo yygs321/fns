@@ -1,4 +1,5 @@
 import React from "react";
+
 import { Box, Typography, LinearProgress, Grid } from "@mui/material";
 
 const BarGraph = (props) => {
@@ -34,8 +35,8 @@ const BarGraph = (props) => {
                   ? "linear-gradient(to right,#e05750, #ffd8d0)"
                   : nutrient / maxNutrient >= 0.5
                   ? "linear-gradient(to right, #14caa0, #55ffd7)"
-                  : "linear-gradient(to right, #4d66e2, #87d0f8)", 
-              borderRadius: "20px", 
+                  : "linear-gradient(to right, #4d66e2, #87d0f8)",
+              borderRadius: "20px",
             },
           }}
           value={

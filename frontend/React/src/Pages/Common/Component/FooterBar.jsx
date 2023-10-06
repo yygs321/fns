@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import CalendarMonthRoundedIcon from "@mui/icons-material/CalendarMonthRounded";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import GroupsRoundedIcon from "@mui/icons-material/GroupsRounded";
 import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
+
 import "../CSS/FooterBar.css";
-import { useNavigate, useLocation } from "react-router-dom";
 
 const FooterBar = () => {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ const FooterBar = () => {
   const [value, setValue] = useState("main");
 
   useEffect(() => {
-    const currentPath = location.pathname; 
+    const currentPath = location.pathname;
 
     if (currentPath.startsWith("/main")) {
       setValue("main");
@@ -48,7 +49,7 @@ const FooterBar = () => {
     >
       <BottomNavigationAction
         value="main"
-        sx={{ scale: "1.1", minWidth: "25px" }} 
+        sx={{ scale: "1.1", minWidth: "25px" }}
         icon={
           <HomeRoundedIcon
             className={value === "main" ? "selected-navbar-action" : ""}

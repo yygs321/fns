@@ -1,7 +1,9 @@
 import { React, useState } from "react";
+
+import { Button, Modal, Box, Typography, TextField } from "@mui/material";
+
 import "../Common/CSS/BackgroundColor.css";
 import "./CSS/WeightInput.scss";
-import { Button, Modal, Box, Typography, TextField } from "@mui/material";
 
 export const 목표체중 = "80";
 export const 기간 = "50";

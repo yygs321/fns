@@ -1,6 +1,7 @@
-import { Grid, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+
+import { Grid, Typography } from "@mui/material";
 
 const NotFound = () => {
   const [isLoading, setIsLoading] = useState(false);

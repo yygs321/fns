@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { Avatar, Grid, Typography, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+
+import axiosInstance from "../Common/Component/AxiosInstance";
 import CommunityBarGraph from "./CommunityBarGraph";
 import UsersTabs from "./UsersTabs";
-import axiosInstance from "../Common/Component/AxiosInstance";
-import { useNavigate } from "react-router-dom";
 import Loading from "../Common/Component/Loading";
 
 const CommunityPage = () => {
@@ -14,26 +16,25 @@ const CommunityPage = () => {
   const now = new Date();
 
   const year = now.getFullYear();
-  const month = (now.getMonth() + 1).toString().padStart(2, "0"); 
-  const day = now.getDate().toString().padStart(2, "0"); 
+  const month = (now.getMonth() + 1).toString().padStart(2, "0");
+  const day = now.getDate().toString().padStart(2, "0");
 
   const formattedToday = `${year}-${month}-${day}`;
 
   const navigate = useNavigate();
 
-  const [kcalories, setKcalories] = useState(0); 
-  const [baseKcalories, setBaseKcalories] = useState(9999); 
-  const [carbohydrate, setCarbohydrate] = useState(0); 
-  const [baseCarbohydrate, setBaseCarbohydrate] = useState(999); 
-  const [protein, setProtein] = useState(0); 
-  const [baseProtein, setBaseProtein] = useState(999); 
-  const [fat, setFat] = useState(0); 
-  const [baseFat, setBaseFat] = useState(999); 
-  const [myProfile, setMyProfile] = useState(null); 
-  const [isLoading, setIsLoading] = useState(false); 
+  const [kcalories, setKcalories] = useState(0);
+  const [baseKcalories, setBaseKcalories] = useState(9999);
+  const [carbohydrate, setCarbohydrate] = useState(0);
+  const [baseCarbohydrate, setBaseCarbohydrate] = useState(999);
+  const [protein, setProtein] = useState(0);
+  const [baseProtein, setBaseProtein] = useState(999);
+  const [fat, setFat] = useState(0);
+  const [baseFat, setBaseFat] = useState(999);
+  const [myProfile, setMyProfile] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const [followees, setFollowees] = useState([]); 
-
+  const [followees, setFollowees] = useState([]);
 
   const getMyData = async () => {
     try {
@@ -140,10 +141,7 @@ const CommunityPage = () => {
                 justifyContent={"center"}
                 alignItems={"center"}
               >
-                <Avatar
-                  alt="MyName"
-                  sx={{ width: "5rem", height: "5rem" }}
-                />
+                <Avatar alt="MyName" sx={{ width: "5rem", height: "5rem" }} />
               </Grid>
               <Grid
                 container
@@ -162,7 +160,6 @@ const CommunityPage = () => {
                   overflow="hidden"
                   textOverflow="ellipsis"
                 >
-      
                   {myProfile ? myProfile.nickname : "닉네임이 없습니다."}
                 </Typography>
               </Grid>

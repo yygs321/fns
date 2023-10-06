@@ -13,13 +13,12 @@ import BarGraph from "./BarGraph";
 import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
 import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
 
-import "../Common/CSS/BackgroundColor.css";
-import "../Common/CSS/ContentBox.css";
-
 import FloatingInputButton from "../Common/Component/FloatingInputButton";
 import axiosInstance from "../Common/Component/AxiosInstance";
 import RecommendCarousel from "./RecommendCarousel";
 import Loading from "../Common/Component/Loading";
+import "../Common/CSS/BackgroundColor.css";
+import "../Common/CSS/ContentBox.css";
 
 const MainPage = () => {
   const [kcalories, setKcalories] = useState(0);

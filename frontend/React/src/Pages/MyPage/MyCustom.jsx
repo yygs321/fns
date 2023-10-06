@@ -1,4 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 import {
   Typography,
   Slider,
@@ -10,8 +12,8 @@ import {
   Box,
 } from "@mui/material";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
-import { useNavigate } from "react-router-dom";
 import ReplayIcon from "@mui/icons-material/Replay";
+
 import axios from "axios";
 
 const MyCustomPage = () => {
