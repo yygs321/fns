@@ -1,0 +1,64 @@
+$입력크기: 60vw;
+$단위마진: 67vw;
+$글자마진: 3.5rem;
+
+
+.정보입력박스 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 50px;
+  height: 15vh;
+}
+.닉네임박스 {
+  display: flex;
+  align-items: center;
+}
+.닉네임글자 {
+  position: relative;
+  white-space: nowrap;
+}
+.닉네임입력 {
+  width: $입력크기;
+}
+.나이글자 {
+  position: relative;
+  white-space: nowrap;
+}
+.나이박스 {
+  display: flex;
+  align-items: center;
+}
+
+.나이입력 {
+  width: $입력크기;
+}
+.키박스 {
+  display: flex;
+  align-items: center;
+}
+.키글자 {
+  display: relative;
+  white-space: nowrap;
+}
+.키입력 {
+  width: $입력크기;
+}
+
+.개인정보-체중박스 {
+  display: flex;
+  align-items: center;
+}
+.체중글자 {
+  display: relative;
+  white-space: nowrap;
+}
+.체중입력 {
+  width: $입력크기;
+}
+
+.성별박스 {
+  display: flex;
+  align-items: center;
+}
+

@@ -1,0 +1,70 @@
+.green-gray-pages {
+  height: 100%;
+  min-height: 92vh;
+  width: 100%;
+  background-color: #c0e2db;
+  -ms-overflow-style: none; 
+  scrollbar-width: none; 
+}
+
+.green-gray-pages::-webkit-scrollbar {
+  display: none;
+}
+
+.green-pages {
+  height: 100%;
+  min-height: 92vh;
+  width: 100%;
+  background-color: #00e1ab;
+  -ms-overflow-style: none; 
+  scrollbar-width: none; 
+}
+
+.green-pages::-webkit-scrollbar {
+  display: none;
+}
+
+.gray-pages {
+  height: 100%;
+  min-height: 92vh;
+  width: 100%;
+  background-color: #e7e7e7;
+  
+  -ms-overflow-style: none; 
+  scrollbar-width: none; 
+}
+
+.gray-pages::-webkit-scrollbar {
+  display: none;
+}
+
+.white-pages {
+  height: 100%;
+  min-height: 92vh;
+  width: 100%;
+  background-color: white;
+  -ms-overflow-style: none; 
+  scrollbar-width: none; 
+}
+
+.white-pages::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  -ms-overflow-style: none; 
+  scrollbar-width: none;
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+.noscroll {
+  -ms-overflow-style: none; 
+  scrollbar-width: none; 
+}
+
+.noscroll::-webkit-scrollbar {
+  display: none;
+}

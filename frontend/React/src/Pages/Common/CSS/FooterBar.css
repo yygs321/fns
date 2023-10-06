@@ -1,0 +1,13 @@
+.selected-navbar-action {
+  transform: scale(1.4);
+  animation: selected-navbar-scale 0.2s linear;
+}
+
+@keyframes selected-navbar-scale {
+  from {
+    transform: scale(1.1);
+  }
+  to {
+    transform: scale(1.4);
+  }
+}

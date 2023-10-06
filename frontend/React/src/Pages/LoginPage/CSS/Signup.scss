@@ -1,0 +1,27 @@
+.회원가입박스 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 50px;
+  height: 10vh;
+}
+
+.글자 {
+  font-size: 1.5rem;
+  align-self: flex-start;
+}
+
+#이메일글씨크기 {
+  font-size: 1rem;
+}
+
+.아이디입력컨테이너 {
+  align-self: flex-start;
+  display: flex;
+  align-content: center;
+  height: 10vh;
+}
+
+.가입버튼 {
+  height: 8vh;
+}

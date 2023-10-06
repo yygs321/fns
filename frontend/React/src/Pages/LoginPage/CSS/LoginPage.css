@@ -1,0 +1,29 @@
+.구글로그인 {
+  object-fit: cover;
+  width: 90%;
+}
+.카카오로그인 {
+  object-fit: cover;
+  width: 90%;
+}
+.로그인박스 {
+  width: 90%;
+}
+.비번박스 {
+  width: 80%;
+}
+.아이디박스 {
+  width: 80%;
+}
+.로고 {
+  text-align: center;
+  height: 35vh;
+  font-size: 5vh;
+  line-height: 25vh;
+  border-radius: 20px;
+}
+.로고-이미지 {
+  object-fit: contain;
+  height: auto;
+  max-height: 35vh;
+}
