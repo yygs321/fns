@@ -73,23 +73,23 @@
       </a>
     </td>
     <td align="center">
-      <a href="https://github.com/ng-lee">
-        <img src="https://github.com/ng-lee.png" alt="이남곤" />
+      <a href="https://github.com/vkdldjtmflr">
+        <img src="https://github.com/vkdldjtmflr.png" alt="구본웅" />
       </a>
     </td>
     <td align="center">
-      <a href="https://github.com/nutbrown">
-        <img src="https://github.com/nutbrown.png" alt="전혜련" />
+      <a href="https://github.com/stock4share2">
+        <img src="https://github.com/stock4share2.png" alt="심현재" />
       </a>
     </td>
     <td align="center">
-      <a href="https://github.com/edder773">
-        <img src="https://github.com/edder773.png" alt="김보석" />
+      <a href="https://github.com/ImChrisKim">
+        <img src="https://github.com/ImChrisKim.png" alt="김성우" />
       </a>
     </td>
     <td align="center">
-      <a href="https://github.com/serenecarp">
-        <img src="https://github.com/serenecarp.png" alt="박성준" />
+      <a href="https://github.com/mycook3">
+        <img src="https://github.com/mycook3.png" alt="박지환" />
       </a>
     </td>
   </tr>
@@ -120,7 +120,7 @@
       </a>
     </td>
     <td align="center">
-      <a href="https://github.com/serenecarp">
+      <a href="https://github.com/mycook3">
         <b>박지환</b>
       </a>
     </td>
