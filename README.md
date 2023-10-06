@@ -95,7 +95,7 @@
   </tr>
   <tr>
     <td align="center">
-      <a href="https://github.com/pickac4rd">
+      <a href="https://github.com/sgkim6">
         <b>김승규</b>
       </a>
     </td>
