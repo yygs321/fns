@@ -45,11 +45,12 @@ const DietPage = () => {
 
   const getIntakeData = async () => {
     try {
+      const date = isToday ? formattedToday : formattedYesterday;
       const res = await axiosInstance({
         method: "get",
 
         url: `${SERVER_API_URL}/intake/total/${
-          isToday ? formattedToday : formattedYesterday
+          date
         }`,
         headers: {
           "X-FNS-ACCESSTOKEN": accessToken,
@@ -86,7 +87,7 @@ const DietPage = () => {
 
     getIntakeData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isToday]);
 
   const changeDay = () => {
     setIsToday(!isToday);
