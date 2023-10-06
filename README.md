@@ -73,13 +73,13 @@
       </a>
     </td>
     <td align="center">
-      <a href="https://github.com/vkdldjtmflr">
-        <img src="https://github.com/vkdldjtmflr.png" alt="구본웅" />
+      <a href="https://github.com/Narn99">
+        <img src="https://github.com/Narn99.png" alt="구본웅" />
       </a>
     </td>
     <td align="center">
-      <a href="https://github.com/stock4share2">
-        <img src="https://github.com/stock4share2.png" alt="심현재" />
+      <a href="https://github.com/hyunin3">
+        <img src="https://github.com/hyunin3.png" alt="심현재" />
       </a>
     </td>
     <td align="center">
@@ -105,12 +105,12 @@
       </a>
     </td>
     <td align="center">
-      <a href="https://github.com/vkdldjtmflr">
+      <a href="https://github.com/Narn99">
         <b>구본웅</b>
       </a>
     </td>
     <td align="center">
-      <a href="https://github.com/stock4share2">
+      <a href="https://github.com/hyunin3">
         <b>심현재</b>
       </a>
     </td>
