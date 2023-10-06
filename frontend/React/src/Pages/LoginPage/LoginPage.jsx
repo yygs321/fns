@@ -64,7 +64,6 @@ const LoginPage = () => {
         },
       });
 
-
       const tokenData = res.data.data.tokenDto;
 
       sessionStorage.setItem("accessToken", tokenData.accessToken);
@@ -75,9 +74,7 @@ const LoginPage = () => {
         await RefreshToken();
       }
 
-
       if (res.data.data.hasProfile === false) {
-      
         navigate(`/info`);
       } else {
         dispatch(userLogin());

@@ -27,16 +27,13 @@ const Signup = () => {
 
   const 이메일전송버튼 = async () => {
     try {
-      const res = await axios({
+      await axios({
         method: "post",
         url: `${SERVER_API_URL}/auth/send-email`,
         data: {
           email: 이메일,
         },
       });
-
-      console.log("이메일 전송");
-      console.log(res);
 
       set이메일전송(true);
       set이메일모달버튼(true);
@@ -56,9 +53,6 @@ const Signup = () => {
           code: 이메일인증번호,
         },
       });
-
-      console.log("이메일 인증 확인");
-      console.log(res);
 
       if (res.data.success) {
         set이메일인증(true);
@@ -93,10 +87,6 @@ const Signup = () => {
       if (이메일인증) {
         if (비번양식확인) {
           if (일치여부확인) {
-            console.log(이메일);
-            console.log(비밀번호);
-            console.log(비밀번호확인);
-
             try {
               const res = await axios({
                 method: "post",
@@ -108,8 +98,7 @@ const Signup = () => {
                   provider: "DEFAULT",
                 },
               });
-              console.log("가입 버튼");
-              console.log(res);
+
               if (res.data.success) {
                 const res2 = await axios({
                   method: "post",
@@ -120,8 +109,6 @@ const Signup = () => {
                   },
                 });
 
-                console.log(res2);
-                console.log(res2.data.message);
                 const tokenData = res2.data.data.tokenDto;
 
                 sessionStorage.setItem("accessToken", tokenData.accessToken);
@@ -167,7 +154,6 @@ const Signup = () => {
     const new비밀번호 = e.target.value;
     set비밀번호(new비밀번호);
 
-    console.log(new비밀번호);
     const 비번체크결과 = 비번체크(e.target.value);
     set비번양식확인(비번체크결과);
   };
@@ -176,7 +162,6 @@ const Signup = () => {
     const new비밀번호확인 = e.target.value;
     set비밀번호확인(new비밀번호확인);
 
-    console.log(new비밀번호확인);
     set일치여부확인(e.target.value === 비밀번호 ? true : false);
   };
 

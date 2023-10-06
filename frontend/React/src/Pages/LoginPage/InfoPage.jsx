@@ -78,17 +78,11 @@ const InfoPage = () => {
   const navigate = useNavigate();
 
   const 저장버튼 = async () => {
-    
     if (닉네임) {
-      
       if (닉네임확인) {
-       
         if (나이) {
-          
           if (키) {
-           
             if (체중) {
-              
               if (성별) {
                 try {
                   const res = await axiosInstance({
@@ -107,19 +101,14 @@ const InfoPage = () => {
                     },
                   });
 
-                  console.log("정보 보내기");
-                  console.log(res.data);
-
                   if (res.data.success) {
-                   
-                    const baseResponse = await axiosInstance({
+                    await axiosInstance({
                       method: "post",
                       url: `${SERVER_API_URL}/base`,
                       headers: {
                         "X-FNS-ACCESSTOKEN": accessToken,
                       },
                     });
-                    console.log(baseResponse.data);
 
                     dispatch(userLogin());
 
@@ -187,7 +176,6 @@ const InfoPage = () => {
         set프로필모달("이미 등록된 닉네임입니다.");
       }
     } else {
-      
       set닉네임오류("닉네임 형식이 잘못됐습니다.");
       set프로필모달("잘못된 닉네임입니다.");
     }
@@ -252,8 +240,6 @@ const InfoPage = () => {
                 color="primary"
                 type="text"
                 value={닉네임}
-              
-
                 className="닉네임입력"
                 onChange={닉네임입력}
                 InputProps={{
@@ -380,7 +366,6 @@ const InfoPage = () => {
                 color="primary"
                 type="number"
                 value={키}
-
                 className="키입력"
                 onChange={키입력}
                 InputProps={{
@@ -424,7 +409,6 @@ const InfoPage = () => {
                 color="primary"
                 type="number"
                 value={체중}
-
                 className="체중입력"
                 onChange={체중입력}
                 InputProps={{

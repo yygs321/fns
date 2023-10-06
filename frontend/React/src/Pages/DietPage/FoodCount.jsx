@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { styled } from "@mui/system";
 import { Grid, TextField, IconButton } from "@mui/material";
 import RemoveIcon from "@mui/icons-material/Remove";
@@ -8,16 +8,9 @@ import { useDispatch } from "react-redux";
 import { fixedFromDiet } from "../../Redux/actions/actions";
 
 const FoodCount = (props) => {
-  const { one, addedDiet } = props;
+  const { one } = props;
 
   const [value, setValue] = useState(one.rate || 1.0);
-  // eslint-disable-next-line no-unused-vars
-  const [isAddedFood, setIsAddedFood] = useState(false);
-
-  useEffect(() => {
-    const index = addedDiet.findIndex((food) => food.name === one.name);
-    setIsAddedFood(index !== -1);
-  }, [addedDiet, one]);
 
   const dispatch = useDispatch();
 
@@ -51,7 +44,7 @@ const FoodCount = (props) => {
     variant: "outlined",
     sx: {
       "& .MuiOutlinedInput-notchedOutline": {
-        borderRadius: "10px", 
+        borderRadius: "10px",
       },
       "& .MuiOutlinedInput-input": {
         textAlign: "center",
@@ -86,7 +79,7 @@ const FoodCount = (props) => {
         alignItems={"center"}
       >
         <NumericFormat
-          customInput={StyledInput} 
+          customInput={StyledInput}
           {...materialUITextFieldProps}
           value={value}
           onValueChange={handleValueChange}

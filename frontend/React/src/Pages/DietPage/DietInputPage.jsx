@@ -1,4 +1,4 @@
-import React, { memo } from "react"; 
+import React, { memo } from "react";
 import { Grid, Typography, TextField, Button } from "@mui/material";
 import NavigateBeforeRoundedIcon from "@mui/icons-material/NavigateBeforeRounded";
 import SearchIcon from "@mui/icons-material/Search";
@@ -49,7 +49,6 @@ const DietInputPage = () => {
 
   const handleSaveDietList = async () => {
     try {
-
       const saveDeletedDiet = deletedDiet.map((food) => ({
         intakeId: food.intakeId,
       }));
@@ -63,7 +62,7 @@ const DietInputPage = () => {
         intakeId: food.intakeId,
         rate: food.rate,
       }));
-     
+
       const requests = [];
 
       if (saveDeletedDiet.length > 0) {
@@ -429,7 +428,6 @@ const DietInputPage = () => {
               xs={12}
               justifyContent={"space-evenly"}
               alignItems={"center"}
-              // textAlign={"center"}
             >
               <Grid
                 container

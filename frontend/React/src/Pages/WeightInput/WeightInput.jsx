@@ -8,14 +8,15 @@ export const 기간 = "50";
 export const 현재체중 = "88";
 export const 시작체중 = "92";
 
-const WeightInput = () => {
+// 현재 사용하지 않는 컴포넌트
 
+const WeightInput = () => {
   const 월 = 9;
   const 일 = 15;
 
   const [수정모달열기, set수정모달열기] = useState(false);
   const [목표모달열기, set목표모달열기] = useState(false);
-  // 체중 설정
+
   const [모달체중, set모달체중] = useState("");
   const [체중, set체중] = useState("");
 
@@ -197,7 +198,7 @@ const WeightInput = () => {
             </div>
           </Box>
         </Modal>
-      
+
         <Modal
           open={목표모달열기}
           onClose={목표설정모달}

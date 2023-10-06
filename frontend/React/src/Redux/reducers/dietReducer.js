@@ -7,8 +7,6 @@ const initialState = {
   fixedDiet: [],
 };
 
-
-
 export const dietReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.NOW_DIET:
@@ -29,14 +27,11 @@ export const dietReducer = (state = initialState, action) => {
       let updatedDeletedDiet = [...state.deletedDiet];
       let updatedAddedDiet = [...state.addedDiet];
 
-      
       if (updatedDeletedDiet.some((food) => food.foodId === addFood.foodId)) {
         updatedDeletedDiet = updatedDeletedDiet.filter(
           (food) => food.foodId !== addFood.foodId
         );
-      }
-      
-      else {
+      } else {
         updatedAddedDiet = [...updatedAddedDiet, addFood];
       }
       return {
@@ -53,11 +48,9 @@ export const dietReducer = (state = initialState, action) => {
       );
 
       if (existingAddedFoodIndex !== -1) {
-        
         const updatedAddedDiet = [...state.addedDiet];
         updatedAddedDiet.splice(existingAddedFoodIndex, 1);
 
-       
         const updatedFixedDiet = state.fixedDiet.filter(
           (food) => food.foodId !== deleteFood.foodId
         );
@@ -122,5 +115,3 @@ export const dietReducer = (state = initialState, action) => {
       return state;
   }
 };
-
-

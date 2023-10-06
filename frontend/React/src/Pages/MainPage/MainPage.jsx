@@ -22,23 +22,23 @@ import RecommendCarousel from "./RecommendCarousel";
 import Loading from "../Common/Component/Loading";
 
 const MainPage = () => {
-  const [kcalories, setKcalories] = useState(0); 
-  const [orgKcal, setOrgKcal] = useState(0); 
+  const [kcalories, setKcalories] = useState(0);
+  const [orgKcal, setOrgKcal] = useState(0);
   const [baseKcalories, setBaseKcalories] = useState(9999);
   const [carbohydrate, setCarbohydrate] = useState(0);
-  const [baseCarbohydrate, setBaseCarbohydrate] = useState(999); 
+  const [baseCarbohydrate, setBaseCarbohydrate] = useState(999);
   const [protein, setProtein] = useState(0);
-  const [baseProtein, setBaseProtein] = useState(999); 
-  const [fat, setFat] = useState(0); 
-  const [baseFat, setBaseFat] = useState(999); 
+  const [baseProtein, setBaseProtein] = useState(999);
+  const [fat, setFat] = useState(0);
+  const [baseFat, setBaseFat] = useState(999);
 
-  const [isOverKcal, setIsOverKcal] = useState(false); 
+  const [isOverKcal, setIsOverKcal] = useState(false);
   const [overKcal, setOverKcal] = useState(0);
 
-  const [isAccordionSelected, setIsAccordionSelected] = useState(false); 
+  const [isAccordionSelected, setIsAccordionSelected] = useState(false);
   const [recommendedFood, setRecommendedFood] = useState([]);
 
-  const [isTooltipOpen, setIsTooltipOpen] = useState(false); 
+  const [isTooltipOpen, setIsTooltipOpen] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -64,9 +64,6 @@ const MainPage = () => {
   const formattedToday = `${year}-${month}-${day}`;
   const formattedYesterday = `${year}-${month}-${beforeDay}`;
 
-  
-
-  // eslint-disable-next-line no-unused-vars
   const getNeut = async () => {
     try {
       const [res, res2, res3] = await Promise.all([
@@ -135,7 +132,6 @@ const MainPage = () => {
     }
   };
 
-
   useEffect(() => {
     setIsLoading(true);
 
@@ -147,9 +143,9 @@ const MainPage = () => {
       targetValue = 100;
     } else {
       targetValue = (orgKcal / baseKcalories) * 100;
-    } 
+    }
     let currentValue = 0;
-    const animationDuration = 500; 
+    const animationDuration = 500;
 
     const interval = setInterval(() => {
       if (currentValue < targetValue) {
@@ -162,12 +158,12 @@ const MainPage = () => {
         }
         setKcalories(Math.round((currentValue / 100) * baseKcalories));
       } else {
-        clearInterval(interval); 
+        clearInterval(interval);
       }
-    }, animationDuration / (targetValue - currentValue)); 
+    }, animationDuration / (targetValue - currentValue));
 
     return () => {
-      clearInterval(interval); 
+      clearInterval(interval);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -200,7 +196,6 @@ const MainPage = () => {
               justifyContent={"center"}
               alignItems={"center"}
             >
-             
               <Typography
                 variant="caption"
                 component="div"
@@ -260,18 +255,14 @@ const MainPage = () => {
                   <Box
                     sx={{
                       position: "absolute",
-                      top: "0", 
-                      right: "0", 
+                      top: "0",
+                      right: "0",
                       zIndex: "20",
                     }}
                   >
                     <Tooltip
                       title={
-                        <Grid
-                          container
-                          justifyContent={"center"}
-                
-                        >
+                        <Grid container justifyContent={"center"}>
                           <Typography
                             color="warning.main"
                             fontWeight={"bolder"}
@@ -395,7 +386,6 @@ const MainPage = () => {
                           component="div"
                           color="text.secondary"
                           fontSize={"3rem"}
-                         
                         >
                           /
                         </Typography>
@@ -495,8 +485,8 @@ const MainPage = () => {
                 aria-controls="panel1bh-content"
                 id="panel1bh-header"
                 sx={{
-                  flexDirection: "column", 
-                  alignItems: "center", 
+                  flexDirection: "column",
+                  alignItems: "center",
                 }}
               >
                 <Grid container>
@@ -514,10 +504,7 @@ const MainPage = () => {
                       >
                         {recommendedFood.map((f, index) => (
                           <React.Fragment key={`${f.name}-${index}-selected`}>
-                            <Typography
-                              sx={{ color: "text.secondary" }}
-                    
-                            >
+                            <Typography sx={{ color: "text.secondary" }}>
                               {f.name}
                             </Typography>
                             {index !== recommendedFood.length - 1 && (

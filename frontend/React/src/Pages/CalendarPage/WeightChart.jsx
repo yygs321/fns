@@ -56,10 +56,7 @@ export function WeightChart() {
         });
 
         const targetData = response.data.data;
-        console.log("성공여부 : ", response.data.success);
         if (response.data.success) {
-          console.log(response)
-
           set현재체중(() => targetData.targetWeightResponseDto.currentWeight);
           set목표체중(() => targetData.targetWeightResponseDto.targetWeight);
           if (targetData.weightList) {
@@ -68,7 +65,6 @@ export function WeightChart() {
 
           set기간(() => targetData.targetWeightResponseDto.remainingDays);
           setPercentage(() => targetData.targetWeightResponseDto.progressRatio);
-          
         }
       } catch (error) {
         console.error("Error while searching:", error);
@@ -236,7 +232,7 @@ export function WeightChart() {
             backgroundColor: "#e7e7e7",
             "& .MuiLinearProgress-bar": {
               background: "linear-gradient(to right, #14caa0, #55ffd7)",
-              borderRadius: "20px", 
+              borderRadius: "20px",
             },
           }}
         />
