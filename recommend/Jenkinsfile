@@ -1,0 +1,100 @@
+pipeline {
+    agent any
+
+    tools {
+        dockerTool 'docker'
+    }
+
+    stages {
+        stage("Clear current directory") {
+            steps {
+                sh 'rm -rf *'
+            }
+        }
+
+        stage('Pull from GitLab') {
+            steps {
+                git url: 'https://lab.ssafy.com/s09-bigdata-recom-sub2/S09P22A403.git',
+                    branch: 'rec/develop',
+                    credentialsId: 'a432e361-21de-400a-a3c2-8f8860f53b7f'
+            }
+        }
+
+        stage('Setup Python Environment') {
+            steps {
+                sh 'python3 -m venv myenv'
+                
+                sh '. myenv/bin/activate'
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                sh 'ls -al'
+
+                sh 'myenv/bin/pip install -r recommend/requirements.txt'
+            }
+        }
+
+        stage('Apply settings.py files') {
+            steps {
+                withCredentials([file(credentialsId: 'settings', variable: 'settings')]) {
+                    script {
+                        sh 'ls -al'
+                        sh 'cp $settings recommend/settings.py'
+                    }
+                }
+            }
+        }
+
+        stage('Delete existing Docker images and containers') {
+            steps {
+                sh '''
+                    if docker container inspect fastapi_server >/dev/null 2>&1; then
+                        echo "container exists locally"
+                        docker stop fastapi_server
+                        docker rm fastapi_server
+                    else
+                        echo "container does not exist locally"
+                    fi
+                    if docker image inspect fastapi_image >/dev/null 2>&1; then
+                        echo "Image exists locally"
+                        docker rmi fastapi_image
+                    else
+                        echo "Image does not exist locally"
+                    fi
+                '''
+            }
+        }
+
+        stage('Build and Deploy Docker') {
+            steps {
+                sh '''
+                    echo [BE] Build Docker Image!
+                    docker build -t fastapi_image -f recommend/Dockerfile .
+                    echo [BE] Run Docker Container!
+                    docker run -dp 8083:8083 --name fastapi_server fastapi_image
+                '''
+            }
+        }
+    }
+
+    post {
+        success {
+            script {
+                def Author_ID = sh(script: "git show -s --pretty=%an", returnStdout: true).trim()
+                def Author_Name = sh(script: "git show -s --pretty=%ae", returnStdout: true).trim()
+                def GIT_COMMIT_MSG = sh(script: 'git log -1 --pretty=%B ${GIT_COMMIT}', returnStdout: true).trim()
+                mattermostSend(color: 'good', message: "✅ Build & Deployment succeeded: ${env.JOB_NAME} (<${env.BUILD_URL}|#${env.BUILD_NUMBER}>)\nBranch: be/develop\nCommit message: ${GIT_COMMIT_MSG} by ${Author_ID}(${Author_Name})\n")
+            }
+        }
+        failure {
+            script {
+                def Author_ID = sh(script: "git show -s --pretty=%an", returnStdout: true).trim()
+                def Author_Name = sh(script: "git show -s --pretty=%ae", returnStdout: true).trim()
+                def GIT_COMMIT_MSG = sh(script: 'git log -1 --pretty=%B ${GIT_COMMIT}', returnStdout: true).trim()
+                mattermostSend(color: 'danger', message: "❌ Build & Deployment failed: ${env.JOB_NAME} (<${env.BUILD_URL}|#${env.BUILD_NUMBER}>)\nBranch: be/develop\nCommit message: ${GIT_COMMIT_MSG} by ${Author_ID}(${Author_Name})\n")
+            }
+        }
+    }
+}
