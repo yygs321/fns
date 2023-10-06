@@ -515,8 +515,8 @@ const CalendarPage = () => {
                           alignItems: "center",
                         }}
                       >
-                        <div>{운동.time}시간</div>
-                        <div>{운동.kcal}kcal</div>
+                        <div>{isNaN(운동.time) ? 0 : 운동.time}시간</div>
+                        <div>{isNaN(운동.kcal) ? 0 : 운동.kcal}kcal</div>
                       </div>
                     </Grid>
                   </Grid>
