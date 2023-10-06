@@ -63,33 +63,33 @@
 <table>
   <tr>
     <td align="center">
-      <a href="https://github.com/pickac4rd">
-        <b>김승규</b>
+      <a href="https://github.com/sgkim6">
+        <img src="https://github.com/sgkim6.png" alt="김승규" />
       </a>
     </td>
-    <td align="center">
+     <td align="center">
       <a href="https://github.com/yygs321">
-        <b>박소민</b>
+        <img src="https://github.com/yygs321.png" alt="박소민" />
       </a>
     </td>
     <td align="center">
       <a href="https://github.com/vkdldjtmflr">
-        <b>구본웅</b>
+        <img src="https://github.com/vkdldjtmflr.png" alt="구본웅" />
       </a>
     </td>
     <td align="center">
       <a href="https://github.com/stock4share2">
-        <b>심현재</b>
+        <img src="https://github.com/stock4share2.png" alt="심현재" />
       </a>
     </td>
     <td align="center">
       <a href="https://github.com/ImChrisKim">
-        <b>김성우</b>
+        <img src="https://github.com/ImChrisKim.png" alt="김성우" />
       </a>
     </td>
     <td align="center">
       <a href="https://github.com/mycook3">
-        <b>박지환</b>
+        <img src="https://github.com/mycook3.png" alt="박지환" />
       </a>
     </td>
   </tr>
@@ -120,7 +120,7 @@
       </a>
     </td>
     <td align="center">
-      <a href="https://github.com/serenecarp">
+      <a href="https://github.com/mycook3">
         <b>박지환</b>
       </a>
     </td>
