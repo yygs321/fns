@@ -462,7 +462,7 @@ const MainPage = () => {
             xs={11}
             justifyContent={"center"}
             alignItems={"center"}
-            sx={{ marginTop: "2vh" }}
+            sx={{ marginTop: "2vh", marginBottom: "5vh" }}
           >
             <Accordion
               expanded={isAccordionSelected}
@@ -472,7 +472,6 @@ const MainPage = () => {
                 height: "100%",
                 width: "100%",
                 boxShadow: "2px 2px 4px #a5a5a5",
-                marginBottom: "5vh",
               }}
             >
               <AccordionSummary
