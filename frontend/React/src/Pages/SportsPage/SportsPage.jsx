@@ -5,7 +5,7 @@ import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
 import DirectionsBikeIcon from "@mui/icons-material/DirectionsBike";
 import HikingIcon from "@mui/icons-material/Hiking";
 import PoolIcon from "@mui/icons-material/Pool";
-import AccessibilityNewIcon from "@mui/icons-material/AccessibilityNew"; 
+import AccessibilityNewIcon from "@mui/icons-material/AccessibilityNew";
 import StairsIcon from "@mui/icons-material/Stairs";
 import SelfImprovementIcon from "@mui/icons-material/SelfImprovement";
 import SportsSoccerIcon from "@mui/icons-material/SportsSoccer";
@@ -17,7 +17,6 @@ import NavigateBeforeRoundedIcon from "@mui/icons-material/NavigateBeforeRounded
 import NavigateNextRoundedIcon from "@mui/icons-material/NavigateNextRounded";
 
 const handleSaveData = () => {
-  
   console.log("데이터가 저장되었습니다.");
 };
 
@@ -25,28 +24,53 @@ const exerciseResponseDto = {
   sportsBookmarkList: [0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1],
   sportsMetValue: [0, 2, 3.5, 5, 6, 7, 8, 4, 5.5, 4.5, 6.5, 5, 5.5],
   exerciseTimeList: [0, 0, 1, 1.5, 0, 0, 2, 1, 1.5, 2, 0, 0, 1.5],
-  weight: 60
+  weight: 60,
 };
 
-const sportNames = [null, "조깅", "사이클", "등산", "수영", "줄넘기", "계단 오르기", "요가", "축구", "야구", 
-"테니스", "배구", "골프"];
-const sportIcons = [null, <DirectionsRunIcon fontSize="large" />, <DirectionsBikeIcon fontSize="large" />, 
-<HikingIcon fontSize="large" />, <PoolIcon fontSize="large" />,
- <AccessibilityNewIcon fontSize="large" />, <StairsIcon fontSize="large" />, <SelfImprovementIcon fontSize="large" />,
- <SportsSoccerIcon fontSize="large" />, <SportsBaseballIcon fontSize="large" />, <SportsTennisIcon fontSize="large" />,
- <SportsVolleyballIcon fontSize="large" />, <SportsGolfIcon fontSize="large" />
+const sportNames = [
+  null,
+  "조깅",
+  "사이클",
+  "등산",
+  "수영",
+  "줄넘기",
+  "계단 오르기",
+  "요가",
+  "축구",
+  "야구",
+  "테니스",
+  "배구",
+  "골프",
+];
+const sportIcons = [
+  null,
+  <DirectionsRunIcon fontSize="large" />,
+  <DirectionsBikeIcon fontSize="large" />,
+  <HikingIcon fontSize="large" />,
+  <PoolIcon fontSize="large" />,
+  <AccessibilityNewIcon fontSize="large" />,
+  <StairsIcon fontSize="large" />,
+  <SelfImprovementIcon fontSize="large" />,
+  <SportsSoccerIcon fontSize="large" />,
+  <SportsBaseballIcon fontSize="large" />,
+  <SportsTennisIcon fontSize="large" />,
+  <SportsVolleyballIcon fontSize="large" />,
+  <SportsGolfIcon fontSize="large" />,
 ];
 
-export const sportsData = exerciseResponseDto.sportsMetValue.map((met, index) => {
-  if (index === 0) return null; 
+export const sportsData = exerciseResponseDto.sportsMetValue
+  .map((met, index) => {
+    if (index === 0) return null;
 
-  const kcalPerHour = (3.5 * met * exerciseResponseDto.weight * 60) / 1000 * 5;
-  return {
-    name: sportNames[index],
-    kcal: kcalPerHour,
-    icon: sportIcons[index],
-  };
-}).filter(Boolean);
+    const kcalPerHour =
+      ((3.5 * met * exerciseResponseDto.weight * 60) / 1000) * 5;
+    return {
+      name: sportNames[index],
+      kcal: kcalPerHour,
+      icon: sportIcons[index],
+    };
+  })
+  .filter(Boolean);
 
 const SportItem = ({
   name,
@@ -116,7 +140,7 @@ const SportItem = ({
 const SportsPage = () => {
   const [times, setTimes] = useState({});
   const [isEditMode, setEditMode] = useState(false);
- 
+
   const [checkedSports, setCheckedSports] = useState(
     sportsData.reduce((acc, sport, index) => {
       return {
@@ -125,7 +149,7 @@ const SportsPage = () => {
       };
     }, {})
   );
-  
+
   const filteredSports = sportsData.filter(
     (sport) => checkedSports[sport.name]
   );
@@ -281,7 +305,6 @@ const SportsPage = () => {
         </Grid>
       </Grid>
 
-
       <div
         style={{
           width: "90%",
@@ -409,7 +432,6 @@ const SportsPage = () => {
           )}
         </Grid>
       </div>
-
 
       <div
         style={{

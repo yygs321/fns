@@ -39,12 +39,9 @@ const DietPage = () => {
   const [dinnerData, setDinnerData] = useState([]);
   const [ETCData, setETCData] = useState([]);
 
-  const [isLoading, setIsLoading] = useState(false); // 로딩
+  const [isLoading, setIsLoading] = useState(false);
 
   const getIntakeData = async () => {
-    console.log(formattedToday);
-    console.log(formattedYesterday);
-
     try {
       const res = await axiosInstance({
         method: "get",
@@ -57,11 +54,7 @@ const DietPage = () => {
         },
       });
 
-      console.log(res);
-
       const meals = res.data.data;
-
-      console.log(meals);
 
       const totalKcal = meals.reduce((total, meal) => {
         return total + meal.kcal;
@@ -73,11 +66,6 @@ const DietPage = () => {
       const lunchMeals = meals.filter((meal) => meal.intakeTime === "LUNCH");
       const dinnerMeals = meals.filter((meal) => meal.intakeTime === "DINNER");
       const ETCMeals = meals.filter((meal) => meal.intakeTime === "ETC");
-
-      console.log(morningMeals);
-      console.log(lunchMeals);
-      console.log(dinnerMeals);
-      console.log(ETCMeals);
 
       setTotalMealsKcal(totalKcal);
       setMorningData(morningMeals);

@@ -25,7 +25,6 @@ const SearchFoodPage = () => {
 
   const handleSearch = async () => {
     try {
-      console.log("Search Term:", searchTerm);
       const response = await axiosInstance.get(`${SERVER_API_URL}/foods`, {
         params: { name: searchTerm },
         headers: {
@@ -34,9 +33,6 @@ const SearchFoodPage = () => {
       });
 
       if (response.data.success) {
-        console.log("Response Data:", response.data);
-        console.log("Response Data:", response.data.data);
-        console.log("Response Data:", response.data.data.name);
         setSearchResults(response.data.data);
       } else {
         console.error("Failed to fetch search results:", response.data.message);
@@ -52,7 +48,6 @@ const SearchFoodPage = () => {
   const handleBackClick = () => {
     setSearchTerm("");
   };
-
 
   const [isFocused, setIsFocused] = useState(false);
 
@@ -142,10 +137,7 @@ const SearchFoodPage = () => {
             placeholder="음식 검색"
             InputProps={{
               endAdornment: (
-                <SearchIcon
-                  color="text.secondary"
-                  onClick={handleSearch}
-                />
+                <SearchIcon color="text.secondary" onClick={handleSearch} />
               ),
               sx: {
                 height: "6vh",
@@ -178,7 +170,7 @@ const SearchFoodPage = () => {
             style={{
               overflowX: "scroll",
               width: "100%",
-              whiteSpace: "nowrap", 
+              whiteSpace: "nowrap",
               height: "5vh",
               marginBottom: "1vh",
             }}

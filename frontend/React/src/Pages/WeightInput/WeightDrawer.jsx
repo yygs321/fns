@@ -14,14 +14,6 @@ export default function WeightDrawer(props) {
   const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
   const accessToken = sessionStorage.getItem("accessToken");
   const { drawerOpen, setDrawerOpen } = props;
-  const now = new Date();
-
-  const year = now.getFullYear();
-  const month = (now.getMonth() + 1).toString().padStart(2, "0");  
-  const day = now.getDate().toString().padStart(2, "0"); 
-
-  // eslint-disable-next-line no-unused-vars
-  const formattedToday = `${year}-${month}-${day}`;
 
   const [입력모달열기, set입력모달열기] = useState(false);
   const [목표모달열기, set목표모달열기] = useState(false);
@@ -34,8 +26,6 @@ export default function WeightDrawer(props) {
   const [기간, set기간] = useState("");
   const [입력기간, set입력기간] = useState("");
 
-
-  // eslint-disable-next-line no-unused-vars
   const 체중데이터받기 = async () => {
     try {
       const res = await axiosInstance({
@@ -46,14 +36,12 @@ export default function WeightDrawer(props) {
         },
       });
 
-      console.log(res.data.data);
       const targetData = res.data.data.targetWeightResponseDto;
 
       if (targetData.targetWeight) {
         set다이어트모드(true);
       }
 
-    
       set시작체중(targetData.initialWeight || "");
       set체중(targetData.currentWeight || "");
       set목표체중(targetData.targetWeight || "");
@@ -67,7 +55,7 @@ export default function WeightDrawer(props) {
 
   const 체중등록 = async () => {
     try {
-      const res = await axiosInstance({
+      await axiosInstance({
         method: "post",
         url: `${SERVER_API_URL}/weight`,
         headers: {
@@ -78,8 +66,6 @@ export default function WeightDrawer(props) {
         },
       });
 
-      console.log(res.data);
-
       set체중(입력체중);
       set입력체중("");
     } catch (err) {
@@ -89,14 +75,13 @@ export default function WeightDrawer(props) {
 
   const 기준영양소등록 = async () => {
     try {
-      const baseResponse = await axiosInstance({
+      await axiosInstance({
         method: "post",
         url: `${SERVER_API_URL}/base`,
         headers: {
           "X-FNS-ACCESSTOKEN": accessToken,
         },
       });
-      console.log(baseResponse.data);
     } catch (err) {
       console.log(err);
     }
@@ -120,7 +105,6 @@ export default function WeightDrawer(props) {
 
   const 체중입력하기 = async () => {
     try {
-     
       await Promise.all([체중등록(), 기준영양소등록()]);
 
       체중데이터받기();
@@ -140,7 +124,7 @@ export default function WeightDrawer(props) {
 
   const 목표설정 = async () => {
     try {
-      const res = await axiosInstance({
+      await axiosInstance({
         method: "post",
         url: `${SERVER_API_URL}/target-weight`,
         headers: {
@@ -151,8 +135,6 @@ export default function WeightDrawer(props) {
           duration: 입력기간,
         },
       });
-
-      console.log(res.data);
 
       set입력목표체중("");
       set입력기간("");
@@ -194,11 +176,7 @@ export default function WeightDrawer(props) {
       }}
       role="presentation"
     >
-      <Grid
-        container
-        justifyContent={"center"}
-        alignItems={"center"}
-      >
+      <Grid container justifyContent={"center"} alignItems={"center"}>
         <Grid
           container
           item
@@ -307,7 +285,6 @@ export default function WeightDrawer(props) {
                         <Typography sx={{ marginTop: "1vh" }} fontSize="1.5rem">
                           {시작체중} kg
                         </Typography>
-                      
                       </Grid>
                     </Grid>
                     <Grid
@@ -415,7 +392,6 @@ export default function WeightDrawer(props) {
             variant="contained"
             className="목표버튼"
             onClick={목표설정모달}
-         
             sx={{
               color: "white",
               fontSize: "1.4rem",
@@ -438,7 +414,7 @@ export default function WeightDrawer(props) {
                 width: "80%",
                 maxWidth: "700px",
                 bgcolor: "background.paper",
-             
+
                 boxShadow: 24,
                 p: 2,
                 top: "50%",
@@ -533,7 +509,7 @@ export default function WeightDrawer(props) {
               </Grid>
             </Box>
           </Modal>
-      
+
           <Modal
             open={목표모달열기}
             onClose={목표설정모달닫기}

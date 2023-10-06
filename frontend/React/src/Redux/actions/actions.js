@@ -1,5 +1,6 @@
 import * as actionTypes from "./actionTypes";
 
+// 식단 관련 액션
 
 export const nowDiet = (diet) => ({
   type: actionTypes.NOW_DIET,
@@ -25,10 +26,10 @@ export const fixedFromDiet = (food) => ({
   payload: food,
 });
 
+// 로그인 관련 액션
 
 export const userLogin = () => ({
   type: actionTypes.USER_LOGIN,
-
 });
 
 export const userLogout = () => ({

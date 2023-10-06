@@ -33,7 +33,6 @@ function App() {
     window.addEventListener("load", setBodyHeight);
     window.addEventListener("resize", setBodyHeight);
 
-   
     return () => {
       window.removeEventListener("load", setBodyHeight);
       window.removeEventListener("resize", setBodyHeight);
@@ -43,8 +42,6 @@ function App() {
   const isLogin = useSelector((state) => {
     return state.auth.isLogin;
   });
-
-  
 
   return (
     <div
@@ -76,7 +73,6 @@ function App() {
               <Route path="/diet" element={<DietPage />} />
               <Route path="/diet/input" element={<DietInputPage />} />
               <Route path="/diet/input/search" element={<SearchFood />} />
-              {/* <Route path="/weight" element={<WeightInput />} /> */}
               <Route path="/fit" element={<SportsPage />} />
               <Route path="/mypage" element={<MyPage />} />
               <Route

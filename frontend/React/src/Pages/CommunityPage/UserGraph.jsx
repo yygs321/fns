@@ -29,11 +29,6 @@ const UserGraph = (props) => {
   const dinnerMeals = meals.filter((meal) => meal.intakeTime === "DINNER");
   const ETCMeals = meals.filter((meal) => meal.intakeTime === "ETC");
 
-  console.log(morningMeals);
-  console.log(lunchMeals);
-  console.log(dinnerMeals);
-  console.log(ETCMeals);
-
   const handleUserChange = (e, newUserIndex) => {
     if (selectedUser !== newUserIndex) {
       setSelectedUser(newUserIndex);
@@ -43,17 +38,14 @@ const UserGraph = (props) => {
   };
 
   const handleCancelFollowAxios = async () => {
-
     try {
-      const res = await axiosInstance({
+      await axiosInstance({
         method: "delete",
         url: `${SERVER_API_URL}/follow/${user.memberId}`,
         headers: {
           "X-FNS-ACCESSTOKEN": accessToken,
         },
       });
-
-      console.log(res);
 
       window.location.reload();
     } catch (err) {
@@ -104,7 +96,7 @@ const UserGraph = (props) => {
           aria-controls="panel1bh-content"
           id="panel1bh-header"
           sx={{
-            alignItems: "center", 
+            alignItems: "center",
             paddingBottom: "0.5rem",
             px: "0px",
           }}

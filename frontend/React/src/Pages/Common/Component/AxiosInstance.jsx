@@ -1,11 +1,10 @@
 import axios from "axios";
-import { RefreshToken } from "./RefreshToken"; 
+import { RefreshToken } from "./RefreshToken";
 
 const axiosInstance = axios.create();
 
 axiosInstance.interceptors.request.use(
   async (config) => {
-   
     return config;
   },
   (error) => {
@@ -24,20 +23,17 @@ axiosInstance.interceptors.response.use(
     console.log(error.response.status);
     if (error.response && error.response.status === 401) {
       try {
-        console.log("야호");
         await RefreshToken();
-        
+
         const newAccessToken = sessionStorage.getItem("accessToken");
         error.config.headers["X-FNS-ACCESSTOKEN"] = newAccessToken;
-        console.log("재발급 완료했습니다!!");
 
         return axiosInstance(error.config);
       } catch (refreshError) {
-       
         return Promise.reject(refreshError);
       }
     }
-  
+
     return Promise.reject(error);
   }
 );

@@ -10,12 +10,12 @@
 
 .profile-section {
   display: flex;
-  flex-direction: row;  
-  align-items: center;     
+  flex-direction: row;
+  align-items: center;
   margin-bottom: 20px;
-  justify-content: center; 
+  justify-content: center;
   width: 100%;
-  text-align: center;      
+  text-align: center;
   font-family: "NanumSquareRound";
 }
 
@@ -26,8 +26,8 @@
   border-radius: 50%;
   border: 0.1px solid rgb(230, 230, 230);
   overflow: hidden;
-  margin-bottom: 15px;     
-  margin-right: 20px; 
+  margin-bottom: 15px;
+  margin-right: 20px;
 }
 
 .profile-details {
@@ -35,13 +35,12 @@
 }
 
 .profile-details h5 {
-  font-size: 2.4rem; 
+  font-size: 2.4rem;
 }
 
 .profile-details p {
-  font-size: 2rem; 
+  font-size: 2rem;
 }
-
 
 @media (max-width: 500px) {
   .profile-avatar {
@@ -58,7 +57,7 @@
   }
 }
 
- @media (min-width: 500px) and (max-width: 799px) {
+@media (min-width: 500px) and (max-width: 799px) {
   .profile-avatar {
     width: 25vw;
     height: 25vw;

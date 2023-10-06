@@ -40,10 +40,7 @@ const UserRecommend = (props) => {
           justifyContent={"center"}
           alignItems={"center"}
         >
-          <Avatar
-            alt="MyName"
-            sx={{ width: "5rem", height: "5rem" }}
-          />
+          <Avatar alt="MyName" sx={{ width: "5rem", height: "5rem" }} />
         </Grid>
         <Grid
           container

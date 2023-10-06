@@ -3,7 +3,6 @@ import axios from "axios";
 export const RefreshToken = async (dispatch) => {
   const SERVER_API_URL = `${process.env.REACT_APP_API_SERVER_URL}`;
 
-
   const accessToken = sessionStorage.getItem("accessToken");
   const refreshToken = sessionStorage.getItem("refreshToken");
 
@@ -19,14 +18,11 @@ export const RefreshToken = async (dispatch) => {
       },
     });
 
-    console.log(res);
     const tokenData = res.data.data;
 
     sessionStorage.setItem("accessToken", tokenData.accessToken);
     sessionStorage.setItem("refreshToken", tokenData.refreshToken);
     sessionStorage.setItem("expirationTime", tokenData.expirationTime);
-
-    
   } catch (err) {
     console.log(err);
     throw err;
