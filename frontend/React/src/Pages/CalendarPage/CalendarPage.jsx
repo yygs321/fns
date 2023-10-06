@@ -103,6 +103,10 @@ const CalendarPage = () => {
         set운동북마크(res1.data.data.sportsBookmarkList);
         set운동시간(res1.data.data.exerciseTimeList);
 
+        console.log(res1);
+        console.log(res2);
+        console.log(res3);
+
         set영양데이터({
           칼로리: {
             섭취량: res3.data.data.kcal,
