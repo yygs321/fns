@@ -1,3 +1,6 @@
+![fns](https://github.com/S09P22A403/fns/blob/master/assets/FNS%20main.png)
+
+
 <div align=center>
     <p>
         정신없이 먹은 식사
