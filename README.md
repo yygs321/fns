@@ -1,3 +1,140 @@
+<div align=center>
+    <p>
+        정신없이 먹은 식사
+        <br><br>
+        건강해지고 싶은 당신을 위해
+        <br><br>
+        식단과 운동을 기록하고
+        <br><br>
+        식단을 추천받고
+        <br><br>
+        친구들과 식단을 공유하며
+        <br><br>
+        식단 기록 및 추천 서비스, <b>FNS</b> 입니다.
+    </p>
+    <a href="https://j9a403.p.ssafy.io/"><del>[ FNS 서비스 바로가기 ]</del></a>
+    <br>
+    <a href="https://youtu.be/Qx0bN870C4I">[ FNS 홍보영상 바로가기 ]</a>
+</div>
+
+<br>
+<br>
+
+## ⭐ 프로젝트 정보
+
+- 프로젝트 기간 : 2023/08/28 ~ 2023/10/06
+- 배포 기간 : 2023/09/13 ~ 2023/10/13
+> GitLab에서 프로젝트를 진행한 후, GitHub으로 옮겨왔습니다.
+
+
+<br>
+<br>
+
+## ⭐ 프로젝트 주요 기능
+
+### 회원 기능
+
+> 자체 로그인 및 카카오 로그인을 할 수 있습니다. <br>
+> 사용자가 저장한 나이 및 성별을 고려한 기준 영양소가 자동으로 설정됩니다. <br>
+> 기준영양소를 원하는대로 변경할 수 있습니다.
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="https://github.com/S09P22A403/fns/blob/master/assets/%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85%20%EB%B0%8F%20%ED%94%84%EB%A1%9C%ED%95%84%EC%A0%80%EC%9E%A5.gif"/>
+    </td>
+    <td align="center">
+      <img src="https://github.com/S09P22A403/fns/blob/master/assets/%ED%94%84%EB%A1%9C%ED%95%84%20%EC%88%98%EC%A0%95.gif" />
+    </td>
+    <td align="center">
+      <img src="https://github.com/S09P22A403/fns/blob/master/assets/%EB%82%98%EC%9D%B4%2C%20%EC%84%B1%EB%B3%84%20%EB%B3%84%20%EA%B8%B0%EC%A4%80%EC%98%81%EC%96%91%EC%86%8C%20%EC%84%A4%EC%A0%95.gif"/>
+    </td>
+    <td align="center">
+      <img src="https://github.com/S09P22A403/fns/blob/master/assets/FNS_%EC%98%81%EC%96%91%EC%86%8C%EC%84%A4%EC%A0%95.gif"/>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <span>회원 가입 및 프로필 저장</span>
+    </td>
+    <td align="center">
+      <span>프로필 수정</span>
+    </td>
+    <td align="center">
+      <span>나이&성별 별 기준영양소 설정</span>
+    </td>
+    <td align="center">
+      <span>기준영양소 수정</span>
+    </td>
+  </tr>
+</table>
+
+### 캘린더 페이지 및 팔로우 페이지
+
+> 캘린더 페이지에서는 식단 및 운동 기록 스트릭을 확인할 수 있습니다 <br>
+> 식단 및 운동을 기록하고 한눈에 확인할 수 있습니다 <br>
+> 목표 몸무게 설정 후 몸무게 변화 그래프를 확인할 수 있습니다.
+> 팔로우 페이지에서는 팔로우한 사용자의 식단을 확인할 수 있습니다.
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="https://github.com/S09P22A403/fns/blob/master/assets/%EB%AA%B8%EB%AC%B4%EA%B2%8C%20%EC%88%98%EC%A0%95%20%EA%B7%B8%EB%9E%98%ED%94%84.gif" />
+    </td>
+    <td align="center">
+      <img src="https://github.com/S09P22A403/fns/blob/master/assets/%EC%9A%B4%EB%8F%99%20%EC%A6%90%EA%B2%A8%EC%B0%BE%EA%B8%B0%20%EB%B0%8F%20%EB%93%B1%EB%A1%9D.gif" />
+    </td>
+    <td align="center">
+      <img src="https://github.com/S09P22A403/fns/blob/master/assets/%ED%8C%94%EB%A1%9C%EC%9A%B0%20%EC%A0%80%EC%9E%A5.gif" />
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <span>몸무게 변화 그래프 확인</span>
+    </td>
+    <td align="center">
+      <span>운동 즐겨찾기 등록</span>
+    </td>
+    <td align="center">
+      <span>팔로우 페이지</span>
+    </td>
+  </tr>
+</table>
+
+### 식단 저장 및 추천, 검색 페이지
+
+> 전날 섭취한 식단을 고려한 오늘의 식단을 추천해줍니다. <br>
+> 식단 섭취량을 조절해서 저장하고 섭취 칼로리를 확인할 수 있습니다. <br>
+> 설정해놓은 칼로리, 탄수화물, 단백질, 지방 조건에 알맞는 음식을 검색해줍니다.
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="https://github.com/S09P22A403/fns/blob/master/assets/%EC%8B%9D%EB%8B%A8%20%EC%B6%94%EC%B2%9C.gif" />
+    </td>
+    <td align="center">
+      <img src="https://github.com/S09P22A403/fns/blob/master/assets/%EC%8B%9D%EB%8B%A8%20%EC%A0%80%EC%9E%A5-%20%EC%B5%9C%EC%A2%85.gif" />
+    </td>
+    <td align="center">
+      <img src="https://github.com/S09P22A403/fns/blob/master/assets/FNS_%EC%9D%8C%EC%8B%9D%EA%B2%80%EC%83%89.gif" />
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <span>식단 추천</span>
+    </td>
+    <td align="center">
+      <span>식단 저장</span>
+    </td>
+    <td align="center">
+      <span>음식 검색</span>
+    </td>
+  </tr>
+</table>
+
+<br>
+<br>
+
 ## 기술 스택
 
 <h3 align="center">Back-end</h3>
@@ -57,6 +194,9 @@
     <img src="https://img.shields.io/badge/Figma-F24E1E?&logo=Figma&logoColor=white">
     <img src="https://img.shields.io/badge/Mattermost-0058CC?&logo=Mattermost&logoColor=white">
 </p>
+
+<br>
+<br>
 
 ## 멤버
 
