@@ -180,7 +180,6 @@
     <img src="https://img.shields.io/badge/Docker-2496ED?&logo=docker&logoColor=white">
     <img src="https://img.shields.io/badge/Jenkins-D24939?&logo=jenkins&logoColor=white">
     <img src="https://img.shields.io/badge/nginx-009639?&logo=nginx&logoColor=white">
-    <img src="https://img.shields.io/badge/SonarQube-4E9BCD?&logo=sonarqube&logoColor=white">
     <br>
     <img src="https://img.shields.io/badge/ubuntu-E95420?&logo=ubuntu&logoColor=white">
     <img src="https://img.shields.io/badge/amazon EC2-FF9900?&logo=amazon ec2&logoColor=white">
